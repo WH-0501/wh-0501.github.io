@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="FIND_PATH123456789101112131415161718find_path (&lt;VAR&gt; name1 [path1 path2 ...])find_path (          &lt;VAR&gt;          name | NAMES name1 [name2 ...]          [HINTS path1 [path2 ... ENV var]]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="find">
+<meta property="og:url" content="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="FIND_PATH123456789101112131415161718find_path (&lt;VAR&gt; name1 [path1 path2 ...])find_path (          &lt;VAR&gt;          name | NAMES name1 [name2 ...]          [HINTS path1 [path2 ... ENV var]]">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/image-20240916112611108.png">
+<meta property="article:published_time" content="2024-09-16T03:18:25.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.935Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="编译工具">
+<meta property="article:tag" content="cmake">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/image-20240916112611108.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/","path":"2024/09/16/编译工具/CMake/脚本指令/find/","title":"find"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>find | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FIND-PATH"><span class="nav-number">1.</span> <span class="nav-text">FIND_PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FIND-PACKAGE"><span class="nav-number">2.</span> <span class="nav-text">FIND_PACKAGE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#module-%E4%B8%8E-config-%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">module 与 config 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#package-%E5%89%8D%E7%BC%80%E5%8F%8A%E6%9F%A5%E6%89%BE%E8%B7%AF%E5%BE%84"><span class="nav-number">2.2.</span> <span class="nav-text">package 前缀及查找路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#protobuf-%E7%89%88%E6%9C%AC"><span class="nav-number">2.3.1.</span> <span class="nav-text">protobuf 版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FIND-LIBRARY"><span class="nav-number">3.</span> <span class="nav-text">FIND_LIBRARY</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="find | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          find
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="FIND-PATH"><a href="#FIND-PATH" class="headerlink" title="FIND_PATH"></a>FIND_PATH</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_path</span> (&lt;VAR&gt; name1 [path1 path2 ...])</span><br><span class="line"><span class="keyword">find_path</span> (</span><br><span class="line">          &lt;VAR&gt;</span><br><span class="line">          name | NAMES name1 [name2 ...]</span><br><span class="line">          [HINTS path1 [path2 ... ENV var]]</span><br><span class="line">          [PATHS path1 [path2 ... ENV var]]</span><br><span class="line">          [PATH_SUFFIXES suffix1 [suffix2 ...]]</span><br><span class="line">          [DOC <span class="string">&quot;cache documentation string&quot;</span>]</span><br><span class="line">          [NO_DEFAULT_PATH]</span><br><span class="line">          [NO_PACKAGE_ROOT_PATH]</span><br><span class="line">          [NO_CMAKE_PATH]</span><br><span class="line">          [NO_CMAKE_ENVIRONMENT_PATH]</span><br><span class="line">          [NO_SYSTEM_ENVIRONMENT_PATH]</span><br><span class="line">          [NO_CMAKE_SYSTEM_PATH]</span><br><span class="line">          [CMAKE_FIND_ROOT_PATH_BOTH |</span><br><span class="line">           ONLY_CMAKE_FIND_ROOT_PATH |</span><br><span class="line">           NO_CMAKE_FIND_ROOT_PATH]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;var&gt;</code> 变量用于存储搜索结果。若未找到，则结果为 <code>&lt;var&gt;-NOTFOUND</code></p>
+<h1 id="FIND-PACKAGE"><a href="#FIND-PACKAGE" class="headerlink" title="FIND_PACKAGE"></a>FIND_PACKAGE</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>( &lt;package&gt; [version] [EXACT] [QUIET] \</span><br><span class="line">    [MODULE][[REQUIRED|COMPONENTS] [components...]]    \</span><br><span class="line">    [OPTIONAL_COMPONENTS components...][NO_POLICY_SCOPE])</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>该函数会设置 <code>&lt;package&gt;_FOUND</code> 变量来指明是否找到该 。若找到了指定 package，则会设置该 package 的相关变量，通过这些变量及相应的 <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#imported-targets">Imported Targets</a> 可获得该 package 的相关信息。</p>
+<p>参数说明：</p>
+<ul>
+<li><strong>QUIET</strong> 选项将会关闭包未找到时的警告信息；</li>
+<li><strong>REQUIRED</strong> 选项表示：如果包未找到，则 cmake 的过程会终止，并输出警告信息；</li>
+<li><strong>EXACT</strong> 选项表示版本号必须精确匹配；</li>
+<li><strong>COMPONENTS</strong> 选项(或未指定 REQUIRED 时)表示可以列出一些与包相关的部件清单；</li>
+<li><strong>version</strong> 参数为版本信息，格式为: <code>major[.minor[.patch[.tweak]]]</code></li>
+</ul>
+<h2 id="module-与-config-模式"><a href="#module-与-config-模式" class="headerlink" title="module 与 config 模式"></a>module 与 config 模式</h2><p>find_package 在搜索 package 时，有两种模式：”<strong>Module</strong>“ 模式和 “<strong>Config</strong>“ 模式</p>
+<img src="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/image-20240916112611108.png" class="" title="image-20240916112611108">
+
+<ul>
+<li><p><strong>Module 模式</strong>：该模式下，cmake 搜索所有名为 <strong>Find.cmake</strong> 的文件（例如：FindProtobuf.cmake）。这些文件的路径由 <strong>CMAKE_MODULE_PATH</strong> 变量指定。若找到该文件，则读取并处理。该模式负责查找 package、检查版本并生成必要的信息。许多模块都只提供了有限的信息，而没有版本化相关的信息。<strong>若未找到任何模块，且未明确指定 MOUDLE 选项，则进入 Config 模式</strong></p>
+</li>
+<li><p><strong>Config 模式</strong>：完整的 Config 模式的命令格式为：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(&lt;package&gt; [version] [EXACT] [QUIET]</span><br><span class="line">       [REQUIRED] [[COMPONENTS] [components...]]</span><br><span class="line">       [CONFIG|NO_MODULE]</span><br><span class="line">       [NO_POLICY_SCOPE]</span><br><span class="line">       [NAMES name1 [name2 ...]]</span><br><span class="line">       [CONFIGS config1 [config2 ...]]</span><br><span class="line">       [HINTS path1 [path2 ... ]]</span><br><span class="line">       [PATHS path1 [path2 ... ]]</span><br><span class="line">       [PATH_SUFFIXES suffix1 [suffix2 ...]]</span><br><span class="line">       [NO_DEFAULT_PATH]</span><br><span class="line">       [NO_CMAKE_ENVIRONMENT_PATH]</span><br><span class="line">       [NO_CMAKE_PATH]</span><br><span class="line">       [NO_SYSTEM_ENVIRONMENT_PATH]</span><br><span class="line">       [NO_CMAKE_PACKAGE_REGISTRY]</span><br><span class="line">       [NO_CMAKE_BUILDS_PATH] <span class="comment"># Deprecated; does nothing.</span></span><br><span class="line">       [NO_CMAKE_SYSTEM_PATH]</span><br><span class="line">       [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY]</span><br><span class="line">       [CMAKE_FIND_ROOT_PATH_BOTH |</span><br><span class="line">        ONLY_CMAKE_FIND_ROOT_PATH |</span><br><span class="line">        NO_CMAKE_FIND_ROOT_PATH])</span><br></pre></td></tr></table></figure>
+
+<p><strong>CONFIG</strong> 选项可用于明确指定跳过 Module 模式，直接进入 Config 模式，<strong>NO_MODULE</strong> 选项与 CONFIG 选项类似。Config 模式尝试查找一个由待查找的包提供的配置文件的位置。包含该文件的路径会被存储在名为 <strong>_DIR</strong> 的缓存变量中。默认情况下，该命令搜索名为  的包。若指定了 NAMES 选项，则其后的 names 参数会替代 。该指令为每个指定的 name 参数搜索名为 <strong>Config.cmake</strong> 或 <strong>-config.cmake</strong> 的文件。<strong>可通过 CONFIGS 选项改变可能的配置文件的名字</strong>。如果找到了配置文件，它将会被 CMake 读取并处理。由于该文件是由包自身提供的，它已经知道包中内容的位置。配置文件的完整路径存储在 cmake 的 <strong>_CONFIG</strong> 变量中。所有 CMake 要处理的配置文件将会搜索对应包的安装信息，并且将该安装匹配的 appropriate version 存储在 cmake 变量 _CONSIDERED_CONFIGS 中，与之相关的版本号（associated version）将被存储在 _CONSIDERED_VERSIONS 中。</p>
+<p>若未找到 package 的配置文件，cmake 会生成一个错误描述文件（除非指定了 QUIET 选项）。若设置了 <strong>_DIR</strong> 变量，但是该变量所指的路径下并没有包含配置文件信息，则会直接忽略该变量，并重新开始查找。</p>
+<p>CMake3.12 新增了 <strong>_ROOT</strong> 变量，可通过设置 CMP0074 Policy 来关闭。若定义了 <strong>_DIR</strong> 变量，那么 <strong>_ROOT</strong> 不起作用。</p>
+</li>
+</ul>
+<p>版本相关变量</p>
+<table>
+<thead>
+<tr>
+<th>PACKAGE_FIND_NAME</th>
+<th>名字。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PACKAGE_FIND_VERSION</td>
+<td>请求的完整版本字符串</td>
+</tr>
+<tr>
+<td>PACKAGE_FIND_VERSION_MAJOR</td>
+<td>如果被请求了，那么它是major版本号，否则是0。</td>
+</tr>
+<tr>
+<td>PACKAGE_FIND_VERSION_MINOR</td>
+<td>如果被请求了，那么它是minor版本号，否则是0。</td>
+</tr>
+<tr>
+<td>PACKAGE_FIND_VERSION_PATCH</td>
+<td>如果被请求了，那么它是patch版本号，否则是0。</td>
+</tr>
+<tr>
+<td>PACKAGE_FIND_VERSION_TWEAK</td>
+<td>如果被请求了，那么它是tweak版本号，否则是0。</td>
+</tr>
+<tr>
+<td>PACKAGE_FIND_VERSION_COUNT</td>
+<td>版本号包含几部分，0到4。</td>
+</tr>
+</tbody></table>
+<p>版本匹配规则</p>
+<table>
+<thead>
+<tr>
+<th>PACKAGE_VERSION</th>
+<th>提供的完整的版本字符串。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PACKAGE_VERSION_EXACT</td>
+<td>如果版本号精确匹配，返回true。</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_COMPATIBLE</td>
+<td>如果版本号相兼容，返回true。</td>
+</tr>
+<tr>
+<td>PACKAGE_VERSION_UNSUITABLE</td>
+<td>如果不适合任何版本，返回true。</td>
+</tr>
+</tbody></table>
+<p>find_package 指令会使用上面的这些变量来检查版本是否可接受。在find_package 返回之后，上面这些变量就不再可用。若版本可接受，则会设置下面的变量：</p>
+<table>
+<thead>
+<tr>
+<th>_VERSION</th>
+<th>提供的完整的版本字符串</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_VERSION_MAJOR</td>
+<td>major版本号，否则是0</td>
+</tr>
+<tr>
+<td>_VERSION_MINOR</td>
+<td>minor版本号，否则是0</td>
+</tr>
+<tr>
+<td>_VERSION_PATCH</td>
+<td>patch版本号，否则是0</td>
+</tr>
+<tr>
+<td>_VERSION_TWEAK</td>
+<td>tweak版本号，否则是0</td>
+</tr>
+<tr>
+<td>_VERSION_COUNT</td>
+<td>版本号包含几部分，0到4</td>
+</tr>
+</tbody></table>
+<p>当有多个版本满足要求时，选择使用哪个包是不确定的。此时可以使用 <strong>CMAKE_FIND_PACKAGE_SORT_ORDER</strong> 和 <strong>CMAKE_FIND_PACKAGE_SORT_DIRECTION</strong> 指令来设置选择顺序。例如，如下指令可以设置优先选择最高版本（需写在 find_package 之前，且 cmake 3 之前的版本未必支持该指令）：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(CMAKE_FIND_PACKAGE_SORT_ORDER NATURAL)</span><br><span class="line"><span class="keyword">SET</span>(CMAKE_FIND_PACKAGE_SORT_DIRECTION DEC)</span><br></pre></td></tr></table></figure>
+
+<p>Config 模式提供了精细的接口和搜索过程。提供的大部分接口都是为了完整性，并由 Module 模式加载的 find-modules 内部使用。大多数用户代码应该只是调用：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(&lt;package&gt; [major[.minor]] [EXACT] [REQUIRED|QUIET])</span><br></pre></td></tr></table></figure>
+
+<p>（建议提供 CMake 软件包配置文件的软件包维护者命名和安装它们，以便下面列出的过程可以找到它们而无需使用其他选项）</p>
+<h2 id="package-前缀及查找路径"><a href="#package-前缀及查找路径" class="headerlink" title="package 前缀及查找路径"></a>package 前缀及查找路径</h2><p>CMake 为 package 构造了一组可能的安装前缀。在每个前缀下，多个目录会被搜索，用来查找配置文件。下述的表格展示了待搜索的路径。每个条目都是专门为Windows(W)，UNIX(U)或者Apple(A)约定的安装树指定的：</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><prefix>&#x2F;</td>
+<td>(W)</td>
+</tr>
+<tr>
+<td><prefix>&#x2F;(cmake|CMake)&#x2F;</td>
+<td>(W)</td>
+</tr>
+<tr>
+<td><prefix>&#x2F;<name>*&#x2F;</td>
+<td>(W)</td>
+</tr>
+<tr>
+<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;&lt;****name****&gt;*&#x2F;</strong></strong>(cmake**</strong>|<strong><strong>CMake)</strong></strong>&#x2F;**</td>
+<td>(W)</td>
+</tr>
+<tr>
+<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;***<em>arch****&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;<strong><strong>cmake</strong></strong>&#x2F;&lt;****name****&gt;*&#x2F;</em>*</td>
+<td>(U)</td>
+</tr>
+<tr>
+<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;***<em>arch****&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;&lt;****name****&gt;*&#x2F;</em>*</td>
+<td>(U)</td>
+</tr>
+<tr>
+<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;<strong><strong>arch</strong>**&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;&lt;**<strong>name****&gt;*&#x2F;</strong></strong>(cmake****|<strong><strong>CMake)</strong></strong>&#x2F;**</td>
+<td>(U)</td>
+</tr>
+<tr>
+<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;cmake&#x2F;<name></em>&#x2F;</td>
+<td>(W&#x2F;U)</td>
+</tr>
+<tr>
+<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;<name></em>&#x2F;</td>
+<td>(W&#x2F;U)</td>
+</tr>
+<tr>
+<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;<name></em>&#x2F;(cmake|CMake)&#x2F;</td>
+<td>(W&#x2F;U)</td>
+</tr>
+<tr>
+<td>&#x2F;.framework&#x2F;Resources&#x2F;</td>
+<td>(A)</td>
+</tr>
+<tr>
+<td>&#x2F;.framework&#x2F;Resources&#x2F;CMake&#x2F;</td>
+<td>(A)</td>
+</tr>
+<tr>
+<td>&#x2F;.framework&#x2F;Versions&#x2F;*&#x2F;Resources&#x2F;</td>
+<td>(A)</td>
+</tr>
+<tr>
+<td>&#x2F;.framework&#x2F;Versions&#x2F;*&#x2F;Resources&#x2F;CMake&#x2F;</td>
+<td>(A)</td>
+</tr>
+<tr>
+<td>&#x2F;.app&#x2F;Contents&#x2F;Resources&#x2F;</td>
+<td>(A)</td>
+</tr>
+<tr>
+<td>&#x2F;.app&#x2F;Contents&#x2F;Resources&#x2F;CMake&#x2F;</td>
+<td>(A)</td>
+</tr>
+</tbody></table>
+<p>安装前缀  通过以下步骤构建，若指定了 <strong>NO_DEFAULT_PATH</strong> 选项，所有 NO_* 选项都会被激活：</p>
+<p>①、搜索 cmake-specific 缓存变量指定的路径。这些变量是为了在命令行中用 -DVAR&#x3D;value 选项而设计的。通过指定 NO_CMAKE_PATH 选项可以跳过该搜索路径。搜索路径还包括：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_PREFIX_PATH</span><br><span class="line">CMAKE_FRAMEWORK_PATH</span><br><span class="line">CMAKE_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
+
+<p>②、搜索 cmake-specific 环境变量指定的路径。这些变量是为了用户在 shell 中进行配置而设计的。通过指定NO_CMAKE_ENVIRONMENT_PATH选项可以跳过该路径。搜索的路径包括：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;package&gt;_DIR</span><br><span class="line">CMAKE_PREFIX_PATH</span><br><span class="line">CMAKE_FRAMEWORK_PATH</span><br><span class="line">CMAKE_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
+
+<p>③、搜索 <strong>HINTS</strong> 选项指定的路径。</p>
+<p>④、搜索**标准的系统环境变量(eg.PATH)**。可通过设置 NO_SYSTEM_ENVIRONMENT_PATH 选项跳过该路径。PATH 中以 “&#x2F;bin” 或 “&#x2F;sbin” 结尾的路径会被自动转换为它们的父路径。例如：PATH 中包含 &#x2F;usr&#x2F;bin，则cmake会自动到 &#x2F;usr&#x2F;(lib&#x2F;|lib|share)&#x2F;cmake&#x2F;&#x2F; 目录下进行搜索</p>
+<p>⑤、搜索在 CMake GUI 中最新配置过的工程的构建树。可通过 NO_CMAKE_BUILDS_PATH 跳过该路径</p>
+<p>⑥、搜索存储在 CMake <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.0/manual/cmake-packages.7.html#user-package-registry">User Package Registry</a> 中的路径。可通过 NO_CMAKE_PACKAGE_REGISTRY 跳过该路径</p>
+<p>⑦、搜索当前系统中定义的 cmake 变量指定的路径。可通过 NO_CMAKE_SYSTEM_PATH 跳过该路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_SYSTEM_PREFIX_PATH</span><br><span class="line">CMAKE_SYSTEM_FRAMEWORK_PATH</span><br><span class="line">CMAKE_SYSTEM_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
+
+<p>⑧、搜索存储在 CMake System Package Registry 中的路径。可通过 NO_CMAKE_SYSTEM_PACKAGE_REGISTRY 跳过该路径</p>
+<p>⑨、搜索 PATHS 选项指定的路径</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(PCL REQUIRED</span><br><span class="line">             PATHS /home/xxx/<span class="number">3</span>rdlibs/pcl/pcl-<span class="number">1.8</span> <span class="comment"># look here</span></span><br><span class="line">             NO_DEFAULT_PATH)</span><br><span class="line">             </span><br><span class="line"><span class="comment"># 指定路径，同时通过 EXACT 来匹配特定版本      </span></span><br><span class="line"><span class="keyword">find_package</span>(OpenCV <span class="number">3.1</span> EXACT REQUIRED PATHS /usr/local/opencv3.<span class="number">1</span>)             </span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结：根据上面描述，主要包括以下几个重要查找目录：</p>
+<ul>
+<li><p><code>&lt;package&gt;_DIR</code></p>
+</li>
+<li><p><code>CMAKE_PREFIX_PATH</code></p>
+</li>
+<li><p>&#96;&#96;CMAKE_FRAMEWORK_PATH&#96;</p>
+</li>
+<li><p><code>CMAKE_APPBUNDLE_PATH PATH</code></p>
+</li>
+</ul>
+<p>优先级最高的是 <code>&lt;package&gt;_DIR</code> 路径。该路径可在调用 cmake 时传入。</p>
+<p>例如：假设在 &#x2F;usr&#x2F;local&#x2F;share 目录下编译了 OpenCV3.3.4:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">OpenCV_DIR=/usr/local/share/opencv-3.3.4/build/ cmake</span></span><br></pre></td></tr></table></figure>
+
+<p>也可在 CMakeLists.txt 中通过 <strong><code>set(OpenCV_DIR &quot;/usr/local/share/opencv-3.3.4/build&quot;)</code></strong> 语句指定 <strong>_DIR 可解决系统中包含不同版本的包的问题</strong> </p>
+<p>由于 &#x2F;usr&#x2F;bin 通常都包含在环境变量 PATH 之中，因此 cmake 会自动到 &#x2F;usr&#x2F;(lib&#x2F;|lib|share)&#x2F;cmake&#x2F;&#x2F; 目录下查找模块，因而大部分通过 apt-get 安装的库都可以被找到</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># VTK_DIR是一个缓存变量，它在CMake调用中保持其状态。</span></span><br><span class="line"><span class="keyword">SET</span>(VTK_DIR <span class="string">&quot;/usr/include/vtk-5.8&quot;</span> CACHE PATH <span class="string">&quot;VTK directory override&quot;</span> FORCE)  </span><br></pre></td></tr></table></figure>
+
+
+
+<p>module 模式下，首先会在模块路径中寻找 Find.cmake，这是查找库的一个典型方式。具体查找路径依次为CMake：</p>
+<ul>
+<li>变量 ${CMAKE_MODULE_PATH} 中的所有目录。</li>
+<li>如果没有，然后再查看它自己的模块目录&#x2F;share&#x2F;cmake-x.y&#x2F;Modules&#x2F;（可通过 CMAKE_ROOT 变量查看. 例如：ubuntu上为 &#x2F;usr&#x2F;share&#x2F;cmake-3.5&#x2F;Modules&#x2F;）。</li>
+</ul>
+<p>(可通过 <strong>SET(CMAKE_MODULE_PATH dir)</strong> 设置查找路径)</p>
+<p>示例：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span> (&lt;package&gt; PATHS paths... NO_DEFAULT_PATH)</span><br><span class="line"><span class="comment"># eg. </span></span><br><span class="line"><span class="keyword">find_package</span>(OpenCV <span class="number">3.1</span> EXACT REQUIRED PATHS /usr/local/opencv3.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(OpenCV_DIR /usr/local/opencv-<span class="number">4.5</span>.<span class="number">5</span>/lib/cmake/opencv4)</span><br><span class="line"><span class="keyword">find_package</span>( OpenCV <span class="number">4.5</span>.<span class="number">5</span> REQUIRED )</span><br><span class="line"><span class="comment">#set(OpenCV_DIR /opt/ros/kinetic/share/OpenCV-3.3.1-dev)</span></span><br><span class="line"><span class="comment">#find_package( OpenCV 3.3.1 REQUIRED )</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结：</p>
+<ul>
+<li><p>判断 find_package() 执行的是 module 模式还是 config 模式</p>
+<ul>
+<li><p>要看 CMAKE_MODULE_PATH 或 cmake 安装路径下是否有 Find.cmake 脚本存在，并且这个脚本能否正确找到包；如果不存在，或这个脚本执行失败，则进入 config 模式</p>
+</li>
+<li><p>通过 CONFIG、NO_MODULE、CONFIG 模式特有字段设定 config 模式</p>
+</li>
+</ul>
+</li>
+<li><p><strong>_DIR</strong> 是 config 模式特有的缓存变量</p>
+<ul>
+<li><p>可在 find_package() 前设定 _DIR，指向包含Config.cmake 或 -config.cmake 的目录</p>
+</li>
+<li><p>module 模式下在 find_package() 前设定 _DIR，并不能用来帮助 find_package() 找到包；并且在 find_package() 后，也没有 _DIR 变量自动存在</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="protobuf-版本"><a href="#protobuf-版本" class="headerlink" title="protobuf 版本"></a><strong>protobuf 版本</strong></h3><p>假设系统中有两个版本的 protobuf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. apt 安装</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libprotobuf-dev protobuf-compiler</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 源码编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">/home/test/thirdlibs/protobuf-3.14.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(Protobuf_PREFIX_PATH</span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/include&quot;</span></span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/lib&quot;</span></span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/bin&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">list</span>(APPEND CMAKE_PREFIX_PATH <span class="string">&quot;$&#123;Protobuf_PREFIX_PATH&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(Protobuf REQUIRED)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误示例</span></span><br><span class="line"><span class="keyword">set</span>(Protobuf_DIR <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/lib/cmake/protobuf&quot;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(Protobuf REQUIRED)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>需注意 find_package 工作在 module 还是 config 模式。当 cmake 安装路径下提供了 FindProtobuf.cmake 时，工作在 module 模式；而不设定 CMAKE_PREFIX_PATH 等预定义变量，仅设置 Protobuf_DIR 的情况下，并不能进入 config 模式，此时 Protobuf_DIR 并未起作用。</p>
+<h1 id="FIND-LIBRARY"><a href="#FIND-LIBRARY" class="headerlink" title="FIND_LIBRARY"></a>FIND_LIBRARY</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" rel="tag"># 编译工具</a>
+              <a href="/tags/cmake/" rel="tag"># cmake</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/" rel="prev" title="list">
+                  <i class="fa fa-angle-left"></i> list
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/modules/ExternalProject/" rel="next" title="ExternalProject">
+                  ExternalProject <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

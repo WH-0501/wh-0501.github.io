@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="编译指令编译为release版本1$ catkin_make --cmake-args -DCMAKE_BUILD_TYPE&#x3D;Release                  CMAKE_BUILD_TYPE 可以的取值是:  Debug - 调试信息多，没优化 Release - 没有多余的调试信息，发布时使用 RelWithDebInfo - 优化过的带有有调试信息的版本 MinSizeRel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="catkin">
+<meta property="og:url" content="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="编译指令编译为release版本1$ catkin_make --cmake-args -DCMAKE_BUILD_TYPE&#x3D;Release                  CMAKE_BUILD_TYPE 可以的取值是:  Debug - 调试信息多，没优化 Release - 没有多余的调试信息，发布时使用 RelWithDebInfo - 优化过的带有有调试信息的版本 MinSizeRel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-16T03:04:39.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.947Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="编译工具">
+<meta property="article:tag" content="catkin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/","path":"2024/09/16/编译工具/catkin/catkin/","title":"catkin"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>catkin | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">编译指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E4%B8%BArelease%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">编译为release版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8C%87%E5%AE%9A%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">编译指定包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E6%8C%87%E5%AE%9A%E5%8C%85%E7%BC%96%E8%AF%91%E4%B8%BArelease%E7%89%88%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">将指定包编译为release版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.4.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E4%B8%BArelease%EF%BC%8C%E5%B9%B6%E5%AE%89%E8%A3%85%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95"><span class="nav-number">1.5.</span> <span class="nav-text">编译为release，并安装在指定目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">1.6.</span> <span class="nav-text">自动初始化工作空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#catkin-init-workspace"><span class="nav-number">1.7.</span> <span class="nav-text">catkin_init_workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#catkin-make-CMakeLists-txt-%E5%B8%B8%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.8.</span> <span class="nav-text">catkin_make CMakeLists.txt 常用变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#catkin-make-isolated"><span class="nav-number">2.</span> <span class="nav-text">catkin_make_isolated</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#catkin-build"><span class="nav-number">3.</span> <span class="nav-text">catkin build</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="catkin | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          catkin
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:04:39" itemprop="dateCreated datePublished" datetime="2024-09-16T11:04:39+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/" itemprop="url" rel="index"><span itemprop="name">catkin</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="编译指令"><a href="#编译指令" class="headerlink" title="编译指令"></a>编译指令</h1><h2 id="编译为release版本"><a href="#编译为release版本" class="headerlink" title="编译为release版本"></a>编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>CMAKE_BUILD_TYPE</strong> 可以的取值是:</p>
+<ul>
+<li><code>Debug</code> - 调试信息多，没优化</li>
+<li><code>Release</code> - 没有多余的调试信息，发布时使用</li>
+<li><code>RelWithDebInfo</code> - 优化过的带有有调试信息的版本</li>
+<li><code>MinSizeRel</code></li>
+</ul>
+<h2 id="编译指定包"><a href="#编译指定包" class="headerlink" title="编译指定包"></a>编译指定包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg &lt;package_name&gt;  <span class="comment"># 临时生效</span></span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --only-pkg-with-msgs=&lt;message_package_name&gt; <span class="comment"># 只编译 .msg 文件</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>白名单：**<code>-DCATKIN_WHITELIST_PACKAGES</code>**</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;package1;package2&quot;</span></span> </span><br></pre></td></tr></table></figure>
+
+<p>恢复编译所有的包（如不执行该指令，则后续都只会编译上述指定的包）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;&quot;</span></span>   </span><br></pre></td></tr></table></figure>
+
+
+
+<p> 黑名单: <strong><code>-DCATKIN_BLACKLIST_PACKAGES</code></strong></p>
+<h2 id="将指定包编译为release版本"><a href="#将指定包编译为release版本" class="headerlink" title="将指定包编译为release版本"></a>将指定包编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>可使用多个</strong> <strong>–pkg</strong> <strong>参数指定多个包</strong></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install --pkg rbx1_bringup <span class="comment"># 安装指定包</span></span>              </span><br></pre></td></tr></table></figure>
+
+
+
+<p>若未编译，则先编译（Debug），再安装。默认安装在当前目录，若要指定安装目录，可使用-DCMAKE_INSTALL_PREFIX参数，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg rbx1_bringup</span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<h2 id="编译为release，并安装在指定目录"><a href="#编译为release，并安装在指定目录" class="headerlink" title="编译为release，并安装在指定目录"></a>编译为release，并安装在指定目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
+
+<h2 id="自动初始化工作空间"><a href="#自动初始化工作空间" class="headerlink" title="自动初始化工作空间"></a>自动初始化工作空间</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON</span></span><br></pre></td></tr></table></figure>
+
+<p>编译rovio包。如果工作空间未初始化，可以自动完成工作空间初始化 。</p>
+<h2 id="catkin-init-workspace"><a href="#catkin-init-workspace" class="headerlink" title="catkin_init_workspace"></a>catkin_init_workspace</h2><p>将当前目录初始化为一个 ROS 工作空间（通常不需要运行该指令，除非想将某个目录指定为 ROS 工作空间）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating symlink &quot;/home/ros/catkin_test/src/CMakeLists.txt&quot; pointing to &quot;/opt/ros/kinetic/share/catkin/cmake/toplevel.cmake&quot;</span><br></pre></td></tr></table></figure>
+
+<p>会在当前目录生成一个 CMakeLists.txt 文件，该文件为 &#x2F;opt&#x2F;ros&#x2F;kinetic&#x2F;share&#x2F;catkin&#x2F;cmake&#x2F;toplevel.cmake 的软链接。</p>
+<h2 id="catkin-make-CMakeLists-txt-常用变量"><a href="#catkin-make-CMakeLists-txt-常用变量" class="headerlink" title="catkin_make CMakeLists.txt 常用变量"></a>catkin_make CMakeLists.txt 常用变量</h2><p>install 相关变量：</p>
+<p><strong>- CATKIN_PACKAGE_BIN_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_ETC_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_INCLUDE_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_LIB_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_PYTHON_DESTINATION</strong></p>
+<p><strong>-</strong> <strong>CATKIN_PACKAGE_SHARE_DESTINATION</strong>: 被设置为 ${CATKIN_GLOBAL_SHARE_DESTINATION}&#x2F;${PROJECT_NAME}</p>
+<p><strong>- CATKIN_GLOBAL_BIN_DESTINATION：</strong>通常值用于ROS核心执行程序</p>
+<p><strong>- CATKIN_GLOBAL_ETC_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_INCLUDE_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_LIB_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_LIBEXEC_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_PYTHON_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_SHARE_DESTINATION</strong></p>
+<h1 id="catkin-make-isolated"><a href="#catkin-make-isolated" class="headerlink" title="catkin_make_isolated"></a>catkin_make_isolated</h1><p>当一个工作空间中包含不同环境的独立的项目时，可以使用该指令进行编译。为纯粹由 catkin 包构成的工作区提供调试，并允许用户构建包含 <strong>catkin</strong> 和 **非catkin **包的工作区。</p>
+<p>非catkin包：编译脚本中不使用 Catkin cmake，而是简单的 CMake 或者其它的工具的程序包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make_isolated --install-space ./cartographer-packages --install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=xxxx install --pkg=</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="catkin-build"><a href="#catkin-build" class="headerlink" title="catkin build"></a>catkin build</h1><p>主要区别在于 catkin build 获取的 isolated 环境。catkin build 使得整个 build configuration 更加独立，并且对配置文件的修改(添加&#x2F;删除程序包，修改 cmake 变量等)更加健壮。</p>
+<ul>
+<li><strong><code>catkin build</code> 并行编译相互独立的包</strong>，因此速度更快</li>
+<li><code>catkin build</code> 可在 workspace 的任何目录下执行，**<code>catkin_make</code> 只能在顶层目录下执行**</li>
+<li>编译指定包更加方便。<code>catkin build</code> ，或者，在要编译的包目录下执行 <code>catkin build --this</code></li>
+<li><code>catkin build</code> 输出的日志更易读</li>
+<li>使用 <code>catkin build</code>，还可以获得许多其它有用的 <code>catkin</code> 子命令，例如: <ul>
+<li>catkin clean - 清除 build devel 及 install 目录</li>
+<li>catkin list</li>
+<li>catkin locate</li>
+<li>catkin profile</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" rel="tag"># 编译工具</a>
+              <a href="/tags/catkin/" rel="tag"># catkin</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/CMake-QT5/" rel="prev" title="CMake-QT5">
+                  <i class="fa fa-angle-left"></i> CMake-QT5
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/" rel="next" title="target">
+                  target <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

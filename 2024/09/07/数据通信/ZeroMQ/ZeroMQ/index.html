@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ZeroMQ 消息模式 Request-Reply Pub-Sub   Parallel Pipeline Fair Queuing ZeroMQ 编程 正确使用 Context 正确的退出和清理 为何需要 ZeroMQ Socket Scalability套接字的扩展性   从 ZeroMQ V2.2 升级到 ZeroMQ V3.2 兼容性变更 不兼容的变更 建议使用 Shim 宏   W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZeroMQ">
+<meta property="og:url" content="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="ZeroMQ 消息模式 Request-Reply Pub-Sub   Parallel Pipeline Fair Queuing ZeroMQ 编程 正确使用 Context 正确的退出和清理 为何需要 ZeroMQ Socket Scalability套接字的扩展性   从 ZeroMQ V2.2 升级到 ZeroMQ V3.2 兼容性变更 不兼容的变更 建议使用 Shim 宏   W">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.208Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ZeroMQ">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ/","path":"2024/09/07/数据通信/ZeroMQ/ZeroMQ/","title":"ZeroMQ"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZeroMQ | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZeroMQ-%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">ZeroMQ 编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8-Context"><span class="nav-number">1.1.</span> <span class="nav-text">正确使用 Context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E9%80%80%E5%87%BA%E5%92%8C%E6%B8%85%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">正确的退出和清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E9%9C%80%E8%A6%81-ZeroMQ"><span class="nav-number">1.3.</span> <span class="nav-text">为何需要 ZeroMQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket-Scalability-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%9A%84%E6%89%A9%E5%B1%95%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">Socket Scalability(套接字的扩展性)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E-ZeroMQ-V2-2-%E5%8D%87%E7%BA%A7%E5%88%B0-ZeroMQ-V3-2"><span class="nav-number">2.</span> <span class="nav-text">从 ZeroMQ V2.2 升级到 ZeroMQ V3.2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%E5%8F%98%E6%9B%B4"><span class="nav-number">2.1.</span> <span class="nav-text">兼容性变更</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E5%8F%98%E6%9B%B4"><span class="nav-number">2.2.</span> <span class="nav-text">不兼容的变更</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8-Shim-%E5%AE%8F"><span class="nav-number">2.3.</span> <span class="nav-text">建议使用 Shim 宏</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Warning-Unstable-Paradigms"><span class="nav-number">3.</span> <span class="nav-text">Warning: Unstable Paradigms</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZeroMQ | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZeroMQ
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- TOC -->
+
+<ul>
+<li><a href="#zeromq-%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F">ZeroMQ 消息模式</a><ul>
+<li><a href="#request-reply">Request-Reply</a></li>
+<li><a href="#pub-sub">Pub-Sub</a></li>
+</ul>
+</li>
+<li><a href="#parallel-pipeline">Parallel Pipeline</a></li>
+<li><a href="#fair-queuing">Fair Queuing</a></li>
+<li><a href="#zeromq-%E7%BC%96%E7%A8%8B">ZeroMQ 编程</a><ul>
+<li><a href="#%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8-context">正确使用 Context</a></li>
+<li><a href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E9%80%80%E5%87%BA%E5%92%8C%E6%B8%85%E7%90%86">正确的退出和清理</a></li>
+<li><a href="#%E4%B8%BA%E4%BD%95%E9%9C%80%E8%A6%81-zeromq">为何需要 ZeroMQ</a></li>
+<li><a href="#socket-scalability%E5%A5%97%E6%8E%A5%E5%AD%97%E7%9A%84%E6%89%A9%E5%B1%95%E6%80%A7">Socket Scalability套接字的扩展性</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%8E-zeromq-v22-%E5%8D%87%E7%BA%A7%E5%88%B0-zeromq-v32">从 ZeroMQ V2.2 升级到 ZeroMQ V3.2</a><ul>
+<li><a href="#%E5%85%BC%E5%AE%B9%E6%80%A7%E5%8F%98%E6%9B%B4">兼容性变更</a></li>
+<li><a href="#%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E5%8F%98%E6%9B%B4">不兼容的变更</a></li>
+<li><a href="#%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8-shim-%E5%AE%8F">建议使用 Shim 宏</a></li>
+</ul>
+</li>
+<li><a href="#warning-unstable-paradigms">Warning: Unstable Paradigms</a></li>
+</ul>
+<!-- /TOC -->
+
+<p>ZeroMQ (即：ØMQ, 0MQ, zmq)，看似是一个嵌入式网络库，但实际上是一个并发框架。提供了跨多种传输协议(如进程内、进程间、TCP、多播、websocket等)的套接字，可以传输原子消息(atomic messages)。ZeroMQ 支持多种消息传递模式，例如：</p>
+<ul>
+<li>fan-out</li>
+<li>pub-sub</li>
+<li>task distribution</li>
+<li>request-reply </li>
+<li>C&#x2F;S</li>
+</ul>
+<p>ZeroMQ 是一个高性能<strong>异步</strong>消息传递库，旨在用于分布式或并发应用程序。它提供了一个消息队列(message queue)，但与面向消息的中间件不同，ZeroMQ 系统可以在没有专用消息代理(message broker)的情况下运行。  </p>
+<blockquote>
+<hr>
+<ul>
+<li>ZeroMQ 中的 Zero 表示<strong>零代理(ZeroMQ 是无代理的)、零延迟、零成本(免费)和零管理</strong>。</li>
+</ul>
+<hr>
+</blockquote>
+<p>查看 ZMQ 版本：  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> major, minor, patch;</span><br><span class="line"><span class="built_in">zmq_version</span>(&amp;major, &amp;minor, &amp;patch);</span><br><span class="line"><span class="built_in">printf</span> (<span class="string">&quot;当前ZMQ版本号为 %d.%d.%d\n&quot;</span>, major, minor, patch);</span><br></pre></td></tr></table></figure>
+
+<h1 id="ZeroMQ-编程"><a href="#ZeroMQ-编程" class="headerlink" title="ZeroMQ 编程"></a>ZeroMQ 编程</h1><h2 id="正确使用-Context"><a href="#正确使用-Context" class="headerlink" title="正确使用 Context"></a>正确使用 Context</h2><p>ZeroMQ 应用程序总是首先创建一个 context，然后使用它来创建套接字。C 语言中，使用 <code>zmq_ctx_new()</code> 创建。在一个应用程序中应当只创建并使用一个 context。从技术上讲，context 是单个进程中所有套接字的容器，并为 inproc 套接字提供实现，inproc 套接字是连接一个进程中线程的最快方式。如果在运行时<strong>一个进程有两个 context，它们就像单独的 ZeroMQ 实例</strong>。如果这是明确想要的，那没有问题，但记住: <strong>在一个进程中使用 <em><code>zmq_ctx_new()</code></em> 函数创建一个 context，并在结束时使用 <em><code>zmq_ctx_destroy()</code></em> 函数关闭它</strong>。  </p>
+<p>若使用 <code>fork()</code> 创建了进程，那么每个进程都要有自己的 context。如果在调用 <code>fork()</code> 之前调用了 <em><code>zmq_ctx_new()</code></em> 函数，那每个子进程都会有自己的 context 对象。  </p>
+<h2 id="正确的退出和清理"><a href="#正确的退出和清理" class="headerlink" title="正确的退出和清理"></a>正确的退出和清理</h2><p>在仍有套接字处于打开状态时调用 <em><code>zmq_ctx_destroy()</code></em> 会导致程序挂起；就算关闭了所有套接字，若仍有消息处于待发送状态，*<code>zmq_ctx_destroy()</code>* 也会造成程序的等待。只有当套接字的 <code>LINGER</code> 选项设为 0 时才能避免。</p>
+<p>需要考虑的 ZeroMQ 对象是消息、套接字和 context。幸运的是，它非常简单，至少在简单的程序中:</p>
+<ul>
+<li>尽可能使用 <em><code>zmq_send()</code></em> 和 *<code>zmq_recv()</code>*，这样可以避免使用 <code>zmq_msg_t</code> 对象  </li>
+<li>若使用 *<code>zmq_msg_recv</code>*，在处理完消息后及时调用 <em><code>zmq_msg_close()</code></em> 释放该消息</li>
+<li>若同时打开和关闭大量 sockets，那可能需要重新规划程序的结构</li>
+<li>退出程序是，先关闭套接字，然后调用 <em><code>zmq_ctx_destroy()</code></em> 删除 context<br>这至少是 C 语言开发的情况。在具有自动对象销毁的语言中，当离开作用域时，套接字和上下文将被销毁。如果使用异常，则必须在类似 <code>final</code> 块的地方进行清理，这与处理任何资源一样。</li>
+</ul>
+<p>用 ZMQ 进行多线程的编程，需要考虑的问题就更多了。一些建议：  </p>
+<ul>
+<li>不要在多个线程中使用同一个套接字</li>
+<li>关闭具有正在进行的请求的每个套接字。正确的方法是设置较低的 <code>LINGER</code> 值(1秒)，然后关闭套接字</li>
+<li>最后，删除 context。这将导致附加线程(即共享相同 context 的线程)中的任何阻塞 <code>recv</code> 或 <code>poll</code> 或 <code>send</code> 都返回错误。应该在主程序中捕获该错误，并设置 <code>linger on</code>，并关闭该线程中的套接字，然后退出。不要两次破删除相同的 context。主线程中的 <em><code>zmq_ctx_destroy</code></em> 将阻塞，直到它所知道的所有套接字都安全关闭为止</li>
+</ul>
+<h2 id="为何需要-ZeroMQ"><a href="#为何需要-ZeroMQ" class="headerlink" title="为何需要 ZeroMQ"></a>为何需要 ZeroMQ</h2><p>任何可重用的消息传递层都需要解决以下所有或大部分问题:  </p>
+<ul>
+<li>如何处理 I&#x2F;O？是让程序阻塞等待响应，还是在后台处理这些事？这是软件设计的关键因素。阻塞式的 I&#x2F;O 操作会让程序架构难以扩展，而后台处理 I&#x2F;O 也是比较困难的</li>
+<li>如何处理动态组件（即临时的组件）？是否要将组件分为客户端和服务端两种，并要求服务端永不消失？那如果想要将服务端相连怎么办？要每隔几秒就进行重连吗？</li>
+<li>如何表示一条消息？怎样通过拆分消息，让其变得易读易写，不用担心缓存溢出，既能高效地传输小消息，又能胜任视频等大型文件的传输？</li>
+<li>如何处理那些不能立刻发送出去的消息？比如需要等待一个网络组件重新连接的时候？是直接丢弃该条消息，还是将它存入数据库，或是内存中的一个队列？</li>
+<li>要在哪里保存消息队列？如果某个组件读取消息队列的速度很慢，造成消息的堆积怎么办？要采取什么样的策略？</li>
+<li>如何处理丢失的消息？是等待新的数据，请求重发，还是需要建立一套新的可靠性机制以保证消息不会丢失？如果这个机制自身崩溃了呢？</li>
+<li>如果想换一种网络连接协议，如用广播代替 TCP 单播？或者改用 IPv6？是否需要重写所有的应用程序，或者将这种协议抽象到一个单独的层中？</li>
+<li>如何对消息进行路由？可以将消息同时发送给多个节点吗？是否能将应答消息返回给请求的发送方？</li>
+<li>如何为另一种语言写一个 API？是否需要完全重写某项协议，还是重新打包一个类库？</li>
+<li>怎样才能做到在不同的架构之间传送消息？是否需要为消息规定一种编码？</li>
+<li>如何处理网络通信错误？等待并重试，还是直接忽略或取消？</li>
+</ul>
+<p>以开源代码，如Hadoop Zookeeper 为例，查看其 C 语言 API 源码，<a target="_blank" rel="noopener" href="http://github.com/apache/zookeeper/blob/trunk/src/c/src/zookeeper.c">src&#x2F;c&#x2F;src&#x2F;zookeeper.c</a>。这段代码实现了一个 C&#x2F;S 网络通信协议。它工作起来很高效，因为使用了 <em><code>poll()</code></em> 来代替 *<code>select()</code>*。但是，Zookeeper应该被抽象出来，作为一种通用的消息通信层，并加以详细的注释。像这样的模块应该得到最大程度上的复用，而不是重复地制造轮子。  </p>
+<p>大多数消息系统项目，如 AMQP，为了解决上面提到的种种问题，发明了一些新的概念，如“代理(<code>broker</code>)”的概念，将寻址、路由、队列等功能都包含了进来。结果就是在一个没有任何注释的协议之上，又构建了一个 C&#x2F;S 协议和相应的 API，让应用程序和代理相互通信。代理的确是一个不错的解决方案，帮助降低大型网络结构的复杂度。但是，在 Zookeeper 这样的项目中应用代理机制的消息系统，可能是件更加糟糕的事，因为这意味着需要添加一台新的计算机，并构成一个新的单点故障。代理会逐渐成为新的瓶颈，管理起来更具风险。如果软件支持，可以添加第二个、第三个、第四个代理，构成某种冗余容错的模式。有人就是这么做的，这让系统架构变得更为复杂，增加了隐患。  </p>
+<p>在这种以代理为中心的架构下，需要一支专门的运维团队。</p>
+<p>
+
+<p>我们真正需要的是这样一种消息软件，它能够做大型消息软件所能做的一切，但使用起来又非常简单，成本很低，可以用到所有的应用程序中，没有任何依赖条件。因为没有了额外的模块，就降低了出错的概率。这种软件需要能够在所有的操作系统上运行，并能支持所有的编程语言。  </p>
+<p>这就是 ZeroMQ:一个高效的、可嵌入的库，它解决了应用程序在网络上可扩展性所需的大多数问题，而且成本不高。  </p>
+<p>ZMQ的主要特点有：</p>
+<ul>
+<li><strong>ZMQ 会在后台线程异步地处理 I&#x2F;O 操作</strong>。使用<strong>无锁数据结构</strong>与应用程序线程通信，因此 ZeroMQ 并发应用程序不需要锁、信号量或其他等待状态</li>
+<li>网络组件可以动态增删，ZMQ 会负责自动重连，这就意味着可以以任何顺序启动组件；用它创建的面向服务架构（SOA：service-oriented architectures）中，服务端可以随意地加入或退出网络。</li>
+<li>ZMQ 会在必要的情况下自动将消息放入队列中保存，一旦建立了连接就开始发送。</li>
+<li><strong>ZMQ有阈值（HWM：High Water Mark）的机制，可以避免消息溢出</strong>。当队列已满，ZMQ 会自动阻塞发送者，或丢弃部分消息，这些行为取决于所使用的消息模式。</li>
+<li>ZMQ 可以用不同的通信协议进行连接，如 TCP、广播、进程内、进程间。改变通信协议时不需要去修改代码。</li>
+<li>ZMQ 会恰当地处理速度较慢的节点，会根据消息模式使用不同的策略。</li>
+<li>ZMQ 提供了多种模式进行消息路由，如 请求-应答模式、发布-订阅模式等。这些模式可以用来搭建网络拓扑结构。</li>
+<li>ZMQ 允许创建代理，以便通过单个调用对消息进行排队、转发或捕获。代理可以降低网络互连的复杂性。</li>
+<li>ZMQ 会发送整个消息，使用消息帧的机制来传递。如果发送了 10KB 大小的消息，就会收到 10KB 大小的消息。</li>
+<li>ZMQ 不强制使用某种消息格式，消息可以是 0 字节的，或是大到 GB 级的数据。当表示这些消息时，可以选用诸如 msgpack、protocol buffers、XDR 等序列化产品。</li>
+<li>ZMQ 能够智能地处理网络错误，有时它会进行重试，有时会告知某项操作发生了错误。</li>
+<li>ZMQ 节省了CPU 时间意味着节省了电能</li>
+</ul>
+<h2 id="Socket-Scalability-套接字的扩展性"><a href="#Socket-Scalability-套接字的扩展性" class="headerlink" title="Socket Scalability(套接字的扩展性)"></a>Socket Scalability(套接字的扩展性)</h2><p>例如，以下脚本会启动气象服务器，然后并行启动一堆客户端：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wuserver &amp;</span><br><span class="line">wuclient 12345 &amp;</span><br><span class="line">wuclient 23456 &amp;</span><br><span class="line">wuclient 34567 &amp;</span><br><span class="line">wuclient 45678 &amp;</span><br><span class="line">wuclient 56789 &amp;</span><br></pre></td></tr></table></figure>
+<p>查看进程执行状态：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><br><span class="line">7136 ph        20   0 1040m 959m 1156 R  157 12.0  16:25.47 wuserver</span><br><span class="line">7966 ph        20   0 98608 1804 1372 S   33  0.0   0:03.94 wuclient</span><br><span class="line">7963 ph        20   0 33116 1748 1372 S   14  0.0   0:00.76 wuclient</span><br><span class="line">7965 ph        20   0 33116 1784 1372 S    6  0.0   0:00.47 wuclient</span><br><span class="line">7964 ph        20   0 33116 1788 1372 S    5  0.0   0:00.25 wuclient</span><br></pre></td></tr></table></figure>
+<p>气象服务器只有一个套接字，但是这里让它并行地向五个客户机发送数据。可能有数千个并发客户端。服务器应用程序看不到它们，也不直接与它们对话。因此，ZeroMQ 套接字就像一个小服务器，默默地接受客户端请求，并在网络可以处理的情况下尽可能快地将数据发送给客户端。</p>
+<h1 id="从-ZeroMQ-V2-2-升级到-ZeroMQ-V3-2"><a href="#从-ZeroMQ-V2-2-升级到-ZeroMQ-V3-2" class="headerlink" title="从 ZeroMQ V2.2 升级到 ZeroMQ V3.2"></a>从 ZeroMQ V2.2 升级到 ZeroMQ V3.2</h1><h2 id="兼容性变更"><a href="#兼容性变更" class="headerlink" title="兼容性变更"></a>兼容性变更</h2><p>这些变更不影响现有程序：  </p>
+<ul>
+<li>pub-sub 过滤现在在 publisher 端而不是 subscriber 端完成。这在许多 pub-sub 用例中显著提高了性能。可以安全地混合使用 v3.2 和 v2.1&#x2F;v2.2 发布者和订阅者。</li>
+<li>ZeroMQ V3.2 提供了新的 API。例如：<code>zmq_disconnect()</code>、<code>zmq_unbind()</code>、<code>zmq_monitor()</code>、<code>zmq_ctx_set()</code> 等</li>
+</ul>
+<h2 id="不兼容的变更"><a href="#不兼容的变更" class="headerlink" title="不兼容的变更"></a>不兼容的变更</h2><ul>
+<li>send&#x2F;recv 方法变更：提供新的不同的、简单的接口 <code>zmq_send()</code> 和 <code>zmq_recv()</code>。旧的功能现在由 <code>zmq_msg_send()</code> 和 <code>zmq_msg_recv()</code> 提供</li>
+<li>这两个方法成功时返回正值，出错时返回 -1。在 v2 版本中，成功时返回 0</li>
+<li><code>zmq_poll()</code> 时间改为毫秒而不再是微秒</li>
+<li><code>ZMQ_NOBLOCK</code> 更改为 <code>ZMQ_DONTWAIT</code></li>
+<li><code>ZMQ_HWM</code> 拆分为 <code>ZMQ_SNDHWM</code> 和 <code>ZMQ_RCVHWM</code></li>
+<li><code>zmq_getsockopt()</code> 的大部分选项都变更为整型值</li>
+<li>删除了 <code>ZMQ_SWAP</code> 选项</li>
+</ul>
+<h2 id="建议使用-Shim-宏"><a href="#建议使用-Shim-宏" class="headerlink" title="建议使用 Shim 宏"></a>建议使用 Shim 宏</h2><p>对于想要同时支持 v2.x 和 v3.2 的程序：  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ZMQ_DONTWAIT</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> ZMQ_DONTWAIT     ZMQ_NOBLOCK</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> ZMQ_VERSION_MAJOR == 2</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmq_msg_send(msg,sock,opt) zmq_send (sock, msg, opt)</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmq_msg_recv(msg,sock,opt) zmq_recv (sock, msg, opt)</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmq_ctx_destroy(context) zmq_term(context)</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> ZMQ_POLL_MSEC    1000        <span class="comment">//  zmq_poll is usec</span></span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> ZMQ_SNDHWM ZMQ_HWM</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> ZMQ_RCVHWM ZMQ_HWM</span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> ZMQ_VERSION_MAJOR == 3</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> ZMQ_POLL_MSEC    1           <span class="comment">//  zmq_poll is msec</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Warning-Unstable-Paradigms"><a href="#Warning-Unstable-Paradigms" class="headerlink" title="Warning: Unstable Paradigms"></a>Warning: Unstable Paradigms</h1><p>传统网络编程的一个规则是套接字智能和一个节点建立连接。虽然有广播协议，但是第三方的。当我们认定“一个套接字 &#x3D; 一个连接”的时候，我们会用一些特定的方式来扩展应用程序架构：我们为每一块逻辑创建线程，该线程独立地维护一个套接字。</p>
+<p><strong>但在 ZMQ 的世界里，套接字是智能的、多线程的，能够自动地维护一组完整的连接</strong>。你无法看到它们，甚至不能直接操纵这些连接。当你进行消息的收发、轮询等操作时，<strong>只能和 ZMQ 套接字打交道，而不是连接本身</strong>。所以说，ZMQ 世界里的连接是私有的，不对外部开放，这也是 ZMQ 易于扩展的原因之一。</p>
+<p>由于你的代码只会和某个套接字进行通信，这样就可以处理任意多个连接，使用任意一种网络协议。而 ZMQ 的消息模式又可以进行更为廉价和便捷的扩展。</p>
+<p>这样一来，传统的思维就无法在 ZMQ 的世界里应用了。在你阅读示例程序代码的时候，也许你脑子里会想方设法地将这些代码和传统的网络编程相关联：当你读到“套接字”的时候，会认为它就表示与另一个节点的连接——这种想法是错误的；当你读到“线程”时，会认为它是与另一个节点的连接——这也是错误的。</p>
+<p>如果你是第一次阅读本指南，使用 ZMQ 进行了一两天的开发（或者更长），可能会觉得疑惑，ZMQ 怎么会让事情便得如此简单。你再次尝试用以往的思维去理解</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/" rel="prev" title="ZeroMQ消息模式">
+                  <i class="fa fa-angle-left"></i> ZeroMQ消息模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%9E%B6%E6%9E%84/" rel="next" title="ZeroMQ 架构">
+                  ZeroMQ 架构 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

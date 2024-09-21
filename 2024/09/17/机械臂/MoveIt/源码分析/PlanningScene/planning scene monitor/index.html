@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1、PlanningSceneMonitor  PlanningSceneMonitor 是维护最新规划场景的推荐接口。RobotState、CurrentStateMonitor、PlanningScene、PlanningSceneMonitor 和 PlanningSceneInterface 之间的关系一开始可能会令人困惑。 1）RobotState RobotState 是一个机器人的快">
+<meta property="og:type" content="article">
+<meta property="og:title" content="planning scene monitor">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="1、PlanningSceneMonitor  PlanningSceneMonitor 是维护最新规划场景的推荐接口。RobotState、CurrentStateMonitor、PlanningScene、PlanningSceneMonitor 和 PlanningSceneInterface 之间的关系一开始可能会令人困惑。 1）RobotState RobotState 是一个机器人的快">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/image-20240917204653825.png">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/image-20240917204642203.png">
+<meta property="article:published_time" content="2024-09-17T12:46:24.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.057Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/image-20240917204653825.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/","path":"2024/09/17/机械臂/MoveIt/源码分析/PlanningScene/planning scene monitor/","title":"planning scene monitor"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>planning scene monitor | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="planning scene monitor | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          planning scene monitor
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:46:24" itemprop="dateCreated datePublished" datetime="2024-09-17T20:46:24+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/" itemprop="url" rel="index"><span itemprop="name">PlanningScene</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>1、PlanningSceneMonitor</strong> </p>
+<p><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_planning/html/classplanning__scene__monitor_1_1PlanningSceneMonitor.html">PlanningSceneMonitor</a> 是维护最新规划场景的推荐接口。RobotState、CurrentStateMonitor、PlanningScene、PlanningSceneMonitor 和 PlanningSceneInterface 之间的关系一开始可能会令人困惑。</p>
+<p><strong>1）RobotState</strong></p>
+<p>RobotState 是一个机器人的快照。它包含 RobotModel 和一组关节值。</p>
+<p><strong>2）CurrentStateMonitor</strong></p>
+<p>可将 CurrentStateMonitor(CSM) 视为 RoboState 的 ROS 封装。它订阅 <strong>joint_states</strong> 主题消息，该主题提供关节状态值，并用这些关节值更新其内部的 RobotState。</p>
+<p><strong>3）PlanningScene</strong></p>
+<p>PlanningScene 是一个 world 的快照，它包括 RobotState 和任意数量的碰撞对象。规划场景可用于<strong>碰撞检查</strong>以及<strong>获取有关环境的信息</strong>。</p>
+<p><strong>4）PlanningSceneMonitor</strong></p>
+<p>PlanningSceneMonitor 用 ROS 接口封装了一个 PlanningScene，以保持 PlanningScene 是最新的。要访问 PlanningSceneMonitor 的底层 PlanningScene，请使用提供的 <strong>LockedPlanningSceneRW</strong> 和 <strong>LockedPlanningSceneRO</strong> 类。</p>
+<p>PlanningSceneMonitor 有以下对象，它们有自己的 ROS 接口来保持规划场景的子组件是最新的:</p>
+<ul>
+<li>一个 CurrentStateMonitor，用于通过robot_state_subscriber_ 和 tf_buffer_ 跟踪对 RobotState 的更新，以及一个 planning scene subscriber，用于侦听来自其他发布者的规划场景差异</li>
+<li>一个 OccupancyGridMapMonitor，用于通过 ROS topic 和 services 跟踪对 OccuancyMap 的更新</li>
+</ul>
+<p>PlanningSceneMonitor 有以下 subscribers：</p>
+<ul>
+<li>**collision_object_subscriber_**：监听 <a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/CollisionObject.html">CollisionObject</a> 消息主题(默认为 &#x2F;collision_object 主题)，添加&#x2F;删除&#x2F;修改 planning scene 中的 collision objects</li>
+<li>**planning_scene_world_subscriber_**：监听 <a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/PlanningSceneWorld.html">PlanningSceneWorld</a> 消息主题(默认为 &#x2F;planning_scene_world 主题)，包含 collision object 信息及 octomap 信息。对于保持规划场景监视器的同步很有用</li>
+<li>**attached_collision_object_subscriber_**：监听 <a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_msgs/html/msg/AttachedCollisionObject.html">AttachedCollisionObject</a> 消息主题(默认为 &#x2F;attached_collision_object 主题)</li>
+</ul>
+<p>PlanningSceneMonitor 提供以下 services：</p>
+<ul>
+<li>get_scene_service_：获取完整的 planning scene state。(默认 services 名为 get_planning_scene)</li>
+</ul>
+<p>PlanningSceneMonitor 初始化：</p>
+<ul>
+<li><strong>startSceneMonitor</strong>：启动 planning_scene_subscriber_</li>
+<li><strong>startWorldGeometryMonitor</strong>：启动 collision_object_subscriber_、planning_scene_world_subscriber_及OccupancyMapMonitor</li>
+<li><strong>startStateMonitor</strong>：启动 CurrentStateMonitor及attached_collision_object_subscriber_</li>
+<li><strong>startPublishingPlanningScene</strong>：启动另一个线程，发布整个规划场景</li>
+<li><strong>providePlanningSceneService</strong>：启动 get_scene_service_</li>
+</ul>
+<p><strong>5）PlanningSceneInterface</strong></p>
+<p>是一个有用的类，用于通过 c++ API 向 MoveGroup 的 PlanningSceneMonitor 发布更新，而无需创建自己的订户和服务客户端。如果没有 MoveGroup 或 MoveItCpp，它可能无法工作。</p>
+<p><strong>2、源码分析</strong></p>
+<p>分为：</p>
+<ul>
+<li>scene monitor</li>
+<li>world geometry monitor</li>
+<li>state monitor</li>
+</ul>
+<p>更新类型 SceneUpdateType ：</p>
+<ul>
+<li><strong>UPDATE_NONE</strong>: 0</li>
+<li><strong>UPDATE_STATE</strong>: 1,更新检测的状态</li>
+<li><strong>UPDATE_TRANSFORMS</strong>: 2</li>
+<li><strong>UPDATE_GEOMETRY</strong>: 4, 更新场景的几何图形。包括接收新的octomaps、碰撞对象、附加对象、场景几何等</li>
+<li><strong>UPDATE_SCENE</strong>: 更新整个场景：</li>
+</ul>
+<p>默认主题：</p>
+<ul>
+<li><strong>DEFAULT_JOINT_STATES_TOPIC</strong>：默认为 &#x2F;joint_state</li>
+<li><strong>DEFAULT_ATTACHED_COLLISION_OBJECT_TOPIC</strong>：默认为 &#x2F;attached_collision_object</li>
+<li><strong>DEFAULT_COLLISION_OBJECT_TOPIC</strong>：&#x2F;collision_object</li>
+<li><strong>DEFAULT_PLANNING_SCENE_WORLD_TOPIC</strong>： &#x2F;planning_scene_world</li>
+<li><strong>DEFAULT_PLANNING_SCENE_TOPIC</strong>：&#x2F;planning_scene</li>
+<li><strong>DEFAULT_PLANNING_SCENE_SERVICE</strong>：&#x2F;get_planning_scene</li>
+<li><strong>MONITORED_PLANNING_SCENE_TOPIC</strong>： monitored_planning_scene</li>
+</ul>
+<p>move_group 节点中实例化 planning_scene_monitor::<strong>PlanningSceneMonitor</strong> 类对象 <strong>planning_scene_monitor</strong>。然后启动以下 monitor：</p>
+<ul>
+<li><strong>scene monitor</strong>：planning_scene_monitor-&gt;<strong>startSceneMonitor</strong>()，订阅 scene_topic(默认为 <em>&#x2F;planning_scene</em>) 主题数据</li>
+<li><strong>world geometry monitor</strong>：planning_scene_monitor-&gt;<strong>startWorldGeometryMonitor</strong>()，订阅 collision_objects_topic(默认为 <em>&#x2F;collision_object</em>) 及 planning_scene_world_topic(默认为 <em>&#x2F;planning_scene_world</em>) 主题数据，此外，还负责处理 octomap 数据</li>
+<li><strong>state monitor</strong>：planning_scene_monitor-&gt;<strong>startStateMonitor</strong>()，通过 current_state_monitor_ 订阅 joint_states_topic(默认为 <em>&#x2F;joint_states</em>)，同时订阅 attached_objects_topic(默认为 <em>&#x2F;attached_collision_object</em>) 主题数据</li>
+</ul>
+<p>​    <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/image-20240917204653825.png" class="" title="image-20240917204653825"></p>
+<p>其中，rviz 在加载 MotionPlanning 后会发布 &#x2F;planning_scene 和 &#x2F;attached_collision_object，可在 MotionPlanning -&gt; Scene Object 中配置 scene objects。</p>
+<p>双臂规划中，启动两个 move_group(假设分别为 &#x2F;front_arm&#x2F;move_group 和 &#x2F;rear_arm&#x2F;move_group)，会发现这两个节点默认订阅 &#x2F;front_arm&#x2F;joint_states 和 &#x2F;rear_arm&#x2F;joint_states 主题数据，而这两个主题分别只发布了各自机械臂关节的状态信息，导致 moveit 在规划时，只会考虑另一条机械臂在  URDF 文件中的默认位姿，而不会考虑实时状态。此时需将 move_group 订阅的 joint_states 映射到 &#x2F;joint_states</p>
+  <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/image-20240917204642203.png" class="" title="image-20240917204642203">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/" rel="prev" title="planning scene API">
+                  <i class="fa fa-angle-left"></i> planning scene API
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/motion%20planning/" rel="next" title="motion planning">
+                  motion planning <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

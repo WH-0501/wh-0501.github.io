@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考：  Behavior Trees in Robotics and AI ROS-Behavior-Tree  BehaviorTree.CPP is now a more sophisticated version of the library Behavior-Tree（ROS-Behavior-Tree）。 提供创建 BT 的框架的 C++ 库。与其它的 BT 实现由如下优势：  支持异">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BehaviorTreeCPP使用">
+<meta property="og:url" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="参考：  Behavior Trees in Robotics and AI ROS-Behavior-Tree  BehaviorTree.CPP is now a more sophisticated version of the library Behavior-Tree（ROS-Behavior-Tree）。 提供创建 BT 的框架的 C++ 库。与其它的 BT 实现由如下优势：  支持异">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214528697.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214637993.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214700719.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214734312.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214932130.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214952385.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215043094.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215055523.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215602833.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215625719.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215637835.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215651319.png">
+<meta property="og:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240917095051939.png">
+<meta property="article:published_time" content="2024-09-05T13:38:11.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.306Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="行为树">
+<meta property="article:tag" content="状态机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214528697.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/","path":"2024/09/05/行为树与状态机/BT/BehaviorTree.CPP/BehaviorTreeCPP使用/","title":"BehaviorTreeCPP使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BehaviorTreeCPP使用 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8A%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">创建自定义节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF-TreeNode"><span class="nav-number">2.1.</span> <span class="nav-text">继承 TreeNode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">2.2.</span> <span class="nav-text">使用依赖注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E5%B0%86-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0-%E6%B3%A8%E5%86%8C%E4%B8%BA%E5%BC%82%E6%AD%A5%E8%A1%8C%E4%B8%BA"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用依赖注入将 类成员函数 注册为异步行为</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dataflow-Ports%E5%8F%8ABlackboard"><span class="nav-number">3.</span> <span class="nav-text">Dataflow,Ports及Blackboard</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#blackboard"><span class="nav-number">3.1.</span> <span class="nav-text">blackboard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ports"><span class="nav-number">3.2.</span> <span class="nav-text">Ports</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#remapping"><span class="nav-number">3.2.1.</span> <span class="nav-text">remapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%BC%95%E7%94%A8%E8%AE%BF%E9%97%AEPorts"><span class="nav-number">3.2.2.</span> <span class="nav-text">通过引用访问Ports</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zero-Copy%E8%AE%BF%E9%97%AEblackboard"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">Zero-Copy访问blackboard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80-blackboard"><span class="nav-number">3.2.3.</span> <span class="nav-text">全局 blackboard</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ports-vs-blackboard"><span class="nav-number">3.3.</span> <span class="nav-text">ports vs blackboard</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BT-CPP-%E7%9B%AE%E6%A0%87"><span class="nav-number">3.3.1.</span> <span class="nav-text">BT.CPP 目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-%E4%B8%8D%E8%A6%81%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-Blackboard"><span class="nav-number">3.3.2.</span> <span class="nav-text">总结:不要直接使用 Blackboard</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XML-schema"><span class="nav-number">4.</span> <span class="nav-text">XML schema</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%8F%8Ablackboard%E6%8C%87%E9%92%88"><span class="nav-number">4.1.</span> <span class="nav-text">端口映射及blackboard指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A7%E5%87%91%E8%A1%A8%E7%A4%BA%E5%8F%8A%E6%98%BE%E5%BC%8F%E8%A1%A8%E7%A4%BA"><span class="nav-number">4.2.</span> <span class="nav-text">紧凑表示及显式表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#subtrees"><span class="nav-number">4.3.</span> <span class="nav-text">subtrees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6"><span class="nav-number">4.4.</span> <span class="nav-text">包含文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Script"><span class="nav-number">5.</span> <span class="nav-text">Script</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E6%93%8D%E4%BD%9C%E7%AC%A6-strings-%E6%95%B0%E5%80%BC"><span class="nav-number">5.1.</span> <span class="nav-text">赋值操作符&#x2F;strings&#x2F;数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6%E5%92%8C%E6%8B%AC%E5%8F%B7"><span class="nav-number">5.2.</span> <span class="nav-text">算术运算符和括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.3.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%92%8C%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.4.</span> <span class="nav-text">逻辑和比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.5.</span> <span class="nav-text">三目运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.6.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pre-and-Post-conditions"><span class="nav-number">6.</span> <span class="nav-text">Pre and Post conditions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pre-conditions"><span class="nav-number">6.1.</span> <span class="nav-text">Pre conditions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Post-conditions"><span class="nav-number">6.2.</span> <span class="nav-text">Post conditions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E9%94%99%E8%AF%AF%E7%A0%81"><span class="nav-number">6.3.</span> <span class="nav-text">设计模式：错误码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E7%8A%B6%E6%80%81%E5%92%8C%E5%A3%B0%E6%98%8E%E6%A0%91"><span class="nav-number">6.4.</span> <span class="nav-text">设计模式：状态和声明树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8E-ROS2-%E9%9B%86%E6%88%90"><span class="nav-number">8.</span> <span class="nav-text">与 ROS2 集成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5BT-Action%E4%BD%BF%E7%94%A8-rclcpp-action"><span class="nav-number">8.1.</span> <span class="nav-text">异步BT::Action使用 rclcpp_action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5BT-Action%E4%BD%BF%E7%94%A8-rclcpp-Client"><span class="nav-number">8.2.</span> <span class="nav-text">异步BT::Action使用 rclcpp::Client</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">9.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E4%B8%80"><span class="nav-number">9.1.</span> <span class="nav-text">例一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E4%BA%8C"><span class="nav-number">9.2.</span> <span class="nav-text">例二</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BehaviorTreeCPP使用 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BehaviorTreeCPP使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-05 21:38:11" itemprop="dateCreated datePublished" datetime="2024-09-05T21:38:11+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>19k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>35 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1709.00084">Behavior Trees in Robotics and AI</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/miccol/ROS-Behavior-Tree">ROS-Behavior-Tree</a></li>
+</ul>
+<p>BehaviorTree.CPP is now a more sophisticated version of the library Behavior-Tree（ROS-Behavior-Tree）。</p>
+<p>提供创建 BT 的框架的 C++ 库。与其它的 BT 实现由如下优势：</p>
+<ul>
+<li>支持异步 actions，例如: non-blocking、a first-class citizen</li>
+<li>可以构建同时执行多个 actions 的 reactive behaviors</li>
+<li>允许使用 XML 在运行时创建 BT</li>
+<li>可以静态连接 TreeNodes，或将其转换为运行时加载的插件</li>
+<li>包括 logging&#x2F;profiling 基础结构，允许用户可视化、记录、回放和分析状态转换</li>
+</ul>
+<p>ROS2 navigation2 基于该库实现。</p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a><strong>编译</strong></h1><p>支持 catkin(ros)、colcon(ros2)、conan、cmake 编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若安装了 ZeroMQ 和 SQlite 等依赖项，则可以使用 cmake --build . --parallel</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br></pre></td></tr></table></figure>
+
+<p>Groot</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装依赖</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install qtbase5-dev libqt5svg5-dev libzmq3-dev libdw-dev</span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> --recurse-submodules https://github.com/BehaviorTree/Groot.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> Groot</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -S . -B build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake --build build</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="创建自定义节点"><a href="#创建自定义节点" class="headerlink" title="创建自定义节点"></a><strong>创建自定义节点</strong></h1><h2 id="继承-TreeNode"><a href="#继承-TreeNode" class="headerlink" title="继承 TreeNode"></a><strong>继承 <code>TreeNode</code></strong></h2><p>要创建自定义节点，默认方式（推荐方法）应继承 <code>TreeNode</code> 类。</p>
+<p>实际通常是继承 <code>TreeNode</code> 的以下子类：</p>
+<ul>
+<li><code>ActionNodeBase</code></li>
+<li><code>ConditionNode</code></li>
+<li><code>DecoratorNode</code></li>
+<li><code>SyncActionNode</code></li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>所有 <code>TreeNode</code> 实例都有 <code>name</code>，其名字不要求唯一</li>
+<li>必须重载子类虚函数 tick()，且返回值必须为 <code>SUCCESS/FAILURE/RUNNING</code></li>
+<li><code>halt()</code> 用于暂停正在执行的 action。同步 action 可无需该方法</li>
+<li>若有输入&#x2F;输出，还需定义静态方法 <code>providedPorts</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SaySomething</span> : <span class="keyword">public</span> SyncActionNode&#123;</span><br><span class="line"><span class="keyword">public</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="function"><span class="type">static</span> PortsList <span class="title">providedPorts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="built_in">InputPort</span>&lt;std::string&gt;(<span class="string">&quot;message&quot;</span>) &#125;;    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        Expected&lt;std::string&gt; msg = <span class="built_in">getInput</span>&lt;std::string&gt;(<span class="string">&quot;message&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (msg) &#123; <span class="comment">// 出错时可以选择抛出异常,也可以选择返回 FAILURE</span></span><br><span class="line">          <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;missing required input [message]: &quot;</span>, msg.<span class="built_in">error</span>() );            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>建议在 <code>tick()</code> 函数中调用 <code>getInput()</code> 方法，而不是在类的构造函数中</strong>。</p>
+<h2 id="使用依赖注入"><a href="#使用依赖注入" class="headerlink" title="使用依赖注入"></a><strong>使用依赖注入</strong></h2><p>除了继承 <code>TreeNode</code> 之外，也可以使用依赖注入方式(<strong>dependency injection</strong>)创建 <code>TreeNode</code> 并指定函数指针。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BT::NodeStatus <span class="title">myFunction</span><span class="params">(BT::TreeNode&amp; self)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GripperInterface</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">GripperInterface</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">open</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;GripperInterface::open&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;GripperInterface::close&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">factory.<span class="built_in">registerSimpleCondition</span>(<span class="string">&quot;CheckBattery&quot;</span>,</span><br><span class="line">                                std::<span class="built_in">bind</span>(CheckBattery));</span><br><span class="line"></span><br><span class="line">GripperInterface gripper; <span class="comment">// 构造 GripperInterface 类对象</span></span><br><span class="line">factory.<span class="built_in">registerSimpleAction</span>(<span class="string">&quot;OpenGripper&quot;</span>, </span><br><span class="line">                             std::<span class="built_in">bind</span>(&amp;GripperInterface::open, &amp;gripper));</span><br><span class="line">factory.<span class="built_in">registerSimpleAction</span>(<span class="string">&quot;CloseGripper&quot;</span>, </span><br><span class="line">                             std::<span class="built_in">bind</span>(&amp;GripperInterface::close, &amp;gripper));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用依赖注入将-类成员函数-注册为异步行为"><a href="#使用依赖注入将-类成员函数-注册为异步行为" class="headerlink" title="使用依赖注入将 类成员函数 注册为异步行为"></a>使用依赖注入将 类成员函数 注册为异步行为</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;behaviortree_cpp_v3/bt_factory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> BT;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyRobot</span>(<span class="type">const</span> std::string&amp; name) : <span class="built_in">name_</span>(name) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Hello from &quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot;!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">move</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; name_ &lt;&lt; <span class="string">&quot; is moving...&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::RUNNING;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">stopMove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; name_ &lt;&lt; <span class="string">&quot; has stopped moving.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::string name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * MoveAction 为异步节点。该节点 tick() 方法中调用 MyRobot::move() 方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MoveAction</span> : <span class="keyword">public</span> AsyncActionNode &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MoveAction</span>(<span class="type">const</span> std::string&amp; name, <span class="type">const</span> NodeConfiguration&amp; config, MyRobot&amp; robot)</span><br><span class="line">        : <span class="built_in">AsyncActionNode</span>(name, config), <span class="built_in">robot_</span>(robot), <span class="built_in">stop_requested_</span>(<span class="literal">false</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> PortsList <span class="title">providedPorts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (stop_requested_) &#123;</span><br><span class="line">            <span class="keyword">return</span> robot_.<span class="built_in">stopMove</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> robot_.<span class="built_in">move</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">halt</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        stop_requested_ = <span class="literal">true</span>;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;MoveAction halted.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    MyRobot&amp; robot_;</span><br><span class="line">    <span class="type">bool</span> stop_requested_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BehaviorTreeFactory factory;</span><br><span class="line">    <span class="function">MyRobot <span class="title">robot</span><span class="params">(<span class="string">&quot;Robo1&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用依赖注入。将 MyRobot 类对象传递到 MoveAction 中</span></span><br><span class="line">    factory.<span class="built_in">registerBuilder</span>&lt;MoveAction&gt;(<span class="string">&quot;MoveAction&quot;</span>, </span><br><span class="line">        [&amp;robot](<span class="type">const</span> std::string&amp; name, <span class="type">const</span> NodeConfiguration&amp; config) &#123;</span><br><span class="line">            <span class="keyword">return</span> std::<span class="built_in">make_unique</span>&lt;MoveAction&gt;(name, config, robot);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 类成员函数注册为节点，注意：只能为 SyncActionNode 类型</span></span><br><span class="line">    factory.<span class="built_in">registerSimpleAction</span>(<span class="string">&quot;SayHello&quot;</span>, std::<span class="built_in">bind</span>(&amp;MyRobot::sayHello, &amp;robot));</span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* xml_text = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">     &lt;root main_tree_to_execute=&quot;MainTree&quot;&gt;</span></span><br><span class="line"><span class="string">         &lt;BehaviorTree ID=&quot;MainTree&quot;&gt;</span></span><br><span class="line"><span class="string">             &lt;Sequence&gt;</span></span><br><span class="line"><span class="string">                 &lt;SayHello/&gt;</span></span><br><span class="line"><span class="string">                 &lt;MoveAction/&gt;</span></span><br><span class="line"><span class="string">             &lt;/Sequence&gt;</span></span><br><span class="line"><span class="string">         &lt;/BehaviorTree&gt;</span></span><br><span class="line"><span class="string">     &lt;/root&gt;</span></span><br><span class="line"><span class="string">    )&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> tree = factory.<span class="built_in">createTreeFromText</span>(xml_text);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行行为树</span></span><br><span class="line">    <span class="keyword">while</span> (tree.<span class="built_in">tickRoot</span>() == NodeStatus::RUNNING) &#123;</span><br><span class="line">        std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">milliseconds</span>(<span class="number">100</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Dataflow-Ports及Blackboard"><a href="#Dataflow-Ports及Blackboard" class="headerlink" title="Dataflow,Ports及Blackboard"></a><strong>Dataflow,Ports及Blackboard</strong></h1><ul>
+<li><strong>blackboard</strong>：是一种 key&#x2F;value 存储结构，用于在所有节点间共享数据</li>
+<li><strong>Ports</strong>：是节点之间用来交换信息的一种机制</li>
+<li>Ports 使用 blackboard 的相同 key 连接</li>
+<li>一个节点的端口数量、名称和类型必须在编译时知道(c++);端口之间的连接是在部署时完成的(XML)</li>
+<li><strong>value 可以是任何 C++ type</strong>(使用类似 std::any 的类型确认机制)</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214528697.png" class="" title="image-20240905214528697">
+
+<ul>
+<li><p>Input Port 可以为</p>
+</li>
+<li><ul>
+<li>静态类型(如字符串)</li>
+<li>一个 pointer, 指向 blackboard 上的一个条目, 由一个 key 标识</li>
+<li>对于输入端口，可通过 <strong>getInput(key)</strong> 读取输入值</li>
+<li>输入类型 <strong>InputPort</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--静态字符串--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">name</span>=<span class="string">&quot;fist&quot;</span>   <span class="attr">message</span>=<span class="string">&quot;hello world&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--pointer,使用该 key 在 blackboard 中查找数据--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">name</span>=<span class="string">&quot;second&quot;</span> <span class="attr">message</span>=<span class="string">&quot;&#123;greetings&#125;&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Output ports</p>
+</li>
+<li><ul>
+<li>输出类型为 <strong>OutputPort</strong>  </li>
+<li>对于输出端口，可通过 <strong>setOutput</strong> 设置输出值</li>
+<li>此外，调试时，可以使用内置的动作 <a target="_blank" rel="noopener" href="https://www.behaviortree.dev/docs/guides/scripting/">Script</a> 将静态值写入条目</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Script</span> <span class="attr">code</span>=<span class="string">&quot; the_answer:=&#x27;The answer is 42&#x27; &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">/**</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"> * 自定义类型 struct Position2D &#123; double x; double y; &#125;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"> * 此例中，使用 string 类型来设置 OtherGoal(其类型为 struct Position2D),</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"> * 需定义定义模板特化函数 BT::convertFromString<span class="tag">&lt;<span class="name">Position2D</span>&gt;</span>(StringView) 实现从</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"> * 字符串初始化 struct Position2D 类型对象</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"> */</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;<span class="name">Script</span>        <span class="attr">code</span>=<span class="string">&quot; OtherGoal:=&#x27;-1;3&#x27; &quot;</span> /&gt;</span></span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Script 是 BT.CPP 3.X 版本中 SetBlackboard 的替代。SetBlackboard 已弃用</strong></p>
+<h2 id="blackboard"><a href="#blackboard" class="headerlink" title="blackboard"></a><strong>blackboard</strong></h2><p><strong>Blackboard 是一个全局共享的数据存储空间</strong>。Blackboard 通常用于存储任务执行过程中的状态信息、目标、条件等数据, 供 Behavior Tree 节点进行读取和修改。</p>
+<p><strong>在 Behavior Tree 中, Blackboard 可以用来实现任务之间的通信和共享数据</strong>。例如, 一个行为节点可以将某个条件的结果写入 Blackboard, 然后另一个行为节点可以读取这个条件的结果进行判断。</p>
+<p>Blackboard 通常是一个<strong>键值对的数据结构</strong>, 可以存储各种类型的数据, 如布尔值、整数、浮点数、字符串等等。Behavior Tree 节点可以通过读取和修改 Blackboard 中的数据来实现任务的执行和决策。</p>
+<p><strong>Blackboard 提供数据集中式设计。</strong></p>
+<p>集中式设计会定义一个数据结构专门用于行为树的输入, 在行为树决策之前, 将需要的数据先从各模块中收集到该数据结构中, 然后传递给行为树。这种方式减少了输入和行为树之间的接口数量(只与预定义的数据结构通信), 但存在数据冗余的缺点。不过, 集中式的数据输入使得行为树的表现更像一个黑盒了。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214637993.png" class="" title="image-20240905214637993">
+
+<p>该 Blackboard 对于行为树而言是只读的, 行为树不允许修改和添加任何信息到这块黑板上面。</p>
+<p>但 BT 在使用过程中, 有时候确实需要在节点&#x2F;行为树之间传递数据, 例如 sequence 节点, 其子节点之间通常会涉及到节点通信问题。此时会定义另一个 blackboard, 负责行为树&#x2F;节点间的通信</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214700719.png" class="" title="image-20240905214700719">
+
+<p>这块 blackboard 是又可以读又可以写的, 为了防止黑板混乱的问题, 必须在使用时规定一些限制, 可以称之为黑板数据的“作用域”：</p>
+<ul>
+<li>全局域（G）：此数据可以给其他行为树访问</li>
+<li>行为树域（T）：此数据可以给行为树内的任意节点访问</li>
+<li>指定节点域（N）：此数据可以给指定的行为树内的某节点（可以是多个）访问</li>
+</ul>
+<p>Blackboard 的使用可以让 Behavior Tree 更加灵活和智能化, 使得任务的执行和决策能够根据实时的情境和条件进行动态调整。</p>
+<h2 id="Ports"><a href="#Ports" class="headerlink" title="Ports"></a><strong>Ports</strong></h2><p>BT::InputPort</p>
+<p>BT::BidirectionalPort</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> PortsList <span class="title">providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; </span><br><span class="line">        BT::BidirectionalPort&lt;std::vector&lt;<span class="type">int</span>&gt;&gt;(<span class="string">&quot;vector&quot;</span>),</span><br><span class="line">        BT::<span class="built_in">InputPort</span>&lt;<span class="type">int</span>&gt;(<span class="string">&quot;value&quot;</span>) </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="remapping"><a href="#remapping" class="headerlink" title="remapping"></a><strong>remapping</strong></h3><p>为了避免在非常大的树中发生名称冲突, 任何树和子树都使用 Blackboard 的不同实例。出于这个原因, 需要显式地将树的端口连接到它的子树的端口。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214734312.png" class="" title="image-20240905214734312">
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">BTCPP_format</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Sequence</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Script</span> <span class="attr">script</span>=<span class="string">&quot; move_goal=&#x27;1;2;3&#x27; &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">SubTree</span> <span class="attr">ID</span>=<span class="string">&quot;MoveRobot&quot;</span> <span class="attr">target</span>=<span class="string">&quot;&#123;move_goal&#125;&quot;</span></span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml"><span class="language-handlebars">                                    <span class="attr">result</span>=<span class="string">&quot;&#123;move_result&#125;&quot;</span> /&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;move_result&#125;&quot;</span>/&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MoveRobot&quot;</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">        <span class="tag">&lt;<span class="name">Fallback</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">Sequence</span>&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                <span class="tag">&lt;<span class="name">MoveBase</span>  <span class="attr">goal</span>=<span class="string">&quot;&#123;target&#125;&quot;</span>/&gt;</span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">                <span class="tag">&lt;<span class="name">Script</span> <span class="attr">script</span>=<span class="string">&quot; result:=&#x27;goal reached&#x27; &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">ForceFailure</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                <span class="tag">&lt;<span class="name">Script</span> <span class="attr">script</span>=<span class="string">&quot; result:=&#x27;error&#x27; &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;/<span class="name">ForceFailure</span>&gt;</span></span></span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">        <span class="tag">&lt;/<span class="name">Fallback</span>&gt;</span></span></span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span></span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"></span></span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="通过引用访问Ports"><a href="#通过引用访问Ports" class="headerlink" title="通过引用访问Ports"></a><strong>通过引用访问Ports</strong></h3><p>参考：<a target="_blank" rel="noopener" href="https://www.behaviortree.dev/docs/tutorial-advanced/tutorial_13_blackboard_reference">Zero-copy access to the blackboard | BehaviorTree.CPP</a></p>
+<h4 id="Zero-Copy访问blackboard"><a href="#Zero-Copy访问blackboard" class="headerlink" title="Zero-Copy访问blackboard"></a><strong>Zero-Copy访问blackboard</strong></h4><p>Blackboard 使用 “值语义”，如 getInput 和 setOuput 获取或设置 Blackboard 中的值。</p>
+<p>在某些情况下，可能需要使用 “引用语义”，即直接访问存储在 Blackboard 中的对象。当对象是:</p>
+<ul>
+<li>复杂数据结构</li>
+<li>复制成本高</li>
+<li>不可复制</li>
+</ul>
+<p>例如，建议使用引用语义的节点是 <strong>LoopNode</strong> 装饰器，它可以 in-place 修改对象向量。</p>
+<p><strong>Method1：共享指针</strong></p>
+<p>为了简单起见，以复制成本较高的对象，如 Pointcloud 为例</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">root</span> <span class="attr">BTCPP_format</span>=<span class="string">&quot;4&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;SegmentCup&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Sequence</span>&gt;</span></span><br><span class="line">           <span class="comment">&lt;!-- AcquirePointCloud 写入点云数据,而 SegmentObject 则读取点云数据 --&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">AcquirePointCloud</span>  <span class="attr">cloud</span>=<span class="string">&quot;&#123;pointcloud&#125;&quot;</span>/&gt;</span> </span><br><span class="line">           <span class="tag">&lt;<span class="name">SegmentObject</span>  <span class="attr">obj_name</span>=<span class="string">&quot;cup&quot;</span> <span class="attr">cloud</span>=<span class="string">&quot;&#123;pointcloud&#125;&quot;</span> <span class="attr">obj_pose</span>=<span class="string">&quot;&#123;pose&#125;&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此例中，建议的 Ports 类型为（使用 std::shared_ptr）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PortsList <span class="title">AcquirePointCloud::providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; OutputPort&lt;std::shared_ptr&lt;Pointcloud&gt;&gt;(<span class="string">&quot;cloud&quot;</span>) &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">PortsList <span class="title">SegmentObject::providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="built_in">InputPort</span>&lt;std::string&gt;(<span class="string">&quot;obj_name&quot;</span>),</span><br><span class="line">             InputPort&lt;std::shared_ptr&lt;Pointcloud&gt;&gt;(<span class="string">&quot;cloud&quot;</span>),</span><br><span class="line">             <span class="built_in">OutputPort</span>&lt;Pose3D&gt;(<span class="string">&quot;obj_pose&quot;</span>) &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Method2: 线程安全的castPtr</strong></p>
+<p>4.5.1 及之后版本推荐的方式。</p>
+<p><strong>当使用 shared_ptr 方法时，最值得注意的问题是它不是线程安全的</strong>。</p>
+<p>如果自定义异步 Node 有自己的线程，那么实际对象可能同时被其他线程访问。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PortsList <span class="title">AcquirePointCloud::providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="built_in">OutputPort</span>&lt;Pointcloud&gt;(<span class="string">&quot;cloud&quot;</span>) &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">PortsList <span class="title">SegmentObject::providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="built_in">InputPort</span>&lt;std::string&gt;(<span class="string">&quot;obj_name&quot;</span>),</span><br><span class="line">             <span class="built_in">InputPort</span>&lt;Pointcloud&gt;(<span class="string">&quot;cloud&quot;</span>),</span><br><span class="line">             <span class="built_in">OutputPort</span>&lt;Pose3D&gt;(<span class="string">&quot;obj_pose&quot;</span>) &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过指针&#x2F;引用访问Pointcloud的实例:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inside the scope below, as long as &quot;any_locked&quot; exists, a mutex protecting </span></span><br><span class="line"><span class="comment">// the instance of &quot;cloud&quot; will remain locked</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">auto</span> any_locked = <span class="built_in">getLockedPortContent</span>(<span class="string">&quot;cloud&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(any_locked-&gt;<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// the entry in the blackboard hasn&#x27;t been initialized yet.</span></span><br><span class="line">    <span class="comment">// You can initialize it doing:</span></span><br><span class="line">    any_locked.<span class="built_in">assign</span>(my_initial_pointcloud);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(Pointcloud* cloud_ptr = any_locked-&gt;<span class="built_in">castPtr</span>&lt;Pointcloud&gt;())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Succesful cast to Pointcloud* (original type).</span></span><br><span class="line">    <span class="comment">// Modify the pointcloud instance, using cloud_ptr</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="全局-blackboard"><a href="#全局-blackboard" class="headerlink" title="全局 blackboard"></a><strong>全局 blackboard</strong></h3><p>在 BehaviorTree.CPP 4.6.0 版本引入。BT.CPP 使用 “scoped blackboards” 以隔离每个子树。</p>
+<p>尽管如此，在某些情况下，有一个真正的 global blackboard 是可取的，它可以从每个子树直接访问，而不需要重新映射。</p>
+<p>其用途：</p>
+<ul>
+<li>不能共享的单例对象和全局对象</li>
+<li>机器人的全局状态</li>
+<li>在行为树之外写入&#x2F;读取的数据，即在执行 tick 的主循环中</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214932130.png" class="" title="image-20240905214932130">
+
+<p>每个子树有自己的 blackboard。Blackboard 的父子关系与行为树的父子关系相同。</p>
+<p>私有 blackboard 的生命周期受其相关联的子树影响。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建全局 blackboard</span></span><br><span class="line"><span class="keyword">auto</span> global_bb = BT::Blackboard::<span class="built_in">create</span>();</span><br><span class="line"><span class="comment">// 创建子 blackboard</span></span><br><span class="line"><span class="keyword">auto</span> maintree_bb = BT::Blackboard::<span class="built_in">create</span>(global_bb);</span><br><span class="line"><span class="keyword">auto</span> tree = factory.<span class="built_in">createTree</span>(<span class="string">&quot;MainTree&quot;</span>, maintree_bb);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码实现</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905214952385.png" class="" title="image-20240905214952385">
+
+<p>访问 top-level blackboard 数据</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- BT.CPP 4.6.0 新增方式. 使用 @ 表示从顶层 blackboard 查找 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">PrintNumber</span> <span class="attr">val</span>=<span class="string">&quot;&#123;@value&#125;&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">global_bb-&gt;<span class="built_in">set</span>(<span class="string">&quot;value&quot;</span>, i);</span><br><span class="line"><span class="keyword">auto</span> value_sqr = global_bb-&gt;<span class="built_in">get</span>&lt;<span class="type">int</span>&gt;(<span class="string">&quot;value_sqr&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ports-vs-blackboard"><a href="#ports-vs-blackboard" class="headerlink" title="ports vs blackboard"></a><strong>ports vs blackboard</strong></h2><p>BT.CPP 提出了 <strong>Input&#x2F;Output Ports</strong>，以替代 Blackboards。</p>
+<p>更具体地说，Ports 是一种接口，它为 blackboard 添加了一层间接和额外的语义。</p>
+<p>要理解为什么推荐使用 Ports 而不鼓励直接使用 Blackboard，应该首先了解 BehaviorTree.CPP 的一些核心原则。</p>
+<h3 id="BT-CPP-目标"><a href="#BT-CPP-目标" class="headerlink" title="BT.CPP 目标"></a><strong>BT.CPP 目标</strong></h3><p><strong>Model Driven Development</strong></p>
+<p>节点之间的数据流描述必须是模型的一部分。此外，希望能清楚地表达 blackboard 条目是被写入（输出）、读取（输入）还是两者都有。</p>
+<p>例如：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215043094.png" class="" title="image-20240905215043094">
+
+<p>在其他实现中，知道这两个节点是否相互通信和依赖的唯一方法是:</p>
+<ul>
+<li>inspecting the code：这是我们想要避免的</li>
+<li>reading the documentation：但是文档不能保证是准确的和最新的</li>
+</ul>
+<p><code>即：需要查看代码或者文档</code></p>
+<p>相反，若 Input&#x2F;Output ports 是模型的一部分，则节点的意图及其与其他端口的关系变得更加明确:</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215055523.png" class="" title="image-20240905215055523">
+
+<p><strong>节点组合及子树范围</strong></p>
+<p>理想情况下，我们希望提供一个平台，允许行为设计师构建由不同供应商&#x2F;用户实现的树(即“组合节点”)。</p>
+<p>但是，当直接使用 Blackboard 时，名称冲突将成为一个问题。</p>
+<p>例如，节点 GraspObject 和 MoveBase 可能是由不同的人开发的，它们都是从 blackboard 取 target。不幸的是，它们有不同的含义，类型也不同：前者期望一个 3D 位姿，而后者是一个 2D 位姿。</p>
+<p>Ports 提供了一个间接层次，也称为 remapping。意味着，无论在定义 Port 时使用哪个名称，都可以将其 remapping 到 XML 中的不同 blackboard 条目，而无需修改源代码。</p>
+<h3 id="总结-不要直接使用-Blackboard"><a href="#总结-不要直接使用-Blackboard" class="headerlink" title="总结:不要直接使用 Blackboard"></a><strong>总结:不要直接使用 Blackboard</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example code in your tick()</span></span><br><span class="line"><span class="built_in">getInput</span>(<span class="string">&quot;goal&quot;</span>, goal);</span><br><span class="line"><span class="built_in">setOutput</span>(<span class="string">&quot;result&quot;</span>, result);</span><br><span class="line"><span class="comment">// 避免使用以下方式</span></span><br><span class="line"><span class="built_in">config</span>().blackboard-&gt;<span class="built_in">get</span>(<span class="string">&quot;goal&quot;</span>, goal);</span><br><span class="line"><span class="built_in">config</span>().blackboard-&gt;<span class="built_in">set</span>(<span class="string">&quot;result&quot;</span>, result);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="XML-schema"><a href="#XML-schema" class="headerlink" title="XML schema"></a><strong>XML schema</strong></h1><p>例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">root</span> <span class="attr">BTCPP_format</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;root_sequence&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">SaySomething</span>   <span class="attr">name</span>=<span class="string">&quot;action_hello&quot;</span> <span class="attr">message</span>=<span class="string">&quot;Hello&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">OpenGripper</span>    <span class="attr">name</span>=<span class="string">&quot;open_gripper&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ApproachObject</span> <span class="attr">name</span>=<span class="string">&quot;approach_object&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">CloseGripper</span>   <span class="attr">name</span>=<span class="string">&quot;close_gripper&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>第一个 tag 为 root，包含一个或多个  tag</p>
+</li>
+<li><p>tag 包含 ID 属性</p>
+</li>
+<li><p>root应包含 BTCPP_format 属性</p>
+</li>
+<li><p>每个 TreeNode 由单个 tag 表示。特别是:</p>
+</li>
+<li><ul>
+<li>tag 的名称是用于在 factory 中注册 TreeNode 的 ID</li>
+<li>属性 name 是实例的名称，是可选的</li>
+<li>端口通过属性配置。在前面的示例中，SaySomething 操作需要输入端口 message</li>
+</ul>
+</li>
+</ul>
+<h2 id="端口映射及blackboard指针"><a href="#端口映射及blackboard指针" class="headerlink" title="端口映射及blackboard指针"></a><strong>端口映射及blackboard指针</strong></h2><p>输入&#x2F;输出 ports 可以通过 blackboard 实体的名字进行映射。</p>
+<p>例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">BTCPP_format</span>=<span class="string">&quot;4&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;root_sequence&quot;</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;Hello&quot;</span>/&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;my_message&#125;&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Sequence 的第一个子节点输出 Hello</li>
+<li>第二个子节点读取和修改 blackboard 实体中名为 my_message 的数据的值</li>
+</ul>
+<h2 id="紧凑表示及显式表示"><a href="#紧凑表示及显式表示" class="headerlink" title="紧凑表示及显式表示"></a><strong>紧凑表示及显式表示</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- 以下两种语法都支持. 前者为紧凑形式, 后者为显式表示 --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">SaySomething</span>               <span class="attr">name</span>=<span class="string">&quot;action_hello&quot;</span> <span class="attr">message</span>=<span class="string">&quot;Hello World&quot;</span>/&gt;</span> <span class="tag">&lt;<span class="name">Action</span> <span class="attr">ID</span>=<span class="string">&quot;SaySomething&quot;</span>   <span class="attr">name</span>=<span class="string">&quot;action_hello&quot;</span> <span class="attr">message</span>=<span class="string">&quot;Hello World&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>紧凑语法更方便、更容易编写，但它提供的关于 TreeNode 模型的信息太少。像 Groot 这样的工具要么需要显式语法，要么需要附加信息。可以使用  标签添加此信息。</p>
+<p>为了使前面的 BT 树的精简版本与 Groot 兼容，必须对 XML 进行如下修改:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">BTCPP_format</span>=<span class="string">&quot;4&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;root_sequence&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">SaySomething</span>   <span class="attr">name</span>=<span class="string">&quot;action_hello&quot;</span> <span class="attr">message</span>=<span class="string">&quot;Hello&quot;</span>/&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">OpenGripper</span>    <span class="attr">name</span>=<span class="string">&quot;open_gripper&quot;</span>/&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ApproachObject</span> <span class="attr">name</span>=<span class="string">&quot;approach_object&quot;</span>/&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">CloseGripper</span>   <span class="attr">name</span>=<span class="string">&quot;close_gripper&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">&lt;!-- the BT executor don&#x27;t require this, but Groot does --&gt;</span>     </span><br><span class="line">   <span class="tag">&lt;<span class="name">TreeNodeModel</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Action</span> <span class="attr">ID</span>=<span class="string">&quot;SaySomething&quot;</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">input_port</span> <span class="attr">name</span>=<span class="string">&quot;message&quot;</span> <span class="attr">type</span>=<span class="string">&quot;std::string&quot;</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">Action</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Action</span> <span class="attr">ID</span>=<span class="string">&quot;OpenGripper&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Action</span> <span class="attr">ID</span>=<span class="string">&quot;ApproachObject&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">Action</span> <span class="attr">ID</span>=<span class="string">&quot;CloseGripper&quot;</span>/&gt;</span>      </span><br><span class="line">   <span class="tag">&lt;/<span class="name">TreeNodeModel</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="subtrees"><a href="#subtrees" class="headerlink" title="subtrees"></a><strong>subtrees</strong></h2><p>树中支持引用子树。使用 SubTree 标签。</p>
+<h2 id="包含文件"><a href="#包含文件" class="headerlink" title="包含文件"></a><strong>包含文件</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">path</span>=<span class="string">&quot;relative_or_absolute_path_to_file&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ros 环境下,可使用 ros_pkg 指定要查找的包 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">ros_pkg</span>=<span class="string">&quot;name_package&quot;</span>  <span class="attr">path</span>=<span class="string">&quot;path_relative_to_pkg/grasp.xml&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Script"><a href="#Script" class="headerlink" title="Script"></a><strong>Script</strong></h1><p>Behavior Tree 4.X 引入。</p>
+<h2 id="赋值操作符-strings-数值"><a href="#赋值操作符-strings-数值" class="headerlink" title="赋值操作符&#x2F;strings&#x2F;数值"></a><strong>赋值操作符&#x2F;strings&#x2F;数值</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">param_A := <span class="number">42</span> <span class="comment">// 将 blackboard 中 param_A 赋值为 42</span></span><br><span class="line">param_B = <span class="number">3.14</span></span><br><span class="line"> <span class="comment">// 同上,将 param_B 赋值为 3.14</span></span><br><span class="line">message = <span class="string">&#x27;hello world&#x27;</span> <span class="comment">// 将 message 赋值为 hello world</span></span><br><span class="line">A:= <span class="number">42</span>; B:=<span class="number">24</span> <span class="comment">// 在一条script语句赋值多个entry</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>操作符 :&#x3D; 和 &#x3D; 之间的区别在于，如果 blackboard 中不存在一个新条目，前者可以在 blackboard 上创建一个新条目，而后者则会在 blackboard 上不包含该条目时抛出异常。</p>
+<h2 id="算术运算符和括号"><a href="#算术运算符和括号" class="headerlink" title="算术运算符和括号"></a><strong>算术运算符和括号</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最终 param_B 为 10，param_C 为 31</span></span><br><span class="line">param_A := <span class="number">7</span></span><br><span class="line">param_B := <span class="number">5</span></span><br><span class="line">param_B *= <span class="number">2</span></span><br><span class="line">param_C := (param_A * <span class="number">3</span>) + param_B</span><br></pre></td></tr></table></figure>
+
+<p>支持加减乘除运算符。且加法运算符是唯一可以处理 string(用于连接两个字符串)的运算符</p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a><strong>位运算符</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最终 val_A 为 0x0F，val_B 为 0xFF</span></span><br><span class="line">value:= <span class="number">0x7F</span></span><br><span class="line">val_A:= value &amp; <span class="number">0x0F</span></span><br><span class="line">val_B:= value | <span class="number">0xF0</span></span><br></pre></td></tr></table></figure>
+
+<p>支持 &amp;(与)、|(或)、~(非)、^(异或)。</p>
+<h2 id="逻辑和比较运算符"><a href="#逻辑和比较运算符" class="headerlink" title="逻辑和比较运算符"></a><strong>逻辑和比较运算符</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val_A := <span class="literal">true</span></span><br><span class="line">val_B := <span class="number">5</span> &gt; <span class="number">3</span></span><br><span class="line">val_C := (val_A == val_B)</span><br><span class="line">val_D := (val_A &amp;&amp; val_B) || !val_C</span><br></pre></td></tr></table></figure>
+
+<p>支持：true&#x2F;false、&amp;&amp;、||、!、&#x3D;&#x3D;、!&#x3D;、&lt;、&lt;&#x3D;、&gt;、&gt;&#x3D;</p>
+<h2 id="三目运算符"><a href="#三目运算符" class="headerlink" title="三目运算符"></a><strong>三目运算符</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val_B = (val_A &gt; <span class="number">1</span>) ? <span class="number">42</span> : <span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Sequence</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Script</span> <span class="attr">code</span>=<span class="string">&quot; msg:=&#x27;hello world&#x27; &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">Script</span> <span class="attr">code</span>=<span class="string">&quot; A:=THE_ANSWER; B:=3.14; color:=RED &quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;<span class="name">Precondition</span> <span class="attr">if</span>=<span class="string">&quot;A&gt;B &amp;&amp; color!=BLUE&quot;</span> <span class="attr">else</span>=<span class="string">&quot;FAILURE&quot;</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                <span class="tag">&lt;<span class="name">Sequence</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                  <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;A&#125;&quot;</span>/&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                  <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;B&#125;&quot;</span>/&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                  <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;msg&#125;&quot;</span>/&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                  <span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">message</span>=<span class="string">&quot;&#123;color&#125;&quot;</span>/&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">                <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">            <span class="tag">&lt;/<span class="name">Precondition</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">        <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml"><span class="language-handlebars"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span></span></span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// Simple tree: a sequence of two asynchronous actions,</span></span><br><span class="line">  <span class="comment">// but the second will be halted because of the timeout.</span></span><br><span class="line"></span><br><span class="line">  BehaviorTreeFactory factory;</span><br><span class="line">  factory.<span class="built_in">registerNodeType</span>&lt;SaySomething&gt;(<span class="string">&quot;SaySomething&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">enum</span> <span class="title class_">Color</span> &#123; RED=<span class="number">1</span>, BLUE=<span class="number">2</span>, GREEN=<span class="number">3</span> &#125;;</span><br><span class="line">  <span class="comment">// We can add these enums to the scripting language</span></span><br><span class="line">  factory.<span class="built_in">registerScriptingEnums</span>&lt;Color&gt;();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Or we can do it manually</span></span><br><span class="line">  factory.<span class="built_in">registerScriptingEnum</span>(<span class="string">&quot;THE_ANSWER&quot;</span>, <span class="number">42</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> tree = factory.<span class="built_in">createTreeFromText</span>(xml_text);</span><br><span class="line">  tree.<span class="built_in">tickWhileRunning</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Pre-and-Post-conditions"><a href="#Pre-and-Post-conditions" class="headerlink" title="Pre and Post conditions"></a><strong>Pre and Post conditions</strong></h1><p>BT.CPP 4.x 引入。可以在Node的实际 tick() 之前或之后运行的脚本。</p>
+<p>脚本的目标不是编写复杂的代码，而只是提高树的可读性，并在非常简单的用例中减少对自定义c++节点的需求。</p>
+<p>如果脚本太长，可能需要重新考虑使用它们的决定。</p>
+<h2 id="Pre-conditions"><a href="#Pre-conditions" class="headerlink" title="Pre conditions"></a><strong>Pre conditions</strong></h2><ul>
+<li><strong>_skipIf</strong>: 若条件成立，则跳过该节点</li>
+<li><strong>_failureIf</strong>: 若条件成立，则跳过并返回 FAILURE</li>
+<li><strong>_successIf</strong>: 若条件成立，则跳过并返回 SUCCESS</li>
+<li><strong>_while</strong>: 与 _skipIf 类似，但当条件变为 false 时，可能中断 RUNNING 节点</li>
+</ul>
+<p>例如：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215602833.png" class="" title="image-20240905215602833">
+
+<p>即：若门非关闭状态，则跳过 OpenDoor。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">OpenDoor</span> <span class="attr">_skipIf</span>=<span class="string">&quot;!door_closed&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Post-conditions"><a href="#Post-conditions" class="headerlink" title="Post conditions"></a><strong>Post conditions</strong></h2><ul>
+<li><strong>_onSuccess</strong>: 若节点返回 SUCCESS，则执行该脚本</li>
+<li><strong>_onFailure</strong>: 若节点返回 FAILURE，则执行该脚本</li>
+<li><strong>_post</strong>: 节点返回 SUCCESS&#x2F;FAILURE，均执行该脚本</li>
+<li><strong>_onHalted</strong>: 若 RUNNING 被 halted，则执行该脚本</li>
+</ul>
+<p>例如：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215625719.png" class="" title="image-20240905215625719">
+
+
+
+<h2 id="设计模式：错误码"><a href="#设计模式：错误码" class="headerlink" title="设计模式：错误码"></a><strong>设计模式：错误码</strong></h2><p>与状态机相比，行为树可能存在的问题之一是，在那些应该根据动作的结果执行不同策略的模式中。</p>
+<p>由于 BT 仅限于成功和失败，这可能是不直观的。</p>
+<p>一种解决方案是将结果&#x2F;错误代码存储在 blackboard 中，但这在 3.X 版本中很麻烦。</p>
+<p>Pre conditions 可以帮助实现更具可读性的代码，就像下面这样:</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215637835.png" class="" title="image-20240905215637835">
+
+<p>MoveBase 增加了 return 端口，Sequence 中后面的节点根据 error_code 执行相应动作。</p>
+<h2 id="设计模式：状态和声明树"><a href="#设计模式：状态和声明树" class="headerlink" title="设计模式：状态和声明树"></a><strong>设计模式：状态和声明树</strong></h2><p>即使行为树的承诺是将我们从状态的暴政中解放出来，但事实是，有时没有状态很难对我们的应用程序进行推理。</p>
+<p>使用状态可以使我们的树更简单。例如，只有当机器人(或子系统)处于特定状态时，才能取树的某个分支。</p>
+<p>例如：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240905215651319.png" class="" title="image-20240905215651319">
+
+<p>该节点只字状态为 DO_LANDING 时才会执行，且一旦 altitude 的值 ≤ 0.1 时，状态切换为 LANDED。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a><strong>使用</strong></h1><ul>
+<li>注册自定义 TreeNode 到 BehaviorTreeFactory  </li>
+<li>加载 XML</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;behaviortree_cpp/bt_factory.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// file that contains the custom nodes definitions</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;dummy_nodes.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> DummyNodes;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">  BehaviorTreeFactory factory;</span><br><span class="line">  <span class="comment">// 创建节点的推荐方式是使用继承</span></span><br><span class="line">  factory.<span class="built_in">registerNodeType</span>&lt;ApproachObject&gt;(<span class="string">&quot;ApproachObject&quot;</span>); </span><br><span class="line">  <span class="comment">// 使用依赖注入方式注册 SimpleActionNode</span></span><br><span class="line">  factory.<span class="built_in">registerSimpleCondition</span>(<span class="string">&quot;CheckBattery&quot;</span>, [&amp;](TreeNode&amp;) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">CheckBattery</span>(); &#125;</span><br><span class="line">   );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  GripperInterface gripper; <span class="comment">// 也可通过类构造函数创建自定义节点</span></span><br><span class="line">  factory.<span class="built_in">registerSimpleAction</span>(<span class="string">&quot;OpenGripper&quot;</span>, [&amp;](TreeNode&amp;)&#123; <span class="keyword">return</span> gripper.<span class="built_in">open</span>(); &#125; );</span><br><span class="line">  factory.<span class="built_in">registerSimpleAction</span>(<span class="string">&quot;CloseGripper&quot;</span>, [&amp;](TreeNode&amp;)&#123; <span class="keyword">return</span> gripper.<span class="built_in">close</span>(); &#125; );</span><br><span class="line">    </span><br><span class="line">  <span class="comment">// 注意: 若 tree 超出范围时(被析构),所有节点都会被删除</span></span><br><span class="line">   <span class="keyword">auto</span> tree = factory.<span class="built_in">createTreeFromFile</span>(<span class="string">&quot;./my_tree.xml&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行 BT 树</span></span><br><span class="line"></span><br><span class="line">  tree.<span class="built_in">tickWhileRunning</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Expected output:</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">  [ Battery: OK ]</span></span><br><span class="line"><span class="comment">  GripperInterface::open</span></span><br><span class="line"><span class="comment">  ApproachObject: approach_object</span></span><br><span class="line"><span class="comment">  GripperInterface::close</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="与-ROS2-集成"><a href="#与-ROS2-集成" class="headerlink" title="与 ROS2 集成"></a>与 ROS2 集成</h1><p>提供了一组现成的封装 BehaviorTree.ROS2，可用于快速实现与 ROS2 交互的 treenode。</p>
+<p>在系统架构方面，应该记住:</p>
+<ul>
+<li>应该有一个集中的 ROS 节点 Coordinator，负责执行行为。这将进一步被称为 Task Planner，它将与 BT.CPP 一起实现</li>
+<li>系统的所有其他元素都应该是面向服务(service-oriented)的组件，并且应该将任何业务逻辑和决策委托给 Task Planner</li>
+</ul>
+<h2 id="异步BT-Action使用-rclcpp-action"><a href="#异步BT-Action使用-rclcpp-action" class="headerlink" title="异步BT::Action使用 rclcpp_action"></a><strong>异步BT::Action使用 <code>rclcpp_action</code></strong></h2><p>与 ROS 交互的推荐方式是使用 <code>rclcpp_action</code>。</p>
+<p>他们完美匹配，因为:</p>
+<ul>
+<li>它们的 API 是异步的，也就是说用户不需要担心创建一个单独的线程</li>
+<li>它们可以被中止，这是实现 <code>TreeNode::halt()</code> 和构建响应性行为所需要的功能</li>
+</ul>
+<p>使用 <code>rclcpp_action</code> 实现 <code>Asyncchronous BT::Action</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参考 https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html#writing-an-action-client</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FibonacciActionServer</span> : <span class="keyword">public</span> rclcpp::Node</span><br></pre></td></tr></table></figure>
+
+<p>或使用 <code>RosActionNode</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://github.com/BehaviorTree/BehaviorTree.ROS</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FibonacciAction</span>: <span class="keyword">public</span> RosActionNode&lt;Fibonacci&gt;</span><br><span class="line"></span><br><span class="line">RosNodeParams params; </span><br><span class="line">params.nh = node;</span><br><span class="line">params.default_port_value = <span class="string">&quot;fibonacci&quot;</span>;</span><br><span class="line">factory.<span class="built_in">registerNodeType</span>&lt;FibonacciAction&gt;(<span class="string">&quot;Fibonacci&quot;</span>, params);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="异步BT-Action使用-rclcpp-Client"><a href="#异步BT-Action使用-rclcpp-Client" class="headerlink" title="异步BT::Action使用 rclcpp::Client"></a><strong>异步BT::Action使用 <code>rclcpp::Client</code></strong></h2><h1 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h1><h2 id="例一"><a href="#例一" class="headerlink" title="例一"></a>例一</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">IsPaused</span> <span class="attr">name</span>=<span class="string">&quot;check_pause&quot;</span>/&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">SequenceStar</span> <span class="attr">name</span>=<span class="string">&quot;sequenceStar&quot;</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">MyAsyncAction</span> <span class="attr">name</span>=<span class="string">&quot;action_A&quot;</span>/&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">MyAsyncAction</span> <span class="attr">name</span>=<span class="string">&quot;action_B&quot;</span>/&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">SequenceStar</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">ReactiveSequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>IsPaused</code> 在暂停时返回 <code>SUCCESS</code>，否则返回 <code>FAILURE</code></li>
+</ul>
+<h2 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/BehaviorTreeCPP%E4%BD%BF%E7%94%A8/image-20240917095051939.png" class="" title="image-20240917095051939">
+
+<p>来源：<a target="_blank" rel="noopener" href="https://roboticseabass.com/2021/05/08/introduction-to-behavior-trees/">https://roboticseabass.com/2021/05/08/introduction-to-behavior-trees/</a></p>
+<ul>
+<li><p><code>GoToX</code> 行为节点，表示前往指定目标点，在执行过程中返回 <code>RUNNING</code> 状态</p>
+</li>
+<li><p><code>AtA</code> 判断是否到达目标点 A；若当前在 A 点，则返回 <code>SUCCESS</code>，其父节点 <code>Fallback</code> 直接返回 <code>SUCCESS</code>，不再执行 <code>GoToA</code>；若当前不在 A 点，则返回 <code>FAILURE</code>，则执行 <code>GoToA</code></p>
+</li>
+<li><p>到达指定目标点后，并行执行 <code>FoundApple</code> 和 <code>FoundOrange</code>（假设设置 <code>Parallel</code> 的 <code>THRESHOLD_SUCCESS</code> 为 1），任意一个成功即返回成功，即无论找到苹果还是橘子都正常结束并行节点，并返回 <code>SUCCESS</code></p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45710350/article/details/109718775">https://blog.csdn.net/weixin_45710350/article/details/109718775</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%A1%8C%E4%B8%BA%E6%A0%91/" rel="tag"># 行为树</a>
+              <a href="/tags/%E7%8A%B6%E6%80%81%E6%9C%BA/" rel="tag"># 状态机</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/API/" rel="prev" title="API">
+                  <i class="fa fa-angle-left"></i> API
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/%E8%8A%82%E7%82%B9/" rel="next" title="节点">
+                  节点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

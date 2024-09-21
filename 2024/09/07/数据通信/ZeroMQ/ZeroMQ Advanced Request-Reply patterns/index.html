@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Request-Reply 机制 The Simple Reply Envelop The Extended Rely Envelope   Request-Reply 组合 DEALER to REP REQ to ROUTER DEALER to ROUTER DEALER to DEALER ROUTER to ROUTER   ROUTER 套接字 Identities and A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advance Request-Reply">
+<meta property="og:url" content="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="Request-Reply 机制 The Simple Reply Envelop The Extended Rely Envelope   Request-Reply 组合 DEALER to REP REQ to ROUTER DEALER to ROUTER DEALER to DEALER ROUTER to ROUTER   ROUTER 套接字 Identities and A">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/request%20with%20minimal%20envelope.png">
+<meta property="og:image" content="http://example.com/images/extended%20request-rely%20pattern.png">
+<meta property="og:image" content="http://example.com/images/reply%20with%20one%20address.png">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.205Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ZeroMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/request%20with%20minimal%20envelope.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/","path":"2024/09/07/数据通信/ZeroMQ/ZeroMQ Advanced Request-Reply patterns/","title":"Advance Request-Reply"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Advance Request-Reply | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Request-Reply-%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">Request-Reply 机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Simple-Reply-Envelop"><span class="nav-number">2.1.</span> <span class="nav-text">The Simple Reply Envelop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Extended-Rely-Envelope"><span class="nav-number">2.2.</span> <span class="nav-text">The Extended Rely Envelope</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Request-Reply-%E7%BB%84%E5%90%88"><span class="nav-number">3.</span> <span class="nav-text">Request-Reply 组合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DEALER-to-REP"><span class="nav-number">3.1.</span> <span class="nav-text">DEALER to REP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REQ-to-ROUTER"><span class="nav-number">3.2.</span> <span class="nav-text">REQ to ROUTER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEALER-to-ROUTER"><span class="nav-number">3.3.</span> <span class="nav-text">DEALER to ROUTER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEALER-to-DEALER"><span class="nav-number">3.4.</span> <span class="nav-text">DEALER to DEALER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROUTER-to-ROUTER"><span class="nav-number">3.5.</span> <span class="nav-text">ROUTER to ROUTER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROUTER-%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">ROUTER 套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Identities-and-Addresses"><span class="nav-number">4.1.</span> <span class="nav-text">Identities and Addresses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROUTER-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">ROUTER 异常处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Load-Balancing-Pattern"><span class="nav-number">5.</span> <span class="nav-text">The Load Balancing Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROUTER-Broker-and-DEALER-Workers"><span class="nav-number">5.1.</span> <span class="nav-text">ROUTER Broker and DEALER Workers</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Advance Request-Reply | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Advance Request-Reply
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id=""><a href="#" class="headerlink" title=""></a></h1><!-- TOC -->
+
+<ul>
+<li><a href="#"></a></li>
+<li><a href="#request-reply-%E6%9C%BA%E5%88%B6">Request-Reply 机制</a><ul>
+<li><a href="#the-simple-reply-envelop">The Simple Reply Envelop</a></li>
+<li><a href="#the-extended-rely-envelope">The Extended Rely Envelope</a></li>
+</ul>
+</li>
+<li><a href="#request-reply-%E7%BB%84%E5%90%88">Request-Reply 组合</a><ul>
+<li><a href="#dealer-to-rep">DEALER to REP</a></li>
+<li><a href="#req-to-router">REQ to ROUTER</a></li>
+<li><a href="#dealer-to-router">DEALER to ROUTER</a></li>
+<li><a href="#dealer-to-dealer">DEALER to DEALER</a></li>
+<li><a href="#router-to-router">ROUTER to ROUTER</a></li>
+</ul>
+</li>
+<li><a href="#router-%E5%A5%97%E6%8E%A5%E5%AD%97">ROUTER 套接字</a><ul>
+<li><a href="#identities-and-addresses">Identities and Addresses</a></li>
+<li><a href="#router-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">ROUTER 异常处理</a></li>
+</ul>
+</li>
+<li><a href="#the-load-balancing-pattern">The Load Balancing Pattern</a><ul>
+<li><a href="#router-broker-and-dealer-workers">ROUTER Broker and DEALER Workers</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Request-Reply-机制"><a href="#Request-Reply-机制" class="headerlink" title="Request-Reply 机制"></a>Request-Reply 机制</h1><p>reply message envelopes  </p>
+<p><strong>Envelopes 是一种用地址安全地包装数据而不接触数据本身的方法</strong>。通过将 Reply 地址分离到一个信封中，可以编写通用的中介，例如 api 和代理，这些中介可以创建、读取和删除地址，而不管消息有效负载或结构是什么。  </p>
+<p>在 Request-reply 模式中，<strong>信封(<em>envelope</em>)保存应答的返回地址</strong>。这也是为什么没有状态的 ZeroMQ 网络创建双向(round-trip)请求-应答对话的方式。  </p>
+<p>使用 REQ 和 REP 套接字时，甚至看不到信封；这些套接字自动处理它们。但是对于大多数有趣的请求-应答模式，需要了解信封，特别是 ROUTER 套接字。  </p>
+<h2 id="The-Simple-Reply-Envelop"><a href="#The-Simple-Reply-Envelop" class="headerlink" title="The Simple Reply Envelop"></a>The Simple Reply Envelop</h2><p>request-reply 通信由请求消息和最终的应答消息组成。在简单的 request-reply 模式中，每个请求都有一个应答。在更高级的模式中，请求和应答可以异步流动。然而，应答信封的工作方式总是一样的。  </p>
+<p>ZeroMQ 应答信封组成结构：  </p>
+<ul>
+<li>零个或多个应答地址</li>
+<li>后面跟着一个空帧(信封分隔符 delimiter)</li>
+<li>然后跟着消息正文(零个或多个帧)<br>信封是由多个套接字在一个链中一起工作创建的。</li>
+</ul>
+<p>例如，以通过 REQ 套接字发送 “Hello” 为例。REQ 套接字创建尽可能简单的 rely 信封，其中没有地址，只有一个空分隔符帧和包含“Hello”字符串的消息帧。这是一个两帧信息。<br><img src="/./images/request%20with%20minimal%20envelope.png" alt="request with minimal envelope">  </p>
+<p><strong>REP 套接字完成匹配工作：去掉信封，直到并包括分隔符帧，保存整个信封</strong>，并将 “Hello” 字符串传递给应用程序。因此，最初的 Hello World 示例在内部使用 request-rely 信封，但应用程序从未看到它们。  </p>
+<p>查看在 hwclient 和 hwserver 之间的网络数据，可以看到的：每个请求和每个应答实际上是两个帧，一个空帧，然后是正文。  </p>
+<h2 id="The-Extended-Rely-Envelope"><a href="#The-Extended-Rely-Envelope" class="headerlink" title="The Extended Rely Envelope"></a>The Extended Rely Envelope</h2><p>现在，在中间添加 ROUTER-DEALER 代理扩展 REQ-REP，看看这会如何影响应答信封。参考：第2章-套接字和模式中已经看到的扩展的请求-应答模式。实际上，可以插入任意数量的代理步骤。机制是一样的。<br><img src="/./images/extended%20request-rely%20pattern.png" alt="extended request-rely pattern"></p>
+<p>Proxy 功能伪代码：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prepare context, frontend and backend sockets</span><br><span class="line">while true:</span><br><span class="line">    poll on both sockets</span><br><span class="line">    if frontend had input:</span><br><span class="line">        read all frames from frontend</span><br><span class="line">        send to backend</span><br><span class="line">    if backend had input:</span><br><span class="line">        read all frames from backend</span><br><span class="line">        send to frontend</span><br></pre></td></tr></table></figure>
+
+<p>ROUTER 套接字与其他套接字不同，它跟踪它拥有的每个连接，并告诉调用者这些连接。它告诉调用者的方式是将连接标识粘贴到接收到的每个消息前面。<strong>标识，也即地址</strong>，是一个二进制字符串，除了“这是连接的唯一句柄”之外没有任何意义。然后，当通过 ROUTER 套接字发送消息时，首先发送一个身份帧。</p>
+<ul>
+<li>从 Router 读取一条消息时，ZeroMQ 会封装一层信封，注明消息的来源</li>
+<li>向 Router 写入一条消息时，ZeroMQ 会将信封拆开，并将消息传递给相应的对象</li>
+</ul>
+<p>ZeroMQ v2.2 及以前版本使用 <code>uid</code> 作为标识。<strong>ZeroMQ v3.0 及以后版本默认生成一个 5 字节的标识(0 +一个随机的 32 位整数)</strong> 。这对网络性能有一些影响，但只有在使用多个代理时才会有影响，这种情况很少见。主要的变化是通过删除对 UUID 库的依赖来简化 libzmq 的编译。  </p>
+<p>假设 REQ 套接字于一个三字节的标识 <code>ABC</code>：<br><img src="/./images/reply%20with%20one%20address.png" alt="Reply with one Address"></p>
+<h1 id="Request-Reply-组合"><a href="#Request-Reply-组合" class="headerlink" title="Request-Reply 组合"></a>Request-Reply 组合</h1><p>有四个请求-应答套接字，每个套接字都有特定的行为。已经了解了它们如何以简单和扩展的 请求-答复 模式进行连接。但这些套接字是可以用来解决许多问题。  </p>
+<p>有效组合：  </p>
+<ul>
+<li>REQ to REP</li>
+<li>DEALER to REP</li>
+<li>REQ to ROUTER</li>
+<li>DEALER to ROUTER</li>
+<li>DEALER to DEALER</li>
+<li>ROUTER to ROUTER</li>
+</ul>
+<p>无效组合：  </p>
+<ul>
+<li>REQ to REQ</li>
+<li>REQ to DEALER</li>
+<li>REP to REP</li>
+<li>REP to ROUTER</li>
+</ul>
+<p>DEALER 就像一个异步 REQ 套接字，而 ROUTER 就像一个异步 REP 套接字。当使用 REQ 套接字时，可以使用 DEALER；只需要自己阅读和书写信封即可。在使用 REP 套接字的地方，可以使用一个 ROUTER；只需要自己管理身份即可。</p>
+<h2 id="DEALER-to-REP"><a href="#DEALER-to-REP" class="headerlink" title="DEALER to REP"></a>DEALER to REP</h2><p>使用 DEALER 替代 REQ，提供了一个可以与多个 REP 服务器通信的异步客户端，发送请求后无需等待应答。  </p>
+<p>使用 DEALER 于 REP 套接字通信时，必须准确的模拟 REQ 套接字将发送的信封，否则 REP 套接字将丢弃该消息。因此，要发送消息，需要：  </p>
+<ul>
+<li>发送一个设置了 MORE 标志的空消息帧</li>
+<li>发送消息正文</li>
+</ul>
+<p>另一端接收到消息时：  </p>
+<ul>
+<li>接收第一帧，若不为空，则丢弃整条消息</li>
+<li>接受下一帧并将其传递给应用程序</li>
+</ul>
+<h2 id="REQ-to-ROUTER"><a href="#REQ-to-ROUTER" class="headerlink" title="REQ to ROUTER"></a>REQ to ROUTER</h2><p>提供了一个可以同时与多个 REQ 客户端通信的异步服务器。  </p>
+<p>可通过两种不同的方式使用 ROUTER：  </p>
+<ul>
+<li>作为在前端和后端套接字之间切换消息的代理</li>
+<li>作为读取消息并对其进行操作的应用程序</li>
+</ul>
+<p>第一种方式，ROUTER 简单读取所有帧，包括身份识别帧，然后直接传送他们。第二种方法，ROUTER 必须知道它所发送的 REPLY 信封的格式。  </p>
+<h2 id="DEALER-to-ROUTER"><a href="#DEALER-to-ROUTER" class="headerlink" title="DEALER to ROUTER"></a>DEALER to ROUTER</h2><p>使异步客户端能够与异步服务器进行通信，双方都可以完全控制消息格式。  </p>
+<p>DEALER 和 ROUTER 都可以处理任意消息格式。  </p>
+<h2 id="DEALER-to-DEALER"><a href="#DEALER-to-DEALER" class="headerlink" title="DEALER to DEALER"></a>DEALER to DEALER</h2><p>使用 DEALER 替换 REP 时，worker 进程可以是完全异步的，发送任意数量的回复。代价是必须自行管理回复信封。  </p>
+<h2 id="ROUTER-to-ROUTER"><a href="#ROUTER-to-ROUTER" class="headerlink" title="ROUTER to ROUTER"></a>ROUTER to ROUTER</h2><p>使用复杂。  </p>
+<h1 id="ROUTER-套接字"><a href="#ROUTER-套接字" class="headerlink" title="ROUTER 套接字"></a>ROUTER 套接字</h1><h2 id="Identities-and-Addresses"><a href="#Identities-and-Addresses" class="headerlink" title="Identities and Addresses"></a>Identities and Addresses</h2><p>ZeroMQ 中的身份(identity)被用作回复信封中的地址。在大多数情况下，标识是任意的并且对于 ROUTER 套接字而言是本地的：它是哈希表中的查找键。独立地，对端可以拥有物理地址（网络端点，如 <code>tcp://192.168.55.117:5670</code>）或逻辑地址（UUID 或电子邮件地址或其他唯一密钥）。  </p>
+<p>使用 ROUTER 套接字与特定对端通信的应用程序可以将逻辑地址转换为标识（如果它已构建了必要的哈希表）。因为 ROUTER 套接字仅在某个对端发送消息时宣布连接的身份（到特定对端），所以只能真正回复消息，而不能自发地与对端通信。  </p>
+<p>即使翻转规则并使 ROUTER 连接到对端而不是等待对端连接到 ROUTER，情况也是如此。但是，可以强制 ROUTER 套接字使用逻辑地址来代替其标识。通过 <code>zmq_setsockopt</code> 配置。其工作原理如下：</p>
+<ul>
+<li>对端应用程序在绑定或连接之前设置其对端套接字（DEALER 或 REQ）的 <code>ZMQ_IDENTITY</code> 选项</li>
+<li>通常，对端会连接到已绑定的 ROUTER 套接字。但 ROUTER 也可以连接到对端</li>
+<li>在连接时，对端套接字告诉 ROUTER 套接字“请使用此身份进行此连接”</li>
+<li>如果对端套接字没有说明这一点，则 ROUTER 会为连接生成任意随机标识</li>
+<li>ROUTER 套接字现在向应用程序提供此逻辑地址，作为来自该对端的任何消息的前缀身份帧</li>
+<li>ROUTER 还期望逻辑地址作为任何传出消息的前缀标识帧</li>
+</ul>
+<p>例如：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Demonstrate request-reply identities</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;zhelpers.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">void</span> *context = zmq_ctx_new ();</span><br><span class="line">    <span class="type">void</span> *sink = zmq_socket (context, ZMQ_ROUTER);</span><br><span class="line">    zmq_bind (sink, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  First allow 0MQ to set the identity</span></span><br><span class="line">    <span class="type">void</span> *anonymous = zmq_socket (context, ZMQ_REQ);</span><br><span class="line">    zmq_connect (anonymous, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line">    s_send (anonymous, <span class="string">&quot;ROUTER uses a generated 5 byte identity&quot;</span>);</span><br><span class="line">    s_dump (sink);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Then set the identity ourselves</span></span><br><span class="line">    <span class="type">void</span> *identified = zmq_socket (context, ZMQ_REQ);</span><br><span class="line">    zmq_setsockopt (identified, ZMQ_IDENTITY, <span class="string">&quot;PEER2&quot;</span>, <span class="number">5</span>);</span><br><span class="line">    zmq_connect (identified, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line">    s_send (identified, <span class="string">&quot;ROUTER socket uses REQ&#x27;s socket identity&quot;</span>);</span><br><span class="line">    s_dump (sink);</span><br><span class="line"></span><br><span class="line">    zmq_close (sink);</span><br><span class="line">    zmq_close (anonymous);</span><br><span class="line">    zmq_close (identified);</span><br><span class="line">    zmq_ctx_destroy (context);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该示例是链接到 ROUTER 套接字的两个端点的示例，其中一个强加逻辑地址 “PEER2”。  </p>
+<h2 id="ROUTER-异常处理"><a href="#ROUTER-异常处理" class="headerlink" title="ROUTER 异常处理"></a>ROUTER 异常处理</h2><p>ZeroMQ V3.2 开始，可以设置 <code>ZMQ_ROUTER_MANDATORY</code> 来捕获发送失败错误（旧版本无法发送消息时采用丢弃策略）。在 ROUTER 套接字上设置，然后在 send 调用上提供不可路由的标识时，套接字将发出 <code>EHOSTUNREACH</code> 错误。  </p>
+<h1 id="The-Load-Balancing-Pattern"><a href="#The-Load-Balancing-Pattern" class="headerlink" title="The Load Balancing Pattern"></a>The Load Balancing Pattern</h1><p><strong>负载均衡</strong>。  </p>
+<p>以邮局为例，如果每个柜台有一个队列，并且有些人购买邮票(一种快速、简单的交易)，有些人开设新账户(一种非常缓慢的交易)，那么将发现购买邮票的人被不公平地困在队列中。就像在邮局一样，如果消息传递体系结构不公平，人们就会感到恼火。  </p>
+<p>邮局示例的解决方案是创建一个单一队列，这样即使一两个柜台工作缓慢，其他柜台也将继续按照先到先得的原则为客户提供服务。  </p>
+<p>PUSH 和 DEALER 使用简单方法的原因之一是纯粹的性能。如果您到达美国任何一个主要机场，您都会发现入境处排着长队。边境巡逻官员会提前派人在每个柜台排队，而不是单独排队。让人们提前步行五十码可以为每位乘客节省一两分钟。而且由于每次护照检查所需的时间大致相同，因此或多或少是公平的。这就是 <strong>PUSH 和 DEALER 的策略：提前发送工作负载，so that there is less travel distance</strong>。</p>
+<p>回到连接到代理(ROUTER)的 worker (DEALER 或 REQ)的场景。代理必须知道 worker 何时准备好，并保留 worker 列表，以便每次都可以使用最近使用最少的 worker。  </p>
+<p>事实上，解决方案非常简单：worker 在启动时以及完成每项任务后发送一条 <code>ready</code> 消息。代理逐一读取这些消息。每次它读取一条消息时，都是来自最后使用的工作线程。因为使用的是 ROUTER 套接字，所以获得了一个身份，然后可以使用该身份将任务发送回 worker 线程。</p>
+<p>这是请求-答复的一种变形，因为任务是与答复一起发送的，并且任务的任何响应都作为新请求发送。  </p>
+<h2 id="ROUTER-Broker-and-DEALER-Workers"><a href="#ROUTER-Broker-and-DEALER-Workers" class="headerlink" title="ROUTER Broker and DEALER Workers"></a>ROUTER Broker and DEALER Workers</h2><p>任何可以使用 REQ 的地方，都可以使用 DEALER。具体区别有两点：  </p>
+<ul>
+<li>REQ 套接字始终在任何数据帧之前发送一个空定界符帧，而 DEALER 没有</li>
+<li>REQ 套接字在收到回复之前只会发送一条消息，而 DEALER 是完全异步的</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20context/" rel="prev" title="ctx_t">
+                  <i class="fa fa-angle-left"></i> ctx_t
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/" rel="next" title="BT 示例代码">
+                  BT 示例代码 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

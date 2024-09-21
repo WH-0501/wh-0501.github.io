@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="trajectory 状态：ACTIVE, FINISHED, FROZEN, DELETED。   FastCorrelativeScanMatcher2D (Real-Time Correlative Scan Matching) 构建 node 和 submap 之间的约束。FastCorrelativeScanMatcher3D (BBS算法)。   Closing Loops通过 Spa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cartographer - 全局优化">
+<meta property="og:url" content="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="trajectory 状态：ACTIVE, FINISHED, FROZEN, DELETED。   FastCorrelativeScanMatcher2D (Real-Time Correlative Scan Matching) 构建 node 和 submap 之间的约束。FastCorrelativeScanMatcher3D (BBS算法)。   Closing Loops通过 Spa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/spa.png">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^m%20=%20\left\{%20\xi^m_i\right\}_{i=1,\cdots,m}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^s%20=%20\left\{%20\xi^s_j\right\}_{j=1,\cdots,n}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi_{i,j}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\Sigma_{i,j}">
+<meta property="og:image" content="http://example.com/images/residual-E.png">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\rho">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^s_j}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i}%20-%20t_{\xi^s_j}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=R_{\xi^m_i}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i}%20\left(%20t_{\xi^m_i}%20-%20t_{\xi^s_j}%20\right)">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_{i;\theta}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_{j;\theta}">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i">
+<meta property="og:image" content="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j">
+<meta property="article:published_time" content="2024-09-21T11:30:31.297Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.797Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/spa.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/","path":"2024/09/21/Robot/Map/cartographer/cartographer - 全局优化/","title":"cartographer - 全局优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cartographer - 全局优化 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Closing-Loops"><span class="nav-number">1.</span> <span class="nav-text">Closing Loops</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-problem"><span class="nav-number">1.1.</span> <span class="nav-text">optimization problem</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cartographer - 全局优化 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cartographer - 全局优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>trajectory 状态：ACTIVE, FINISHED, FROZEN, DELETED。  </p>
+<p>FastCorrelativeScanMatcher2D (Real-Time Correlative Scan Matching) 构建 node 和 submap 之间的约束。<br>FastCorrelativeScanMatcher3D (BBS算法)。  </p>
+<h2 id="Closing-Loops"><a href="#Closing-Loops" class="headerlink" title="Closing Loops"></a>Closing Loops</h2><p>通过 Sparse Pose Adjustment(SPA) 算法优化所有 scan 和 submap 的位姿，来实现全局优化。  </p>
+<p>LocalTrajectorBuilder 中，构建了一个个 submap，也记录了每帧 scan 插入到 submap 中的 pose。 由于传感器测量值存在误差，虽然在局部范围内(即 submap 中)误差影响不大，但由于建图是一个增量式的过程，第 n 个 pose 的预估值依赖于前面 n-1 个 pose 的估计值，因而，会导致误差的累积。因此需要 loop closure 来消除这种误差累积。  </p>
+<p>一旦局部 scan-to-submap 成功，就将该 scan 的 pose 作为节点添加到优化问题中。   </p>
+<h3 id="optimization-problem"><a href="#optimization-problem" class="headerlink" title="optimization problem"></a>optimization problem</h3><p>与 scan matching 一样，回环优化也被公式化为<strong>非线性最小二乘问题</strong>(nonlinear least squares problem)，每隔几秒钟，就会使用 Ceres 来计算结果：<br><img src="/../images/spa.png" alt="SPA"></p>
+<p><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^m = \left\{ \xi^m_i\right\}_{i=1,\cdots,m}" style="border:none;"> 所有 submap 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^s = \left\{ \xi^s_j\right\}_{j=1,\cdots,n}" style="border:none;"> 所有 scan 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 第 i 个 submap 相对于世界坐标系的位姿，上表 m 表示 submap<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;"> 第 j 帧 scan 相对于世界坐标系的位姿，上表 s 表示 scan<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi_{i,j}" style="border:none;"> 第 j 帧 scan 插入第 i 个 submap 的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Sigma_{i,j}" style="border:none;"> 协方差矩阵。表示 第 j 帧 scan 插入第 i 个 submap 的质量，即 scan matching 的评分。<br>约束残差 E 的计算方式：<br><img src="/../images/residual-E.png" alt="residual-E"><br>其中 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\rho" style="border:none;"> 为 loss function (目前使用的是 Huber loss)，用于减少当扫描匹配为优化问题添加不正确约束时可能出现在（SPA）中的异常值的影响(即:<strong>减少异常值outliers对优化结果的影响</strong>)。 例如：诸如办公室隔间等局部对称的环境。 异常值的可选方法参考：&gt; Robust map optimization using dynamic covariance scaling<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i}" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^s_j}" style="border:none;"> 分别表示 submap 和 scan 位姿中的 translation 部分。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i} - t_{\xi^s_j}" style="border:none;"> 则表示了 scan 在 submap 中的相对位姿在世界坐标系下的表示。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R_{\xi^m_i}" style="border:none;"> 表示 submap 在全局坐标系下的位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i}" style="border:none;"> 逆矩阵，表示 submap 局部坐标系到全局坐标系之间的变换关系<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i} \left( t_{\xi^m_i} - t_{\xi^s_j} \right)" style="border:none;"> 表示 scan 在 submap 中的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_{i;\theta}" style="border:none;"> 表示 scan 的姿态<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_{j;\theta}" style="border:none;"> 表示 submap 的姿态  </p>
+<p>全局优化（loop closure）的目的就是优化 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;">，使误差值尽可能的小。   </p>
+<p>每次局部匹配成功，则该时刻的位姿点都会作为一个节点。  </p>
+<p>约束分为全局约束和局部约束。  </p>
+<p>intra constraints<br>intra residuals<br>inter constraints, same trajectory<br>inter residuals, same trajectory<br>inter constraints, different trajectory (无)<br>inter residuals, different trajectory (无)  </p>
+<p>1、scan 数据<br>订阅激光数据 <code>Node::HandleLaserScanMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理激光数据。    </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddRangeData</code> 局部 scan-to-submap 匹配,将scan数据插入 submap，并返回局部匹配结果 matching_result<br> -&gt; 调用 <code>pose_graph_-&gt;AddNode</code> 根据局部匹配结果，添加节点及约束<br> -&gt; 调用 <code>local_slam_result_callback_</code> 即 <code>MapBuilderServer::OnLocalSlamResult</code> 更新日志  </p>
+<p>2、IMU 数据<br>订阅激光数据 <code>Node::HandleImuMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddImuData</code><br> -&gt; <code>pose_graph_-&gt;AddImuData</code></p>
+<p>3、Odometry 数据<br>订阅激光数据 <code>Node::HandleOdometryMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddOdometryData</code><br> -&gt; <code>pose_graph_-&gt;AddOdometryData</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/" rel="prev" title="cartographer - RangeDataCollator">
+                  <i class="fa fa-angle-left"></i> cartographer - RangeDataCollator
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20Pose%20extrapolator/" rel="next" title="cartographer - Pose extrapolator">
+                  cartographer - Pose extrapolator <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

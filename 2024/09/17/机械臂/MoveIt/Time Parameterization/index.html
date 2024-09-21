@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MoveIt! 目前主要是一个 kinematic motion planning  framework - 规划关节或末端执行器的位置，而不是速度或加速度。然而，MoveIt! 会利用后处理来时间参数化运动轨迹的速度和加速度值。 Speed ControlFrom File默认情况下，MoveIt! 将关节轨迹的速度和加速度设置为机器人的 URDF 或 joint_limits.yaml 中允许">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Time Parameterization">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="MoveIt! 目前主要是一个 kinematic motion planning  framework - 规划关节或末端执行器的位置，而不是速度或加速度。然而，MoveIt! 会利用后处理来时间参数化运动轨迹的速度和加速度值。 Speed ControlFrom File默认情况下，MoveIt! 将关节轨迹的速度和加速度设置为机器人的 URDF 或 joint_limits.yaml 中允许">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917194940845.png">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917195006177.png">
+<meta property="article:published_time" content="2024-09-17T11:48:57.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.126Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917194940845.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/","path":"2024/09/17/机械臂/MoveIt/Time Parameterization/","title":"Time Parameterization"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Time Parameterization | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Speed-Control"><span class="nav-number">1.</span> <span class="nav-text">Speed Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#From-File"><span class="nav-number">1.1.</span> <span class="nav-text">From File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-number">1.2.</span> <span class="nav-text">运行时</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Time-Parameterization-Algorithms"><span class="nav-number">2.</span> <span class="nav-text">Time Parameterization Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterative-Parabolic-Time-Parameterization"><span class="nav-number">2.1.</span> <span class="nav-text">Iterative Parabolic Time Parameterization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterative-Spline-Parameterization"><span class="nav-number">2.2.</span> <span class="nav-text">Iterative Spline Parameterization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-optimal-Trajectory-Generation"><span class="nav-number">2.3.</span> <span class="nav-text">Time-optimal Trajectory Generation</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Time Parameterization | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Time Parameterization
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:48:57" itemprop="dateCreated datePublished" datetime="2024-09-17T19:48:57+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>MoveIt! 目前主要是一个 <strong>kinematic motion planning</strong></p>
+<p> <strong>framework</strong> - 规划关节或末端执行器的位置，而不是速度或加速度。然而，MoveIt! 会<strong>利用后处理来时间参数化运动轨迹的速度和加速度值</strong>。</p>
+<h1 id="Speed-Control"><a href="#Speed-Control" class="headerlink" title="Speed Control"></a><strong>Speed Control</strong></h1><h2 id="From-File"><a href="#From-File" class="headerlink" title="From File"></a><strong>From File</strong></h2><p>默认情况下，MoveIt! 将关节轨迹的速度和加速度设置为机器人的 URDF 或 joint_limits.yaml 中允许的默认值。</p>
+<p>joint_limits.yaml 由 setup assistant 生成，最初是 URDF 中值的副本。如果需要特殊约束，用户可以将这些值修改为小于原始 URDF 值。特定的关节属性可以通过 <em>max_position</em>、<em>min_position</em>、<em>max_velocity</em>、<em>max_acceleration</em> 来改变。关节限制可以通过 <em>has_velocity_limits</em>、<em>has_acceleration_limits</em> 键来打开或关闭。</p>
+<h2 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a><strong>运行时</strong></h2><p>运动轨迹的速度也可以在运行时修改。要在每个运动规划的基础上改变速度，可以设置两个缩放因子，如 MotionPlanRequest.msg 中所述。在 MoveIt MotionPlanning RViz 插件中也可以使用 spinbox 来设置这两个因子</p>
+<ul>
+<li><strong>max_velocity_scaling_factor</strong>：</li>
+<li><strong>max_acceleration_scaling_factor</strong>：</li>
+</ul>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917194940845.png" class="" title="image-20240917194940845">
+
+
+
+<h1 id="Time-Parameterization-Algorithms"><a href="#Time-Parameterization-Algorithms" class="headerlink" title="Time Parameterization Algorithms"></a><strong>Time Parameterization Algorithms</strong></h1><p>MoveIt 支持多种运动学轨迹后处理算法，以添加时间戳和速度&#x2F;加速度值。目前在 MoveIt 中有三个默认可用的选项:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/iterative_time_parameterization.cpp"><strong>Iterative Parabolic Time Parameterization</strong></a>：即 iptp，调用 <strong>AddTimeParameterization</strong></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/iterative_spline_parameterization.cpp"><strong>Iterative Spline Parameterization</strong></a>：即 isp，调用 <strong>AddIterativeSplineParameterization</strong></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/time_optimal_trajectory_generation.cpp"><strong>Time-optimal Trajectory Generation</strong></a>：即 totg，调用 <strong>AddTimeOptimalParameterization</strong>。注意，需 melodic 及以上版本</li>
+</ul>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917195006177.png" class="" title="image-20240917195006177">
+
+
+
+<h2 id="Iterative-Parabolic-Time-Parameterization"><a href="#Iterative-Parabolic-Time-Parameterization" class="headerlink" title="Iterative Parabolic Time Parameterization"></a><strong>Iterative Parabolic Time Parameterization</strong></h2><p>IPTP - 迭代抛物线时间参数化算法默认在 motion planning pipeline 中作为 planning request adapter 使用。尽管 MoveIt 使用的迭代抛物线时间参数化算法多年来已经被数百个机器人使用，但它存在已知的 bug。</p>
+<p>使用 <strong>五次样条曲线</strong> 插补。</p>
+<ul>
+<li>moveit 默认使用规划器，可以实现速度和加速度平滑，但无法避免加速度的抖动，详细参考 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/issues/160">Improve time parameterization</a>。</li>
+<li>该规划器<strong>等间距</strong>插补，平滑速度和加速度，适合用在低速精确轨迹控制下。</li>
+</ul>
+<h2 id="Iterative-Spline-Parameterization"><a href="#Iterative-Spline-Parameterization" class="headerlink" title="Iterative Spline Parameterization"></a><strong>Iterative Spline Parameterization</strong></h2><p>迭代样条参数化算法与 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/382">pr382</a> 合并为解决这些问题的。虽然初步的实验很有希望，但在完全替代迭代抛物时间参数化算法之前，正在等待来自社区的更多反馈。</p>
+<p><strong>三次样条曲线</strong>。</p>
+<p>原理参考 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/382">Improved IPTP by fitting a cubic spline</a></p>
+<h2 id="Time-optimal-Trajectory-Generation"><a href="#Time-optimal-Trajectory-Generation" class="headerlink" title="Time-optimal Trajectory Generation"></a><strong>Time-optimal Trajectory Generation</strong></h2><p>在 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/809">pr#809</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/1365">pr#1365</a> 中引入的时间最优轨迹生成算法可以产生非常平滑和连续的速度 profiles 轨迹。该方法是在原始轨迹上拟合路径段，然后从优化后的路径上采样新的路径点。这与严格的时间参数化方法不同，因为生成的路点可能在一定的误差范围内偏离原始轨迹。因此，<strong>在使用此方法时，可能需要额外的碰撞检查</strong>。</p>
+<p>算法原理参考 <a target="_blank" rel="noopener" href="http://www.golems.org/projects/traj.html">Time-Optimal Path Following (July 2012)</a></p>
+<ul>
+<li>该规划器输出轨迹为<strong>等时间间距</strong>（其余为等距）</li>
+<li>该规划器在小间距下规划的速度和加速度较其余两种优化算法更加合理与平滑，<strong>在较大间距下三种规划算法效果差距不大</strong>，良好的规划间距会因机械臂参数的不同而有所不同</li>
+<li><strong>在过小间距下(0.001s)插补，会出现运动规划不恒定</strong>，规划速度不平滑的现象，经测试在0.005s（不同机械臂不一致，同时需要根据控制器输出频率等确定）的规划间距下可以有较为稳定和理想的规划效果。</li>
+</ul>
+<p>切换到 TOTG 方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default_planner_request_adapters/AddTimeParameterization</span><br><span class="line"># 替换为</span><br><span class="line">default_planner_request_adapters/AddTimeOptimalParameterization.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>planning_request_adapter_plugins&#x2F;src&#x2F;add_time_parameterization.cpp</p>
+<p>C++ 解决方案参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk">https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk</a></li>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4">https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4</a></li>
+</ul>
+<p>moveit_commander 解决方案：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.robot= moveit_commander.RobotCommander()</span><br><span class="line"><span class="variable language_">self</span>.arm= <span class="variable language_">self</span>.robot.right_arm</span><br><span class="line">...</span><br><span class="line"><span class="variable language_">self</span>.arm.compute_cartesian_path(waypoints, <span class="number">0.01</span>, <span class="number">0.0</span>, <span class="literal">True</span>)</span><br><span class="line">plan= <span class="variable language_">self</span>.arm.retime_trajectory(<span class="variable language_">self</span>.robot.get_current_state(), plan, <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/" rel="prev" title="Perception">
+                  <i class="fa fa-angle-left"></i> Perception
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/URDF%E5%8F%8ASRDF/" rel="next" title="URDF及SRDF">
+                  URDF及SRDF <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

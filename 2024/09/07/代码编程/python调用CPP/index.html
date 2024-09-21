@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="python 调用 C++Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。 12345678910111213141516171819202122232425262728293031323334#include &lt;boost&#x2F;python.hpp&gt;namespace bp &#x3D; boost::python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python调用C++">
+<meta property="og:url" content="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="python 调用 C++Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。 12345678910111213141516171819202122232425262728293031323334#include &lt;boost&#x2F;python.hpp&gt;namespace bp &#x3D; boost::python">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.947Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="代码编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/","path":"2024/09/07/代码编程/python调用CPP/","title":"python调用C++"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python调用C++ | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python-%E8%B0%83%E7%94%A8-C"><span class="nav-number">1.</span> <span class="nav-text">python 调用 C++</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E8%B0%83%E7%94%A8-python"><span class="nav-number">2.</span> <span class="nav-text">C++ 调用 python</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="python调用C++ | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python调用C++
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">代码编程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="python-调用-C"><a href="#python-调用-C" class="headerlink" title="python 调用 C++"></a><strong>python 调用 C++</strong></h1><p>Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> value) : <span class="built_in">value_</span>(value) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; value_ = value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> value_; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;No arguments&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;Value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// BOOST_PYTHON_MODULE 宏定义 python 模块 my_module </span></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">  <span class="comment">// 使用 bp::class_ 将上面定义的 MyClass 类暴露给 python</span></span><br><span class="line">  <span class="function">bp::class_&lt;MyClass&gt; <span class="title">my_class_interface</span><span class="params">(<span class="string">&quot;MyClass&quot;</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment">// bp::init 用于暴露构造函数</span></span></span></span><br><span class="line"><span class="params"><span class="function">    bp::init&lt;<span class="type">int</span>&gt;())</span></span>;</span><br><span class="line">    <span class="comment">// .def 将 C++ 类的成员函数暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;setValue&quot;</span>, &amp;MyClass::setValue)</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;getValue&quot;</span>, &amp;MyClass::getValue)</span><br><span class="line">    <span class="comment">// 重载函数</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)()&gt;(&amp;MyClass::show))</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)(<span class="type">int</span>)&gt;(&amp;MyClass::show))</span><br><span class="line">    <span class="comment">// .def_readwrite 和 .def_readonly 用于将类成员变量暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def_readonly</span>(<span class="string">&quot;value&quot;</span>, &amp;MyClass::value_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cmake 文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最低版本要求</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">project</span>(MyPythonModule)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 C++ 标准</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 Python 和 Boost Python</span></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源文件</span></span><br><span class="line"><span class="keyword">set</span>(SOURCES my_class.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成共享库</span></span><br><span class="line"><span class="keyword">add_library</span>(my_module SHARED <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_module <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 PREFIX 为空，生成 my_class.so 库，否则默认生成 libmy_class.so 库</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(my_module PROPERTIES PREFIX <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用别名</span></span><br><span class="line">moveit::core::<span class="built_in">MoveItErrorCode</span> (MoveGroupInterfaceWrapper::*pick_1)(<span class="type">const</span> std::string&amp;, <span class="type">bool</span>) =</span><br><span class="line">      &amp;MoveGroupInterfaceWrapper::pick;</span><br><span class="line">move_group_interface_class.<span class="built_in">def</span>(<span class="string">&quot;pick&quot;</span>, pick_1);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>bp::tuple 用于将 C++ 数据转换为 Python 元组的工具。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function">bp::tuple <span class="title">createComplexTuple</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个复杂的元组，包含整数、字符串和向量</span></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">    bp::list pyList;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> v : vec) &#123;</span><br><span class="line">        pyList.<span class="built_in">append</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bp::<span class="built_in">make_tuple</span>(<span class="number">42</span>, <span class="string">&quot;Hello, World&quot;</span>, pyList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">    bp::<span class="built_in">def</span>(<span class="string">&quot;createComplexTuple&quot;</span>, createComplexTuple);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="C-调用-python"><a href="#C-调用-python" class="headerlink" title="C++ 调用 python"></a><strong>C++ 调用 python</strong></h1><p>假设有 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># example.py</span></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">greet</span><span class="params">(name)</span>:</span></span><br><span class="line"><span class="function">  return f<span class="string">&quot;Hello, &#123;name&#125;!&quot;</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">def add(a, b):</span></span><br><span class="line"><span class="function">  return a + b</span></span><br></pre></td></tr></table></figure>
+
+<p>C++ 中通过 boost.python 调用以上 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callPythonFunctions</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 初始化Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 导入 Python 模块</span></span><br><span class="line">    bp::object example_module = bp::<span class="built_in">import</span>(<span class="string">&quot;example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取函数对象</span></span><br><span class="line">    bp::object greet_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;greet&quot;</span>);</span><br><span class="line">    bp::object add_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="comment">// 调用 greet 函数</span></span><br><span class="line">    bp::object result = <span class="built_in">greet_function</span>(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">    std::string greet_result = bp::<span class="built_in">extract</span>&lt;std::string&gt;(result);</span><br><span class="line">    std::cout &lt;&lt; greet_result &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调用 add 函数</span></span><br><span class="line">    bp::object sum_result = <span class="built_in">add_function</span>(<span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="type">int</span> sum = bp::<span class="built_in">extract</span>&lt;<span class="type">int</span>&gt;(sum_result);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="built_in">catch</span> (bp::error_already_set <span class="type">const</span> &amp;) &#123;</span><br><span class="line">    <span class="built_in">PyErr_Print</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 关闭Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">callPythonFunctions</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>对应的 CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"><span class="keyword">project</span>(CppCallPython)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(SOURCES main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(CppCallPython <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(CppCallPython <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/" rel="tag"># 代码编程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/" rel="prev" title="行为树与状态机">
+                  <i class="fa fa-angle-left"></i> 行为树与状态机
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/Docker/Docker/" rel="next" title="Docker">
+                  Docker <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

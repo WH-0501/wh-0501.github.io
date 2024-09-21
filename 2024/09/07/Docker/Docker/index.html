@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述BUILD, SHIP, RUN 即：build – Docker 可以轻易构建用户的应用 SHIP – Docker 可以将应用快速分发 RUN – Docker 有能力秒级启动应用 基于GO开发，遵循Apache2.0。 Docker是一个基于LXC（即:linux container）技术之上构建的Container容器引擎。 Docker 使用客户端-服务器 (C&#x2F;S) 架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker">
+<meta property="og:url" content="http://example.com/2024/09/07/Docker/Docker/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="概述BUILD, SHIP, RUN 即：build – Docker 可以轻易构建用户的应用 SHIP – Docker 可以将应用快速分发 RUN – Docker 有能力秒级启动应用 基于GO开发，遵循Apache2.0。 Docker是一个基于LXC（即:linux container）技术之上构建的Container容器引擎。 Docker 使用客户端-服务器 (C&#x2F;S) 架构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/07/Docker/Docker/image-20240916212807488.png">
+<meta property="og:image" content="http://example.com/2024/09/07/Docker/Docker/docker%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="http://example.com/2024/09/07/Docker/Docker/image-20240916213120282.png">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.690Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/07/Docker/Docker/image-20240916212807488.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/Docker/Docker/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/Docker/Docker/","path":"2024/09/07/Docker/Docker/","title":"Docker"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">Docker特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%BB%84%E4%BB%B6%E4%B8%8E%E5%85%83%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">Docker组件与元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.</span> <span class="nav-text">Docker的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="nav-number">1.4.</span> <span class="nav-text">Docker 可视化工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86%E5%A4%8D%E6%9D%82"><span class="nav-number">2.1.</span> <span class="nav-text">环境管理复杂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97%E6%97%B6%E4%BB%A3%E7%9A%84%E5%88%B0%E6%9D%A5"><span class="nav-number">2.2.</span> <span class="nav-text">云计算时代的到来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96%E6%89%8B%E6%AE%B5%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">2.3.</span> <span class="nav-text">虚拟化手段的变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LXC%E7%9A%84%E4%BE%BF%E6%90%BA%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">LXC的便携性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">容器</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/Docker/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>BUILD, SHIP, RUN</p>
+<p>即：build – Docker 可以轻易构建用户的应用</p>
+<p>SHIP – Docker 可以将应用快速分发</p>
+<p>RUN – Docker 有能力秒级启动应用</p>
+<p>基于GO开发，遵循Apache2.0。</p>
+<p>Docker是一个基于LXC（即:linux container）技术之上构建的Container容器引擎。</p>
+<p>Docker 使用客户端-服务器 (C&#x2F;S) 架构模式，使用远程API来管理和创建Docker容器。</p>
+<h2 id="Docker特性"><a href="#Docker特性" class="headerlink" title="Docker特性"></a><strong>Docker特性</strong></h2><ul>
+<li>速度飞快以及优雅的隔离框架</li>
+<li>物美价廉</li>
+<li>CPU&#x2F;内存的低消耗</li>
+<li>快速开&#x2F;关机</li>
+<li>跨云计算基础构架</li>
+</ul>
+<h2 id="Docker组件与元素"><a href="#Docker组件与元素" class="headerlink" title="Docker组件与元素"></a><strong>Docker组件与元素</strong></h2><p>Docker有三个组件和三个基本元素。</p>
+<p>三个组件分别是：</p>
+<ul>
+<li><strong>Docker Client</strong> 是用户界面，它支持用户与Docker Daemon之间通信。</li>
+<li><strong>Docker Daemon</strong> 运行于主机上，处理服务请求。</li>
+<li><strong>Docker Index</strong> 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。</li>
+</ul>
+<p>三个基本要素分别是：</p>
+<ul>
+<li><strong>Docker Containers</strong> 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。</li>
+<li><strong>Docker Images</strong> 是一个只读模板，用来运行Docker容器。</li>
+<li><strong>DockerFile</strong> 是文件指令集，用来说明如何自动创建Docker镜像。</li>
+</ul>
+<h2 id="Docker的优势"><a href="#Docker的优势" class="headerlink" title="Docker的优势"></a><strong>Docker的优势</strong></h2><ul>
+<li>Docker层是基于容器技术的轻量级虚拟化，没有Hypervisor层，省去了Hypervisor的开销</li>
+<li>对层级的创新应用，通过写入自己特有的内容后添加新的镜像层，新增的镜像层和下层的镜像一起又可以作为基础镜像被更上层的镜像使用。这种特性可以极大地提高磁盘利用率。同时，多个容器使用同一个基础镜像时，可极大地减少内存占用等方面，因为不同的容器访问同一个文件时，只会占用一份内存。</li>
+</ul>
+<h2 id="Docker-可视化工具"><a href="#Docker-可视化工具" class="headerlink" title="Docker 可视化工具"></a><strong>Docker 可视化工具</strong></h2><ul>
+<li>Portainer</li>
+<li>LazyDocker</li>
+</ul>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a><strong>目标</strong></h1><p><strong>实现轻量级的操作系统虚拟化解决方案。</strong></p>
+<p>Docker产生的目的主要是为了解决如下问题。</p>
+<h2 id="环境管理复杂"><a href="#环境管理复杂" class="headerlink" title="环境管理复杂"></a><strong>环境管理复杂</strong></h2><p>从各种OS到各种中间件再到各种App，一款产品能够成功发布，作为开发者需要关心的东西太多，且难于管理，这个问题在软件行业中普遍存在并需要直接面对。<strong>Docker可以简化部署多种应用实例的工作</strong>，比如Web应用、后台应用、数据库应用、大数据应用比如Hadoop集群、消息队列等等都可以打包成一个Image部署。</p>
+<h2 id="云计算时代的到来"><a href="#云计算时代的到来" class="headerlink" title="云计算时代的到来"></a><strong>云计算时代的到来</strong></h2><p>AWS的成功, 引导开发者将应用转移到云上, 解决了硬件管理的问题，然而软件配置和管理相关的问题依然存在 (AWS cloudformation是这个方向的业界标准)。Docker的出现正好能帮助软件开发者开阔思路，尝试新的软件管理方法来解决这个问题。</p>
+<h2 id="虚拟化手段的变化"><a href="#虚拟化手段的变化" class="headerlink" title="虚拟化手段的变化"></a><strong>虚拟化手段的变化</strong></h2><p>云时代采用标配硬件来降低成本，采用虚拟化手段来满足用户按需分配的资源需求以及保证可用性和隔离性。然而无论是KVM还是Xen，在 Docker 看来都在浪费资源，因为用户需要的是高效运行环境而非OS, GuestOS既浪费资源又难于管理, 更加轻量级的LXC更加灵活和快速。</p>
+<img src="/2024/09/07/Docker/Docker/image-20240916212807488.png" class="" title="image-20240916212807488">
+
+<p><strong>与虚拟机的区别：</strong></p>
+<ul>
+<li>虚拟机是用来进行硬件资源划分的完美解决方案，它利用了硬件虚拟化技术。通过一个 Hypervisor 层来实现对资源的彻底隔离；而容器则是操作系统级别的虚拟化，利用的是内核的 Cgroup 和 Namespace 特性，完全是通过软件来实现，仅仅是进程本身就可以与其它进程隔离开，不需要任何辅助</li>
+<li>Docker 容器与主机共享操作系统内核，不同的容器之间可以共享部分系统资源，因此容器更加轻量级，消耗的资源也更少。而虚拟机会独占分配给自己的资源，几乎不存在资源共享，各个虚拟机实例之间近乎完全隔离，因此虚拟机更加重量级，也会消耗更多的资源</li>
+<li>容器被用来设计运行单进程。但 docker exec 命令已解决了该问题</li>
+</ul>
+<h2 id="LXC的便携性"><a href="#LXC的便携性" class="headerlink" title="LXC的便携性"></a><strong>LXC的便携性</strong></h2><p>LXC在 Linux 2.6 的 Kernel 里就已经存在了，但是其设计之初并非为云计算考虑的，缺少标准化的描述手段和容器的可便携性，决定其构建出的环境难于分发和标准化管理(相对于KVM之类image和snapshot的概念)。Docker就在这个问题上做出了实质性的创新方法。</p>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h1><img src="/2024/09/07/Docker/Docker/docker%E6%9E%B6%E6%9E%84.png" class="" title="docker架构">
+
+<p>(来自&lt;Docker进阶与实战&gt;)</p>
+<p>基于内核的Cgroup和Namespace技术。</p>
+<p>Docker并不会直接与内核交互，而是通过Libcontainer与内核交互。</p>
+<p>Libccontainer通过clone接口直接创建容器，通过pivot_root接口进入容器，并通过直接操作cgroupfs文件实现对资源的管理。</p>
+<img src="/2024/09/07/Docker/Docker/image-20240916213120282.png" class="" title="image-20240916213120282">
+
+
+
+<table>
+<thead>
+<tr>
+<th>Docker 镜像(Images)</th>
+<th>Docker 镜像是用于创建 Docker 容器的模板。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Docker 容器(Container)</td>
+<td>容器是独立运行的一个或一组应用。</td>
+</tr>
+<tr>
+<td>Docker 客户端(Client)</td>
+<td>Docker 客户端通过命令行或者其他工具使用 Docker API (<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/api/docker_remote_api">https://docs.docker.com/reference/api/docker_remote_api</a>) 与 Docker 的守护进程通信。</td>
+</tr>
+<tr>
+<td>Docker 主机(Host)</td>
+<td>一个物理或者虚拟的机器用于执行 Docker 守护进程和容器。</td>
+</tr>
+<tr>
+<td>Docker 仓库(Registry)</td>
+<td>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。Docker Hub(<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com</a>) 提供了庞大的镜像集<a target="_blank" rel="noopener" href="https://hub.docker.com/">合供使用。</a></td>
+</tr>
+<tr>
+<td>Docker Machine</td>
+<td>Docker Machine是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker，比如VirtualBox、 Digital Ocean、Microsoft Azure。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install apt-transport-https ca-certificates curl softwareproperties-common gnupg lsb-release</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="built_in">sudo</span> gpg --</span></span><br><span class="line">dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signedby=/usr/share/keyrings/docker-archive-keyring.gpg]</span></span> </span><br><span class="line">https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | </span><br><span class="line">sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt update</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装最新版本</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt install docker-ce docker-ce-cli containerd.io docker-composeplugin</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl start docker</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl enable docker # 使能自启动</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">无需 sudo 运行</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo usermod -aG docker <span class="variable">$USER</span></span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">newgrp docker # 无需重启，立即生效</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装 docker-compose. 需自行选择版本. 或使用 pip 安装：pip install dockercompose</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo curl -L</span></span> </span><br><span class="line">&quot;https://github.com/docker/compose/releases/download/v2.29.2/dockercompose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo chmod +x /usr/local/bin/docker-compose</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Docker daemon 绑定到 Unix socket，而不是 TCP 端口。默认情况下，Unix Socket 只能被 root 用户使用，其它用户需使用 sudo 来访问Unix socket。Docker daemon 总是以 root 用户运行。</p>
+<p>因此，需使用 sudo 来执行 Docker 指令，或者将需要使用 Dockerclient 的用户加入 docker 用户组。<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface">Docker用户组等价于root用户</a>。</p>
+<p>创建 docker 组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> groupadd docker</span></span><br></pre></td></tr></table></figure>
+
+<p>将用户加入docket组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> usermod -aG docker <span class="variable">$USER</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注销并重新登录即可。</p>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a><strong>容器</strong></h1><p>Docker通过 Libcontainer 来实现对容器生命周期的管理、信息的设置和查询，以及监控和通信等功能。容器以镜像为基础，同时又为镜像提供了一个标准的和隔离的执行环境。</p>
+<p>容器首先必须是一个相对独立的运行环境，且在一个容器环境内，应该最小化其对外界的影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">容器=cgroup+namespace+rootfs+容器引擎（用户态工具）</span><br></pre></td></tr></table></figure>
+
+<p>Namespace（主要做访问隔离）</p>
+<p>Cgroup（主要做资源控制）</p>
+<p>Rootfs（文件系统隔离）</p>
+<p>容器引擎（生命周期控制）</p>
+<p>Docker 容器是 Docker 镜像的运行态体现。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/" rel="prev" title="python调用C++">
+                  <i class="fa fa-angle-left"></i> python调用C++
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/Linux/NAT%E8%BD%AC%E5%8F%91/" rel="next" title="NAT转发">
+                  NAT转发 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

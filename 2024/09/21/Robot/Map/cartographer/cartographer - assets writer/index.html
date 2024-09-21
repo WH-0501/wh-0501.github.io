@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SLAM的目的是通过一个度量空间来计算单个传感器的轨迹。在更高的层面上，SLAM的输入是传感器的数据，输出的是对轨迹到目前为止的最佳估计。为了实时和高效，Cartographer 将大部分传感器数据立即扔掉。   轨迹单独没有什么作用，但是一旦估计出了最佳轨迹，就可以用全部的传感器数据来推导和显示周围环境的信息。   Cartographer提供assets writer来完成该功能。 asset">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cartographer - assets writer">
+<meta property="og:url" content="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="SLAM的目的是通过一个度量空间来计算单个传感器的轨迹。在更高的层面上，SLAM的输入是传感器的数据，输出的是对轨迹到目前为止的最佳估计。为了实时和高效，Cartographer 将大部分传感器数据立即扔掉。   轨迹单独没有什么作用，但是一旦估计出了最佳轨迹，就可以用全部的传感器数据来推导和显示周围环境的信息。   Cartographer提供assets writer来完成该功能。 asset">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-21T11:30:31.293Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.794Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/","path":"2024/09/21/Robot/Map/cartographer/cartographer - assets writer/","title":"cartographer - assets writer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cartographer - assets writer | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">示例：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cartographer - assets writer | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cartographer - assets writer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>SLAM的目的是通过一个度量空间来计算单个传感器的轨迹。在更高的层面上，SLAM的输入是传感器的数据，输出的是对轨迹到目前为止的最佳估计。为了实时和高效，Cartographer 将大部分传感器数据立即扔掉。  </p>
+<p>轨迹单独没有什么作用，但是一旦估计出了最佳轨迹，就可以用全部的传感器数据来推导和显示周围环境的信息。  </p>
+<p>Cartographer提供assets writer来完成该功能。 assets writer 的输入内容：  </p>
+<ul>
+<li>原始传感器数据(例如：bag文件)  </li>
+<li>使用原始传感器数据执行 SLAM 得到的 pbstream 文件  </li>
+<li>传感器外部参数(例如：来自bag包或urdf模型的tf数据)  </li>
+<li>配置文件，.lua 文件</li>
+</ul>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>1）、生成 pbstream 文件<br><code>roslaunch cartographer_ros offline_backpack_3d.launch bag_filenames:=$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag</code><br>该指令会加载 cartographer_offline_node 节点。 该指令运行结束之后，会生成 b3-2016-04-05-14-14-00.bag.pbstream 文件。    </p>
+<p>当运行为 online node 时，cartographer 并不知道 bag 什么时候结束，因此需要主动调用如下服务来显式的完成当前轨迹，并使 cartographer 序列化其当前状态：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Finish the first trajectory. No further data will be accepted on it.</span><br><span class="line">rosservice call /finish_trajectory 0</span><br><span class="line"></span><br><span class="line"># Ask Cartographer to serialize its current state.</span><br><span class="line"># (press tab to quickly expand the parameter syntax)</span><br><span class="line">rosservice call /write_state &quot;&#123;filename: &#x27;$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag.pbstream&#x27;, include_unfinished_submaps: &#x27;true&#x27;&#125;&quot;  </span><br><span class="line">```   </span><br><span class="line">（注意：若不指定路径，默认写入 $&#123;HOME&#125;.ros 目录下）  </span><br><span class="line">![assets_writer](../images/assets_writer_path.png)</span><br><span class="line"></span><br><span class="line">2）、调用 assets writer 生成地图  </span><br></pre></td></tr></table></figure>
+<p>roslaunch cartographer_ros assets_writer_backpack_3d.launch <br>   bag_filenames:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag <br>   pose_graph_filename:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag.pbstream</p>
+<pre><code>可通过 `--output_file_prefix` 来指定输出文件前缀，若不指定，则默认为第一个 bag 包的名字。 例如：若指定 `--output_file_prefix=point.ply`，则此例中输出文件名为：`$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag_points.ply`  
+  
+### 配置  
+Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [PointsBatchs](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/points_batch.h) 组成。数据从第一个处理器流向下一个处理器，每个处理器都有机会在传递之前修改PointsBatch（点流）。  
+
+例如：assets_writer_backpack_3d.lua 使用 min_max_range_filter 来过滤离传感器太近或太远的点。然后，写 X-Rays，再根据传感器坐标系ID重新着色这个 PointBatch，并使用这些新的颜色来写另一组 X-Rays。  
+  
+所有的 PointsProcessor 都在 [cartographer/io](https://github.com/googlecartographer/cartographer/tree/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io) 子目录下，并记录在他们各自的头文件中。
+
+### 点云数据第一人称视角可视化  
+一般情况下，通过点生成 fly 需要两个步骤：  
+    ①、将想要显示的点写入 PLY 文件  
+    ②、使用[point_cloud_viewer](https://github.com/googlecartographer/point_cloud_viewer)  
+
+第一步通常通过使用 [IntensityToColorPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/intensity_to_color_points_processor.cc) 将点设置为非白色的颜色，然后使用 [PlyWritingPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/ply_writing_points_processor.h) 将这些点写入 PLY中。例如：assets_writer_backpack_2d.lua。  
+
+一旦有了PLY文件，按照 point_cloud_viewer 的README文档来生成一个存储在磁盘上的 octree 数据。  
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20LocalTrajectoryBuilder2D/" rel="prev" title="cartographer - LocalTrajectoryBuilder2D">
+                  <i class="fa fa-angle-left"></i> cartographer - LocalTrajectoryBuilder2D
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/" rel="next" title="cartographer - RangeDataCollator">
+                  cartographer - RangeDataCollator <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

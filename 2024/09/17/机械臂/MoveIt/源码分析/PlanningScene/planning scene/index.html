@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1、Planning scene Planning scene 用来表示机器人所处的环境，同时存储了机器人本身的状态。 PlanningScene 类提供了用于碰撞(collision)检查和约束(constraint)检查的主接口。 可使用 RobotModel 或 URDF 和 SRDF 来配置 PlanningScene。但这并不是实例化 PlanningScene 的推荐方式。推荐使用 P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="planning scene">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="1、Planning scene Planning scene 用来表示机器人所处的环境，同时存储了机器人本身的状态。 PlanningScene 类提供了用于碰撞(collision)检查和约束(constraint)检查的主接口。 可使用 RobotModel 或 URDF 和 SRDF 来配置 PlanningScene。但这并不是实例化 PlanningScene 的推荐方式。推荐使用 P">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-17T12:45:07.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.053Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/","path":"2024/09/17/机械臂/MoveIt/源码分析/PlanningScene/planning scene/","title":"planning scene"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>planning scene | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="planning scene | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          planning scene
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:45:07" itemprop="dateCreated datePublished" datetime="2024-09-17T20:45:07+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/" itemprop="url" rel="index"><span itemprop="name">PlanningScene</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>1、Planning scene</strong></p>
+<p>Planning scene 用来表示机器人所处的环境，同时存储了机器人本身的状态。</p>
+<p>PlanningScene 类提供了用于碰撞(collision)检查和约束(constraint)检查的主接口。</p>
+<p>可使用 RobotModel 或 URDF 和 SRDF 来配置 PlanningScene。但这并不是实例化 <a target="_blank" rel="noopener" href="http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/planning_scene/planning_scene_tutorial.html">PlanningScene</a> 的推荐方式。推荐使用 <strong>PlanningSceneMonitor</strong> 来创建和维护当前 planning scene，它使用机器人关节和其它传感器的数据。</p>
+<p>本例中，使用 PlanningScene，但该方法仅用于演示。</p>
+<p>​                robot_model_loader::RobotModelLoader robot_model_loader(“robot_description”); robot_model::RobotModelPtr kinematic_model &#x3D; robot_model_loader.getModel(); planning_scene::PlanningScene planning_scene(kinematic_model);              </p>
+<p>利用参数服务器上的 robot_description 参数来定义一个 planning_scene。</p>
+<p><strong>2、Collision Checking</strong></p>
+<p><strong>1）self-collision checking</strong></p>
+<p>要做的第一件事是检查机器人在当前状态下是否处于自碰撞状态，即机器人当前的配置是否会导致机器人的各个部件相互碰撞。为此，将构造一个 <strong>CollisionRequest</strong> 对象和一个 <strong>CollisionResult</strong> 对象，并将它们传递给碰撞检查函数。注意，结果中包含了机器人是否处于自碰撞状态的结果。自碰撞检查使用一个 unpadded 的机器人，即直接使用 URDF 中提供的碰撞网格，没有额外的填充。</p>
+<p>​                collision_detection::CollisionRequest collision_request; collision_detection::CollisionResult collision_result; planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 1: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
+<p><strong>2）改变状态</strong></p>
+<p>改变机器人的当前状态。Planning scene 在内部维护当前状态。可以得到它的一个引用，然后改变它，然后重新检查碰撞。需要特别注意的是，在发出新的碰撞检查请求之前，需要清除 collision_result。</p>
+<p>​                robot_state::RobotState&amp; current_state &#x3D; planning_scene.getCurrentStateNonConst(); current_state.setToRandomPositions(); collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 2: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
+<p>从何获得当前状态？</p>
+<p><strong>3）Checking for a group</strong></p>
+<p>现在，对 hand 进行碰撞检查，即：将检查 hand 与机器人身体的其他部位是否有碰撞。可以通过将组名 “hand” 添加到碰撞请求中来特别地进行请求。</p>
+<p>​                collision_request.group_name &#x3D; “hand”; current_state.setToRandomPositions(); collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 3: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
+<p><strong>4）Getting Contact Information</strong></p>
+<p>首先，手动设置机械臂到一个位置，假设在该位置确知会发生自碰撞。请注意，以 Panda 为例，这种状态现在实际上超出了 Panda 的 joint 限制，也可以直接检查。</p>
+<p>​                std::vector<double> joint_values &#x3D; { 0.0, 0.0, 0.0, -2.9, 0.0, 1.4, 0.0 }; const robot_model::JointModelGroup* joint_model_group &#x3D; current_state.getJointModelGroup(“panda_arm”); current_state.setJointGroupPositions(joint_model_group, joint_values); ROS_INFO_STREAM(“Test 4: Current state is “                &lt;&lt; (current_state.satisfiesBounds(joint_model_group) ? “valid” : “not valid”));              </p>
+<p>现在，可以得到可能发生在给定位置的任何碰撞的联系信息。可以通过在碰撞请求中填充适当的字段并指定要返回的最大联系数量来请求联系信息。</p>
+<p>​                collision_request.contacts &#x3D; true; collision_request.max_contacts &#x3D; 1000; … collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 5: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”); collision_detection::CollisionResult::ContactMap::const_iterator it; for (it &#x3D; collision_result.contacts.begin(); it !&#x3D; collision_result.contacts.end(); ++it) {  ROS_INFO(“Contact between: %s and %s”, it-&gt;first.first.c_str(), it-&gt;first.second.c_str()); }              </p>
+<p><strong>5）Modifying the Allowed Collision Matrix</strong></p>
+<p>AllowedCollisionMatrix(ACM) 提供了一种机制来告诉 collision world 忽略某些对象之间的碰撞：包括 robot 的部件和 world 中的对象。可以告诉 collision 检查器忽略上面报告的 links 之间的所有碰撞，也就是说，即使这些 links 实际上是在碰撞中，collision 检查器也会忽略这些碰撞，返回 not in collision。</p>
+<p>还请注意，在本例中还介绍了如何复制允许的 collision matrix 和当前状态，并将它们传递给 collision checking 函数。</p>
+<p>​                collision_detection::AllowedCollisionMatrix acm &#x3D; planning_scene.getAllowedCollisionMatrix(); robot_state::RobotState copied_state &#x3D; planning_scene.getCurrentState(); collision_detection::CollisionResult::ContactMap::const_iterator it2; for (it2 &#x3D; collision_result.contacts.begin(); it2 !&#x3D; collision_result.contacts.end(); ++it2) {  acm.setEntry(it2-&gt;first.first, it2-&gt;first.second, true); } collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result, copied_state, acm); ROS_INFO_STREAM(“Test 6: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
+<p><strong>6）Full Collision Checking</strong></p>
+<p>当检查自冲突时，可以使用checkCollision函数，它将检查自冲突和与环境的冲突[当前是空的]。这是一组冲突检查功能，将最常用的planner。注意，与环境的碰撞检查将使用padded版本的robot。填充物有助于使robot远离环境中的障碍物。</p>
+<p>虽然已经检查了自碰撞，但可以使用 checkCollision 函数来代替，它将检查自碰撞和与环境的碰撞(目前为空)。这是一组在规划程序中最常使用冲突检查函数。请注意，<strong>与环境的碰撞检查将使用 padded 版的机器人</strong>。填充有助于使机器人远离环境中的障碍物</p>
+<p>​                collision_result.clear(); planning_scene.checkCollision(collision_request, collision_result, copied_state, acm); ROS_INFO_STREAM(“Test 7: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
+<p><strong>3、Constraint Checking</strong></p>
+<p>PlanningScene 类还包括易于使用的检查约束的函数调用。约束可以是两种类型:</p>
+<ul>
+<li>从 KinematicConstraint 集中选择的约束:即JointConstraint, PositionConstraint, OrientationConstraint和VisibilityConstraint</li>
+<li>通过回调指定的用户定义约束</li>
+</ul>
+<p>先看一个带有简单的 KinematicConstraint 的例子。</p>
+<p><strong>1）Checking Kinematic Constraints</strong></p>
+<p>首先在 Panda robot 的 panda_arm 组的末端执行器上定义一个简单的位置和方向约束。注意使用方便的函数来填充约束(这些函数可以在 utils.h 文件中找到，该文件来自 moveit_core 中的 kinematic_constraints 目录)。</p>
+<p>​                std::string end_effector_name &#x3D; joint_model_group-&gt;getLinkModelNames().back(); geometry_msgs::PoseStamped desired_pose; desired_pose.pose.orientation.w &#x3D; 1.0; desired_pose.pose.position.x &#x3D; 0.3; desired_pose.pose.position.y &#x3D; -0.185; desired_pose.pose.position.z &#x3D; 0.5; desired_pose.header.frame_id &#x3D; “panda_link0”; moveit_msgs::Constraints goal_constraint &#x3D;    kinematic_constraints::constructGoalConstraints(end_effector_name, desired_pose);              </p>
+<p>然后可以使用 PlanningScene 类中的 <strong>isStateConstrained</strong> 函数检查这个约束的状态</p>
+<p>​                copied_state.setToRandomPositions(); copied_state.update(); bool constrained &#x3D; planning_scene.isStateConstrained(copied_state, goal_constraint); ROS_INFO_STREAM(“Test 8: Random state is “ &lt;&lt; (constrained ? “constrained” : “not constrained”));              </p>
+<p>有一种更有效的检查约束的方法(当需要反复检查相同的约束时，例如在 planner 中)。首先构造一个 KinematicConstraintSet 来对 ROS Constraints 消息进行预处理，并对其进行快速处理。</p>
+<p>​                kinematic_constraints::KinematicConstraintSet kinematic_constraint_set(kinematic_model); kinematic_constraint_set.add(goal_constraint, planning_scene.getTransforms()); bool constrained_2 &#x3D; planning_scene.isStateConstrained(copied_state, kinematic_constraint_set); ROS_INFO_STREAM(“Test 9: Random state is “ &lt;&lt; (constrained_2 ? “constrained” : “not constrained”));              </p>
+<p>使用 KinematicConstraintSet 类有一个直接的方法来做到这一点</p>
+<p>​                kinematic_constraints::ConstraintEvaluationResult constraint_eval_result &#x3D;    kinematic_constraint_set.decide(copied_state); ROS_INFO_STREAM(“Test 10: Random state is “ &lt;&lt; (constraint_eval_result.satisfied ? “constrained” : “not constrained”));              </p>
+<p><strong>3）User-defined constraints</strong></p>
+<p>用户定义的约束也可以指定到 PlanningScene 类。这是通过使用 setStateFeasibilityPredicate 函数指定一个回调来完成的。</p>
+<p>下面是一个简单的用户定义回调示例，检查 Panda 机器人的 “panda_joint1” 是正还是负:</p>
+<p>​                bool stateFeasibilityTestExample(const robot_state::RobotState&amp; kinematic_state, bool verbose) {  const double* joint_values &#x3D; kinematic_state.getJointPositions(“panda_joint1”);  return (joint_values[0] &gt; 0.0); }              </p>
+<p>然后，无论何时调用 <strong>isStateFeasible</strong>，这个用户定义的回调都会被调用</p>
+<p>​                planning_scene.setStateFeasibilityPredicate(stateFeasibilityTestExample); bool state_feasible &#x3D; planning_scene.isStateFeasible(copied_state); ROS_INFO_STREAM(“Test 11: Random state is “ &lt;&lt; (state_feasible ? “feasible” : “not feasible”));              </p>
+<p>无论何时调用 isStateValid，都会执行三个检查：</p>
+<ul>
+<li>冲突检查</li>
+<li>约束检查</li>
+<li>使用用户定义的回调进行可行性检查</li>
+</ul>
+<p>​                bool state_valid &#x3D; planning_scene.isStateValid(copied_state, kinematic_constraint_set, “panda_arm”); ROS_INFO_STREAM(“Test 12: Random state is “ &lt;&lt; (state_valid ? “valid” : “not valid”));              </p>
+<p>请注意，所有的 planners 均可通过 MoveIt 和 OMPL 使用用户定义的回调执行碰撞检查、约束检查和可行性检查。</p>
+<p><strong>4、运行</strong></p>
+<p>​                roslaunch moveit_tutorials planning_scene_tutorial.launch              </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/MoveitSimpleControllerManager/" rel="prev" title="MoveitSimpleControllerManager">
+                  <i class="fa fa-angle-left"></i> MoveitSimpleControllerManager
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/" rel="next" title="planning scene API">
+                  planning scene API <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

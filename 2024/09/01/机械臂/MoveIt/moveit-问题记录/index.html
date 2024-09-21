@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="semantic 错误① Semantic description is not specified .. 未指定 SRDF 文件(通常在 planning_context.launch 中) ② Semantic description is not specified for the same robot as the URDF 修改了机械臂模型，但未重新生成 SRDF。例如：将机械臂安装在车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="moveit-问题记录">
+<meta property="og:url" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="semantic 错误① Semantic description is not specified .. 未指定 SRDF 文件(通常在 planning_context.launch 中) ② Semantic description is not specified for the same robot as the URDF 修改了机械臂模型，但未重新生成 SRDF。例如：将机械臂安装在车">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212011075.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212441818.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212655189.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212720316.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212732200.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212741605.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212749902.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212754200.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212806141.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212810524.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212814153.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212848740.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212857931.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212944566.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213036326.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213117876.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213129021.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213150207.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213158311.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213237796.png">
+<meta property="article:published_time" content="2024-09-01T13:17:54.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.004Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212011075.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/","path":"2024/09/01/机械臂/MoveIt/moveit-问题记录/","title":"moveit-问题记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>moveit-问题记录 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#semantic-%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">semantic 错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#move-group-%E5%8A%A0%E8%BD%BD%E6%85%A2"><span class="nav-number">2.</span> <span class="nav-text">move_group 加载慢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#panda-moveit-config-demo"><span class="nav-number">3.</span> <span class="nav-text">panda_moveit_config demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#moveit-tutorials-%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD-motion-planning"><span class="nav-number">4.</span> <span class="nav-text">moveit_tutorials 无法加载 motion planning</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#execution-type-%E5%AF%BC%E8%87%B4%E5%BC%82%E5%B8%B8"><span class="nav-number">5.</span> <span class="nav-text">execution_type 导致异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#visual-array-%E8%AD%A6%E5%91%8A"><span class="nav-number">6.</span> <span class="nav-text">visual_array 警告</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E8%BD%A8%E8%BF%B9%E6%89%A7%E8%A1%8C"><span class="nav-number">7.</span> <span class="nav-text">停止轨迹执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#asyncMove"><span class="nav-number">7.1.</span> <span class="nav-text">asyncMove</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-execute"><span class="nav-number">7.2.</span> <span class="nav-text">async_execute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go"><span class="nav-number">7.3.</span> <span class="nav-text">go</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%A8%E8%BF%B9%E8%B5%B7%E7%82%B9%E5%BC%82%E5%B8%B8"><span class="nav-number">8.</span> <span class="nav-text">轨迹起点异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E4%BB%BB%E4%BD%95%E4%B8%80%E7%BB%84%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">9.</span> <span class="nav-text">无法识别任何一组控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gazebo-%E4%B8%AD-controllers"><span class="nav-number">9.1.</span> <span class="nav-text">gazebo 中 controllers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#moveit-%E5%8C%85%E4%B8%AD-controllers"><span class="nav-number">9.2.</span> <span class="nav-text">moveit 包中 controllers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interactive-Marker-%E4%B8%8D%E6%98%BE%E7%A4%BA"><span class="nav-number">10.</span> <span class="nav-text">Interactive Marker 不显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cartesian-%E8%BD%A8%E8%BF%B9%E9%80%9F%E5%BA%A6%E4%B8%BA%E7%A9%BA"><span class="nav-number">11.</span> <span class="nav-text">cartesian 轨迹速度为空</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%8A%9B%E5%8A%9B%E7%9F%A9-gravity-torques"><span class="nav-number">12.</span> <span class="nav-text">重力力矩(gravity torques)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A7%84%E5%88%92%E6%97%B6%E9%97%B4"><span class="nav-number">13.</span> <span class="nav-text">设置规划时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95"><span class="nav-number">14.</span> <span class="nav-text">选择规划算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spawner-error-too-few-arguments"><span class="nav-number">15.</span> <span class="nav-text">spawner: error: too few arguments</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gazebo-%E6%97%A0%E6%B3%95%E5%8A%A0%E8%BD%BD-controller"><span class="nav-number">16.</span> <span class="nav-text">Gazebo 无法加载 controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RViz-%E4%B8%8D%E6%98%BE%E7%A4%BA-interactMarker"><span class="nav-number">17.</span> <span class="nav-text">RViz 不显示 interactMarker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Motion-planning-start-tree-could-not-be-initialized"><span class="nav-number">18.</span> <span class="nav-text">Motion planning start tree could not be initialized!</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="moveit-问题记录 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          moveit-问题记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 21:17:54" itemprop="dateCreated datePublished" datetime="2024-09-01T21:17:54+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="semantic-错误"><a href="#semantic-错误" class="headerlink" title="semantic 错误"></a><strong>semantic 错误</strong></h1><p>① Semantic description is not specified ..</p>
+<p>未指定 SRDF 文件(通常在 planning_context.launch 中)</p>
+<p>② Semantic description is not specified for the same robot as the URDF</p>
+<p>修改了机械臂模型，但未重新生成 SRDF。例如：将机械臂安装在车上，但仍使用机械臂的 SRDF。</p>
+<h1 id="move-group-加载慢"><a href="#move-group-加载慢" class="headerlink" title="move_group 加载慢"></a><strong>move_group 加载慢</strong></h1><p>move_group 启动很慢，并提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">It is likely there are too many vertices in collision geometry  </span><br></pre></td></tr></table></figure>
+
+<p>​      </p>
+<p>原因：导出的模型(STL&#x2F;dae)太详细，进行碰撞检测时变慢，可减少面或顶点数。注意，只需要修改  中的  即可，无需修改  中的参数。</p>
+<h1 id="panda-moveit-config-demo"><a href="#panda-moveit-config-demo" class="headerlink" title="panda_moveit_config demo"></a><strong>panda_moveit_config demo</strong></h1><p>运行 demo 程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch rviz_tutorial:=<span class="literal">true</span></span>  </span><br></pre></td></tr></table></figure>
+
+<p>​     </p>
+<p>无法加载插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception while loading planning adapter plugin &#x27;default_planner_request_adapters/ResolveConstraintFrames&#x27;: According to the loaded plugin descriptions the class default_planner_request_adapters/ResolveConstraintFrames with base class type planning_request_adapter::PlanningRequestAdapter does not exist. Declared types are  chomp/OptimizerAdapter default_planner_request_adapters/AddIterativeSplineParameterization default_planner_request_adapters/AddTimeOptimalParameterization default_planner_request_adapters/AddTimeParameterization default_planner_request_adapters/Empty default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints default_planner_request_adapters/FixWorkspaceBounds              </span><br></pre></td></tr></table></figure>
+
+
+
+<p>屏蔽 <code>panda_moveit_config/launch/ompl_planning_pipeline.launch.xml</code> 及 <code>chomp_planning_pipeline.launch.xml</code> 文件中的 controller 配置</p>
+<h1 id="moveit-tutorials-无法加载-motion-planning"><a href="#moveit-tutorials-无法加载-motion-planning" class="headerlink" title="moveit_tutorials 无法加载 motion planning"></a><strong>moveit_tutorials 无法加载 motion planning</strong></h1><p>运行 moveit_tutorials demo 时，rviz 卡死在添加 motion planning 插件上</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch rviz_tutorial:=<span class="literal">true</span></span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<h1 id="execution-type-导致异常"><a href="#execution-type-导致异常" class="headerlink" title="execution_type 导致异常"></a><strong>execution_type 导致异常</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RLException: unused args [execution_type] for include of [rxxx_moveit_config/launch/xxx_moveit_controller_manager.launch.xml]     </span><br></pre></td></tr></table></figure>
+
+<p>​         </p>
+<p>xxx_moveit_controller_manager.launch.xml 中添加 execution_type 定义</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212011075.png" class="" title="image-20240901212011075">
+
+
+
+<h1 id="visual-array-警告"><a href="#visual-array-警告" class="headerlink" title="visual_array 警告"></a><strong>visual_array 警告</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">attempted to add visual [link_base] to link [JXB], but it already exists in visual_array under name [link_base] </span><br></pre></td></tr></table></figure>
+
+<p>​             </p>
+<p>机械臂挂载到移动底盘时，挂载 joint 重复导致的。</p>
+<h1 id="停止轨迹执行"><a href="#停止轨迹执行" class="headerlink" title="停止轨迹执行"></a><strong>停止轨迹执行</strong></h1><p>轨迹执行过程中停止</p>
+<h2 id="asyncMove"><a href="#asyncMove" class="headerlink" title="asyncMove"></a><strong>asyncMove</strong></h2><p>轨迹规划及执行。有两种 move 指令：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">asyncMove</span>()  <span class="comment">// 可通过 stop() 停止轨迹 </span></span><br><span class="line"><span class="built_in">move</span>()    </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://docs.ros.org/en/jade/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroup.html#a65af5d80f04a9557b627d7d0bcb1e097">asyncMove</a>：规划并执行轨迹。<strong>非阻塞</strong>(不等待轨迹的执行完成)</li>
+<li><a target="_blank" rel="noopener" href="http://docs.ros.org/en/jade/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroup.html#a4c63625e2e9eb5c342d1fc6732bd8cf7">move</a>：规划并执行轨迹。<strong>阻塞</strong>(等待轨迹的执行完成)，并且需要启动一个 asynchronous spinner</li>
+</ul>
+<p>对应 python 下为：</p>
+<ul>
+<li>async_move</li>
+<li>move</li>
+</ul>
+<h2 id="async-execute"><a href="#async-execute" class="headerlink" title="async_execute"></a><strong>async_execute</strong></h2><p>轨迹执行(不包括轨迹规划过程)。有两种 execute 指令：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">async_execute</span>() <span class="comment">// 执行过程中可通过 stop() 停止 </span></span><br><span class="line"><span class="built_in">execute</span>()    </span><br></pre></td></tr></table></figure>
+
+
+
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">moveit::planning_interface::MoveGroupInterface::Plan my_plan;  </span><br><span class="line">moveit::planning_interface::MoveItErrorCode success = group.<span class="built_in">plan</span>(my_plan)  </span><br><span class="line">group.<span class="built_in">asyncexecute</span>(my_plan);  </span><br><span class="line"><span class="built_in">sleep</span>(<span class="number">1</span>);  </span><br><span class="line">group.<span class="built_in">stop</span>();  </span><br><span class="line"><span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">plan=arm.<span class="built_in">plan</span>()  </span><br><span class="line">arm.<span class="built_in">execute</span>(plan,wait=False)  </span><br><span class="line">rospy.<span class="built_in">loginfo</span>(<span class="string">&quot;move home finished&quot;</span>)  </span><br><span class="line">rospy.<span class="built_in">sleep</span>(<span class="number">0.5</span>)  </span><br><span class="line">arm.<span class="built_in">stop</span>()  </span><br><span class="line">rospy.<span class="built_in">loginfo</span>(<span class="string">&quot;stoped&quot;</span>)  </span><br><span class="line">rospy.<span class="built_in">sleep</span>(<span class="number">0.5</span>)  </span><br><span class="line">moveit_commander.<span class="built_in">roscpp_shutdown</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>execute() 接口，通过 actionlib 向 <strong>execute_trajectory</strong> 发送 moveit_msgs::ExecuteTrajectoryGoal 类型 </p>
+<h2 id="go"><a href="#go" class="headerlink" title="go"></a><strong>go</strong></h2><p>将 wait 参数设置为 false</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group.go(wait=<span class="literal">False</span>)   </span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<p>然后通过订阅 &#x2F;move_group&#x2F;status 获取轨迹执行状态。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># moveit_commander/src</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">go</span>(<span class="params">self, joints=<span class="literal">None</span>, wait=<span class="literal">True</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; Set the target of the group and then move the group to the specified target &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(joints) <span class="keyword">is</span> <span class="built_in">bool</span>:</span><br><span class="line">        wait = joints</span><br><span class="line">        joints = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">type</span>(joints) <span class="keyword">is</span> JointState:</span><br><span class="line">        <span class="variable language_">self</span>.set_joint_value_target(joints)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">type</span>(joints) <span class="keyword">is</span> Pose:</span><br><span class="line">        <span class="variable language_">self</span>.set_pose_target(joints)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> joints <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="variable language_">self</span>.set_joint_value_target(<span class="variable language_">self</span>.get_remembered_joint_values()[joints])</span><br><span class="line">        <span class="keyword">except</span> TypeError:</span><br><span class="line">            <span class="variable language_">self</span>.set_joint_value_target(joints)</span><br><span class="line">    <span class="keyword">if</span> wait:</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._g.move()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._g.async_move()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>go() 函数通过调用 move()&#x2F;async_move()，其中 async_move() 实际是调用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">move(<span class="literal">False</span>) <span class="comment"># 即：wait 参数为 False, 非阻塞   </span></span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
+<p>move() 接口通过 actionlib 向 move_group 发送 moveit_msgs::MoveGroupGoal  类型 goal。</p>
+<p>设置为 unblock 模式后，前一条轨迹未执行完时，接收到新的指令，会自动执行新的指令。</p>
+<h1 id="轨迹起点异常"><a href="#轨迹起点异常" class="headerlink" title="轨迹起点异常"></a><strong>轨迹起点异常</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invalid Trajectory: start point deviates from current robot state more than 0.01 </span><br></pre></td></tr></table></figure>
+
+<p>​             </p>
+<p>可能原因：</p>
+<ul>
+<li>机械臂抖动大，导致起始位姿改变</li>
+<li>move_group 获取的机械臂状态不对</li>
+</ul>
+<p>原因1解决方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置机械臂当前的状态作为运动初始状态</span></span><br><span class="line">group.setStartStateToCurrentState()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者放大允许误差范围</span></span><br><span class="line">group.setGoalPositionTolernace(<span class="number">0.001</span>)</span><br><span class="line">group.setGoalOrientationTolernace(<span class="number">0.02</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或修改文件参数(无法通过 rosparam set 设置)</span></span><br><span class="line">/move_group/trajectory_execution/allowed_start_tolerance <span class="number">0.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>原因2解决方法</p>
+<p>查看是否有节点重复发布机械臂关节状态。关掉 launch 中重复的 joint_state_publisher，例如：</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212441818.png" class="" title="image-20240901212441818">
+
+<p>可以看到有重复发布机械臂关节</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">header:</span> </span><br><span class="line">  <span class="attr">seq:</span> <span class="number">39288</span></span><br><span class="line">  <span class="attr">stamp:</span> </span><br><span class="line">    <span class="attr">secs:</span> <span class="number">1662717522</span></span><br><span class="line">    <span class="attr">nsecs:</span> <span class="number">857585906</span></span><br><span class="line">  <span class="attr">frame_id:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">name:</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">front_left_wheel</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">front_right_wheel</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">rear_left_wheel</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">rear_right_wheel</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_shoulder_pan_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_shoulder_lift_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_elbow_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_1_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_2_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_3_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger1_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger2_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger1_inner_knuckle_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger2_inner_knuckle_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger1_finger_tip_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">gripper_finger2_finger_tip_joint</span></span><br><span class="line"><span class="attr">position:</span> [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]</span><br><span class="line"><span class="attr">velocity:</span> []</span><br><span class="line"><span class="attr">effort:</span> []</span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">header:</span> </span><br><span class="line">  <span class="attr">seq:</span> <span class="number">260742</span></span><br><span class="line">  <span class="attr">stamp:</span> </span><br><span class="line">    <span class="attr">secs:</span> <span class="number">1662717522</span></span><br><span class="line">    <span class="attr">nsecs:</span> <span class="number">862274557</span></span><br><span class="line">  <span class="attr">frame_id:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="attr">name:</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_elbow_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_shoulder_lift_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_shoulder_pan_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_1_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_2_joint</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ur5_wrist_3_joint</span></span><br><span class="line"><span class="attr">position:</span> [<span class="number">1.7724227905273438</span>, <span class="number">-2.3259976545916956</span>, <span class="number">1.5698211193084717</span>, <span class="number">0.5097464323043823</span>, <span class="number">1.4149070978164673</span>, <span class="number">3.5952674807049334e-05</span>]</span><br><span class="line"><span class="attr">velocity:</span> [<span class="number">-0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]</span><br><span class="line"><span class="attr">effort:</span> [<span class="number">-0.8272280693054199</span>, <span class="number">1.4930458068847656</span>, <span class="number">-0.46405479311943054</span>, <span class="number">-0.24553163349628448</span>, <span class="number">0.13877874612808228</span>, <span class="number">0.03812602907419205</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="无法识别任何一组控制器"><a href="#无法识别任何一组控制器" class="headerlink" title="无法识别任何一组控制器"></a><strong>无法识别任何一组控制器</strong></h1><p>Unable to identify any set of controllers that can actuate the specified joints:</p>
+<p>参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/ha010/article/details/109274459">https://blog.csdn.net/ha010/article/details/109274459</a></p>
+<h2 id="gazebo-中-controllers"><a href="#gazebo-中-controllers" class="headerlink" title="gazebo 中 controllers"></a><strong>gazebo 中 controllers</strong></h2><p>以 xxxx+Kinova 为例，gazebo launch 中会通过 kinova_control.launch 来配置 controllers：</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212655189.png" class="" title="image-20240901212655189">
+
+<p>可见，kinova_control.launch 在启动 controller_spawner 时，设置了命名空间(kinova_robotName 参数指定)和 controller 名</p>
+<p>同时 kinova_control.launch 会加载 $(arg kinova_robotName)_control.yaml 配置文件</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212720316.png" class="" title="image-20240901212720316">
+
+
+
+<h2 id="moveit-包中-controllers"><a href="#moveit-包中-controllers" class="headerlink" title="moveit 包中 controllers"></a><strong>moveit 包中 controllers</strong></h2><img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212732200.png" class="" title="image-20240901212732200">
+
+<p>在 moveit 启动 launch 中通过 joint_state_ns 及 controller_manger 设置了命名空间及名字，<strong>后续会将 &#x2F;joint_states 主题映射为 joint_states_ns 参数指定的主题名</strong>。并在 arm_controller.yaml 中配置 controllers 信息</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212741605.png" class="" title="image-20240901212741605">
+
+<p><code>&lt;controller_manager&gt;_moveit_controller_manager.launch.xml</code></p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212749902.png" class="" title="image-20240901212749902">
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212754200.png" class="" title="image-20240901212754200">
+
+<p>（该配置文件在单独运行 moveit demo，如 j2n6s300_demo.launch 时，可以使用，其中指定了 controllers: j2n6s300 和 j2n6s300_gripper，无法与 kinova_control.launch 一起使用）</p>
+<p>即：gazebo 中 joint_states 主题为 &#x2F;j2n6s300&#x2F;joint_states，而在 moveit 中使用的是 &#x2F;mr2000_kinova&#x2F;joint_states，需进行同步。</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212806141.png" class="" title="image-20240901212806141">
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212810524.png" class="" title="image-20240901212810524">
+
+<p>注意：arm_controller.yaml 中指定了 controllers 插件前缀为 j2n6s300，与 kinova_control.launch 中设置的相同</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212814153.png" class="" title="image-20240901212814153">
+
+
+
+<h1 id="Interactive-Marker-不显示"><a href="#Interactive-Marker-不显示" class="headerlink" title="Interactive Marker 不显示"></a><strong>Interactive Marker 不显示</strong></h1><img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212848740.png" class="" title="image-20240901212848740">
+
+<p>同时，需检查 kinematics.yaml，确保其内容正确。尤其注意 group name 需匹配。</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212857931.png" class="" title="image-20240901212857931">
+
+
+
+<h1 id="cartesian-轨迹速度为空"><a href="#cartesian-轨迹速度为空" class="headerlink" title="cartesian 轨迹速度为空"></a><strong>cartesian 轨迹速度为空</strong></h1><p>compute_cartesian_path 轨迹规划成功，但其速度及加速度为空，导致 UR5 driver 无法执行轨迹。</p>
+<p>C++ 解决方案参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk">https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk</a></li>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4">https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4</a></li>
+</ul>
+<p>moveit_commander 解决方案：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.robot= moveit_commander.RobotCommander()</span><br><span class="line"><span class="variable language_">self</span>.arm= <span class="variable language_">self</span>.robot.right_arm</span><br><span class="line">...</span><br><span class="line"><span class="variable language_">self</span>.arm.compute_cartesian_path(waypoints, <span class="number">0.01</span>, <span class="number">0.0</span>, <span class="literal">True</span>)</span><br><span class="line">plan= <span class="variable language_">self</span>.arm.retime_trajectory(<span class="variable language_">self</span>.robot.get_current_state(), plan, <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="重力力矩-gravity-torques"><a href="#重力力矩-gravity-torques" class="headerlink" title="重力力矩(gravity torques)"></a><strong>重力力矩(gravity torques)</strong></h1><p>通过 DH 参数计算机械手的雅可比矩阵，然后想通过每个关节的扭矩得到笛卡尔力，但是发现输出的每个关节扭矩通常包含重力扭矩。想知道如何知道不同构型下的重力力矩?</p>
+<p>在查看API文档的时候也发现在**导纳控制(<strong>admittance control</strong>)**之前需要降低重力力矩，但是不知道在不同的配置下机械手的重力力矩如何得到。</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901212944566.png" class="" title="image-20240901212944566">
+
+<p>API：</p>
+<ul>
+<li>GetAngularForceGravityFree：获取当前 torque 值，不包含 gravity</li>
+<li>GetAngularTorqueGravityEstimation：获取由 gravity 生成的 torque 值</li>
+</ul>
+<p><strong>joint_torque &#x3D; GetAngularForceGravityFree + GetAngularTorqueGravityEstimation</strong></p>
+<p>KinovaComm::getGravityCompensatedTorques 中会调用 GetAngularTorqueGravityEstimation。参考 <a target="_blank" rel="noopener" href="https://github.com/Kinovarobotics/kinova-ros/issues/366">issues#366</a></p>
+<h1 id="设置规划时间"><a href="#设置规划时间" class="headerlink" title="设置规划时间"></a><strong>设置规划时间</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arm.set_planning_time(10)  </span><br></pre></td></tr></table></figure>
+
+<p>​            </p>
+<h1 id="选择规划算法"><a href="#选择规划算法" class="headerlink" title="选择规划算法"></a><strong>选择规划算法</strong></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">planner = <span class="string">&quot;RRTstarkConfigDefault&quot;</span>  <span class="comment"># Asymptotic optimal tree-based planner</span></span><br><span class="line"><span class="comment"># planner = &quot;ESTkConfigDefault&quot;  # Default: tree-based planner</span></span><br><span class="line"><span class="comment"># planner = &quot;RRTConnectConfigDefault&quot;  # Tree-based planner</span></span><br><span class="line"><span class="comment"># planner = &quot;PRMstarkConfigDefault&quot;  # Probabilistic Roadmap planner</span></span><br><span class="line"></span><br><span class="line">move_group.set_planner_id(planner)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="spawner-error-too-few-arguments"><a href="#spawner-error-too-few-arguments" class="headerlink" title="spawner: error: too few arguments"></a><strong>spawner: error: too few arguments</strong></h1><p>运行 xxx_moveit_config 包中的 demo_gazebo.launch 时提示该异常</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213036326.png" class="" title="image-20240901213036326">
+
+<p>经排查，屏蔽 xxx_moveit_config 包中 gazebo.launch 文件中的 ros_controllers.launch 即不再报错</p>
+<p>查看 ros_controllers.launch 文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load joint controller configurations from YAML file to parameter server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find truck_auboi10_moveit_config)/config/ros_controllers.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load the controllers --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">args</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>负责加载 ros_controllers.yaml 参数，并<strong>启动 controller_manager 中的 spawner 节点。注意：默认 args 为空，因此出现该异常终止。需在参数中添加 controller 信息</strong>，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Franka 机械臂 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">args</span>=<span class="string">&quot;$(arg transmission)_joint_trajectory_controller&quot;</span> /&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!-- JAKA MiniCobo. 其 controller 信息在 ros_controllers.yaml 中 --&gt;</span>    </span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint_state_controller jaka_minicobo_controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，若 ros_controllers.yaml 中 controllers 设置了命名空间，则还需要 ns 参数。例如：</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213117876.png" class="" title="image-20240901213117876">
+
+
+
+<h1 id="Gazebo-无法加载-controller"><a href="#Gazebo-无法加载-controller" class="headerlink" title="Gazebo 无法加载 controller"></a><strong>Gazebo 无法加载 controller</strong></h1><img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213129021.png" class="" title="image-20240901213129021">
+
+<p>示例中，gazebo 通过 truck_auboi10.yaml 加载 controllers</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find truck_auboi10_gazebo)/config/truck_auboi10.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line">                   </span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">args</span>=<span class="string">&quot;front_aubo_i10_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">                      rear_aubo_i10_controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 truck_auboi10.yaml 内容为</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213150207.png" class="" title="image-20240901213150207">
+
+<p>改写为</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213158311.png" class="" title="image-20240901213158311">
+
+<p>同时，为 spawner 配置 ns 参数</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;aubo_i10&quot;</span> <span class="attr">args</span>=<span class="string">&quot;front_aubo_i10_controller</span></span></span><br><span class="line"><span class="string"><span class="tag">                          rear_aubo_i10_controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="RViz-不显示-interactMarker"><a href="#RViz-不显示-interactMarker" class="headerlink" title="RViz 不显示 interactMarker"></a><strong>RViz 不显示 interactMarker</strong></h1><p>检查 kinematics.yaml 参数是否正确加载</p>
+<h1 id="Motion-planning-start-tree-could-not-be-initialized"><a href="#Motion-planning-start-tree-could-not-be-initialized" class="headerlink" title="Motion planning start tree could not be initialized!"></a><strong>Motion planning start tree could not be initialized!</strong></h1><p>原因一：SRDF 中指定了 disable_collisions，但 URDF 中无相应 link</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/image-20240901213237796.png" class="" title="image-20240901213237796">
+
+
+
+<p>原因二：机器人处于碰撞状态</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/" rel="prev" title="moveit-Gazebo">
+                  <i class="fa fa-angle-left"></i> moveit-Gazebo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/" rel="next" title="nav2_behavior_tree">
+                  nav2_behavior_tree <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

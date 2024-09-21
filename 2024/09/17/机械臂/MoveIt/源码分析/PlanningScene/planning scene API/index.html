@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本教程中，将研究使用 planning scene 差异来执行两个操作:  向 world 中添加和删除对象 将物体附加到机器人上&#x2F;从机器人上分离  1、运行测试 运行代码 ​                roslaunch panda_moveit_config demo.launch roslaunch moveit_tutorials planning_scene_ros_api">
+<meta property="og:type" content="article">
+<meta property="og:title" content="planning scene API">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="本教程中，将研究使用 planning scene 差异来执行两个操作:  向 world 中添加和删除对象 将物体附加到机器人上&#x2F;从机器人上分离  1、运行测试 运行代码 ​                roslaunch panda_moveit_config demo.launch roslaunch moveit_tutorials planning_scene_ros_api">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-17T12:45:53.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.057Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/","path":"2024/09/17/机械臂/MoveIt/源码分析/PlanningScene/planning scene API/","title":"planning scene API"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>planning scene API | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="planning scene API | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          planning scene API
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:45:53" itemprop="dateCreated datePublished" datetime="2024-09-17T20:45:53+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/" itemprop="url" rel="index"><span itemprop="name">PlanningScene</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本教程中，将研究使用 planning scene 差异来执行两个操作:</p>
+<ul>
+<li>向 world 中添加和删除对象</li>
+<li>将物体附加到机器人上&#x2F;从机器人上分离</li>
+</ul>
+<p><strong>1、运行测试</strong></p>
+<p>运行代码</p>
+<p>​                roslaunch panda_moveit_config demo.launch roslaunch moveit_tutorials planning_scene_ros_api_tutorial.launch              </p>
+<p>此时，在 RViz 中会看到：</p>
+<ul>
+<li>物体出现在 planning scene 中</li>
+<li>物体附加到机器人上</li>
+<li>物体从机器人上分离</li>
+<li>从 planning scene 中删除物体</li>
+</ul>
+<p><strong>2、源码分析</strong></p>
+<p>代码位于 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_tutorials/tree/melodic-devel/doc/planning_scene_ros_api">planning_scene_ros_api</a></p>
+<p><strong>1）可视化</strong></p>
+<p>MoveItVisualTools 包提供了许多在 RViz 中可视化物体、机器人和轨迹的功能，还提供了调试工具，例如 step-by-step introspection 脚本等。</p>
+<p>​                moveit_visual_tools::MoveItVisualTools visual_tools(“panda_link0”); visual_tools.deleteAllMarkers();              </p>
+<p><strong>2）ROS API</strong></p>
+<p>Planning scene publisher 的 ROS API 是通过使用 diffs 主题接口实现的。Planning scene diff 是当前 planning scene(由move_group节点维护)与用户所需的新 planning scene 之间的差异。</p>
+<p><strong>3）Advertise the required topic</strong></p>
+<p>创建一个发布者并等待订阅者，请注意，这个主题可能需要在 launch 文件中重新映射。</p>
+<p>​                &#x2F;&#x2F; 创建 Publisher ros::Publisher planning_scene_diff_publisher &#x3D; node_handle.advertise&lt;moveit_msgs::PlanningScene&gt;(“planning_scene”, 1); ros::WallDuration sleep_t(0.5); while (planning_scene_diff_publisher.getNumSubscribers() &lt; 1) {  sleep_t.sleep(); } visual_tools.prompt(“Press ‘next’ in the RvizVisualToolsGui window to start the demo”);              </p>
+<p><strong>4）Define the attached object message</strong></p>
+<p>将使用此消息向 world 中添加或删除物体，并将物体附加到机器人。</p>
+<p>​                moveit_msgs::AttachedCollisionObject attached_object; attached_object.link_name &#x3D; “panda_leftfinger”; &#x2F;* The header must contain a valid TF frame*&#x2F; attached_object.object.header.frame_id &#x3D; “panda_leftfinger”; &#x2F;* The id of the object <em>&#x2F; attached_object.object.id &#x3D; “box”; &#x2F;</em> A default pose <em>&#x2F; geometry_msgs::Pose pose; pose.orientation.w &#x3D; 1.0; &#x2F;</em> Define a box to be attached *&#x2F; shape_msgs::SolidPrimitive primitive; primitive.type &#x3D; primitive.BOX; primitive.dimensions.resize(3); primitive.dimensions[0] &#x3D; 0.1; primitive.dimensions[1] &#x3D; 0.1; primitive.dimensions[2] &#x3D; 0.1; attached_object.object.primitives.push_back(primitive); attached_object.object.primitive_poses.push_back(pose);              </p>
+<p>注意，将物体附加到机器人上需要将相应的操作指定为 ADD 操作</p>
+<p>​                attached_object.object.operation &#x3D; attached_object.object.ADD;              </p>
+<p>由于将对象连接到机械手以模拟拾取对象，所以希望碰撞检查器忽略添加的物体与机械手之间的碰撞</p>
+<p>​                attached_object.touch_links &#x3D; std::vector<a href="std::string">std::string</a>{ “panda_hand”, “panda_leftfinger”, “panda_rightfinger” };              </p>
+<p><strong>5）Add an object into the environment</strong></p>
+<p>通过将物体添加到 planning scene 的 world 部分的碰撞物体集中，将物体添加到环境中。注意，这里只使用了 attached_object 消息的 “object” 字段。</p>
+<p>​                ROS_INFO(“Adding the object into the world at the location of the hand.”); moveit_msgs::PlanningScene planning_scene; &#x2F;&#x2F; 注意：只需使用 attached_object.object planning_scene.world.collision_objects.push_back(attached_object.object); planning_scene.is_diff &#x3D; true; planning_scene_diff_publisher.publish(planning_scene); visual_tools.prompt(“Press ‘next’ in the RvizVisualToolsGui window to continue the demo”);              </p>
+<p><strong>6）Interlude: Synchronous vs Asynchronous updates</strong></p>
+<p>有两种单独的机制可以使用 diffs 与 move_group 节点交互:</p>
+<ul>
+<li>通过 rosservice 调用发送一个 diff 并阻塞直到 diff 被应用(同步更新)</li>
+<li>通过主题发送一个 diff，不阻塞等待(异步更新)</li>
+</ul>
+<p>虽然本教程的大部分内容使用后一种机制，但用以下服务客户端替换 planning_scene_diff_publisher 是完全合理的:</p>
+<p>​                ros::ServiceClient planning_scene_diff_client &#x3D;    node_handle.serviceClient&lt;moveit_msgs::ApplyPlanningScene&gt;(“apply_planning_scene”); planning_scene_diff_client.waitForExistence(); moveit_msgs::ApplyPlanningScene srv; srv.request.scene &#x3D; planning_scene; planning_scene_diff_client.call(srv);              </p>
+<p>注意，直到确定 diff 已经被应用，这个过程才会继续。</p>
+<p><strong>7）Attach an object to the robot</strong></p>
+<p>当机器人从环境中抓起一个物体时，需要将该物体“附加”到机器人上，以便处理机器人模型的任何组件都知道该附加物体，例如用于碰撞检查。</p>
+<p>附加一个物体需要两个操作：</p>
+<ul>
+<li>从环境中删除原始物体</li>
+<li>将该物体附加到机器人</li>
+</ul>
+<p>​                &#x2F;* First, define the REMOVE object message*&#x2F; moveit_msgs::CollisionObject remove_object; remove_object.id &#x3D; “box”; remove_object.header.frame_id &#x3D; “panda_link0”; remove_object.operation &#x3D; remove_object.REMOVE; &#x2F;* Carry out the REMOVE + ATTACH operation *&#x2F; ROS_INFO(“Attaching the object to the hand and removing it from the world.”); planning_scene.world.collision_objects.clear(); planning_scene.world.collision_objects.push_back(remove_object); planning_scene.robot_state.attached_collision_objects.push_back(attached_object); planning_scene_diff_publisher.publish(planning_scene); visual_tools.prompt(“Press ‘next’ in the RvizVisualToolsGui window to continue the demo”);              </p>
+<p><strong>8）Detach an object from the robot</strong></p>
+<p>分离物体同样需要两步操作：</p>
+<ul>
+<li>从机器人上分离物体</li>
+<li>将物体重新引入环境中</li>
+</ul>
+<p>​                &#x2F;* First, define the DETACH object message*&#x2F; moveit_msgs::AttachedCollisionObject detach_object; detach_object.object.id &#x3D; “box”; detach_object.link_name &#x3D; “panda_link8”; detach_object.object.operation &#x3D; attached_object.object.REMOVE; &#x2F;* Carry out the DETACH + ADD operation *&#x2F; ROS_INFO(“Detaching the object from the robot and returning it to the world.”); planning_scene.robot_state.attached_collision_objects.clear(); planning_scene.robot_state.attached_collision_objects.push_back(detach_object); planning_scene.robot_state.is_diff &#x3D; true; planning_scene.world.collision_objects.clear(); planning_scene.world.collision_objects.push_back(attached_object.object); planning_scene.is_diff &#x3D; true; planning_scene_diff_publisher.publish(planning_scene); visual_tools.prompt(“Press ‘next’ in the RvizVisualToolsGui window to continue the demo”);              </p>
+<p><strong>9）从 collision world 删除物体</strong></p>
+<p>​                ROS_INFO(“Removing the object from the world.”); planning_scene.robot_state.attached_collision_objects.clear(); planning_scene.world.collision_objects.clear(); planning_scene.world.collision_objects.push_back(remove_object); planning_scene_diff_publisher.publish(planning_scene);              </p>
+<p><strong>3、使用</strong></p>
+<p>调试 Planning Scene Monitor</p>
+<p>​                rosrun moveit_ros_planning moveit_print_planning_scene_info              </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/" rel="prev" title="planning scene">
+                  <i class="fa fa-angle-left"></i> planning scene
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene%20monitor/" rel="next" title="planning scene monitor">
+                  planning scene monitor <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="pilz_industrial_motion_planner 提供了一个轨迹生成器，以使用MoveIt PlanerManager 插件的接口，规划标准的机器人运动，如 PTP, LIN, CIRC。 1、User Interface MoveGroup 这个包实现了 MoveIt 的 planning_interface::PlannerManager 接口。通过加载相应的 planning p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pilz Industrial">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="pilz_industrial_motion_planner 提供了一个轨迹生成器，以使用MoveIt PlanerManager 插件的接口，规划标准的机器人运动，如 PTP, LIN, CIRC。 1、User Interface MoveGroup 这个包实现了 MoveIt 的 planning_interface::PlannerManager 接口。通过加载相应的 planning p">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211529434.png">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211548571.png">
+<meta property="article:published_time" content="2024-09-17T13:14:43.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.077Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211529434.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/","path":"2024/09/17/机械臂/MoveIt/MotionPlanning/Planners/Pilz/","title":"Pilz Industrial"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Pilz Industrial | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Pilz Industrial | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pilz Industrial
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:14:43" itemprop="dateCreated datePublished" datetime="2024-09-17T21:14:43+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>pilz_industrial_motion_planner 提供了一个轨迹生成器，以使用MoveIt PlanerManager 插件的接口，规划标准的机器人运动，如 PTP, LIN, CIRC。</p>
+<p><strong>1、User Interface MoveGroup</strong></p>
+<p>这个包实现了 MoveIt 的 planning_interface::PlannerManager 接口。通过加载相应的 planning pipeline(pilz_industrial_motion_planner_planning_pipeline.launch.xml)，轨迹生成功能可以通过用户界面访问(c++、python或rviz) move_group 提供的节点,例如 &#x2F;plan_kinematics_path 服务和 move_group action。参考 Move Group c++ Interface。</p>
+<p><strong>2、Joint limits</strong></p>
+<p>对于所有命令，planner 使用来自参数服务器的最大速度和加速度。使用 MoveIt setup assistant，文件 joint_limits.yaml 会使用适当的默认值自动生成并在启动期间加载。</p>
+<p>参数服务器上的限制会覆盖来自 URDF 机器人描述的限制。请注意，虽然在 URDF 和参数服务器中都可以设置位置限制和速度限制，但<strong>只能通过参数服务器设置加速度限制</strong>。作为对常用 has_acceleration 和 max_acceleration 参数的扩展，添加了设置 has_deceleration 和 max_deceleration(&lt;0.0) 的功能。</p>
+<p>限制合并的<strong>前提是来自参数服务器的限制必须更严格或至少等于 URDF 中设置的参数</strong>。</p>
+<p>目前，计算的轨迹将通过使用所有限制的最严格组合作为所有关节的共同限制来遵守限制。</p>
+<p><strong>3、Cartesian limits</strong></p>
+<p>对于笛卡尔轨迹生成(LIN&#x2F;CIRC)，该 planner 需要三维笛卡尔空间中最大速度的信息。即平移&#x2F;旋转速度&#x2F;加速&#x2F;减速需要在参数服务器上进行如下设置:</p>
+<p>​                cartesian_limits:  max_trans_vel: 1  max_trans_acc: 2.25  max_trans_dec: -5  max_rot_vel: 1.57              </p>
+<p>对于平动梯形和旋转梯形，planner 假定相同的加速度比。因此，旋转加速度计算为 max_trans_acc &#x2F; max_trans_vel * max_rot_vel(相应的减速)。</p>
+<p><strong>4、Planning Interface</strong></p>
+<p>这个包使用 moveit_msgs::MotionPlanRequest 和 moveit_msgs::MotionPlanResponse 作为运动规划的输入和输出。</p>
+<p><strong>5、PTP motion command</strong></p>
+<p>该规划器生成具有梯形关节速度分布的完全同步的点对点轨迹。假设所有关节具有相同的最大关节速度&#x2F;加速度&#x2F;减速极限。如果没有，则采用最严格的限制。以达到目标时间最长的轴为导向轴(<strong>lead axis</strong>)。其他轴都是减速的，以便它们与导向轴共享相同的加速&#x2F;匀速&#x2F;减速阶段</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211529434.png" class="" title="image-20240917211529434">
+
+<p>1）输入参数</p>
+<p>moveit_msgs::MotionPlanRequest</p>
+<ul>
+<li><p>planner_id：PTP</p>
+</li>
+<li><p>group_name：规划组名称</p>
+</li>
+<li><p>max_velocity_scaling_factor：</p>
+</li>
+<li><p>max_acceleration_scaling_factor：</p>
+</li>
+<li><p>start_state&#x2F;joint_state&#x2F;(name,position and velocity)：</p>
+</li>
+<li><p>goal_constraints：</p>
+</li>
+<li><p>关节空间目标点</p>
+</li>
+<li><ul>
+<li>goal_constraints&#x2F;joint_constraints&#x2F;joint_name: goal joint name</li>
+<li>goal_constraints&#x2F;joint_constraints&#x2F;position: goal joint position</li>
+</ul>
+</li>
+<li><p>笛卡尔空间目标点</p>
+</li>
+<li><ul>
+<li>goal_constraints&#x2F;position_constraints&#x2F;header&#x2F;frame_id: 该数据关联的坐标系</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;link_name: target link name</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;constraint_region: bounding volume of the target point</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;target_point_offset: offset (in the link frame) for the target point on the target link (optional)</li>
+</ul>
+</li>
+</ul>
+<p><strong>6、LIN motion command</strong></p>
+<p>该 planner 生成目标和开始位姿之间的线性笛卡尔轨迹。规划器使用笛卡尔限制在笛卡尔空间中生成梯形速度剖面。平移运动是起始位置向量与目标位置向量之间的线性插值。旋转运动是四元数 slerp 之间的开始和目标方向。</p>
+<p>平动和旋转运动在时间上是同步的。这个计划器只接受零速度的开始状态。规划结果是一个关节轨迹。如果运动计划因违反关节空间限制而失败，用户需要调整笛卡尔速度&#x2F;加速度比例因子。</p>
+<p><strong>7、CIRC motion command</strong></p>
+<p><strong>8、示例</strong></p>
+<p>​                sudo apt install ros-melodic-prbt-moveit-config roslaunch prbt_moveit_config demo.launch              </p>
+<p><strong>9、使用 Planner</strong></p>
+<p>pilz_industrial_motion_planner::CommandPlanner 是作为 MoveIt motion planning pipeline 提供的，因此，可以与使用 MoveIt 的所有其他 manipulators 一起使用。加载插件需要在 move_group 节点启动之前，将 &#x2F;move_group&#x2F;planning_plugin 参数设置为 pilz_industrial_motion_planner::CommandPlanner。</p>
+<p>要使用 command planner，必须定义 cartesian limits。该限制应该在名称空间 _planning 下。其中 是指 URDF 加载的参数。例如，如果 URDF 被加载到 &#x2F;robot_description 中，cartesian limits 必须定义在 &#x2F;robot_description_planning。</p>
+<p>参考：prbt_moveit_config 包</p>
+<p><strong>1）Sequence of multiple segments</strong></p>
+<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这减少了规划开销，并允许遵循预先描述的路径，而无需在中间点停下来。</p>
+<p>请注意:如果某个序列中的命令规划失败，则该顺序中的命令将全部不执行。</p>
+<p>请注意:序列命令<strong>允许包含多个组的命令</strong>(例如“机械手”，“抓手”)</p>
+<p><strong>2）User interface sequence capability</strong></p>
+<p>接受 moveit_msgs::<strong>MotionSequenceRequest</strong> 作为输入。该请求包含上面描述的后续目标列表和一个额外的 blend_radius 参数。如果给定的blend_radius(meter)大于零，则对应的轨迹与下面的目标合并在一起，使机器人不停留在当前目标。</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211548571.png" class="" title="image-20240917211548571">
+
+<p>参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/master/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
+<p>MotionSequenceRequest 的限制</p>
+<ul>
+<li>只有第一个魔表有 start state。后续轨迹以前一个目标点为起点</li>
+<li>两个随后的 blend_radius 球体不能重叠。Blend_radius(i) + Blend_radius(i+1) 必须小于目标之间的距离</li>
+</ul>
+<p>用户可以通过 action server <strong>&#x2F;sequence_move_group</strong> 执行moveit_msgs::MotionSequenceRequest</p>
+<p>在单个点上，MoveGroupSequenceAction 与标准 MoveGroup 能力不同:如果机器人已经在目标位置，路径仍然被执行。底层的 PlannerManager 可以检查单个 moveit_msgs::MotionPlanRequest 的约束是否已经满足，但 MoveGroupSequenceAction 功能没有实现这样的检查，以允许在圆形或类似的路径上移动。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://github.com/PilzDE/pilz_industrial_motion/blob/melodic-devel/pilz_robot_programming/examples/demo_program.py">pilz_robot_programming</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/" rel="prev" title="OMPL">
+                  <i class="fa fa-angle-left"></i> OMPL
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/SBPL/" rel="next" title="SBPL">
+                  SBPL <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

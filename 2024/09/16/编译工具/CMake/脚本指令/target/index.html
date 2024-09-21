@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="target_include_directories指定编译参数给定的 target 时需要包含的目录。该 target 必须经过 add_executable 或 add_library 命令编译，不能是 IMPORTED target。 与 include_dirctories 区别include_directories 影响目录范围。该 CMakeLists.txt 中的所有 targets">
+<meta property="og:type" content="article">
+<meta property="og:title" content="target">
+<meta property="og:url" content="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="target_include_directories指定编译参数给定的 target 时需要包含的目录。该 target 必须经过 add_executable 或 add_library 命令编译，不能是 IMPORTED target。 与 include_dirctories 区别include_directories 影响目录范围。该 CMakeLists.txt 中的所有 targets">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-16T03:18:25.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.943Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="编译工具">
+<meta property="article:tag" content="cmake">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/","path":"2024/09/16/编译工具/CMake/脚本指令/target/","title":"target"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>target | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#target-include-directories"><span class="nav-number">1.</span> <span class="nav-text">target_include_directories</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E-include-dirctories-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">与 include_dirctories 区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#target-sources"><span class="nav-number">2.</span> <span class="nav-text">target_sources</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD-CUSTOM-TARGET"><span class="nav-number">2.1.</span> <span class="nav-text">ADD_CUSTOM_TARGET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD-CUSTOM-COMMAND"><span class="nav-number">2.2.</span> <span class="nav-text">ADD_CUSTOM_COMMAND</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.1.</span> <span class="nav-text">生成文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-Events"><span class="nav-number">2.2.2.</span> <span class="nav-text">Build Events</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="target | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          target
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="target-include-directories"><a href="#target-include-directories" class="headerlink" title="target_include_directories"></a>target_include_directories</h1><p>指定编译参数给定的 target 时需要包含的目录。该 target 必须经过 <code>add_executable</code> 或 <code>add_library</code> 命令编译，不能是 <code>IMPORTED target</code>。</p>
+<h2 id="与-include-dirctories-区别"><a href="#与-include-dirctories-区别" class="headerlink" title="与 include_dirctories 区别"></a>与 include_dirctories 区别</h2><p><strong><code>include_directories</code></strong> 影响目录范围。该 CMakeLists.txt 中的所有 targets，以及在其调用点之后添加的所有子目录中的目标，均会将 <code>include_directories</code> 指定的目录包含到其路径中</p>
+<p><strong><code>target_include_directories(target x/y)</code></strong> 则具有目标范围，将目录 x&#x2F;y 添加到目标 target 的包含路径。</p>
+<p>如果所有目标使用相关的包含目录，则需要用 <code>include_directories</code>，如果路径特定于某个目标，或想更好地控制路径的可见性，则需要 <code>target_include_directories</code>。</p>
+<h1 id="target-sources"><a href="#target-sources" class="headerlink" title="target_sources"></a>target_sources</h1><p>指定编译给定 target 时用到的源文件。其中 target 必须由 <code>add_executable</code> 或 <code>add_library</code> 之类的命令创建，不能为 <code>ALIASA</code> 目标。</p>
+<h2 id="ADD-CUSTOM-TARGET"><a href="#ADD-CUSTOM-TARGET" class="headerlink" title="ADD_CUSTOM_TARGET"></a>ADD_CUSTOM_TARGET</h2><p>增加一个没有输出的目标，使得它总是被构建</p>
+<h2 id="ADD-CUSTOM-COMMAND"><a href="#ADD-CUSTOM-COMMAND" class="headerlink" title="ADD_CUSTOM_COMMAND"></a>ADD_CUSTOM_COMMAND</h2><p>向生成的构建系统添加自定义构建规则。</p>
+<p><code>ADD_CUSTOM_COMMAND</code> 有两个限制：</p>
+<ul>
+<li>只有在相同的 CMakeLists.txt 中，指定了所有依赖于其输出的目标时才有效</li>
+<li>对于不同的独立目标，使用 <code>ADD_CUSTOM_COMMAND</code>的输出可以重新执行定制命令。这可能会导致冲突，应该避免这种情况的发生</li>
+</ul>
+<p>只有当构建的目标以 <code>ADD_CUSTOM_COMMAND</code> 生成的OUTPUT文件为源代码的情况下，<code>ADD_CUSTOM_COMMAND</code> 中指定的命令才会才会执行。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dcb26b24806b">https://www.jianshu.com/p/dcb26b24806b</a></p>
+<p>该命令主要用于两种场景下。</p>
+<h3 id="生成文件"><a href="#生成文件" class="headerlink" title="生成文件"></a>生成文件</h3><p>添加自定义命令来生成文件。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT output1 [output2 ...]</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [MAIN_DEPENDENCY depend]</span><br><span class="line">                   [DEPENDS [depends...]]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [IMPLICIT_DEPENDS &lt;lang1&gt; depend1</span><br><span class="line">                                    [&lt;lang2&gt; depend2] ...]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [DEPFILE depfile]</span><br><span class="line">                   [VERBATIM] [APPEND] [USES_TERMINAL]</span><br><span class="line">                   [COMMAND_EXPAND_LISTS])</span><br></pre></td></tr></table></figure>
+
+<p>定义了一个命令来生成指定的 OUTPUT 文件。在 CMakeLists.txt 同一目录中创建的目标(该目标指定自定义命令的任何输出作为源文件)将获得一个规则，以便在构建时使用该命令生成该文件。不要在多个可能并行构建的独立目标中列出输出，或者规则的两个实例可能冲突(而是使用add_custom_target()命令来驱动该命令，并使其他目标依赖于该命令)。在 makefile 术语中，这会以以下形式创建一个新目标:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">OUTPUT: MAIN_DEPENDENCY DEPENDS</span></span><br><span class="line">        COMMAND</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)</span><br><span class="line"><span class="keyword">project</span>(<span class="keyword">test</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT COPY_RES</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_directory <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/config <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/log.txt <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_target</span>(CopyTask ALL DEPENDS COPY_RES)</span><br></pre></td></tr></table></figure>
+
+<p><code>add_custom_target</code>：生成一个目标 CopyTask，该目标依赖 COPY_RES。而 COPY_RES 实际上是用来复制文件夹或复制文件，也就是 COMMAND 中定义的操作。</p>
+<p><strong>options</strong>：</p>
+<ul>
+<li><strong>APPEND</strong>：将 COMMAND 和 DEPENDS 选项值附加到指定的第一个输出的自定义命令。之前必须已经调用过具有相同输出的此命令</li>
+<li><strong>BYPRODUCTS</strong>：指定命令预期生成的文件。如果副产品(byproduct)名是相对路径，它将相对于当前源目录相对应的构建树目录进行解释。每个副产品文件都将自动标记为GENERATED源文件属性</li>
+<li><strong>COMMAND</strong>：指定要执行的命令。如果指定了多个 COMMAND，它们将按顺序执行，但不一定组成有状态的 shell 或 batch 脚本。可选的 ARGS 参数是为了向后兼容。</li>
+<li><strong>COMMENT</strong>：在构建时执行命令之前显示给定的消息</li>
+<li><strong>DEPENDS</strong>：指定命令所依赖的文件。每个参数都转换为依赖项。如果未指定 DEPENDS，则只要缺少 OUTPUT，该命令就会运行；如果该命令实际上并未创建 OUTPUT，则该规则将始终运行</li>
+<li><strong>COMMAND_EXPAND_LISTS</strong>：</li>
+<li><strong>IMPLICIT_DEPENDS</strong>：请求扫描输入文件的隐式依赖项。给定的语言指定应使用其相应依赖扫描器的编程语言(programming language).目前仅支持C和CXX语言扫描器。必须为IMPLICIT_DEPENDS列表中的每个文件指定语言。IMPLICIT_DEPENDS选项目前仅支持Makefile生成器，其它生成器将忽略该选项。此选项<strong>不能与DEPFILE选项同时指定</strong>。</li>
+<li><strong>JOB_POOL</strong>：为 Ninja 生成器指定一个 pool。不能与 USES_TERMINAL 一起使用(暗含 console pool)。</li>
+<li><strong>MAIN_DEPENDENCY</strong>：指定命令的主要输入源文件。每个源文件最多可以有一个命令将其指定为其主要依赖项。编译命令(即用于库或可执行文件)算作隐式主要依赖项，它会被自定义命令规范覆盖</li>
+<li><strong>OUTPUT</strong>：指定命令预期生成的输出文件。每个输出文件将自动标记为生成的源文件属性。如果自定义命令的输出实际上没有作为磁盘上的文件创建，则应该使用 SYMBOLIC 源文件属性对其进行标记。如果输出名称是相对路径，则其绝对路径将解析为相对于与当前源目录对应的构建树目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_BINARY_DIR.html#variable:CMAKE_CURRENT_BINARY_DIR"><strong>CMAKE_CURRENT_BINARY_DIR</strong></a>)或当前源目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_SOURCE_DIR.html#variable:CMAKE_CURRENT_SOURCE_DIR"><strong>CMAKE_CURRENT_SOURCE_DIR</strong></a>)。3.20 版本以后，输出参数可使用一组受限的生成器表达式</li>
+<li>USES_TERMINAL：如果可能，该命令将被授予直接访问终端(terminal)的权限</li>
+<li>VERBATIM：命令的所有参数都将为构建工具正确转义(escaped),以便调用的命令接收每个参数不变。建议使用VERBATIM，因为它可以实现正确的行为。当没有给出VERBATIM时，行为是特定于平台的</li>
+<li>WORKING_DIRECTORY：使用给定的当前工作目录执行命令。如果是相对路径，会被解释为相对于当前源目录对应的构建树目录</li>
+<li>DEPFILE：指定一个包含自定义命令依赖项的depfile。它通常由自定义命令本身发出。这个关键字只能在生成器支持的情况下使用</li>
+</ul>
+<p>例一</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加自定义命令来运行 someTool 以生产 out.c 文件，然后将该文件编译为库。当 in.txt 文件发生变化时，会自动重新运行该生成规则。</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT out.c</span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o out.c</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib out.c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.20 版本可以使用生成器表达式来指定每个配置的输出。例如</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">                   -c <span class="string">&quot;$&lt;CONFIG&gt;&quot;</span></span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行 someTool 指令生成 out-.c 文件，config 是编译选项。</p>
+<p>例二：为多个 targets 生成文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果多个独立 targets 需要相同的自定义命令输出，则必须将其附加到它们都依赖的单个自定义 target</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT table.csv</span><br><span class="line">  <span class="keyword">COMMAND</span> makeTable -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">                    -o table.csv</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_custom_target</span>(generate_table_csv DEPENDS table.csv)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT foo.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case foo -o foo.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(foo foo.cxx)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT bar.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case bar -o bar.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(bar bar.cxx)</span><br></pre></td></tr></table></figure>
+
+<p>foo.cxx 只被 foo 使用，bar.cxx 只被 bar 使用。但两个 target 都需要 table.csv。由于 foo 和 bar 是可以并发构建的独立目标，因此通过将其自定义命令放在单独的目标 generate_table_csv 中来防止它们竞相生成 table.csv。生成 foo.cxx 和 bar.cxx 的自定义指令均指定 target-level 依赖 generate_table_csv。</p>
+<h3 id="Build-Events"><a href="#Build-Events" class="headerlink" title="Build Events"></a>Build Events</h3><p>将自定义命令添加到 target，如库或可执行文件。这对于在构建 target 之前或之后执行操作非常有用。该命令将成为 target 的一部分，并且仅在构建 target 本身时执行。如果 target 已构建，则不会执行该命令。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> &lt;<span class="keyword">target</span>&gt;</span><br><span class="line">                   PRE_BUILD | PRE_LINK | POST_BUILD</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [VERBATIM] [USES_TERMINAL])</span><br></pre></td></tr></table></figure>
+
+<p>这将定义一个新命令，该命令将与构建指定的 <code>&lt;target&gt;</code> 关联。 必须在当前目录中定义；不能指定在其它目录中定义的 target。</p>
+<p>命令何时执行由以下指定的选项决定:</p>
+<ul>
+<li><strong>PRE_BUILD</strong>：在 Visual Studio Generators 上，在 target 中执行任何其它规则之前运行。在其它生成器(generator)上,在 PRE_LINK 命令之前运行</li>
+<li><strong>PRE_LINK</strong>：在编译源代码之后但在链接二进制文件(binary)或运行静态库的库管理员(librarian)或存档器工具(archiver tool)之前运行。这不是为 add_custom_target 命令创建的 target 定义的</li>
+<li><strong>POST_BUILD</strong>：在执行 target 中的所有其它规则后运行</li>
+</ul>
+<p>使用 TARGET 格式时，project 应始终指定上述三个关键字之一。出于向后兼容性(backward compatibility)的原因，如果没有给出这样的关键字，则假定为 POST_BUILD，但 project 应明确提供其中一个关键字以明确他们期望的行为。</p>
+<p>例一</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POST_BUILD 事件可用于在链接后对二进制文件进行后处理,例如</span></span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myExe POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;&quot;</span></span><br><span class="line">                     -o <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;.hash&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="comment"># 在链接后，将会运行 someHasher 来生成 .hash 文件</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 3.20 版本</span></span><br><span class="line"><span class="keyword">add_library</span>(myPlugin MODULE myPlugin.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myPlugin POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myPlugin&gt;&quot;</span></span><br><span class="line">                     --as-code <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  BYPRODUCTS <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" rel="tag"># 编译工具</a>
+              <a href="/tags/cmake/" rel="tag"># cmake</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/" rel="prev" title="catkin">
+                  <i class="fa fa-angle-left"></i> catkin
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/" rel="next" title="list">
+                  list <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

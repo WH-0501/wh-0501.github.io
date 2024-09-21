@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ZeroMQ 消息模式 Request-Reply Router and Dealer   Pub-Sub 简单 Pub-Sub Pub-Sub Synchronization Node Coordination节点协调   Pub-Sub Network with a Proxy Pub-Sub forward proxy Extended Pub-Sub   Push-Pull Para">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZeroMQ消息模式">
+<meta property="og:url" content="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="ZeroMQ 消息模式 Request-Reply Router and Dealer   Pub-Sub 简单 Pub-Sub Pub-Sub Synchronization Node Coordination节点协调   Pub-Sub Network with a Proxy Pub-Sub forward proxy Extended Pub-Sub   Push-Pull Para">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/Request-Reply.png">
+<meta property="og:image" content="http://example.com/images/extended%20request-reply.png">
+<meta property="og:image" content="http://example.com/images/request-reply%20broker.png">
+<meta property="og:image" content="http://example.com/images/Pub-Sub.png">
+<meta property="og:image" content="http://example.com/images/Pub-Sub%20Synchronization.png">
+<meta property="og:image" content="http://example.com/images/Pub-Sub%20with%20a%20proxy.png">
+<meta property="og:image" content="http://example.com/images/pub-sub%20forwarder%20proxy.png">
+<meta property="og:image" content="http://example.com/images/Extended%20Pub-Sub.png">
+<meta property="og:image" content="http://example.com/images/parallel%20pipeline.png">
+<meta property="og:image" content="http://example.com/images/parallel%20pipeline%20with%20kill%20signaling.png">
+<meta property="og:image" content="http://example.com/images/fair%20queuing.png">
+<meta property="og:image" content="http://example.com/images/Exclusive%20Pair.png">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.211Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ZeroMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/Request-Reply.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/","path":"2024/09/07/数据通信/ZeroMQ/ZeroMQ消息模式/","title":"ZeroMQ消息模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZeroMQ消息模式 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZeroMQ-%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">ZeroMQ 消息模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Request-Reply"><span class="nav-number">2.</span> <span class="nav-text">Request-Reply</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-and-Dealer"><span class="nav-number">2.1.</span> <span class="nav-text">Router and Dealer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pub-Sub"><span class="nav-number">3.</span> <span class="nav-text">Pub-Sub</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95-Pub-Sub"><span class="nav-number">3.1.</span> <span class="nav-text">简单 Pub-Sub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pub-Sub-Synchronization"><span class="nav-number">3.2.</span> <span class="nav-text">Pub-Sub Synchronization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-Coordination-%E8%8A%82%E7%82%B9%E5%8D%8F%E8%B0%83"><span class="nav-number">3.2.1.</span> <span class="nav-text">Node Coordination(节点协调)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pub-Sub-Network-with-a-Proxy"><span class="nav-number">3.3.</span> <span class="nav-text">Pub-Sub Network with a Proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pub-Sub-forward-proxy"><span class="nav-number">3.4.</span> <span class="nav-text">Pub-Sub forward proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extended-Pub-Sub"><span class="nav-number">3.5.</span> <span class="nav-text">Extended Pub-Sub</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Push-Pull"><span class="nav-number">4.</span> <span class="nav-text">Push-Pull</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Pipeline"><span class="nav-number">4.1.</span> <span class="nav-text">Parallel Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fair-Queuing"><span class="nav-number">4.2.</span> <span class="nav-text">Fair Queuing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exclusive-Pair"><span class="nav-number">5.</span> <span class="nav-text">Exclusive Pair</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZeroMQ消息模式 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZeroMQ消息模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- TOC -->
+
+<ul>
+<li><a href="#zeromq-%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F">ZeroMQ 消息模式</a></li>
+<li><a href="#request-reply">Request-Reply</a><ul>
+<li><a href="#router-and-dealer">Router and Dealer</a></li>
+</ul>
+</li>
+<li><a href="#pub-sub">Pub-Sub</a><ul>
+<li><a href="#%E7%AE%80%E5%8D%95-pub-sub">简单 Pub-Sub</a></li>
+<li><a href="#pub-sub-synchronization">Pub-Sub Synchronization</a><ul>
+<li><a href="#node-coordination%E8%8A%82%E7%82%B9%E5%8D%8F%E8%B0%83">Node Coordination节点协调</a></li>
+</ul>
+</li>
+<li><a href="#pub-sub-network-with-a-proxy">Pub-Sub Network with a Proxy</a></li>
+<li><a href="#pub-sub-forward-proxy">Pub-Sub forward proxy</a></li>
+<li><a href="#extended-pub-sub">Extended Pub-Sub</a></li>
+</ul>
+</li>
+<li><a href="#push-pull">Push-Pull</a><ul>
+<li><a href="#parallel-pipeline">Parallel Pipeline</a></li>
+<li><a href="#fair-queuing">Fair Queuing</a></li>
+</ul>
+</li>
+<li><a href="#exclusive-pair">Exclusive Pair</a></li>
+</ul>
+<!-- /TOC -->
+
+
+<h1 id="ZeroMQ-消息模式"><a href="#ZeroMQ-消息模式" class="headerlink" title="ZeroMQ 消息模式"></a>ZeroMQ 消息模式</h1><p>ZeroMQ 内置四种核心消息模式：  </p>
+<ul>
+<li><strong>Request-reply</strong>：该模式将一组服务端和一组客户端相连，用于远程过程调用会任务分发。是一种 remote procedure call 和任务分发模式  </li>
+<li><strong>Pub-sub</strong>：该模式将一组发布者和一组订阅者相连，用于数据分发</li>
+<li><strong>Pipeline</strong>：该模式以fan-out&#x2F;fan-in形式连接节点，该模式可以有多个步骤和循环。这是一个并行的任务分发和收集模式</li>
+<li><strong>Exclusive pair</strong>：该模式将两个套接字一对一的连接起来。这是一种在进程中连接两个线程的模式，不要与“普通”套接字对混淆</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://api.zeromq.org/master:zmq_socket"><code>zmq_socket()</code></a>手册中详细介绍了所有消息模式。  </p>
+<p>以下是合法的套接字连接-绑定对（一端绑定，一端连接即可）：  </p>
+<ul>
+<li>PUB and SUB</li>
+<li>REQ and REP</li>
+<li>REQ and ROUTER (take care, REQ inserts an extra null frame)</li>
+<li>DEALER and REP (take care, REP assumes a null frame)</li>
+<li>DEALER and ROUTER</li>
+<li>DEALER and DEALER</li>
+<li>ROUTER and ROUTER</li>
+<li>PUSH and PULL</li>
+<li>PAIR and PAIR</li>
+</ul>
+<p>还将看到对 XPUB 和 XSUB 套接字的引用。任何其他组合都将产生未记录且不可靠的结果，并且如果尝试它们，ZeroMQ 的未来版本可能会返回错误。当然，可以并且将通过代码桥接其他套接字类型，即从一个套接字类型读取并写入另一个套接字类型。  </p>
+<h1 id="Request-Reply"><a href="#Request-Reply" class="headerlink" title="Request-Reply"></a>Request-Reply</h1><p>是一种同步请求应答模式，发送 request 之后，必须等待 reply 才能继续发送请求。<br><img src="/./images/Request-Reply.png" alt="Request-Reply pattern">  </p>
+<h2 id="Router-and-Dealer"><a href="#Router-and-Dealer" class="headerlink" title="Router and Dealer"></a>Router and Dealer</h2><p><img src="/./images/extended%20request-reply.png" alt="extended request-reply"> <img src="/./images/request-reply%20broker.png" alt="extended request-reply"><br>可用于解决请求分发问题。多个客户端和多个服务器，每个请求可能发送到不同的服务器进行处理。可解决当新增服务器时，每个客户端都需要修改以连接到新增的服务器。    </p>
+<p>向 Router 发送消息，ZeroMQ 会自动带上消息来源帧。同时，由 Router 发送出去的消息，需手动带上目标 ID，该 ID 通常由 <code>zmq_setsockopt()</code> 定义。  </p>
+<p>Router-Dealer 可演变为：  </p>
+<ul>
+<li>Router-Dealer</li>
+<li>Router-REQ</li>
+<li>Router-REP</li>
+</ul>
+<h1 id="Pub-Sub"><a href="#Pub-Sub" class="headerlink" title="Pub-Sub"></a>Pub-Sub</h1><h2 id="简单-Pub-Sub"><a href="#简单-Pub-Sub" class="headerlink" title="简单 Pub-Sub"></a>简单 Pub-Sub</h2><p><img src="/./images/Pub-Sub.png" alt="Pub-Sub pattern"><br>是一种异步模型。Publiser 向所有 subscriber 发布消息。Subscriber 可订阅多种消息，也可以向多个 publishers 订阅消息。  </p>
+<p>要使用 SUB 套接字，必须使用 <code>zmq_setsockopt()</code> 设置 subscription。subscriber 可设置多个 subsciptions，只要消息满足其中一条订阅信息，SUB套接字就会收到。<br>pub-sub 模式需要注意：无法得知 SUB 何时开始接收消息，即便是先开启 SUB，后开启 PUB 发送消息，依然会丢失一部分消息。这是因为建立连接需要一些时间。解决方法：  </p>
+<ul>
+<li>方法一：可在建立连接之后，等待一段时间再发送消息 - 实际使用中不建议该方式，因为该方式太脆弱，且不好控制</li>
+<li>方法二：该方法认为发布者发布的消息流是无穷无尽的，丢失一部分也没关系</li>
+</ul>
+<p>pub-sub 模式说明：  </p>
+<ul>
+<li>订阅者可连接多个发布者，轮流接收消息</li>
+<li>若使用 TCP 协议，那么当订阅者处理速度过慢时，消息会在发布者端堆积(可使用阈值 HWM 进行保护)</li>
+<li>ZeroMQ V3.X 版本，若使用 connected 协议(如: <code>tcp:@&lt;&gt;@</code> 或 <code>ipc:@&lt;&gt;@</code>)，则在 publisher 端进行过滤；若使用 <code>epgm:@&lt;//&gt;@</code> 协议，则在 subscriber 端进行过滤。在 ZeroMQ V2.X，所有过滤都是在 subscriber 端进行</li>
+</ul>
+<p>
+
+<h2 id="Pub-Sub-Synchronization"><a href="#Pub-Sub-Synchronization" class="headerlink" title="Pub-Sub Synchronization"></a>Pub-Sub Synchronization</h2><p><img src="/./images/Pub-Sub%20Synchronization.png" alt="Pub-Sub Synchronization">  </p>
+<p>使用 REQ-REP 来同步 Pub 于 Sub，Pub 等待所有 Sub 启动后再向发布消息。  </p>
+<h3 id="Node-Coordination-节点协调"><a href="#Node-Coordination-节点协调" class="headerlink" title="Node Coordination(节点协调)"></a>Node Coordination(节点协调)</h3><p>要协调网络中的一组节点时，不适合使用 PAIR 套接字。这也是线程和节点之间的不同处之一。若远程节点断开后又重连，PAIR 不会进行处理。  </p>
+<p>线程与节点的第二个重大区别在于：线程的数量一般是固定的，而节点的数量则会经常变化。  </p>
+<p>以气象信息模型为基础，考虑节点的协调，保证客户端不会丢失最开始的消息。  </p>
+<p>程序流程：  </p>
+<ul>
+<li>发布者知道预期的订阅者数量，可以任意指定</li>
+<li>发布者启动后会等待所有订阅者进行连接，也就是节点协调。每个订阅者会使用另一个套接字来告知发布者自己已经就绪</li>
+<li>当所有订阅者准备就绪后，发布者才开始发布消息</li>
+</ul>
+<p>此例中，使用 <code>REQ-REP</code> 套接字来同步发布者和订阅者。  </p>
+<p>当 REQ-REP 请求完成时，仍无法保证 SUB 套接字已成功建立连接。除非使用 inproc 协议，否则对外连接的顺序是不一定的。因此，示例程序中使用了 <code>sleep(1)</code> 的方式来进行处理，随后再发送同步请求。</p>
+<p>更可靠的模型是：  </p>
+<ul>
+<li>发布者打开 PUB 套接字，发送 Hello 消息</li>
+<li>订阅者打开 SUB 套接字，当接收到 Hello 消息后再使用 REQ-REP 套接字进行同步</li>
+<li>当发布者获得所有订阅者的同步消息后，再发送真正的数据</li>
+</ul>
+<h2 id="Pub-Sub-Network-with-a-Proxy"><a href="#Pub-Sub-Network-with-a-Proxy" class="headerlink" title="Pub-Sub Network with a Proxy"></a>Pub-Sub Network with a Proxy</h2><p><img src="/./images/Pub-Sub%20with%20a%20proxy.png" alt="Pub-Sub with a proxy"></p>
+<h2 id="Pub-Sub-forward-proxy"><a href="#Pub-Sub-forward-proxy" class="headerlink" title="Pub-Sub forward proxy"></a>Pub-Sub forward proxy</h2><p>即：**<em>Transport Bridging</em>**<br>ZeroMQ 用户经常提出的一个问题是，“如何将 ZeroMQ 网络与 X 技术连接起来?”其中 X 是其他网络或消息传递技术。</p>
+<p>最简单的答案就是 <em>bridge</em>。Bridge 是一个小应用程序，它在一个套接字上使用一种协议，并在另一个套接字上转换为&#x2F;从另一种协议。可以看做一个协议解释器。ZeroMQ 中常见的桥接问题是桥接两个传输或网络。 </p>
+<p><img src="/./images/pub-sub%20forwarder%20proxy.png" alt="Pub-Sub forward proxy"> </p>
+<h2 id="Extended-Pub-Sub"><a href="#Extended-Pub-Sub" class="headerlink" title="Extended Pub-Sub"></a>Extended Pub-Sub</h2><p><img src="/./images/Extended%20Pub-Sub.png" alt="Extended Pub-Sub"></p>
+<h1 id="Push-Pull"><a href="#Push-Pull" class="headerlink" title="Push-Pull"></a>Push-Pull</h1><p>Push&#x2F;Pull 是消息传输的另一个重要的 pattern。<strong>用于 fan-out、fan-in 单向通信</strong>。  </p>
+<p>Push 会将消息均匀地分发到所有可用的客户端，pull 会将来自所有连接的客户端的消息公平地排队。  </p>
+<p>Push&#x2F;Pull 的特点是 <strong>Push 端和 Pull 端都可以做 server</strong>，<code>bind</code> 到某个地址等待对方访问。如果在 Push 端绑定地址，那么这是一个 Push server，对应的 Pull clients 可以 connect 到这个 Push server 往外拉数据；反之，如果建立一个 Pull server，对应的 Push clients 可以 connect 到这个 Pull server 往里压数据。由此，可以轻松实现一个 task 的 map reduce 的 framework。如下图所示，中间的 worker 可以随需增减。  </p>
+<h2 id="Parallel-Pipeline"><a href="#Parallel-Pipeline" class="headerlink" title="Parallel Pipeline"></a>Parallel Pipeline</h2><p><img src="/./images/parallel%20pipeline.png" alt="Parallel Pipeline">  </p>
+<ul>
+<li>生成可以并行执行的任务的 ventilator</li>
+<li>一组处理这些任务的 workers</li>
+<li>结果收集器(Sink)会在末端接收所有worker的处理结果</li>
+</ul>
+<p>Ventilator 生成任务，并分发到 workers，wokers 处理后将结果发送到 Sink。是一种并行任务处理模型。  </p>
+<p>现实中，workers 可能分布在不同的计算机中，也可能利用 GPU 进行复杂计算。  </p>
+<p>更进一步，当任务处理完成时，干净的关闭进程。如果在后台启动了很多worker，现在希望在批处理完成时关闭它们。通过向 workers 发送一个 kill 消息来实现。最好的地方是 sink，因为它知道什么时候完成了一个批处理。<br><img src="/./images/parallel%20pipeline%20with%20kill%20signaling.png" alt="parallel pipeline with kill signaling">  </p>
+<p>因为 Push-Pull 是单向的。因此需要使用另一种套接字类型，或者可以混合多个套接字流来将 sink 连接到 workers。此例中，如上图，使用 pub-sub 模型向 worker 发送 kill 消息。  </p>
+<h2 id="Fair-Queuing"><a href="#Fair-Queuing" class="headerlink" title="Fair Queuing"></a>Fair Queuing</h2><p><img src="/./images/fair%20queuing.png" alt="Fair Queuing">  </p>
+<p>管道模式也会出现慢连接的情况，让人误以为 PUSH 套接字没有进行负载均衡。如果正在使用 PUSH 和 PULL，并且其中一个 worker 程序比其他 worker 程序获得更多消息，这是因为其 PULL 套接字比其他 worker 程序连接得更快，并且在其他 worker 程序连接之前捕获了大量消息。如果想要适当的负载平衡，可以看看<a target="_blank" rel="noopener" href="https://zguide.zeromq.org/docs/chapter3/#advanced-request-reply">第3章-高级请求-应答模式</a>中的负载平衡模式。</p>
+<h1 id="Exclusive-Pair"><a href="#Exclusive-Pair" class="headerlink" title="Exclusive Pair"></a>Exclusive Pair</h1><p>该模式将两个套接字一对一链接起来。是一种在进程中连接两个线程的模式。<br><img src="/./images/Exclusive%20Pair.png" alt="Exclusive Pair"></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://zguide.zeromq.org/docs/chapter2/#Signaling-Between-Threads-PAIR-Sockets">Signaling Between Threads(PAIR sockets)</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Multithreaded relay</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;zhelpers.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> *</span></span><br><span class="line"><span class="function"><span class="title">step1</span> <span class="params">(<span class="type">void</span> *context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//  Connect to step2 and tell it we&#x27;re ready</span></span><br><span class="line">    <span class="type">void</span> *xmitter = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_connect</span> (xmitter, <span class="string">&quot;inproc://step2&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Step 1 ready, signaling step 2\n&quot;</span>);</span><br><span class="line">    <span class="built_in">s_send</span> (xmitter, <span class="string">&quot;READY&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_close</span> (xmitter);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> *</span></span><br><span class="line"><span class="function"><span class="title">step2</span> <span class="params">(<span class="type">void</span> *context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//  Bind inproc socket before starting step1</span></span><br><span class="line">    <span class="type">void</span> *receiver = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_bind</span> (receiver, <span class="string">&quot;inproc://step2&quot;</span>);</span><br><span class="line">    <span class="type">pthread_t</span> thread;</span><br><span class="line">    <span class="built_in">pthread_create</span> (&amp;thread, <span class="literal">NULL</span>, step1, context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Wait for signal and pass it on</span></span><br><span class="line">    <span class="type">char</span> *string = <span class="built_in">s_recv</span> (receiver);</span><br><span class="line">    <span class="built_in">free</span> (string);</span><br><span class="line">    <span class="built_in">zmq_close</span> (receiver);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Connect to step3 and tell it we&#x27;re ready</span></span><br><span class="line">    <span class="type">void</span> *xmitter = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_connect</span> (xmitter, <span class="string">&quot;inproc://step3&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Step 2 ready, signaling step 3\n&quot;</span>);</span><br><span class="line">    <span class="built_in">s_send</span> (xmitter, <span class="string">&quot;READY&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_close</span> (xmitter);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">void</span> *context = <span class="built_in">zmq_ctx_new</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Bind inproc socket before starting step2</span></span><br><span class="line">    <span class="type">void</span> *receiver = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_bind</span> (receiver, <span class="string">&quot;inproc://step3&quot;</span>);</span><br><span class="line">    <span class="type">pthread_t</span> thread;</span><br><span class="line">    <span class="built_in">pthread_create</span> (&amp;thread, <span class="literal">NULL</span>, step2, context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Wait for signal</span></span><br><span class="line">    <span class="type">char</span> *string = <span class="built_in">s_recv</span> (receiver);</span><br><span class="line">    <span class="built_in">free</span> (string);</span><br><span class="line">    <span class="built_in">zmq_close</span> (receiver);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Test successful!\n&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_ctx_destroy</span> (context);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是 ZeroMQ 多线程编程的典型示例：  </p>
+<ul>
+<li>两个线程通过 &#96;inproc&#96;&#96; 通信，使用同一个 context</li>
+<li>父线程创建一个套接字，绑定到 <code>inproc://&lt;端点&gt;</code>，然后启动子线程，将 context 对象传递给它</li>
+<li>子线程创建一个套接字，连接到 <code>inproc://&lt;端点&gt;</code>，然后发送已就绪信号给父线程</li>
+</ul>
+<p>注意：使用这种模式的多线程代码不能扩展到进程。如果使用 <code>inproc</code> 和套接字对，那么会构建一个紧密绑定的应用程序，也就是说，线程在结构上是相互依赖的。当低延迟非常重要时，可以这样做。另一种设计模式是松散绑定(loosely bound)的应用程序，其中线程有自己的 context，并通过 <code>ipc</code> 或 <code>tcp</code> 进行通信。可以轻松地将松散绑定的线程分解为单独的进程。  </p>
+<p>此处使用了 PAIR 套接字，而不使用其他套接字，是考虑到：  </p>
+<ul>
+<li>发送方可以使用 PUSH，接收方使用 PULL。看上去可行，但 <strong>PUSH 发送消息时会进行负载均衡</strong>，若开启了两个接收方，就会丢失一半的信号。而 PAIR 套接字建立的是一对一的链接，具有排他性</li>
+<li>发送方可以使用 DEALER，接收方使用 ROUTER。但 ROUTER 套接字将信息封装在一个“envelope”中，这意味着零大小信号变成了一个 multipart 信息。如果不关心数据并将任何东西视为有效信号，并且如果重复读取套接字，那么这将无关紧要。但是，如果决定发送真实的数据，会突然发现 ROUTER 会提供“错误”的消息。DEALER 同样有负载均衡机制，和 PUSH 套接字有同样的风险</li>
+<li>发送方可以使用 PUB，接收方使用 SUB。这样，消息可以远洋发送，PUB 套接字也不会进行负载均衡。但是，需要对 SUB 套接字设置一个空的订阅消息</li>
+</ul>
+<p>综上，使用 PAIR 套接字是线程协调最合适的方式。  </p>
+<blockquote>
+<hr>
+<ul>
+<li>ZeroMQ 中协调线程应该使用的唯一机制是 ZeroMQ 消息。</li>
+</ul>
+<hr>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" rel="prev" title="io_thread">
+                  <i class="fa fa-angle-left"></i> io_thread
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ/" rel="next" title="ZeroMQ">
+                  ZeroMQ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

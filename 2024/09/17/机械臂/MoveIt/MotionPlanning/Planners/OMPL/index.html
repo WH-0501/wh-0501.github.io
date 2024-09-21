@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Open Motion Planning Library 是一个强大的集合，包含了最先进的基于采样的运动规划算法，是 MoveIt 中的默认规划器。 OMPL 设置对应 ompl_planning.yaml 文件。例如： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OMPL">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="Open Motion Planning Library 是一个强大的集合，包含了最先进的基于采样的运动规划算法，是 MoveIt 中的默认规划器。 OMPL 设置对应 ompl_planning.yaml 文件。例如： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-17T13:11:37.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.074Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/","path":"2024/09/17/机械臂/MoveIt/MotionPlanning/Planners/OMPL/","title":"OMPL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OMPL | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OMPL-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">OMPL 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Longest-Valid-Segment-Fraction"><span class="nav-number">1.1.</span> <span class="nav-text">Longest Valid Segment Fraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Projection-Evaluator"><span class="nav-number">1.2.</span> <span class="nav-text">Projection Evaluator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enforce-Planning-in-Joint-Space"><span class="nav-number">1.3.</span> <span class="nav-text">Enforce Planning in Joint Space</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Smoothing-Paths"><span class="nav-number">2.</span> <span class="nav-text">Smoothing Paths</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OMPL-Optimization-Objectives"><span class="nav-number">2.1.</span> <span class="nav-text">OMPL Optimization Objectives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OMPL-%E4%BC%98%E5%8C%96%E5%99%A8%E5%81%9C%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">OMPL 优化器停止条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Post-Processing-Smoothing"><span class="nav-number">2.3.</span> <span class="nav-text">Post-Processing Smoothing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Persistent-Roadmaps"><span class="nav-number">3.</span> <span class="nav-text">Persistent Roadmaps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OMPL | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OMPL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:11:37" itemprop="dateCreated datePublished" datetime="2024-09-17T21:11:37+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>26 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Open Motion Planning Library 是一个强大的集合，包含了最先进的基于采样的运动规划算法，是 MoveIt 中的默认规划器。</p>
+<h1 id="OMPL-设置"><a href="#OMPL-设置" class="headerlink" title="OMPL 设置"></a><strong>OMPL 设置</strong></h1><p>对应 ompl_planning.yaml 文件。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line">planner_configs:</span><br><span class="line">  SBLkConfigDefault:</span><br><span class="line">    type: geometric::SBL</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ESTkConfigDefault:</span><br><span class="line">    type: geometric::EST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0 setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LBKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::LBKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  BKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::BKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  KPIECEkConfigDefault:</span><br><span class="line">    type: geometric::KPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9 (0.0,1.]</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  RRTkConfigDefault:</span><br><span class="line">    type: geometric::RRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">  RRTConnectkConfigDefault:</span><br><span class="line">    type: geometric::RRTConnect</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  RRTstarkConfigDefault:</span><br><span class="line">    type: geometric::RRTstar</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1</span><br><span class="line">  TRRTkConfigDefault:</span><br><span class="line">    type: geometric::TRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    max_states_failed: 10  # when to start increasing temp. default: 10</span><br><span class="line">    temp_change_factor: 2.0  # how much to increase or decrease temp. default: 2.0</span><br><span class="line">    min_temperature: 10e-10  # lower limit of temp change. default: 10e-10</span><br><span class="line">    init_temperature: 10e-6  # initial temperature. default: 10e-6</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountierNodeRatio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    k_constant: 0.0  # value used to normalize expresssion. default: 0.0 set in setup()</span><br><span class="line">  PRMkConfigDefault:</span><br><span class="line">    type: geometric::PRM</span><br><span class="line">    max_nearest_neighbors: 10  # use k nearest neighbors. default: 10</span><br><span class="line">  PRMstarkConfigDefault:</span><br><span class="line">    type: geometric::PRMstar</span><br><span class="line">  FMTkConfigDefault:</span><br><span class="line">    type: geometric::FMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.1  # multiplier used for the nearest neighbors search radius. default: 1.1</span><br><span class="line">    nearest_k: 1  # use Knearest strategy. default: 1</span><br><span class="line">    cache_cc: 1  # use collision checking cache. default: 1</span><br><span class="line">    heuristics: 0  # activate cost to go heuristics. default: 0</span><br><span class="line">    extended_fmt: 1  # activate the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  BFMTkConfigDefault:</span><br><span class="line">    type: geometric::BFMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.0  # multiplier used for the nearest neighbors search radius. default: 1.0</span><br><span class="line">    nearest_k: 1  # use the Knearest strategy. default: 1</span><br><span class="line">    balanced: 0  # exploration strategy: balanced true expands one tree every iteration. False will select the tree with lowest maximum cost to go. default: 1</span><br><span class="line">    optimality: 1  # termination strategy: optimality true finishes when the best possible path is found. Otherwise, the algorithm will finish when the first feasible path is found. default: 1</span><br><span class="line">    heuristics: 1  # activates cost to go heuristics. default: 1</span><br><span class="line">    cache_cc: 1  # use the collision checking cache. default: 1</span><br><span class="line">    extended_fmt: 1  # Activates the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  PDSTkConfigDefault:</span><br><span class="line">    type: geometric::PDST</span><br><span class="line">  STRIDEkConfigDefault:</span><br><span class="line">    type: geometric::STRIDE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    use_projected_distance: 0  # whether nearest neighbors are computed based on distances in a projection of the state rather distances in the state space itself. default: 0</span><br><span class="line">    degree: 16  # desired degree of a node in the Geometric Near-neightbor Access Tree (GNAT). default: 16</span><br><span class="line">    max_degree: 18  # max degree of a node in the GNAT. default: 12</span><br><span class="line">    min_degree: 12  # min degree of a node in the GNAT. default: 12</span><br><span class="line">    max_pts_per_leaf: 6  # max points per leaf in the GNAT. default: 6</span><br><span class="line">    estimated_dimension: 0.0  # estimated dimension of the free space. default: 0.0</span><br><span class="line">    min_valid_path_fraction: 0.2  # Accept partially valid moves above fraction. default: 0.2</span><br><span class="line">  BiTRRTkConfigDefault:</span><br><span class="line">    type: geometric::BiTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1</span><br><span class="line">    init_temperature: 100  # initial temperature. default: 100</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf</span><br><span class="line">  LBTRRTkConfigDefault:</span><br><span class="line">    type: geometric::LBTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    epsilon: 0.4  # optimality approximation factor. default: 0.4</span><br><span class="line">  BiESTkConfigDefault:</span><br><span class="line">    type: geometric::BiEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ProjESTkConfigDefault:</span><br><span class="line">    type: geometric::ProjEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LazyPRMkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRM</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  LazyPRMstarkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRMstar</span><br><span class="line">  SPARSkConfigDefault:</span><br><span class="line">    type: geometric::SPARS</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 1000  # maximum consecutive failure limit. default: 1000</span><br><span class="line">  SPARStwokConfigDefault:</span><br><span class="line">    type: geometric::SPARStwo</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 5000  # maximum consecutive failure limit. default: 5000</span><br><span class="line">  TrajOptDefault:</span><br><span class="line">    type: geometric::TrajOpt</span><br><span class="line"></span><br><span class="line">panda_arm:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">panda_arm_hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Longest-Valid-Segment-Fraction"><a href="#Longest-Valid-Segment-Fraction" class="headerlink" title="Longest Valid Segment Fraction"></a><strong>Longest Valid Segment Fraction</strong></h2><p>最长有效分段分数。<strong>longest_valid_segment_fraction</strong> 参数定义用于碰撞检测的机器人运动离散化程度，极大地影响了基于 ompl 的解决方案的性能和可靠性。本文中，motion 可以被认为是图中两个节点之间的边，其中节点是沿轨迹的路点。OMPL 中的默认运动碰撞检查器只是将边缘离散为许多子状态以进行碰撞检查。<strong>目前在 OMPL&#x2F;MoveIt 中没有可用的连续碰撞检查</strong>。</p>
+<p>具体来说，<strong>longest_valid_segment_fraction</strong> 是机器人状态空间的一部分，假设机器人当前未处于碰撞中，假设机器人可以在保持无碰撞的情况下移动。例如，如果 <em>longest_valid_segment_fraction &#x3D; 0.01</em>，假设两个节点之间的边小于状态空间的 1&#x2F;100，那么不需要明确地检查沿这条边的任何子状态，只需要检查它连接的两个节点。</p>
+<p>除了 ompl_planning.yaml 中的 longest_valid_segment_fraction 参数之外，还有 <strong>maximum_waypoint_distance</strong>，可在 dynamic reconfigure 文件中找到。maximum_waypoint_distance 为碰撞检查定义了相同的机器人运动离散化，但它是在绝对 level 上实现的，而不是使用状态空间的 fractions。例如，如果 maximum_waypoint_distance &#x3D; 0.1，那么如果一条状态空间距离小于 0.1 的边，那么不会显式地检查沿该边的任何子状态，而只需要检测两点。</p>
+<p>如果同时设置了 longest_valid_segment_fraction 和 maximum_waypoint_distance，则选择产生最保守离散化的变量（在给定边缘上生成最多碰撞检查状态的变量）。</p>
+<p>将 longest_valid_segment_fraction（或 maximum_waypoint_distance）设置得太低，碰撞检查&#x2F;运动规划会很慢。设置得太高，会错过小&#x2F;窄物体。此外，高碰撞检查分辨率会导致路径平滑器输出难以理解的运动，因为它们能够“捕捉”无效路径，然后尝试通过对其进行采样来修复它们，但并不完美。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/337">此处记录了此参数对两个 MoveIt 教程示例的影响的快速分析</a>。</p>
+<h2 id="Projection-Evaluator"><a href="#Projection-Evaluator" class="headerlink" title="Projection Evaluator"></a><strong>Projection Evaluator</strong></h2><p><strong>projection_evaluator</strong> 参数可以包含一个关节或 links 列表，以近似地覆盖配置空间。Planner 使用此设置，如:</p>
+<ul>
+<li>KPIECE</li>
+<li>BKPIECE</li>
+<li>LBKPIECE</li>
+<li>PDST</li>
+</ul>
+<h2 id="Enforce-Planning-in-Joint-Space"><a href="#Enforce-Planning-in-Joint-Space" class="headerlink" title="Enforce Planning in Joint Space"></a><strong>Enforce Planning in Joint Space</strong></h2><p>根据 planning problem 的不同，MoveIt 在<strong>关节空间</strong>和<strong>笛卡尔空间</strong>之间进行选择，以表征规划问题。设置 group 参数 <strong>enforce_joint_model_state_space</strong> 将强制所有规划使用 joint space。</p>
+<p><strong>默认情况下，带有方向路径约束的规划请求是在笛卡尔空间中采样的，因此调用 IK 作为生成采样器</strong>。</p>
+<p>通过强制执行 joint space，规划过程将使用拒绝抽样来找到有效的请求。</p>
+<h1 id="Smoothing-Paths"><a href="#Smoothing-Paths" class="headerlink" title="Smoothing Paths"></a><strong>Smoothing Paths</strong></h1><p>OMPL 中的许多 planners(包括默认的 planner)更倾向于寻找解决方案路径的速度而不是路径质量。在后处理阶段对可行路径进行平滑和缩短，以获得更接近最优路径。然而，由于 OMPL 中的算法是概率性的，因此不能保证每次都能找到全局最优解或相同的解。其他库，如基于搜索的规划库(Search Based Planning Library, SBPL)提供了确定性结果，即给定相同的环境、起点和目标，将始终得到相同的路径。SBPL 是基于 A* 的，因此将根据所选的搜索分辨率获得最佳结果。然而，SBPL 也有缺点，例如难以以适当的分辨率定义状态空间格(例如，如何定义关节角度或末端执行器姿态的良好离散化)和调整特殊的启发式。</p>
+<p>在 OMPL 中有几个 planners 可以提供理论上的最优性保证，但通常只是渐近的:它们收敛到最优解，但收敛速度可能很慢。这些规划器使用的优化目标通常是路径长度的最小化，但也可以使用其他优化目标。</p>
+<h2 id="OMPL-Optimization-Objectives"><a href="#OMPL-Optimization-Objectives" class="headerlink" title="OMPL Optimization Objectives"></a><strong>OMPL Optimization Objectives</strong></h2><p>OMPL 规划库中的几个 planners 能够针对指定的优化目标进行优化。目前可用于 MoveIt 的渐近最优 planner 是：</p>
+<ul>
+<li><p>RRT*</p>
+</li>
+<li><p>PRM*</p>
+</li>
+<li><p>LazyPRM*</p>
+</li>
+<li><p>BFMT</p>
+</li>
+<li><p>FMT</p>
+</li>
+<li><p>Lower Bound Tree RRT(LBTRRT)</p>
+</li>
+<li><p>SPARS</p>
+</li>
+<li><p>SPARS2</p>
+</li>
+<li><p>Transition-based RRT(T-RRT)</p>
+</li>
+</ul>
+<p>OMPL 还提供了一种称为 <strong>AnytimePathShortening</strong> 的 meta-optimization 算法，该算法重复并行运行多个规划器，并与路径捷径和路径杂交(这两种技术用于局部优化解决方案路径)交织在一起。虽然没有被证明是最优的，但在实践中通常是获得渐近最优解路径的有效策略。</p>
+<p>以及 OMPL 中的其他优化规划器，但尚未在 MoveIt 中公开：</p>
+<ul>
+<li>RRT#</li>
+<li>RRTX</li>
+<li>Informed RRT*</li>
+<li>Batch Informed Trees(BIT*)</li>
+<li>Sparse Stable RRT</li>
+<li>FMT*</li>
+<li>CForest</li>
+</ul>
+<p>以下优化目标是可用的:</p>
+<ul>
+<li>PathLengthOptimizationObjective (Default，路径长度)</li>
+<li>MechanicalWorkOptimizationObjective</li>
+<li>MaximizeMinClearanceObjective (最大化最小间隙)</li>
+<li>StateCostIntegralObjective (状态代价积分)</li>
+<li>MinimaxObjective</li>
+</ul>
+<p>这些优化目标的配置可以通过 ompl_planning.yaml 中的 <strong>optimization_objective</strong> 完成。该参数的值被设置为所选优化目标的名称。例如，要配置 RRTstar 以使用 maximizemclearanceobjective, ompl_planning.yaml 中的 planner entry:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">optimization_objective:</span> <span class="string">MaximizeMinClearanceObjective</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>有关 OMPL 最优规划者的更多信息，请参阅: <a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/optimalPlanning.html">OMPL-最优规划文档</a>。</p>
+<h2 id="OMPL-优化器停止条件"><a href="#OMPL-优化器停止条件" class="headerlink" title="OMPL 优化器停止条件"></a><strong>OMPL 优化器停止条件</strong></h2><p>当超过给定的时间限制时，OMPL 中的规划器会终止求解。但是，可以通过 <strong>termination_condition</strong> 参数(ompl_planning.yaml)为每个规划程序配置指定额外的规划程序终止条件。可能的值为：</p>
+<ul>
+<li>**Iteration [num]**：迭代 num 次后终止</li>
+<li>**CostConvergence [solutionsWindow，epsilon]**：在代价（由优化目标指定）收敛之后终止。参数 solutionsWindow 指定的最小解决方案数，用于确认 planner 是否收敛。参数 ε 是要考虑收敛的阈值。应该是接近 0 的正数。如果在找到新的更好的解决方案后累积移动平均值没有以 ε 的相对分数变化，则已经达到收敛。OMPL 版本 ≥ 1.5.0</li>
+<li><strong>ExactSolution</strong>：找到确切的解决方案或发生超时后立即终止。这修改了 anytime&#x2F;optimizing 规划器的逻辑，在发现第一个可行解决方案时终止</li>
+</ul>
+<p>在所有情况下，planner 将在满足用户指定的终止条件或达到 timeout 指定的时间限制时终止，两者中以先发生者为准。</p>
+<p>例如，要指定 RRTstar 应该在收敛时终止，可以使用以下设置:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">termination_condition:</span> <span class="string">CostConvergence[10,.1]</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，没有指定优化目标(optimization_objective)，因此将使用默认的 <strong>PathLengthOptimizationObjective</strong>。</p>
+<h2 id="Post-Processing-Smoothing"><a href="#Post-Processing-Smoothing" class="headerlink" title="Post-Processing Smoothing"></a><strong>Post-Processing Smoothing</strong></h2><p>请注意，平滑对于减少间接路由的程度是有限度的。还要注意，这里只讨论基于几何（运动学）的平滑。速度&#x2F;加速度&#x2F;急动平滑在其他地方处理，参考：Time Parameterization。</p>
+<p><strong>可以通过增加 planning time 来调整 MoveIt 在平滑上花费的时间</strong>。在找到初始规划之后但在 <strong>allowed_planning_time</strong> 用完之前的任何剩余时间都将用于平滑。MoveIt 还进行路径混合(path hybridization)，将 N 个不同规划运行的最佳部分拼接在一起。因此，<strong>num_planning_attempts</strong> 也会影响质量。</p>
+<p>虽然目前未在 MoveIt 的顶层公开，但可以通过在 model_based_planning_context.cpp 中将简化持续时间(simplification duration)设置为 0（无限制）来实现更多平滑。这将启用 OMPL 的 simpleMax() 函数。</p>
+<p>除了内部 OMPL 平滑器之外，最近还努力使用 STOMP&#x2F;CHOMP 进行后处理。请参考：<a target="_blank" rel="noopener" href="https://moveit.ros.org/moveit!/ros/2018/10/25/gsoc-motion-planning-support.html">gsoc-motion-planning-support</a>。</p>
+<h1 id="Persistent-Roadmaps"><a href="#Persistent-Roadmaps" class="headerlink" title="Persistent Roadmaps"></a><strong>Persistent Roadmaps</strong></h1><p>默认情况下，对于每个运动规划请求，规划算法均从头开始。但是，对于构建环境路线图的某些规划器，如果规划场景或多或少是静态的，则可以从先前的运动计划请求中重用路线图。请考虑以下计划配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">PersistentLazyPRMstar:</span> <span class="comment"># use this with a representative environment to create a roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">PersistentLazyPRM:</span> <span class="comment"># use this to load a previously created roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRMstar:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRM:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>第一个规划程序配置 <strong>PersistentLazyPRMstar</strong>，将使用 LazyPRM* 来随着每个运动计划请求，在采样的机器人配置之间不断发展渐近最优路径的路线图。销毁规划器实例后，它将把路线图保存到磁盘中。 <strong>PersistentLazyPRM</strong> 配置与之类似，不同之处在于它将从磁盘加载路线图，但销毁后不会将其保存。<strong>SemiPersistent</strong> 规划器配置不会加载&#x2F;保存路线图，但是会随着每个运动规划请求的进行而不断扩展路线图（而不是在规划之前清除路线图的默认行为）。**支持持续性规划功能的四个计划器是：PRM，PRM*，LazyPRM 和 LazyPRM***。它们之间的关键区别在于，当在路线图中搜索有效路径时，惰性变体将根据需要，重新验证节点和边的有效性。非惰性变体将不会检查路线图对于当前环境是否仍然有效。换句话说，对于静态环境，请使用非惰性变体；对于变化很小的环境，请使用惰性变体；如果环境可能发生重大变化，请使用非持久性计划器。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/" rel="prev" title="CHOMP">
+                  <i class="fa fa-angle-left"></i> CHOMP
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/" rel="next" title="Pilz Industrial">
+                  Pilz Industrial <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

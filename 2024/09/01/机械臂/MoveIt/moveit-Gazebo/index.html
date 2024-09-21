@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Driver 负责 moveit 与真实机器人或者 gazebo 通信，真实机器人与 gazebo 仿真的区别就在于：  gazebo仿真时，这个 Driver 已经帮我们集成好了，只需要写个 controller 就可以实现通信！ 真实机器人中，如果是自己开发的机器人，这个 Driver 需要自己去编写  将 MoveIt 下发的 FollowJointTrajectory 比喻成插头，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="moveit-Gazebo">
+<meta property="og:url" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="Driver 负责 moveit 与真实机器人或者 gazebo 通信，真实机器人与 gazebo 仿真的区别就在于：  gazebo仿真时，这个 Driver 已经帮我们集成好了，只需要写个 controller 就可以实现通信！ 真实机器人中，如果是自己开发的机器人，这个 Driver 需要自己去编写  将 MoveIt 下发的 FollowJointTrajectory 比喻成插头，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/image-20240901210956306.png">
+<meta property="article:published_time" content="2024-09-01T13:09:23.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.004Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/image-20240901210956306.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/","path":"2024/09/01/机械臂/MoveIt/moveit-Gazebo/","title":"moveit-Gazebo"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>moveit-Gazebo | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="moveit-Gazebo | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          moveit-Gazebo
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 21:09:23" itemprop="dateCreated datePublished" datetime="2024-09-01T21:09:23+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/image-20240901210956306.png" class="" title="image-20240901210956306">
+
+
+
+<p>Driver 负责 moveit 与真实机器人或者 gazebo 通信，真实机器人与 gazebo 仿真的区别就在于：</p>
+<ul>
+<li>gazebo仿真时，这个 Driver 已经帮我们集成好了，只需要写个 controller 就可以实现通信！</li>
+<li>真实机器人中，如果是自己开发的机器人，这个 Driver 需要自己去编写</li>
+</ul>
+<p>将 MoveIt 下发的 FollowJointTrajectory 比喻成插头，把机器人接收轨迹 Joint Trajectory Controller 和状态反馈部分 Joint State Controller 比喻成插座，所以需要两个控制器来实现 moveit 和 gazebo 的联合仿真。</p>
+<p>主要需要构建 ros_control 和 Moveit! 的桥梁：</p>
+<ul>
+<li>先在 <strong>Moveit! 端配置关节和传感器接口 yaml 文件</strong>，将其加载到 rviz 端</li>
+<li>再在<strong>机器人端配置 ros_control 和接口 yaml 文件，将机器人加载到 Gazebo</strong>（通常在 gazebo 包中，并通过 spawn 加载）  </li>
+<li>最后同时启动加载有 ros_control 的 Gazebo 和加载有 Moveit 的 rviz，达到联合仿真的目的</li>
+</ul>
+<p>需要注意：<strong>保持 gazebo 中加载的 controllers 和 moveit 中的 controllers 命名空间一致</strong>。</p>
+<p>包含文件：</p>
+<ul>
+<li>_bringup_moveit.launch：最顶层</li>
+<li>_gazebo_world.launch：加载仿真环境</li>
+<li>_gazebo_states.launch：启动 joint state controller</li>
+<li>_trajectory_controller.launch：启动插补运算的 controller</li>
+<li>_moveit_controller_manager.launch.xml：启动 follow joint trajectory 功能</li>
+</ul>
+<p><strong>1）MoveIt! 端配置</strong></p>
+<p>首先确保已通过 MoveIt! Setup Assiant 完成了配置。</p>
+<p>测试指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch ROBOT_moveit_config demo.launch</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>1.1）创建控制器配置文件</strong></p>
+<p>创建控制器配置文件。在生成的 MoveIt! config 包的 config 目录下创建 controllers.yaml 文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">joint_state_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">  <span class="attr">publish_rate:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">controller_list:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;$(arg prefix)gen3_joint_trajectory_controller&quot;</span></span><br><span class="line">    <span class="attr">action_ns:</span> <span class="string">follow_joint_trajectory</span></span><br><span class="line">    <span class="attr">default:</span> <span class="literal">True</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">FollowJointTrajectory</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_4</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_5</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_6</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$(arg</span> <span class="string">prefix)joint_7</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>1.2）修改启动文件</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;dof&quot;</span> <span class="attr">default</span>=<span class="string">&quot;7&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">default</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Set the param that trajectory_execution_manager needs to find the controller plugin --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">value</span>=<span class="string">&quot;moveit_simple_controller_manager/MoveItSimpleControllerManager&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- The rest of the params are specific to this plugin --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find gen3_move_it_config)/config/$(arg dof)dof/controllers.yaml&quot;</span> <span class="attr">subst_value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>2）示例一</strong></p>
+<p>① 创建 URDF 模型</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;&lt;robot_name&gt;&quot;</span> <span class="attr">xmlns:xacro</span>=<span class="string">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;world&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;fixed&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;world&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">&lt;!-- 为 Joints 添加传动 Transmissions for ROS Control --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;transmission_block&quot;</span> <span class="attr">params</span>=<span class="string">&quot;joint_name&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;$&#123;joint_name&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>hardware_interface/PositionJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor1&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>hardware_interface/PositionJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint1&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint2&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint3&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint4&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint5&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">xacro:transmission_block</span> <span class="attr">joint_name</span>=<span class="string">&quot;joint6&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 添加 Gazebo 控制器插件 ros_control plugin --&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">gazebo</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/robot_name<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span>      </span><br><span class="line">        <span class="tag">&lt;<span class="name">robotSimType</span>&gt;</span>gazebo_ros_control/DefaultRobotHWSim<span class="tag">&lt;/<span class="name">robotSimType</span>&gt;</span>      </span><br><span class="line">        <span class="tag">&lt;<span class="name">legacyModeNS</span>&gt;</span>true<span class="tag">&lt;/<span class="name">legacyModeNS</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>② 生成配置文件</p>
+<p>参考 MoveIt! Setup Assistant 使用说明生成配置文件。</p>
+<p>③ 创建 Gazebo 功能包</p>
+<p>新建 _gazebo 包，在其中创建 config 和 launch 目录</p>
+<p>添加 config 文件</p>
+<ul>
+<li><strong>robot_name_gazebo_joint_states.yaml</strong>：定义 joint_state_controller，用于监控机器人实时状态</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">robot_name:</span></span><br><span class="line">  <span class="comment"># Publish all joint states -----------------------------------</span></span><br><span class="line">  <span class="attr">joint_state_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">    <span class="attr">publish_rate:</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>robot_name_trajectory_control.yaml</strong>：用于明确控制器接口接收哪些关节信息，需与 URDF 模型对应，此外，还包含每个关节的 PID 参数</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">robot_name:</span></span><br><span class="line">  <span class="attr">arm_joint_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&quot;position_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint4</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint5</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">joint6</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">gains:</span></span><br><span class="line">      <span class="attr">joint1:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">      <span class="attr">joint2:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">      <span class="attr">joint3:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">      <span class="attr">joint4:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">      <span class="attr">joint5:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br><span class="line">      <span class="attr">joint6:</span>   &#123;<span class="attr">p:</span> <span class="number">1000.0</span>, <span class="attr">i:</span> <span class="number">0.0</span>, <span class="attr">d:</span> <span class="number">0.1</span>, <span class="attr">i_clamp:</span> <span class="number">0.0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>创建 launch 文件</p>
+<ul>
+<li>robot_name_trajectory_controller.launch：将 <strong>robot_name_trajectory_control.yaml</strong> 配置文件加载到参数服务器，再调用 spawner 根据参数文件内容启动 <strong>arm_joint_controller</strong>，该控制器完成每个轴的插补运算，并让每个轴运动</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_gazebo)/config/robot_name_trajectory_control.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;arm_controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/robot_name&quot;</span> <span class="attr">args</span>=<span class="string">&quot;arm_joint_controller&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>robot_name_gazebo_states.launch：加载 joint_state_controller</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 将关节控制器的配置参数加载到参数服务器中 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_gazebo)/config/robot_name_gazebo_joint_states.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/robot_name&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint_state_controller&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 运行robot_state_publisher节点，发布tf  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/robot_name/joint_states&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>robot_name_gazebo_world.launch</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- these are the arguments you can pass this launch file, for example paused:=true --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;use_sim_time&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;headless&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- We resume the logic in empty_world.launch --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find gazebo_ros)/launch/empty_world.launch&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg debug)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg gui)&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg paused)&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;use_sim_time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg use_sim_time)&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;headless&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg headless)&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load the URDF into the ROS Parameter Server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro --inorder &#x27;$(find robot_name_description)/urdf/robot_name.xacro&#x27;&quot;</span> /&gt;</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;urdf_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;gazebo_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawn_model&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">args</span>=<span class="string">&quot;-urdf -model robot_name -param robot_description&quot;</span>/&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>robot_name_bringup_moveit.launch</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- Launch Gazebo  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_gazebo)/launch/robot_name_gazebo_world.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- ros_control arm launch file --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_gazebo)/launch/robot_name_gazebo_states.launch&quot;</span> /&gt;</span>   </span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- ros_control trajectory control dof arm launch file --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_gazebo)/launch/robot_name_trajectory_controller.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- moveit launch file --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_name_moveit_config)/launch/moveit_planning_execution.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/" rel="prev" title="moveit-使用">
+                  <i class="fa fa-angle-left"></i> moveit-使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="next" title="moveit-问题记录">
+                  moveit-问题记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

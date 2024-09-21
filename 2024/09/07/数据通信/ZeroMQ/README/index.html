@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考：    Using ZeroMQ Security   MQTT vs ZeroMQ   zeromq源码分析  ZeroMQ 部署参考：https:&#x2F;&#x2F;zeromq.org&#x2F;download&#x2F;   Ubuntu 安装：   12# sudo apt install libzmq3-dev$ sudo apt install libzmq5 libczmq-dev  源码编译：   1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZeroMQ使用">
+<meta property="og:url" content="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="参考：    Using ZeroMQ Security   MQTT vs ZeroMQ   zeromq源码分析  ZeroMQ 部署参考：https:&#x2F;&#x2F;zeromq.org&#x2F;download&#x2F;   Ubuntu 安装：   12# sudo apt install libzmq3-dev$ sudo apt install libzmq5 libczmq-dev  源码编译：   1234">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/Missing%20Message%20Problem%20Solver.png">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.203Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ZeroMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/Missing%20Message%20Problem%20Solver.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/","path":"2024/09/07/数据通信/ZeroMQ/README/","title":"ZeroMQ使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ZeroMQ使用 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZeroMQ-%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">ZeroMQ 部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZeroMQ-%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">ZeroMQ 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZeroMQ-Socket-types"><span class="nav-number">2.1.</span> <span class="nav-text">ZeroMQ Socket types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsock-t-%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">2.2.</span> <span class="nav-text">zsock_t 结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsock-new"><span class="nav-number">2.3.</span> <span class="nav-text">zsock_new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zmalloc"><span class="nav-number">2.4.</span> <span class="nav-text">zmalloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsys-socket"><span class="nav-number">2.5.</span> <span class="nav-text">zsys_socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsys-init"><span class="nav-number">2.6.</span> <span class="nav-text">zsys_init</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zmq-socket"><span class="nav-number">2.7.</span> <span class="nav-text">zmq_socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reaper-t-%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.8.</span> <span class="nav-text">reaper_t 线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.9.</span> <span class="nav-text">主要参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">使用问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#error-unknown-type-name-%E2%80%98zctx-t%E2%80%99"><span class="nav-number">3.1.</span> <span class="nav-text">error: unknown type name ‘zctx_t’</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Missing-Message-Problem-Solver"><span class="nav-number">3.2.</span> <span class="nav-text">Missing Message Problem Solver</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ZeroMQ使用 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZeroMQ使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>参考：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://hintjens.com/blog:49">Using ZeroMQ Security</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.hivemq.com/article/mqtt-vs-zeromq-for-iot/">MQTT vs ZeroMQ</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zengzy/p/5122634.html">zeromq源码分析</a></li>
+</ul>
+<h1 id="ZeroMQ-部署"><a href="#ZeroMQ-部署" class="headerlink" title="ZeroMQ 部署"></a>ZeroMQ 部署</h1><p>参考：<a target="_blank" rel="noopener" href="https://zeromq.org/download/">https://zeromq.org/download/</a>  </p>
+<p>Ubuntu 安装：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">sudo</span> apt install libzmq3-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libzmq5 libczmq-dev</span></span><br></pre></td></tr></table></figure>
+
+<p>源码编译：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载源码，切换到相应版本的 tag</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/zeromq/libzmq.git</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> libzmq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./version.sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置及编译 zeromq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./configure --prefix=/usr/local/zeromq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make &amp;&amp; make install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或使用 cmake 编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置环境变量</span></span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或在 /etc/ld.so.conf.d 中添加 zeromq.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例程序：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> --depth=1 https://github.com/imatix/zguide.git</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/jedisct1/libsodium.git</span><br><span class="line">cd libsodium</span><br><span class="line">./autogen.sh -s</span><br><span class="line">./configure -prefix=/usr/local/libsodium &amp;&amp; make check</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">git clone https://github.com/zeromq/libzmq.git</span><br><span class="line">cd libzmq</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./configure &amp;&amp; make check</span></span><br><span class="line">mkdir build &amp;&amp; cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/libzmq</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ../../</span><br><span class="line"></span><br><span class="line">git clone https://github.com/zeromq/czmq.git</span><br><span class="line">cd czmq</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./configure &amp;&amp; make check</span></span><br><span class="line">mkdir build &amp;&amp; cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/czmq</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+
+<h1 id="ZeroMQ-使用"><a href="#ZeroMQ-使用" class="headerlink" title="ZeroMQ 使用"></a>ZeroMQ 使用</h1><h2 id="ZeroMQ-Socket-types"><a href="#ZeroMQ-Socket-types" class="headerlink" title="ZeroMQ Socket types"></a>ZeroMQ Socket types</h2><p>ZeroMQ 提供 12 中 Socket 类型：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*  Socket types.  */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PAIR 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PUB 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_SUB 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_REQ 3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_REP 4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_DEALER 5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_ROUTER 6</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PULL 7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PUSH 8</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_XPUB 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_XSUB 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_STREAM 11</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="zsock-t-结构体"><a href="#zsock-t-结构体" class="headerlink" title="zsock_t 结构体"></a>zsock_t 结构体</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">zsock_t</span> &#123;</span></span><br><span class="line">    <span class="type">uint32_t</span> tag; <span class="comment">// object 标记，用于运行时检测</span></span><br><span class="line">    <span class="type">void</span> *handle; <span class="comment">// libzmq 套接字句柄</span></span><br><span class="line">    <span class="type">char</span> *endpoint; <span class="comment">// 最后一个绑定端点(如果有的话)</span></span><br><span class="line">    <span class="type">char</span> *cache; <span class="comment">// 保存最后接收到的 zsock_brecv 字符串</span></span><br><span class="line">    <span class="type">int</span> type; <span class="comment">// 套接字类型</span></span><br><span class="line">    <span class="type">size_t</span> cache_size; <span class="comment">// 缓存大小</span></span><br><span class="line">    <span class="type">uint32_t</span> routing_id; <span class="comment">// server 套接字的 routing ID</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>tag</code> 在 <code>zsock_new</code> 时赋值为 <code>ZSOCK_TAG(0xcafe0004)</code>。zsock_t 实例总是将此标记作为其数据的前 4 个字节，这使得可以执行运行时对象类型和验证。  </p>
+<h2 id="zsock-new"><a href="#zsock-new" class="headerlink" title="zsock_new"></a>zsock_new</h2><p>该接口会自动完成 zsock 泄漏检测 – 不是 zsock 官方接口的一部分。这使 CZMQ 能够智能地报告套接字泄漏 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#   <span class="keyword">define</span> zsock_new(t) zsock_new_checked((t), __FILE__, __LINE__)</span></span><br></pre></td></tr></table></figure>
+<p><code>zsock_new_checked(...)</code> 中创建 socket。这个宏传递调用方文件名和行号，以便 CZMQ 可以智能地报告套接字泄漏。要关闭这种检查，请在编译代码之前定义 <code>ZSOCK_NOCHECK</code>。  </p>
+<p>最终，调用 <code>zsys_socket(...)</code> 创建套接字，并且，若为初次调用该接口，还会自动创建 ZMQ context。调用者负责在进程退出前销毁 ZMQ 套接字，避免 ZMQ 死锁(deadlock)。注意：不要在 CZMQ 应用中直接调用该接口，而应该使用 <code>zsock_new()</code> 方法。  </p>
+<h2 id="zmalloc"><a href="#zmalloc" class="headerlink" title="zmalloc"></a>zmalloc</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined (_ZMALLOC_DEBUG) || defined (_ZMALLOC_PEDANTIC)</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmalloc(size) calloc(1,(size))</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmalloc(size) safe_malloc((size), __FILE__, __LINE__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>若需要追踪内存泄漏(如使用 mtrace)，则定义 <code>_ZMALLOC_DEBUG</code> 宏。<code>_ZMALLOC_PEDANTIC</code> 做同样的事情，但它的目的是将内存溢出的情况传播到调用堆栈。  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> *</span><br><span class="line"><span class="title function_">safe_malloc</span> <span class="params">(<span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *file, <span class="type">unsigned</span> line)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//     printf (&quot;%s:%u %08d\n&quot;, file, line, (int) size);</span></span><br><span class="line">    <span class="type">void</span> *mem = <span class="built_in">calloc</span> (<span class="number">1</span>, size);</span><br><span class="line">    <span class="keyword">if</span> (mem == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;FATAL ERROR at %s:%u\n&quot;</span>, file, line);</span><br><span class="line">        <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;OUT OF MEMORY (malloc returned NULL)\n&quot;</span>);</span><br><span class="line">        fflush (<span class="built_in">stderr</span>);</span><br><span class="line">        <span class="built_in">abort</span> ();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="zsys-socket"><a href="#zsys-socket" class="headerlink" title="zsys_socket"></a>zsys_socket</h2><p>创建新的 ZMQ 套接字，且若为初次调用，会自动创建 ZMQ context。调用者负责在进程退出时销毁 ZMQ socket，避免 ZMQ 死锁(deadlock)。注意：不要在应用程序中直接调用该接口，而应该使用 <code>zsock_new()</code>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">zsys_socket</span> <span class="params">(<span class="type">int</span> type, <span class="type">const</span> <span class="type">char</span> *filename, <span class="type">size_t</span> line_nbr)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 第一次初始化;如果应用程序将自己的线程调用与zsock混合在一起，如果两个线程试图同时创建套接字，则可能会失败。在这样的应用程序中，它们必须在启动任何线程之前在主程序中创建一个套接字。如果应用程序的线程使用zactor，那么可以保证它始终是安全的</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    zsys_init ();</span><br><span class="line">    ZMUTEX_LOCK (s_mutex);</span><br><span class="line">    <span class="type">void</span> *handle = zmq_socket (s_process_ctx, type);</span><br><span class="line">    <span class="keyword">if</span> (handle) &#123;</span><br><span class="line">        <span class="comment">//  Configure socket with process defaults</span></span><br><span class="line">        zsock_set_linger (handle, (<span class="type">int</span>) s_linger);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> (ZMQ_VERSION_MAJOR == 2)</span></span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> v2/v3 socket api in zsock_option.inc are not public (not</span></span><br><span class="line">        <span class="comment">// added to include/zsock.h) so we have to use zmq_setsockopt directly</span></span><br><span class="line">        <span class="comment">// This should be fixed and zsock_set_hwm should be used instead</span></span><br><span class="line"><span class="meta">#       <span class="keyword">if</span> defined (ZMQ_HWM)</span></span><br><span class="line">        <span class="type">uint64_t</span> value = s_sndhwm;</span><br><span class="line">        <span class="type">int</span> rc = zmq_setsockopt (handle, ZMQ_HWM, &amp;value, <span class="keyword">sizeof</span> (<span class="type">uint64_t</span>));</span><br><span class="line">        assert (rc == <span class="number">0</span> || zmq_errno () == ETERM);</span><br><span class="line"><span class="meta">#       <span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="comment">//  For later versions we use separate SNDHWM and RCVHWM</span></span><br><span class="line">        zsock_set_sndhwm (handle, (<span class="type">int</span>) s_sndhwm);</span><br><span class="line">        zsock_set_rcvhwm (handle, (<span class="type">int</span>) s_rcvhwm);</span><br><span class="line"><span class="meta">#   <span class="keyword">if</span> defined (ZMQ_IPV6)</span></span><br><span class="line">        zsock_set_ipv6 (handle, s_ipv6);</span><br><span class="line"><span class="meta">#   <span class="keyword">else</span></span></span><br><span class="line">        zsock_set_ipv4only (handle, s_ipv6? <span class="number">0</span>: <span class="number">1</span>);</span><br><span class="line"><span class="meta">#   <span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="comment">//  Add socket to reference tracker so we can report leaks; this is</span></span><br><span class="line">        <span class="comment">//  done only when the caller passes a filename/line_nbr</span></span><br><span class="line">        <span class="keyword">if</span> (filename) &#123;</span><br><span class="line">            <span class="type">s_sockref_t</span> *sockref = (<span class="type">s_sockref_t</span> *) zmalloc (<span class="keyword">sizeof</span> (<span class="type">s_sockref_t</span>));</span><br><span class="line">            <span class="keyword">if</span> (sockref) &#123;</span><br><span class="line">                sockref-&gt;handle = handle;</span><br><span class="line">                sockref-&gt;type = type;</span><br><span class="line">                sockref-&gt;filename = filename;</span><br><span class="line">                sockref-&gt;line_nbr = line_nbr;</span><br><span class="line">                zlist_append (s_sockref_list, sockref);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                zmq_close (handle);</span><br><span class="line">                ZMUTEX_UNLOCK (s_mutex);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        s_open_sockets++;</span><br><span class="line">    &#125;</span><br><span class="line">    ZMUTEX_UNLOCK (s_mutex);</span><br><span class="line">    <span class="keyword">return</span> handle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="zsys-init"><a href="#zsys-init" class="headerlink" title="zsys_init"></a>zsys_init</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">zsys_init</span> <span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">    <span class="comment">//To avoid two inits at same time</span></span><br><span class="line">    pthread_once(&amp;init_all_mutex_var, zsys_initialize_mutex);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (s_initialized) &#123;</span><br><span class="line">        assert (s_process_ctx);</span><br><span class="line">        <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ZMUTEX_LOCK (s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Doing this again here... to ensure that after mutex wait if the thread 2 gets execution, it will</span></span><br><span class="line">    <span class="comment">// will get the context right away</span></span><br><span class="line">    <span class="keyword">if</span> (s_initialized) &#123;</span><br><span class="line">        assert (s_process_ctx);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">        <span class="comment">// unlock the mutex before returning the context</span></span><br><span class="line">        ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Pull process defaults from environment</span></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IO_THREADS&quot;</span>))</span><br><span class="line">        s_io_threads = atoi (getenv (<span class="string">&quot;ZSYS_IO_THREADS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_MAX_SOCKETS&quot;</span>))</span><br><span class="line">        s_max_sockets = atoi (getenv (<span class="string">&quot;ZSYS_MAX_SOCKETS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_MAX_MSGSZ&quot;</span>))</span><br><span class="line">        s_max_msgsz = atoi (getenv (<span class="string">&quot;ZSYS_MAX_MSGSZ&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_ZERO_COPY_RECV&quot;</span>))</span><br><span class="line">        s_zero_copy_recv = atoi (getenv (<span class="string">&quot;ZSYS_ZERO_COPY_RECV&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_FILE_STABLE_AGE_MSEC&quot;</span>))</span><br><span class="line">        s_file_stable_age_msec = atoi (getenv (<span class="string">&quot;ZSYS_FILE_STABLE_AGE_MSEC&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LINGER&quot;</span>))</span><br><span class="line">        s_linger = atoi (getenv (<span class="string">&quot;ZSYS_LINGER&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_SNDHWM&quot;</span>))</span><br><span class="line">        s_sndhwm = atoi (getenv (<span class="string">&quot;ZSYS_SNDHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_RCVHWM&quot;</span>))</span><br><span class="line">        s_rcvhwm = atoi (getenv (<span class="string">&quot;ZSYS_RCVHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_PIPEHWM&quot;</span>))</span><br><span class="line">        s_pipehwm = atoi (getenv (<span class="string">&quot;ZSYS_PIPEHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6&quot;</span>))</span><br><span class="line">        s_ipv6 = atoi (getenv (<span class="string">&quot;ZSYS_IPV6&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>), <span class="string">&quot;stdout&quot;</span>))</span><br><span class="line">            s_logstream = <span class="built_in">stdout</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>), <span class="string">&quot;stderr&quot;</span>))</span><br><span class="line">            s_logstream = <span class="built_in">stderr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        s_logstream = <span class="built_in">stdout</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>), <span class="string">&quot;true&quot;</span>))</span><br><span class="line">            s_logsystem = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>), <span class="string">&quot;false&quot;</span>))</span><br><span class="line">            s_logsystem = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_AUTO_USE_FD&quot;</span>))</span><br><span class="line">        s_auto_use_fd = atoi (getenv (<span class="string">&quot;ZSYS_AUTO_USE_FD&quot;</span>));</span><br><span class="line"></span><br><span class="line">    zsys_catch_interrupts ();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__WINDOWS__)</span></span><br><span class="line">    ZMUTEX_INIT (s_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    s_sockref_list = zlist_new ();</span><br><span class="line">    <span class="keyword">if</span> (!s_sockref_list) &#123;</span><br><span class="line">        zsys_shutdown ();</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">        ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    srandom ((<span class="type">unsigned</span>) time (<span class="literal">NULL</span>));</span><br><span class="line"></span><br><span class="line">    assert (!s_process_ctx);</span><br><span class="line">    <span class="comment">//  We use zmq_init/zmq_term to keep compatibility back to ZMQ v2</span></span><br><span class="line">    s_process_ctx = zmq_init ((<span class="type">int</span>) s_io_threads);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (ZMQ_MAX_SOCKETS)</span></span><br><span class="line">    zmq_ctx_set (s_process_ctx, ZMQ_MAX_SOCKETS, (<span class="type">int</span>) s_max_sockets);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    s_initialized = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">    atexit (zsys_shutdown);</span><br><span class="line">    pthread_atfork(<span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;zsys_pthread_at_fork_handler);</span><br><span class="line">    <span class="comment">//don&#x27;t hold the lock because some of the function will call zsys_init again</span></span><br><span class="line">    ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//  The following functions call zsys_init(), so they MUST be called after</span></span><br><span class="line">    <span class="comment">//  s_initialized is set in order to avoid an infinite recursion</span></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_INTERFACE&quot;</span>))</span><br><span class="line">        zsys_set_interface (getenv (<span class="string">&quot;ZSYS_INTERFACE&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv6_address (getenv (<span class="string">&quot;ZSYS_IPV6_ADDRESS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6_MCAST_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv6_mcast_address (getenv (<span class="string">&quot;ZSYS_IPV6_MCAST_ADDRESS&quot;</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_ipv6_mcast_address (<span class="string">&quot;ff02:0:0:0:0:0:0:1&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV4_MCAST_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv4_mcast_address (getenv (<span class="string">&quot;ZSYS_IPV4_MCAST_ADDRESS&quot;</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_ipv4_mcast_address (<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGIDENT&quot;</span>))</span><br><span class="line">        zsys_set_logident (getenv (<span class="string">&quot;ZSYS_LOGIDENT&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSENDER&quot;</span>))</span><br><span class="line">        zsys_set_logsender (getenv (<span class="string">&quot;ZSYS_LOGSENDER&quot;</span>));</span><br><span class="line"></span><br><span class="line">    zsys_set_max_msgsz (s_max_msgsz);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined ZMQ_ZERO_COPY_RECV</span></span><br><span class="line">    zmq_ctx_set (s_process_ctx, ZMQ_ZERO_COPY_RECV, s_zero_copy_recv);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    zsys_set_file_stable_age_msec (s_file_stable_age_msec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_PRIORITY&quot;</span>))</span><br><span class="line">        zsys_set_thread_priority (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_PRIORITY&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_priority (s_thread_priority);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_SCHED_POLICY&quot;</span>))</span><br><span class="line">        zsys_set_thread_sched_policy (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_SCHED_POLICY&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_sched_policy (s_thread_sched_policy);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX&quot;</span>))</span><br><span class="line">        zsys_set_thread_name_prefix (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_name_prefix (s_thread_name_prefix);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX_STR&quot;</span>))</span><br><span class="line">        zsys_set_thread_name_prefix_str (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX_STR&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若为 Unix 系统，则使用 <code>pthread_once</code> 避免在多个线程中同时进行初始化</li>
+<li>若已初始化，则返回进程 context，退出</li>
+<li>获取环境变量</li>
+<li>定义信号处理函数 <code>zsys_catch_interrupts()</code></li>
+<li>初始化 socket 存储列表 <code>s_sockref_list</code>  </li>
+<li>ZMQ 初始化，使用 <strong><code>zmq_init/zmq_term</code></strong> 兼容 ZMQ v2</li>
+<li>若为 Unix 系统，则通过 <code>atexit(zsys_shutdown)</code> 指定退出时执行 <code>zsys_shutdown</code> 函数；并调用 <code>pthread_atfork</code>  </li>
+<li>是否设置零拷贝 <code>ZMQ_ZERO_COPY_RECV</code>  </li>
+<li><code>zsys_set_file_stable_age_msec</code></li>
+<li>设置线程参数：    <ul>
+<li>设置线程优先级 <code>zsys_set_thread_priority</code>  </li>
+<li>设置线程调度策略 <code>zsys_set_thread_sched_polcy</code></li>
+<li>设置线程名字前缀 <code>zsys_set_thread_name_prefix</code>，<code>zsys_set_thread_name_prefix_str</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="zmq-socket"><a href="#zmq-socket" class="headerlink" title="zmq_socket"></a>zmq_socket</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">zmq_socket</span> <span class="params">(<span class="type">void</span> *ctx_, <span class="type">int</span> type_)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!ctx_ || !(static_cast&lt;zmq::<span class="type">ctx_t</span> *&gt; (ctx_))-&gt;check_tag ()) &#123;</span><br><span class="line">        errno = EFAULT;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    zmq::<span class="type">ctx_t</span> *ctx = static_cast&lt;zmq::<span class="type">ctx_t</span> *&gt; (ctx_);</span><br><span class="line">    zmq::<span class="type">socket_base_t</span> *s = ctx-&gt;create_socket (type_);</span><br><span class="line">    <span class="keyword">return</span> static_cast&lt;<span class="type">void</span> *&gt; (s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用 <code>ctx-&gt;create_socket(type_)</code> 来创建套接字。该接口调用 <code>socket_base_t::create(...)</code> 来创建 socket 并注册其 mailbox，该接口中，根据套接字类型，调用相应接口(如：<code>pair_t</code>、<code>pub_t</code>、<code>sub_t</code>、<code>req_t</code>、<code>dealer_t</code>、<code>router_t</code>、<code>pull_t</code>、<code>push_t</code>、<code>xpub_t</code>、<code>xsub_t</code>、<code>stream_t</code>、<code>server_t</code>、<code>client_t</code>、<code>radio_t</code>、<code>dish_t</code>、<code>gather_t</code>、<code>scatter_t</code>、<code>dgram_t</code>、<code>peer_t</code>、<code>channel_t</code>)创建对应类型套接字    </p>
+<h2 id="reaper-t-线程"><a href="#reaper-t-线程" class="headerlink" title="reaper_t 线程"></a>reaper_t 线程</h2><p>ZeroMQ 中的 Reaper 线程是一个后台线程，负责清理不再使用的资源，比如已断开的连接、已完成的消息等等。当一个 socket 或者一个 endpoint 被关闭时，其相关的资源会被标记为不再使用，并放入 Reaper thread 维护的队列中。Reaper thread 在空闲时会扫描这个队列，将不再使用的资源清理掉。</p>
+<p>Reaper thread 的存在可以有效地减少应用程序的内存占用和资源浪费，特别是当应用程序运行时间较长、连接数量较大时。同时，Reaper thread 也可以提高应用程序的运行效率和稳定性。</p>
+<h2 id="主要参数"><a href="#主要参数" class="headerlink" title="主要参数"></a>主要参数</h2><ul>
+<li>ZSYS_IO_THREADS</li>
+<li>ZSYS_MAX_SOCKETS</li>
+<li>ZSYS_MAX_MSGSZ</li>
+<li>ZSYS_ZERO_COPY_RECV</li>
+<li>ZSYS_FILE_STABLE_AGE_MSEC</li>
+<li>ZSYS_LINGER</li>
+<li>ZSYS_SNDHWM</li>
+<li>ZSYS_RCVHWM</li>
+<li>ZSYS_PIPEHWM</li>
+<li>ZSYS_IPV6</li>
+<li>ZSYS_LOGSTREAM：日志路径</li>
+<li>ZSYS_LOGSYSTEM</li>
+<li>ZSYS_AUTO_USE_FD</li>
+</ul>
+<p>以下参数需在 <code>zsys_init()</code> 之后调用：  </p>
+<ul>
+<li>ZSYS_INTERFACE</li>
+<li>ZSYS_IPV6_ADDRESS</li>
+<li>ZSYS_IPV6_MCAST_ADDRESS</li>
+<li>ZSYS_IPV4_MCAST_ADDRESS</li>
+<li>ZSYS_LOGIDENT</li>
+<li>ZSYS_LOGSENDER</li>
+<li>ZSYS_THREAD_PRIORITY</li>
+<li>ZSYS_THREAD_SCHED_POLICY</li>
+<li>ZSYS_THREAD_NAME_PREFIX</li>
+<li>ZSYS_THREAD_NAME_PREFIX_STR</li>
+</ul>
+<h1 id="使用问题"><a href="#使用问题" class="headerlink" title="使用问题"></a>使用问题</h1><h2 id="error-unknown-type-name-‘zctx-t’"><a href="#error-unknown-type-name-‘zctx-t’" class="headerlink" title="error: unknown type name ‘zctx_t’"></a>error: unknown type name ‘zctx_t’</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;czmq.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">zctx_t</span> *ctx = zctx_new ();</span><br><span class="line">    <span class="type">void</span> *publisher = zsocket_new (ctx, ZMQ_PUB);</span><br><span class="line">    zsocket_set_curve_server (publisher, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">puts</span> (<span class="string">&quot;Hello, Curve!&quot;</span>);</span><br><span class="line">    zctx_destroy (&amp;ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>error: unknown type name ‘zctx_t’; did you mean ‘zrex_t’?</code>    </p>
+<p>原因：代码中使用的是 CZMQ v2 API，这些 API 在 v3 中已启用，在 v4 中已被删除。  </p>
+<p>解决方法：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;czmq.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">zsock_t</span> *publisher = zsock_new (ZMQ_PUB);</span><br><span class="line">    zsock_set_curve_server (publisher, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">puts</span> (<span class="string">&quot;Hello, Curve!&quot;</span>);</span><br><span class="line">    zsock_destroy (&amp;publisher);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Missing-Message-Problem-Solver"><a href="#Missing-Message-Problem-Solver" class="headerlink" title="Missing Message Problem Solver"></a>Missing Message Problem Solver</h2><p>在使用 ZeroMQ 构建应用程序时，经常会遇到：丢失期望接收的消息。  </p>
+<p>造成这种情况的最常见原因：<br><img src="/./images/Missing%20Message%20Problem%20Solver.png" alt="Missing Message Problem Solver"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/" rel="prev" title="BT 示例代码">
+                  <i class="fa fa-angle-left"></i> BT 示例代码
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/" rel="next" title="行为树与状态机">
+                  行为树与状态机 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

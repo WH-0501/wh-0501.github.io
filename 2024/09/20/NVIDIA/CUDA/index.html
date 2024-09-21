@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="CUDA 与 CUDA Driver 并非一一对应，一台电脑上只有一个版本的 CUDA Driver，但可以有多个 CUDA 版本。 CUDA API 包括 CUDA Runtime API 和 CUDA Driver API。    Runtime API 与 Driver 最大区别是懒加载  第一个 runtime API 调用时，进行 cudaInit 初始化  第一个需要 contex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA">
+<meta property="og:url" content="http://example.com/2024/09/20/NVIDIA/CUDA/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="CUDA 与 CUDA Driver 并非一一对应，一台电脑上只有一个版本的 CUDA Driver，但可以有多个 CUDA 版本。 CUDA API 包括 CUDA Runtime API 和 CUDA Driver API。    Runtime API 与 Driver 最大区别是懒加载  第一个 runtime API 调用时，进行 cudaInit 初始化  第一个需要 contex">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/8718fcbd057ce429c15030472ca322c3.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/format,webp-1726897215619-30.webp">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/777a274604017c74ddeb254b54d8bed65fbca309_2_500x500.jpeg">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/sample-cuda-configuration-data.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/CUDA-components.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/forward-compatibility.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/CTK-and-min-driver-versions.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/forward-compatibility-upgrade-path.png">
+<meta property="og:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/memory-hierarchy-in-gpus-1-625x381.png">
+<meta property="article:published_time" content="2024-09-20T14:17:30.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.706Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="NVIDIA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/20/NVIDIA/CUDA/8718fcbd057ce429c15030472ca322c3.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/20/NVIDIA/CUDA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/20/NVIDIA/CUDA/","path":"2024/09/20/NVIDIA/CUDA/","title":"CUDA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CUDA | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-Toolkit-%E4%B8%8E-conda-cudatoolkit"><span class="nav-number">1.</span> <span class="nav-text">CUDA Toolkit 与 conda cudatoolkit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-W2L"><span class="nav-number">2.</span> <span class="nav-text">CUDA W2L</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">编程环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compute-Capability"><span class="nav-number">3.1.</span> <span class="nav-text">Compute Capability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96%E7%9A%84%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.</span> <span class="nav-text">额外的硬件信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compute-Capability-Target"><span class="nav-number">3.3.</span> <span class="nav-text">Compute Capability Target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA-Runtime"><span class="nav-number">3.4.</span> <span class="nav-text">CUDA Runtime</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-Compatibility"><span class="nav-number">4.</span> <span class="nav-text">CUDA Compatibility</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA-Toolkit-%E7%89%88%E6%9C%AC"><span class="nav-number">4.1.</span> <span class="nav-text">CUDA Toolkit 版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text">源码兼容性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">4.3.</span> <span class="nav-text">二进制兼容性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minor-Version-Compatibility"><span class="nav-number">4.4.</span> <span class="nav-text">Minor Version Compatibility</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CUDA-11-%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81-Minor-Version-Compatibility"><span class="nav-number">4.4.1.</span> <span class="nav-text">CUDA 11 开始支持 Minor Version Compatibility</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minor-Compatibility-%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F"><span class="nav-number">4.4.2.</span> <span class="nav-text">Minor Compatibility 部署注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Forward-Compatibility"><span class="nav-number">4.5.</span> <span class="nav-text">Forward Compatibility</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E8%B7%A8-Toolkit-Major-%E7%89%88%E6%9C%AC"><span class="nav-number">4.5.1.</span> <span class="nav-text">支持跨 Toolkit Major 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deployment-Considerations-for-Forward-Compatibility"><span class="nav-number">4.5.2.</span> <span class="nav-text">Deployment Considerations for Forward Compatibility</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">CUDA 编程模型</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/20/NVIDIA/CUDA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CUDA | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CUDA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-20 22:17:30" itemprop="dateCreated datePublished" datetime="2024-09-20T22:17:30+08:00">2024-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/CUDA/" itemprop="url" rel="index"><span itemprop="name">CUDA</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+<p>CUDA 与 CUDA Driver 并非一一对应，一台电脑上只有一个版本的 CUDA Driver，但可以有多个 CUDA 版本。</p>
+<p>CUDA API 包括 CUDA Runtime API 和 CUDA Driver API。</p>
+<img src="/2024/09/20/NVIDIA/CUDA/8718fcbd057ce429c15030472ca322c3.png" class="" title="CUDA layer">
+
+<ul>
+<li><p>Runtime API 与 Driver 最大区别是懒加载</p>
+<ul>
+<li><p>第一个 runtime API 调用时，进行 <code>cudaInit</code> 初始化</p>
+</li>
+<li><p>第一个需要 context 的 API 调用时，会调用 <code>cudaDevicePrimaryCtxRetain</code> 创建 context</p>
+</li>
+</ul>
+</li>
+<li><p><code>cuda</code> 开头的都是 Runtime API</p>
+</li>
+<li><p>Runtime API 对应 <code>cuda_runtime.h</code> 和 <code>libcudart.so</code></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvidia-smi</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvcc -V</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>CUDA 支持多种语言，无论哪种语言或接口，指令最终都会被 driver 转换为 PTX(Parallel Thread Execution) 代码。</p>
+<p>CUDA 架构组件包括：</p>
+<ul>
+<li>NVIDIA GPU 并行计算引擎</li>
+<li>对硬件初始化、配置的OS内核级支持</li>
+<li>硬件初始化、配置的OS内核级支持</li>
+<li>用于并行计算kernel和函数的PTX 指令集架构(ISA，Instruction set architecture)</li>
+</ul>
+<img src="/2024/09/20/NVIDIA/CUDA/format,webp-1726897215619-30.webp" class="" title="img">
+
+
+
+<h1 id="CUDA-Toolkit-与-conda-cudatoolkit"><a href="#CUDA-Toolkit-与-conda-cudatoolkit" class="headerlink" title="CUDA Toolkit 与 conda cudatoolkit"></a>CUDA Toolkit 与 conda cudatoolkit</h1><p>CUDA Toolkit 是 NVIDIA 官方提供的安装包，包含了 NVIDIA Driver、CUDA 编译器、开发工具等，参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#major-components">CUDA Toolkit major components</a>。</p>
+<p>CUDA Toolkit 包含了 CUDA 开发调试相关的所有组件。但对 Pytorch 等深度学习框架，其大多只需要使用 CUDA 的动态链接库。</p>
+<p>Anaconda 在安装 pytorch 等需要用到 CUDA 的框架时，会自动安装 cudatoolkit，其主要包含应用程序在使用 CUDA 时所依赖的动态库（不包括 runtime 层和以下的层，包括 nvcc 和 CUDA driver）。安装好之后，只需要 cudatoolkit 与 NVIDIA driver 兼容即可。Anaconda 安装的 cudatoolkit 位于 <code>~/anaconda3/pkgs/</code> 目录中。</p>
+<blockquote>
+<p>pytorch 检测 CUDA 版本的代码位于 <code>torch/utils/cpp_extension.py</code> 中的 <code>find_cuda_home</code> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例如 v2.3.1 </span></span><br><span class="line">CUDA_HOME = _find_cuda_home() <span class="keyword">if</span> torch.cuda._is_compiled() <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如 v2.0.0</span></span><br><span class="line">CUDA_HOME = _find_cuda_home()</span><br></pre></td></tr></table></figure>
+
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从 nvidia 和 conda-forge channels 安装 cudatoolkit</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda install cudatoolkit=11.1 -c nvidia/label/cuda-11.1.1 -c conda-forge</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>实际调用哪个 CUDA 库，需根据 tf&#x2F;pytorch 生成时设置的链接库路径确定。如 pytorch setup.py 中指定了链接库的搜索路径，其中 <strong><code>CUDA_HOME</code></strong>  获取逻辑为：</p>
+<ul>
+<li>默认 cuda 安装路径 <code>/usr/local/cuda</code></li>
+<li>若默认路径不存在，则搜索 <code>nvcc</code> 所在目录</li>
+<li>若 <code>nvcc</code> 也不存在，则直接寻找 <code>cudart</code> 库文件目录（此时通常使用 conda 安装的 cudatoolkit），将其上级目录作为 <code>CUDA_HOME</code></li>
+<li>若未找到 <code>CUDA_HOME</code> ，则生成 CPU 版 pytorch</li>
+</ul>
+<h1 id="CUDA-W2L"><a href="#CUDA-W2L" class="headerlink" title="CUDA W2L"></a>CUDA W2L</h1><img src="/2024/09/20/NVIDIA/CUDA/777a274604017c74ddeb254b54d8bed65fbca309_2_500x500.jpeg" class="" title="wsl-launch-upt-0625-rz_editted">
+
+
+
+<h1 id="编程环境"><a href="#编程环境" class="headerlink" title="编程环境"></a>编程环境</h1><p>开发人员需关注两个版本信息：</p>
+<ul>
+<li>Compute capability</li>
+<li>CUDA Runtime 和 CUDA Driver APIs</li>
+</ul>
+<h2 id="Compute-Capability"><a href="#Compute-Capability" class="headerlink" title="Compute Capability"></a>Compute Capability</h2><p><strong>描述了硬件的特性，反映了设备支持的指令集以及其他规范，也称 SM Version</strong>，例如每个 block 的最大线程数和每个多处理器的寄存器数。Compute Capability 向后兼容。</p>
+<blockquote>
+<p>GPU Compute Capability 不等于 计算性能</p>
+</blockquote>
+<p>CUDA 版本需与算力匹配：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CUDA">https://en.wikipedia.org/wiki/CUDA</a></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">架构</td>
+<td align="center">计算能力Compute Capability</td>
+<td align="center">发布时间</td>
+<td align="center">Tesla系列</td>
+<td align="center">Quadro系列</td>
+<td align="center">GeForce系列</td>
+<td align="center">Jetson系列</td>
+</tr>
+<tr>
+<td align="center">Tesla</td>
+<td align="center">X &#x3D; 1</td>
+<td align="center">2006</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Fermi</td>
+<td align="center">X &#x3D; 2</td>
+<td align="center">2010</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Kepler</td>
+<td align="center">X &#x3D; 3</td>
+<td align="center">2012</td>
+<td align="center">Kepler K系列</td>
+<td align="center">Quadro K系列</td>
+<td align="center">GeForce 600&#x2F;700系列</td>
+<td align="center">Tegra K1</td>
+</tr>
+<tr>
+<td align="center">Maxwell</td>
+<td align="center">X &#x3D; 5</td>
+<td align="center">2014</td>
+<td align="center">Maxwell M系列</td>
+<td align="center">Quadro M系列</td>
+<td align="center">GeForce 900系列</td>
+<td align="center">Tegra X1</td>
+</tr>
+<tr>
+<td align="center">Pascal</td>
+<td align="center">X &#x3D; 6</td>
+<td align="center">2016</td>
+<td align="center">Pascal P系列</td>
+<td align="center">Quadro P系列</td>
+<td align="center">GeForce 10系列</td>
+<td align="center">Tegra X2</td>
+</tr>
+<tr>
+<td align="center">Volta</td>
+<td align="center">X &#x3D; 7</td>
+<td align="center">2017</td>
+<td align="center">Tesla V系列</td>
+<td align="center">-</td>
+<td align="center">TITAN V</td>
+<td align="center">AGX Xavier</td>
+</tr>
+<tr>
+<td align="center">Turing</td>
+<td align="center">X.Y &#x3D; 7.5</td>
+<td align="center">2018</td>
+<td align="center">Tesla T系列</td>
+<td align="center">Quadro RTX系列</td>
+<td align="center">GeForce 16系列，GeForce 20系列</td>
+<td align="center">AGX Xavier</td>
+</tr>
+<tr>
+<td align="center">Ampere</td>
+<td align="center">X &#x3D; 8</td>
+<td align="center">2020</td>
+<td align="center">Tesla A系列</td>
+<td align="center">RTX A系列</td>
+<td align="center">GeForce 30系列</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Ada Lovelace</td>
+<td align="center">X.Y &#x3D; 8.9</td>
+<td align="center">2022</td>
+<td align="center">L4、L40</td>
+<td align="center">RTX Ada系列</td>
+<td align="center">GeForce 40系列</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Hopper</td>
+<td align="center">X &#x3D; 9</td>
+<td align="center">2022</td>
+<td align="center">H100</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>（来源：<a target="_blank" rel="noopener" href="https://qinganzhang.github.io/posts/cuda-learning-notes/gpu%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95%E5%85%BC%E5%AE%B9%E6%80%A7%E5%92%8C%E7%BC%96%E8%AF%91/">GPU架构发展、兼容性和编译</a>）</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/datacenter/tesla/drivers/index.html#cuda-arch-matrix">https://docs.nvidia.com/datacenter/tesla/drivers/index.html#cuda-arch-matrix</a></p>
+<p>不同 Compute Capability 支持的功能，参考 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#features-and-technical-specifications">Features and Technical Specifications</a></p>
+<p>设备中 GPU 的计算能力可以通过编程方式查询，如 <code>deviceQuery</code> CUDA Sample 所示。该程序的输出如下。此信息是通过调用 <em><code>cudaGetDeviceProperties()</code></em>  获得。</p>
+<img src="/2024/09/20/NVIDIA/CUDA/sample-cuda-configuration-data.png" class="" title="deviceQuery">
+
+<p>如图中，CUDA Capability 版本为 7.0</p>
+<p>附录K – <a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/cuda-computing-power-cn/">CUDA 计算能力</a></p>
+<h2 id="额外的硬件信息"><a href="#额外的硬件信息" class="headerlink" title="额外的硬件信息"></a>额外的硬件信息</h2><p>计算能力没有描述某些硬件特性。例如，无论计算能力如何，大多数 GPU(但不是所有 gpu) 都可以将内核执行与主机和设备之间的异步数据传输重叠。在这种情况下，调用 <code>cudaGetDeviceProperties()</code> 来确定设备是否具有特定功能。例如，<code>asyncEngineCount</code> 字段指示是否可能重叠内核执行和数据传输(如果是，可能有多少并发传输)，<code>canMapHostMemory</code> 字段表示是否可以执行零拷贝数据传输。</p>
+<h2 id="Compute-Capability-Target"><a href="#Compute-Capability-Target" class="headerlink" title="Compute Capability Target"></a>Compute Capability Target</h2><p>要针对特定版本的 NVIDIA 硬件和 CUDA 软件，请使用 nvcc 的 <code>-arch</code>， <code>-code</code> 和 <code>-gencode</code>选项。例如，使用 warp shuffle 操作的代码必须使用 <code>-arch=sm_30</code>(或更高的计算能力)进行编译。</p>
+<p>参考： <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#building-for-maximum-compatibility">Building for maximum compatibility</a></p>
+<h2 id="CUDA-Runtime"><a href="#CUDA-Runtime" class="headerlink" title="CUDA Runtime"></a>CUDA Runtime</h2><p>提供以下功能</p>
+<ul>
+<li>Device management</li>
+<li>Context management</li>
+<li>Memory management</li>
+<li>Code module management</li>
+<li>Execution control</li>
+<li>Texture reference management</li>
+<li>Interoperability with OpenGL and Direct3D</li>
+</ul>
+<p>与底层 CUDA Driver API 相比，CUDA Runtime 通过提供隐式初始化、上下文管理和设备代码模块管理，极大地简化了设备管理。nvcc 生成的 c++ 主机代码利用 CUDA Runtime，因此链接到此代码的应用程序将依赖于 CUDA Runtime；类似地，任何使用 cuBLAS, cuFFT 和其他 CUDA toolkit 库的代码也将依赖于 CUDA Runtime。</p>
+<p>CUDA Runtime 在内核启动之前处理内核加载和设置内核参数和启动配置。隐式驱动版本检查、代码初始化、CUDA 上下文管理、CUDA 模块管理(从库到函数映射)、内核配置和参数传递都是由CUDA Runtime 执行的。</p>
+<p>它包括两个主要部分:</p>
+<ul>
+<li>C 风格的函数接口(<code>cuda_runtime_api.h</code>)</li>
+<li>C++ 风格的封装(<code>cuda_runtime.h</code>)</li>
+</ul>
+<h1 id="CUDA-Compatibility"><a href="#CUDA-Compatibility" class="headerlink" title="CUDA Compatibility"></a>CUDA Compatibility</h1><p>CUDA 软件环境由三部分组成:</p>
+<ul>
+<li>CUDA Toolkit（库、CUDA Runtime 及开发工具）：用于开发者构建 CUDA 程序</li>
+<li>CUDA Driver：用户态驱动，如 linux 下的<code>libcuda.so</code></li>
+<li>NVIDIA GPU device driver：内核态驱动组件</li>
+</ul>
+<img src="/2024/09/20/NVIDIA/CUDA/CUDA-components.png" class="" title="Components of CUDA">
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#cuda-compatibility-developer-s-guide%EF%BC%89">https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#cuda-compatibility-developer-s-guide）</a></p>
+<p>在 Linux 系统上，CUDA Driver 和内核态组件在 NVIDIA display driver 中一起提供。</p>
+<p>为了方便起见，每个 CUDA Toolkit 附带了一个 NVIDIA display driver。该驱动程序支持该版本 CUDA Toolkit 中引入的所有功能。</p>
+<p>通常，升级 CUDA Toolkit 包括升级 Toolkit 和 Driver，以获得最先进的工具包和驱动程序功能。</p>
+<img src="/2024/09/20/NVIDIA/CUDA/forward-compatibility.png" class="" title="CUDA Upgrade Path">
+
+<p>但这并不总是必需的。CUDA 兼容性允许只升级某些组件，并不总是需要一个完整的系统升级。</p>
+<h2 id="CUDA-Toolkit-版本"><a href="#CUDA-Toolkit-版本" class="headerlink" title="CUDA Toolkit 版本"></a>CUDA Toolkit 版本</h2><p>从CUDA 11开始，Toolkit 版本基于行业标准的版本控制方案: <code>.x.y.z</code>:</p>
+<ul>
+<li><code>x</code> 代表主版本 - API 已经改变，二进制兼容性被打破</li>
+<li><code>y</code> 代表次要版本 - 引入新 API，弃用旧 API，源代码兼容性可能会被破坏，但保持二进制兼容性</li>
+<li><code>z</code> 代表发布&#x2F;补丁版本</li>
+</ul>
+<p>Toolkit 中各组件版本信息，可查看 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#cuda-major-component-versions">CUDA Toolkit Major Component Versions</a></p>
+<p>CUDA 支持几种兼容性选择：</p>
+<ul>
+<li>CUDA 向前兼容升级最初是在 CUDA 10 中引入的，旨在让用户能够访问新的 CUDA 功能，并在安装了较旧的 NVIDIA datacenter driver 的系统上运行使用新 CUDA 版本构建的应用程序</li>
+<li>CUDA 增强兼容性在 CUDA 11.1 中首次引入，提供了两个好处：<ul>
+<li>通过利用 CUDA Toolkit 中组件语义版本控制，可以为一个 CUDA 小版本(例如11.1)构建应用程序，并在主要家族(即11.x)中的所有未来小版本中工作</li>
+<li>CUDA Runtime 放宽了最低 driver 版本检查，因此在移动到新的次要版本时不再需要升级 driver</li>
+</ul>
+</li>
+<li>CUDA Driver 确保编译后的 CUDA 应用程序保持向后二进制兼容性。使用 CUDA Toolkit 3.2 编译的应用程序可以运行在较新的 Driver 上</li>
+</ul>
+<h2 id="源码兼容性"><a href="#源码兼容性" class="headerlink" title="源码兼容性"></a>源码兼容性</h2><p>源代码兼容性定义为库提供的一组保证，其中针对特定版本的库(使用SDK)构建的格式良好的应用程序将在安装新版本的SDK时继续构建和运行而不会出现错误。</p>
+<h2 id="二进制兼容性"><a href="#二进制兼容性" class="headerlink" title="二进制兼容性"></a>二进制兼容性</h2><p>二进制兼容性定义为库提供的一组保证，其中针对所述库的应用程序在与库的不同版本动态链接时将继续工作。</p>
+<p>CUDA Driver API 有一个 C-style ABI，它保证在旧驱动程序(例如CUDA 3.2)上运行的应用程序仍然可以在现代驱动程序(例如CUDA 11.0附带的驱动程序)上正常运行。</p>
+<p>因此，CUDA Driver API 是二进制兼容的，但不兼容源代码(根据较新的 SDK 重新构建应用程序可能需要更改源代码)。</p>
+<img src="/2024/09/20/NVIDIA/CUDA/CTK-and-min-driver-versions.png" class="" title="CUDA Toolkit and Minimum Driver Versions">
+
+
+
+
+
+<h2 id="Minor-Version-Compatibility"><a href="#Minor-Version-Compatibility" class="headerlink" title="Minor Version Compatibility"></a>Minor Version Compatibility</h2><h3 id="CUDA-11-开始支持-Minor-Version-Compatibility"><a href="#CUDA-11-开始支持-Minor-Version-Compatibility" class="headerlink" title="CUDA 11 开始支持 Minor Version Compatibility"></a>CUDA 11 开始支持 Minor Version Compatibility</h3><p>CUDA 11及后续版本默认为 Minor Version 兼容性。</p>
+<p>从CUDA 11开始，使用 CUDA major 发行系列中的 CUDA Toolkit 编译的应用程序可以在具有至少最低要求的 driver 版本的系统上运行，功能集有限。这个最低要求的 driver 可以不同于 CUDA  Toolkit 中打包的驱动程序，但应该<strong>属于同一个 major 版本</strong>。</p>
+<p>由于二进制向后兼容，基于任何旧的 CUDA Toolkit 构建的应用程序总是能在新 driver 上运行，在 CUDA 11 之前，基于新 CUDA  Toolkit 构建的应用程序在没有向前兼容包的旧 driver 上不受支持。</p>
+<p>如果使用的是新的 CUDA 10。则所需的最小驱动程序版本与打包为该工具包版本一部分的驱动程序版本相同。因此，在CUDA 11.1之前，每个新的 CUDA Toolkit 小版本都更改了所需的最低 driver 版本。因此，系统管理员总是必须升级 driver ，以支持基于CUDA Toolkit 构建的应用程序。</p>
+<h3 id="Minor-Compatibility-部署注意"><a href="#Minor-Compatibility-部署注意" class="headerlink" title="Minor Compatibility 部署注意"></a>Minor Compatibility 部署注意</h3><p>如上，直接依赖于 CUDA Runtime 的应用程序可以部署在以下两种场景中:</p>
+<ul>
+<li>系统上安装的 CUDA driver 比 Runtime 更新</li>
+<li>CUDA  Runtime 比系统上的 CUDA  driver 更新，但它们来自相同的 CUDA Toolkit 的 major 版本</li>
+</ul>
+<p>在场景 2 中，系统管理员应该意识到上述限制，并且应该能够在遇到任何问题时指出应用程序失败的原因。</p>
+<p>Minor 版本兼容性为库的使用和部署提供了灵活性。使用支持次要版本兼容性的库的应用程序可以部署在具有不同版本的 Toolkit 和库的系统上，而无需针对库版本的差异重新编译应用程序。这对库的旧版本和新版本都适用，前提是它们都来自同一个 major 发行系列。请注意，应该考虑库本身具有相互依赖性。例如，每个 cuDNN 版本都需要一个特定版本的 cuBLAS。</p>
+<h2 id="Forward-Compatibility"><a href="#Forward-Compatibility" class="headerlink" title="Forward Compatibility"></a>Forward Compatibility</h2><h3 id="支持跨-Toolkit-Major-版本"><a href="#支持跨-Toolkit-Major-版本" class="headerlink" title="支持跨 Toolkit Major 版本"></a>支持跨 Toolkit Major 版本</h3><img src="/2024/09/20/NVIDIA/CUDA/forward-compatibility-upgrade-path.png" class="" title="Forward Compatibility Upgrade Path">
+
+
+
+<p>Forward Compatibility 升级方式参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package">Installing the Forward Compatibility Package</a></p>
+<h3 id="Deployment-Considerations-for-Forward-Compatibility"><a href="#Deployment-Considerations-for-Forward-Compatibility" class="headerlink" title="Deployment Considerations for Forward Compatibility"></a>Deployment Considerations for Forward Compatibility</h3><p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package">https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package</a></p>
+<h1 id="CUDA-编程模型"><a href="#CUDA-编程模型" class="headerlink" title="CUDA 编程模型"></a>CUDA 编程模型</h1><img src="/2024/09/20/NVIDIA/CUDA/memory-hierarchy-in-gpus-1-625x381.png" class="" title="img">
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/%EF%BC%89">https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/）</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NVIDIA/" rel="tag"># NVIDIA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/20/NVIDIA/Jetson/Jetpack/" rel="prev" title="Jetpack">
+                  <i class="fa fa-angle-left"></i> Jetpack
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/NVIDIA/nvidia-docker/" rel="next" title="nvidia-docker">
+                  nvidia-docker <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

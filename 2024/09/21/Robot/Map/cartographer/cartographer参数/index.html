@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="cartographer 官方调参教程参考：Tuning methodology cartographer_ros 配置tracking_frame: SLAM算法跟随坐标系. 若使用了 IMU, 则应该是 IMU 的位置(尽管可能转动). 常用的选择是: “imu_link”   published_frame: 发布位姿的子坐标系. 例如: 若系统中有其它模块发布了 odom 坐标系, 则为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cartographer参数">
+<meta property="og:url" content="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%E5%8F%82%E6%95%B0/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="cartographer 官方调参教程参考：Tuning methodology cartographer_ros 配置tracking_frame: SLAM算法跟随坐标系. 若使用了 IMU, 则应该是 IMU 的位置(尽管可能转动). 常用的选择是: “imu_link”   published_frame: 发布位姿的子坐标系. 例如: 若系统中有其它模块发布了 odom 坐标系, 则为">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/cartographer_launch_params.png">
+<meta property="article:published_time" content="2024-09-21T11:30:31.314Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.808Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/cartographer_launch_params.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%E5%8F%82%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%E5%8F%82%E6%95%B0/","path":"2024/09/21/Robot/Map/cartographer/cartographer参数/","title":"cartographer参数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>cartographer参数 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cartographer-ros-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">cartographer_ros 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fixed-ratio"><span class="nav-number">1.1.</span> <span class="nav-text">Fixed ratio:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cartographer-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">cartographer 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81-CeresSolverOptions"><span class="nav-number">2.1.</span> <span class="nav-text">1、 CeresSolverOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81trajectory-builder"><span class="nav-number">2.2.</span> <span class="nav-text">2、trajectory builder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81-SubmapsOptions"><span class="nav-number">2.3.</span> <span class="nav-text">3、 SubmapsOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81adaptive-voxel-filter-options"><span class="nav-number">2.4.</span> <span class="nav-text">4、adaptive_voxel_filter_options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81loop-closure-adaptive-voxel-filter-options"><span class="nav-number">2.5.</span> <span class="nav-text">5、loop_closure_adaptive_voxel_filter_options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81CeresScanMatcherOptions"><span class="nav-number">2.6.</span> <span class="nav-text">6、CeresScanMatcherOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FastCorrelativeScanMatcherOptions"><span class="nav-number">2.7.</span> <span class="nav-text">FastCorrelativeScanMatcherOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RealTimeCorrelativeScanMatcherOptions"><span class="nav-number">2.8.</span> <span class="nav-text">RealTimeCorrelativeScanMatcherOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MotionFilterOptions"><span class="nav-number">2.9.</span> <span class="nav-text">MotionFilterOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ceres-solver-options"><span class="nav-number">2.10.</span> <span class="nav-text">ceres_solver_options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RangeDataInserterOptions"><span class="nav-number">2.11.</span> <span class="nav-text">RangeDataInserterOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PoseGraphOptions"><span class="nav-number">2.12.</span> <span class="nav-text">PoseGraphOptions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConstraintBuilderOptions"><span class="nav-number">2.13.</span> <span class="nav-text">ConstraintBuilderOptions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#launch-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">launch 配置</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="cartographer参数 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cartographer参数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>cartographer 官方调参教程参考：<a target="_blank" rel="noopener" href="https://google-cartographer-ros.readthedocs.io/en/latest/tuning.html">Tuning methodology</a></p>
+<h2 id="cartographer-ros-配置"><a href="#cartographer-ros-配置" class="headerlink" title="cartographer_ros 配置"></a>cartographer_ros 配置</h2><p><strong>tracking_frame</strong>: SLAM算法跟随坐标系. 若使用了 IMU, 则应该是 IMU 的位置(尽管可能转动). 常用的选择是: “imu_link”  </p>
+<p><strong>published_frame</strong>: 发布位姿的子坐标系. 例如: 若系统中有其它模块发布了 odom 坐标系, 则为 odom. 此时, odom 在 “map_frame” 中的位姿将被发布, 否则设置为 “base_link” .  </p>
+<p><strong>odom_frame</strong>: 仅在 provide_odom_frame 为 true 时有效. 使能时, carto 发布的tf 树为: publishd_frame -&gt; odom_frame -&gt; map_frame.  </p>
+<p><strong>use_odometry</strong>: 若使能, 将订阅 “odom” 主题的 odometry 消息.  </p>
+<p><strong>use_nav_sat</strong>: 若使能, 将订阅 “fix” 主题的 NavSatFix (GPS)数据.  </p>
+<p><strong>use_landmarks</strong>: 若使能, 将订阅 “landmarks” 主题消息.   </p>
+<p><strong>num_laser_scans</strong>: 要订阅的 laser scan 主题 “scan” 的数目. 若有多个时, 可为 “scan_1”、”scan_2”  </p>
+<p><strong>num_multi_echo_laser_scans</strong>: 要订阅的 multi-echo laser scan 主题 “echoes” 的数目. 若有多个时, 可为 “echoes_1”、”echoes_2”  </p>
+<p>Laser scan 与 multi-echo laser scan:<br>标准的 laser scan 消息只包括每个激光脉冲的单个深度和强度值(intensity). 通常是强度最强的.<br>multi-echo: 多回波传感器能够为激光器发出的每个脉冲返回几个回波. 例如, 拾取到从玻璃以及其后面墙壁的回波, 或者在不同距离的两个物体的边界处接收到两个用于表示每个物体距离的回波.  </p>
+<p><strong>num_subdivisions_per_laser_scan</strong>: 将每个接收到的（多回波）激光扫描分割成的点云数. <strong>分割 scan 能保证激光设备移动过程中 scans 不会弯曲变形</strong>. 有相应的轨迹生成器选项可以将分离的scans累积到点云中, 用来进行scan matching. 用于 SensorBridge 类中，将激光点云数据按该参数分段。 </p>
+<p><strong>num_point_clouds</strong>: 订阅的点云主题 “points2” 的个数. 若有多个时, 可为 “points2_1”、”points2_2”  </p>
+<p><strong>lookup_transform_timeout_sec</strong>: 使用 tf2 查找transforms时的超时时间.  </p>
+<h3 id="Fixed-ratio"><a href="#Fixed-ratio" class="headerlink" title="Fixed ratio:"></a>Fixed ratio:</h3><p><strong>rangefinder_sampling_ratio</strong>: 测距仪消息的固定采样率.<br><strong>odometry_sampling_ratio</strong>: 里程计消息的固定采样率.<br><strong>fixed_frame_sampling_ratio</strong>: 固定坐标系消息的固定采样率.<br><strong>imu_sampling_ratio</strong>: IMU消息的固定采样率.<br><strong>landmarks_sampling_ratio</strong>: landmarks消息的固定采样率<br>基于 FixedRatioSampler 实现按固定频率均匀采样.  </p>
+<h2 id="cartographer-配置"><a href="#cartographer-配置" class="headerlink" title="cartographer 配置"></a>cartographer 配置</h2><h3 id="1、-CeresSolverOptions"><a href="#1、-CeresSolverOptions" class="headerlink" title="1、 CeresSolverOptions"></a>1、 CeresSolverOptions</h3><p>use_nonmonotonic_steps  </p>
+<p>max_num_iterations  </p>
+<p>num_threads  </p>
+<h3 id="2、trajectory-builder"><a href="#2、trajectory-builder" class="headerlink" title="2、trajectory builder"></a>2、trajectory builder</h3><p><strong>min_range、max_range</strong>：测距有效范围，超过该范围的会被丢弃。<br>例如:<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_2D.min_range = 0.3  </span><br><span class="line">TRAJECTORY_BUILDER_2D.min_range = 8</span><br></pre></td></tr></table></figure></p>
+<p><strong>min_z、max_z</strong>： 高度范围<br>例如：<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_2D.min_z = -0.8  </span><br><span class="line">TRAJECTORY_BUILDER_2D.min_z = 2</span><br></pre></td></tr></table></figure></p>
+<p><strong>missing_data_ray_length</strong>: 超出’max_range’的点将以此长度作为空白空间插入。(即:超出最大范围时，会清除该指定范围内的数据)<br>例如：<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_2D.missing_data_ray_length = 1</span><br></pre></td></tr></table></figure></p>
+<p><strong>use_imu_data</strong>: 是否使用 imu。（或者修改 trajectory_builder_2d.lua 文件）<br>例如:<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_2D.use_imu_data = false</span><br></pre></td></tr></table></figure></p>
+<p><strong>num_accumulated_range_data</strong>：累积指定帧数的激光数据作为一个unwarped(未扭曲)的联合帧，去进行scan matching（即:num_accumulated_range_data帧进行一次激光匹配）。<br>例如：<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_3D.num_accumulated_range_data = 160</span><br></pre></td></tr></table></figure><br>指定累加 160 帧激光数据作为一帧，有些激光雷达将一帧扫描数据分批次发布，因此需要累加起来，方便去除运动畸变。<br>如果有两个测距传感器（例如，两个LIDAR）同时提供完整扫描(例如：前后各一个)，则应将此变量设置为2。 </p>
+<p><strong>voxel_filter_size</strong>：<br>距离机器人较近的地方通常扫描到的点更多，远处的物体的扫描点较少。为了降低计算量，需对点云进行降采样，但简单的随机采样会导致低密度区的点变少，而高密度区的点仍然较多。因而，cartographer中采用了 <a href="../../PCL/%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/VoxelGridFilter.md">voxel filter</a>(<strong>使用体素化网格实现降采样</strong>)。 voxel_filter_size 越小，过滤后的点云更密集，计算量越大；voxel_filter_size越大，数据量越小，计算速度越快，但可能会导致数据丢失。  </p>
+<p><strong>use_online_correlative_scan_matching</strong>： 是否首先使用 correlative scan matcher 来解决在线 scan match 问题，从而为Ceres生成一个良好的起点。（即:使用RealTimeCorrelativeScanMatcher对数据源进行预处理）。开启之后的对应配置参数参考： RealTimeCorrelativeScanMatcherOptions、  CeresScanMatcherOptions、 MotionFilterOptions。  </p>
+<p><strong>imu_gravity_time_constant</strong>：IMU重力时间常数。 基于通过IMU观察到的重力方向的移动平均值的时间常数（以秒为单位）。 应该选择使得误差：<br>1.来自加速度测量误差不影响重力方向（当常数减小时变得更糟）<br>2.来自角速度的积分（当常数增加时变得更糟）误差得到平衡。  </p>
+<p><strong>rotational_histogram_size</strong>： 旋转匹配器的 histogram(直方图) buckets 数</p>
+<h3 id="3、-SubmapsOptions"><a href="#3、-SubmapsOptions" class="headerlink" title="3、 SubmapsOptions"></a>3、 SubmapsOptions</h3><p><strong>num_range_data</strong>：每个 submap 包含点云的帧数。</p>
+<h3 id="4、adaptive-voxel-filter-options"><a href="#4、adaptive-voxel-filter-options" class="headerlink" title="4、adaptive_voxel_filter_options"></a>4、adaptive_voxel_filter_options</h3><p>voxel_filter_size 指定了定长的 voxel 边长，cartographer另外还提供了自适应voxel边长的参数类adaptive_voxel_filter_options。  </p>
+<p><strong>max_length</strong>:voxel边的最大长度  </p>
+<p><strong>max_num_points</strong>: 如果存在很多的点，且至少不少于’max_num_points’数目，则减小voxel边长，以尝试获得该最少点数</p>
+<p><strong>max_range</strong>:距离原点超过该范围的点直接丢弃  </p>
+<p>TRAJECTORY_BUILDER_2D.*adaptive_voxel_filter.max_length的限制下确定最佳的voxel_filter_size来实现</p>
+<h3 id="5、loop-closure-adaptive-voxel-filter-options"><a href="#5、loop-closure-adaptive-voxel-filter-options" class="headerlink" title="5、loop_closure_adaptive_voxel_filter_options"></a>5、loop_closure_adaptive_voxel_filter_options</h3><h3 id="6、CeresScanMatcherOptions"><a href="#6、CeresScanMatcherOptions" class="headerlink" title="6、CeresScanMatcherOptions"></a>6、CeresScanMatcherOptions</h3><p><strong>occupied_space_weight</strong>: Scaling parameters for each cost functor.<br><strong>translation_weight</strong><br><strong>rotation_weight</strong> </p>
+<p>还包括 CeresSolverOptions 参数。在 3D 建图中，还包括 occupied_space_weight_0、occupied_space_weight_1 参数，分别配置经过 voxel filter 过滤后的高分辨率和低分辨率的点云。</p>
+<h3 id="FastCorrelativeScanMatcherOptions"><a href="#FastCorrelativeScanMatcherOptions" class="headerlink" title="FastCorrelativeScanMatcherOptions"></a>FastCorrelativeScanMatcherOptions</h3><p><strong>linear_search_window</strong>(默认:7)：  </p>
+<p><strong>angular_search_window</strong>(默认:30 rad)：  </p>
+<p><strong>branch_and_bound_depth</strong>(默认:7)：</p>
+<h3 id="RealTimeCorrelativeScanMatcherOptions"><a href="#RealTimeCorrelativeScanMatcherOptions" class="headerlink" title="RealTimeCorrelativeScanMatcherOptions"></a>RealTimeCorrelativeScanMatcherOptions</h3><p><strong>linear_search_window</strong>:最小线性搜索窗口，其中将找到最佳扫描对齐    </p>
+<p><strong>angular_search_window</strong>:最小角度搜索窗口，其中将找到最佳扫描对齐。</p>
+<p><strong>translation_delta_cost_weight</strong>:  </p>
+<p><strong>rotation_delta_cost_weight</strong>  </p>
+<p>例如：<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true</span><br><span class="line">TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.linear_search_window = 0.1</span><br><span class="line">TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.translation_delta_cost_weight = 10.</span><br><span class="line">TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.rotation_delta_cost_weight = 1e-1</span><br></pre></td></tr></table></figure></p>
+<h3 id="MotionFilterOptions"><a href="#MotionFilterOptions" class="headerlink" title="MotionFilterOptions"></a>MotionFilterOptions</h3><p><strong>max_time_seconds</strong>：插入 submap 中的 scan 数据的时间阈值, 超过该时间间隔则插入    </p>
+<p><strong>max_distance_meters</strong>：若移动距离超过该阈值, 则插入 submap  </p>
+<p><strong>max_angle_radians</strong>：若旋转角度超过该阈值, 则插入 submap</p>
+<h3 id="ceres-solver-options"><a href="#ceres-solver-options" class="headerlink" title="ceres_solver_options"></a>ceres_solver_options</h3><h3 id="RangeDataInserterOptions"><a href="#RangeDataInserterOptions" class="headerlink" title="RangeDataInserterOptions"></a>RangeDataInserterOptions</h3><p><strong>hit_probability</strong>：hit 点的概率值（必须大于0.5）。  </p>
+<p><strong>miss_probability</strong>：miss 点的概率值（必须小于0.5）  </p>
+<p><strong>num_free_space_voxels</strong>：最多可更新多少个空闲 voxels 以进行扫描匹配。 0禁用空闲空间  </p>
+<h3 id="PoseGraphOptions"><a href="#PoseGraphOptions" class="headerlink" title="PoseGraphOptions"></a>PoseGraphOptions</h3><p><strong>optimize_every_n_nodes</strong>: 每隔指定数目的node就进行一次全局优化。  </p>
+<p><strong>matcher_translation_weight</strong>: 优化问题中，非 loop closure 扫描匹配约束的平移分量的权重。即：局部约束的平移分量的权重。</p>
+<p><strong>max_num_final_iterations</strong>：最后一次图优化的迭代次数  </p>
+<p><strong>matcher_rotation_weight</strong>: 局部约束的旋转分量的权重。</p>
+<p><strong>global_sampling_ratio</strong>:</p>
+<p><strong>log_residual_histograms</strong>:</p>
+<p><strong>global_constraint_search_after_n_seconds</strong>(默认为 10): 如果在此选项指定的持续时间内没有在两个轨迹之间添加全局约束，则将在全局范围而不是在较小的搜索窗口中执行 loop closure searches。 即：   </p>
+<p><strong>SPARSE_POSE_GRAPH.optimization_problem.huber_scale</strong> &#x3D; 1e2  该参数为激光匹配的权重(即闭环权重)  </p>
+<p><strong>optimize_every_n_scans</strong>：积多少帧点云后执行一次全局图优化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = false TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 10. TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 0.01</span><br></pre></td></tr></table></figure>
+
+<h3 id="ConstraintBuilderOptions"><a href="#ConstraintBuilderOptions" class="headerlink" title="ConstraintBuilderOptions"></a>ConstraintBuilderOptions</h3><p><strong>sampling_ratio</strong>：ConstraintBuilder2D中采样器的频率。主要影响 ConstraintBuilder2D::MaybeAddConstraint 方法，达到控制约束数量的目的。 数值越小，约束数量越大。    </p>
+<p><strong>max_constraint_distance</strong>(默认：15)：称为约束的最大距离阈值，若距离超过该值，则不作为约束条件。  </p>
+<p><strong>min_score</strong>(默认：0.55)：约束的最低分数，数值越大，计算速度越快，约束数量也越少。在sampling_ratio较小的情况下，很可能会造成约束过少而导致建图失败。   </p>
+<p><strong>global_localization_min_score</strong>(默认：0.6)：  </p>
+<p><strong>loop_closure_translation_weight</strong>(默认：1.1e4)：   </p>
+<p><strong>loop_closure_rotation_weight</strong>(默认：1e5)：   </p>
+<p><strong>log_matches</strong>(默认：true)：   </p>
+<p>FastCorrelativeScanMatcherOptions<br>CeresScanMatcherOptions  </p>
+<h2 id="launch-配置"><a href="#launch-配置" class="headerlink" title="launch 配置"></a>launch 配置</h2><p><strong>load_state_filename</strong>  </p>
+<p><strong>upload_load_state_file</strong>  </p>
+<p><strong>load_frozen_state</strong></p>
+<p><strong>client_id</strong></p>
+<p><strong>collect_metrics</strong>： 激活运行时度量标准(metrics)的集合。 如果激活，则可以通过ROS服务访问度量标准。 可通过 read_metrics 服务来读取。  </p>
+<p><strong>server_address</strong>:  </p>
+<p><strong>start_trajectory_with_default_topics</strong>: </p>
+<p><strong>save_map_filename</strong>: 若非空，则序列化 state，并在关闭前写入磁盘。  </p>
+<p><img src="/../images/cartographer_launch_params.png" alt="cartographer_launch_params">  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%AE%98%E6%96%B9%E8%AE%BA%E6%96%87/" rel="prev" title="cartographer - 官方论文">
+                  <i class="fa fa-angle-left"></i> cartographer - 官方论文
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20Constraints/" rel="next" title="cartographer Constraints">
+                  cartographer Constraints <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Jetson orin nano 8GB     L4T-r34.1.1  JetPack5.0.1  L4T-r35.2.1  JetPack5.1 ubuntu20.04 kernel 5.10 LTS CUDA 11.4.19（driver 470.82.01） cuDNN 8.6.0 TensorRT 8.5.2    L4T-r35.3.1  JetPack5.1.1  L4T-r35.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetson-pytorch">
+<meta property="og:url" content="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="Jetson orin nano 8GB     L4T-r34.1.1  JetPack5.0.1  L4T-r35.2.1  JetPack5.1 ubuntu20.04 kernel 5.10 LTS CUDA 11.4.19（driver 470.82.01） cuDNN 8.6.0 TensorRT 8.5.2    L4T-r35.3.1  JetPack5.1.1  L4T-r35.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921153500642.png">
+<meta property="og:image" content="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921162713885.png">
+<meta property="article:published_time" content="2024-09-21T07:33:40.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:37.751Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="NVIDIA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921153500642.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/","path":"2024/09/21/NVIDIA/Jetson/Jetson-pytorch/","title":"Jetson-pytorch"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Jetson-pytorch | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-pytorch"><span class="nav-number">1.</span> <span class="nav-text">安装 pytorch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-torchvision"><span class="nav-number">2.</span> <span class="nav-text">安装 torchvision</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81-pytorch"><span class="nav-number">3.</span> <span class="nav-text">验证 pytorch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">安装问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E7%BC%96%E8%AF%91"><span class="nav-number">4.1.</span> <span class="nav-text">未编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ffmpeg-%E7%89%88%E6%9C%AC"><span class="nav-number">4.2.</span> <span class="nav-text">ffmpeg 版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%89%BE%E5%88%B0-CUDA-Runtime"><span class="nav-number">4.3.</span> <span class="nav-text">未找到 CUDA Runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IndexError-list-index-out-of-range"><span class="nav-number">4.4.</span> <span class="nav-text">IndexError: list index out of range</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Jetson-pytorch | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Jetson-pytorch
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-21 15:33:40 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T15:33:40+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/Jetson/" itemprop="url" rel="index"><span itemprop="name">Jetson</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Jetson orin nano 8GB</p>
+<img src="/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921153500642.png" class="" title="image-20240921153500642">
+
+
+
+<p>L4T-r34.1.1</p>
+<ul>
+<li>JetPack5.0.1</li>
+</ul>
+<p>L4T-r35.2.1</p>
+<ul>
+<li>JetPack5.1<ul>
+<li>ubuntu20.04</li>
+<li>kernel 5.10 LTS</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/archive/11.4.4/cuda-toolkit-release-notes/index.html">CUDA 11.4.19</a>（driver 470.82.01）</li>
+<li>cuDNN 8.6.0</li>
+<li>TensorRT 8.5.2</li>
+</ul>
+</li>
+</ul>
+<p>L4T-r35.3.1</p>
+<ul>
+<li>JetPack5.1.1</li>
+</ul>
+<p>L4T-r35.4.1</p>
+<ul>
+<li>JetPack5.1.2</li>
+</ul>
+<p>L4T-r36.3.0</p>
+<ul>
+<li>JetPack6.0<ul>
+<li>ubuntu2204</li>
+<li>kernel 5.15LTS</li>
+<li>python3.8</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/archive/12.2.1/cuda-toolkit-release-notes/index.html#">CUDA 12.2</a>（driver 535.86.10）</li>
+<li>cuDNN 8.9.4</li>
+<li>TensorRT 8.6.2</li>
+</ul>
+</li>
+</ul>
+<p>内部 docker 容器 （基于 dustynv&#x2F;ros：noetic-desktop-l4t-r35.4.1）</p>
+<h1 id="安装-pytorch"><a href="#安装-pytorch" class="headerlink" title="安装 pytorch"></a>安装 pytorch</h1><p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html">https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://developer.download.nvidia.cn/compute/redist/jp/v512/pytorch/torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl -O torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install <span class="string">&#x27;Cython&lt;3&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此处其他库依赖 numpy 1.23.5 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install numpy==1.23.5 torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>注：JetPack6 提供了 2.3.0 版本 pytorch 即相应版本的 torchvision</p>
+<img src="/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921162713885.png" class="" title="image-20240921162713885">
+
+
+
+<h1 id="安装-torchvision"><a href="#安装-torchvision" class="headerlink" title="安装 torchvision"></a>安装 torchvision</h1><p>参考<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048">https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install libjpeg-dev zlib1g-dev libpython3-dev libopenblas-dev libavcodec-dev libavformat-dev libswscale-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> --branch &lt;version&gt; https://github.com/pytorch/vision torchvision   <span class="comment"># see below for version of torchvision to download</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> torchvision</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> BUILD_VERSION=0.x.0  <span class="comment"># where 0.x.0 is the torchvision version</span></span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 setup.py install --user</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> ../  <span class="comment"># attempting to load torchvision from build dir will result in import error</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install <span class="string">&#x27;pillow&lt;7&#x27;</span> <span class="comment"># always needed for Python 2.7, not needed torchvision v0.5.0+ with Python 3.6</span></span></span><br></pre></td></tr></table></figure>
+
+<p>版本对应关系</p>
+<p>● PyTorch v1.0 - torchvision v0.2.2</p>
+<p>● PyTorch v1.1 - torchvision v0.3.0</p>
+<p>● PyTorch v1.2 - torchvision v0.4.0</p>
+<p>● PyTorch v1.3 - torchvision v0.4.2</p>
+<p>● PyTorch v1.4 - torchvision v0.5.0</p>
+<p>● PyTorch v1.5 - torchvision v0.6.0</p>
+<p>● PyTorch v1.6 - torchvision v0.7.0</p>
+<p>● PyTorch v1.7 - torchvision v0.8.1</p>
+<p>● PyTorch v1.8 - torchvision v0.9.0</p>
+<p>● PyTorch v1.9 - torchvision v0.10.0</p>
+<p>● PyTorch v1.10 - torchvision v0.11.1</p>
+<p>● PyTorch v1.11 - torchvision v0.12.0</p>
+<p>● PyTorch v1.12 - torchvision v0.13.0</p>
+<p>● PyTorch v1.13 - torchvision v0.13.0</p>
+<p>● PyTorch v1.14 - torchvision v0.14.1</p>
+<p>● PyTorch v2.0 - torchvision v0.15.1</p>
+<p>● PyTorch v2.1 - torchvision v0.16.1</p>
+<p>● PyTorch v2.2 - torchvision v0.17.1</p>
+<p>● PyTorch v2.3 - torchvision v0.18.0</p>
+<h1 id="验证-pytorch"><a href="#验证-pytorch" class="headerlink" title="验证 pytorch"></a>验证 pytorch</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; import torch</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.__version__)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Pytorch 接口输出的 cuda 的版本并不一定是 Pytorch 在实际系统上运行时使用的 cuda 版本，而是编译该 Pytorch release 版本时使用的 cuda 版本</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.version.cuda)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.is_available())</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.device_count()) <span class="comment"># GPU 数量</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.get_device_name(0))</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.current_device())</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或 python3 -c <span class="string">&quot;import torch; print(torch.cuda.is_available())&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip list | grep torch</span></span><br><span class="line">knn_pytorch               0.1</span><br><span class="line">torch                     2.1.0a0+41361538.nv23.6</span><br><span class="line">torchvision               0.16.1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvcc -V</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pip show torch</span></span><br><span class="line">Name: torch</span><br><span class="line">Version: 2.1.0a0+41361538.nv23.6</span><br><span class="line">Summary: Tensors and Dynamic neural networks in Python with strong GPU acceleration</span><br><span class="line">Home-page: https://pytorch.org/</span><br><span class="line">Author: PyTorch Team</span><br><span class="line">Author-email: packages@pytorch.org</span><br><span class="line">License: BSD-3</span><br><span class="line">Location: /usr/local/miniconda/envs/test/lib/python3.8/site-packages</span><br><span class="line">Requires: filelock, fsspec, jinja2, networkx, sympy, typing-extensions</span><br><span class="line">Required-by: torchvision</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h1><h2 id="未编译"><a href="#未编译" class="headerlink" title="未编译"></a><strong>未编译</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 setup.py install --user</span></span><br><span class="line">setup.py:10: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html</span><br><span class="line">  from pkg_resources import DistributionNotFound, get_distribution, parse_version</span><br><span class="line">No CUDA runtime is found, using CUDA_HOME=&#x27;/usr/local/cuda&#x27;</span><br><span class="line">Building wheel torchvision-0.16.1</span><br><span class="line">Compiling extensions with following flags:</span><br></pre></td></tr></table></figure>
+
+<p>降低 setuptools 版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前 setuptools 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip list | grep setuptools</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若版本 &gt; 60, 则降低版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install setuptools==58</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ffmpeg-版本"><a href="#ffmpeg-版本" class="headerlink" title="ffmpeg 版本"></a>ffmpeg 版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: ‘AV_CODEC_CAP_INTRA_ONLY’ was not declared in this scope; did you mean ‘AV_CODEC_PROP_INTRA_ONLY’?</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：降低 ffmpeg 版本。例如：<code>conda install ffmpeg==4.2</code></p>
+<h2 id="未找到-CUDA-Runtime"><a href="#未找到-CUDA-Runtime" class="headerlink" title="未找到 CUDA Runtime"></a>未找到 CUDA Runtime</h2><p><code>libcudart.so</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py install --user</span><br><span class="line">setup.py:10: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html</span><br><span class="line">  from pkg_resources import DistributionNotFound, get_distribution, parse_version</span><br><span class="line">No CUDA runtime is found, using CUDA_HOME=&#x27;/usr/local/cuda&#x27;</span><br><span class="line">Building wheel torchvision-0.16.1</span><br><span class="line">Compiling extensions with following flags:</span><br><span class="line">  FORCE_CUDA: False</span><br><span class="line">  FORCE_MPS: False</span><br><span class="line">  DEBUG: False</span><br><span class="line">  TORCHVISION_USE_PNG: True</span><br><span class="line">  TORCHVISION_USE_JPEG: True</span><br><span class="line">  TORCHVISION_USE_NVJPEG: True</span><br><span class="line">  TORCHVISION_USE_FFMPEG: True</span><br><span class="line">  TORCHVISION_USE_VIDEO_CODEC: True</span><br><span class="line">  NVCC_FLAGS: </span><br><span class="line">Compiling with debug mode OFF</span><br><span class="line">Building torchvision without PNG image support</span><br><span class="line">Running build on conda-build: False</span><br><span class="line">Running build on conda: True</span><br><span class="line">Building torchvision with JPEG image support</span><br><span class="line">  libjpeg include path: /usr/local/miniconda/envs/test/include</span><br><span class="line">  libjpeg lib path: /usr/local/miniconda/envs/test/lib</span><br><span class="line">Building torchvision without NVJPEG image support</span><br><span class="line">Building torchvision without ffmpeg support</span><br><span class="line">Building torchvision without video codec support</span><br><span class="line">running install</span><br><span class="line">/usr/local/miniconda/envs/test/lib/python3.8/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.</span><br><span class="line">!!</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>export FORCE_CUDA=&quot;1&quot;</code></p>
+<h2 id="IndexError-list-index-out-of-range"><a href="#IndexError-list-index-out-of-range" class="headerlink" title="IndexError: list index out of range"></a>IndexError: list index out of range</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cuda_flags = common_cflags + COMMON_NVCC_FLAGS + _get_cuda_arch_flags()</span><br><span class="line">  File &quot;/user/x/libs/anaconda3/envs/test1/lib/python3.7/site-packages/torch/utils/cpp_extension.py&quot;, line 1561, in _get_cuda_arch_flags</span><br><span class="line">    arch_list[-1] += &#x27;+PTX&#x27;</span><br><span class="line"></span><br><span class="line">IndexError: list index out of range</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CUDA_VERSION=$(/usr/local/cuda/bin/nvcc --version | sed -n &#x27;s/^.*release \([0-9]\+\.[0-9]\+\).*$/\1/p&#x27;)</span><br><span class="line">if [[ $&#123;CUDA_VERSION&#125; == 9.0* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;7.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 9.2* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 10.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 11.0* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5;8.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 11.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 12.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;5.0;5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5;8.0;8.6;8.7;8.9;9.0+PTX&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;unsupported cuda version.&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>即：设置 <code>TORCH_CUDA_ARCH_LIST=&quot;YOUR_GPUs_CC + PTX&quot;</code> 或在 Dockerfile 中设置 <code>ARG TORCH_CUDA_ARCH_LIST=&quot;YOUR_GPUs_CC + PTX&quot;</code></p>
+<blockquote>
+<p>以下方式可获取 <code>TORCH_CUDA_ARCH_LIST</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.cuda.get_device_capability(<span class="number">0</span>)</span><br><span class="line">torch.cuda.get_arch_list()</span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<p>docker 需访 cuda 库，因此需注意  <code>/etc/docker/daemon.json</code> 中设置 <code>default-runtime</code>，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 修改完成后需重启 docker：sudo systemctl restart docker</span><br><span class="line">&#123;</span><br><span class="line">    &quot;runtimes&quot;: &#123;</span><br><span class="line">        &quot;nvidia&quot;: &#123;</span><br><span class="line">            &quot;path&quot;: &quot;nvidia-container-runtime&quot;,</span><br><span class="line">            &quot;runtimeArgs&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;default-runtime&quot;: &quot;nvidia&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NVIDIA/" rel="tag"># NVIDIA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/NVIDIA/nvidia-docker/" rel="prev" title="nvidia-docker">
+                  <i class="fa fa-angle-left"></i> nvidia-docker
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/Robot/ROS/NodeHandle/" rel="next" title="NodeHandle">
+                  NodeHandle <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

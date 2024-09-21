@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Covariant Hamiltonian optimization for motion planning(即：协变哈密顿量优化)，基于梯度的轨迹优化方法，它使得许多日常的运动规划问题变得既简单又可训练。当大多数高维 motion planners 将轨迹生成划分为不同的 planning 和 optimization 阶段时，该算法在 optimization 阶段利用了协变梯度法和函数梯度法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CHOMP">
+<meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="Covariant Hamiltonian optimization for motion planning(即：协变哈密顿量优化)，基于梯度的轨迹优化方法，它使得许多日常的运动规划问题变得既简单又可训练。当大多数高维 motion planners 将轨迹生成划分为不同的 planning 和 optimization 阶段时，该算法在 optimization 阶段利用了协变梯度法和函数梯度法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/image-20240917210733996.png">
+<meta property="article:published_time" content="2024-09-17T13:05:52.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.071Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/image-20240917210733996.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/","path":"2024/09/17/机械臂/MoveIt/MotionPlanning/Planners/CHOMP/","title":"CHOMP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CHOMP | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-CHOMP"><span class="nav-number">1.</span> <span class="nav-text">使用 CHOMP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-demo"><span class="nav-number">1.2.</span> <span class="nav-text">运行 demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-CHOMP-with-Obstacles-in-the-Scene"><span class="nav-number">1.3.</span> <span class="nav-text">Running CHOMP with Obstacles in the Scene</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E6%95%B4-CHOMP-%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">调整 CHOMP 参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CHOMP-%E4%B8%8E-OMPL-%E8%BD%A8%E8%BF%B9%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">CHOMP 与 OMPL 轨迹的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CHOMP-%E4%BD%9C%E4%B8%BA-OMPL-%E7%9A%84-post-processor"><span class="nav-number">4.</span> <span class="nav-text">CHOMP 作为 OMPL 的 post-processor</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CHOMP | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CHOMP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:05:52" itemprop="dateCreated datePublished" datetime="2024-09-17T21:05:52+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Covariant Hamiltonian optimization for motion planning(即：<strong>协变哈密顿量优化</strong>)，基于<strong>梯度</strong>的轨迹优化方法，它使得许多日常的运动规划问题变得既简单又可训练。当大多数高维 motion planners 将轨迹生成划分为不同的 planning 和 optimization 阶段时，该算法在 optimization 阶段利用了协变梯度法和函数梯度法，设计了完全基于轨迹优化的运动规划算法。给定一个不可行的初始轨迹，CHOMP 通过对周围环境的反应，快速地将轨迹从碰撞中拉出，同时优化关节速度、加速度等动力学量。它迅速收敛到一个光滑的无碰撞的轨迹，可以有效地执行机器人。</p>
+<h1 id="使用-CHOMP"><a href="#使用-CHOMP" class="headerlink" title="使用 CHOMP"></a><strong>使用 CHOMP</strong></h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a><strong>配置</strong></h2><p>首先需要使用 MoveIt Setup Assistant 创建机器人配置包 _moveit_config </p>
+<p>注意：如果使用 ros-planning&#x2F;panda_moveit_config 进行演示，那么这些步骤已经完成了，可以跳过这一部分。</p>
+<p>① 将 chomp_planning_pipeline.launch.xml 下载到 MoveIt 配置包的 launch 目录</p>
+<p>② 下载 chomp_planning.yaml 文件，放入 _moveit_config&#x2F;config 目录中</p>
+<p>③ 将 chomp_planning.yaml 中的 animate_endeffector_segment: “panda_rightfinger” 更改为机器人的适当 link</p>
+<h2 id="运行-demo"><a href="#运行-demo" class="headerlink" title="运行 demo"></a><strong>运行 demo</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch pipeline:=chomp</span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<h2 id="Running-CHOMP-with-Obstacles-in-the-Scene"><a href="#Running-CHOMP-with-Obstacles-in-the-Scene" class="headerlink" title="Running CHOMP with Obstacles in the Scene"></a><strong>Running CHOMP with Obstacles in the Scene</strong></h2><p>要在有障碍的环境中运行CHOMP，以运行Python脚本示例：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_tutorials/tree/melodic-devel/doc/collision_environments/scripts/collision_scene_example.py">collision_scene_example.py</a></p>
+<p>该脚本创建一个有四个障碍物的杂乱场景，或者一个只有一个障碍物的简单场景（取决于脚本的参数）。也可以改变障碍物的位置&#x2F;大小来改变场景。</p>
+<p>要在有障碍的场景运行 CHOMP planner，打开两个 shell。在第一个 shell 启动 RViz，等待一切完成加载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch pipeline:=chomp</span>   </span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<p>在第二个 shell 中启动脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_tutorials collision_scene_example.py cluttered <span class="comment"># 或者 rosrun moveit_tutorials collision_scene_example.py sparse</span></span> </span><br></pre></td></tr></table></figure>
+
+<p>​     </p>
+<p>接下来，在 RViz 中，在MotionPlanning 面板的 Context 标签中选择 CHOMP。通过 imarker 移动末端执行器来设置所需的开始和目标状态，然后点击 MotionPlanning 面板中 Planning 标签下的 Plan 按钮来开始计划。Planner 将尝试在给定的开始和结束位置之间找到一个可行的解决方案。</p>
+ <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/CHOMP/image-20240917210733996.png" class="" title="image-20240917210733996">
+
+
+
+<h1 id="调整-CHOMP-参数"><a href="#调整-CHOMP-参数" class="headerlink" title="调整 CHOMP 参数"></a><strong>调整 CHOMP 参数</strong></h1><p>CHOMP 有一些与之相关的优化参数。这些可以针对正在使用的特定环境&#x2F;机器人进行修改，这些参数通常在 chomp_planning.yaml 文件中。在工作的机器人的配置文件夹中。如果机器人不存在此文件，可以创建它并设置所需的参数值。例如：</p>
+<ul>
+<li><strong>planning_time_limit</strong>：最大规划时间</li>
+<li><strong>max_iterations</strong>：最大迭代次数</li>
+<li><strong>max_iterations_after_collision_free</strong>：找到无碰撞路径后要执行的最大迭代次数</li>
+<li><strong>smoothness_cost_weight</strong>：该参数在 CHOMP 实际优化的最终成本中控制其权重</li>
+<li><strong>obstacle_cost_weight</strong>：该参数控制了对 CHOMP 优化的最终成本所给予的障碍的权重。例如：0.0 有一些可以忽略的障碍，1.0 则是一个硬约束</li>
+<li><strong>learning_rate</strong>：优化器用来在降低总成本的同时找到本地&#x2F;全局最小值的学习率</li>
+<li><strong>smoothness_cost_velocity、smoothness_cost_acceleration、smoothness_cost_jerk</strong>：与velocity、acceleration 和 jerk 相关的变量</li>
+<li><strong>ridge_factor</strong>：目标函数中 total quadratic cost matrix 对角线上的噪声。增加小的噪声[如0.001]可以使 CHOMP 避开障碍物，但代价是轨迹的平顺性</li>
+<li><strong>use_pseudo_inverse</strong>：是否启用伪逆计算</li>
+<li><strong>pseudo_inverse_ridge_factor</strong>：如果启用伪逆，则设置ridge因子</li>
+<li><strong>joint_update_limit</strong>：设置关节的更新限制</li>
+<li><strong>collision_clearance</strong>：为避开障碍物而需要保持的最小距离</li>
+<li><strong>collision_threshold</strong>：为了避免碰撞，需要维护的碰撞阈值</li>
+<li><strong>use_stochastic_descent</strong>：如果想在优化成本的同时使用随机下降，将其设置为 true&#x2F;false。在随机下降中，使用的是轨迹上的一个随机点，而不是所有的轨迹点。这样更快，并保证收敛，但在最坏的情况下可能需要更多的迭代</li>
+<li><strong>enable_failure_recovery</strong>：若设置为 true，CHOMP 调整某些参数，希望在使用 chomp_planning.yaml 中指定的默认参数不存在解时找到解决方案</li>
+<li><strong>max_recovery_attempts</strong>：这是第一次尝试使用默认参数后，使用不同参数集运行 CHOMP 的最大次数</li>
+<li><strong>trajectory_initialization_method</strong>：为 CHOMP 提供轨迹初始化的类型，可以是 quintic-spline、linear、cubic 或 fillTrajectory。前三个选项是用于初始化起始和目标状态之间的轨迹的插值方法。fillTrajectory 提供了一个选项，可以从现有的运动规划器[如OMPL]计算出的路径初始化轨迹</li>
+</ul>
+<p>为 CHOMP 选择参数需要一些直觉，这是由规划环境提供的。例如，CHOMP 的默认参数在没有障碍的环境中工作得很好。然而，在有许多障碍的环境中，默认参数可能会导致 CHOMP 陷入局部最小值。通过调整参数，可以提高 CHOMP 生成的 plan 的质量。</p>
+<p>一些未使用&#x2F;注释的参数是:</p>
+<ul>
+<li>hmc_stochasticity</li>
+<li>hmc_annealing_factor</li>
+<li>hmc_discretization</li>
+<li>use_hamiltonian_montecarlo</li>
+<li>animate_endeffector</li>
+<li>animate_endeffector_segment</li>
+<li>animate_path</li>
+<li>random_jump_amount</li>
+<li>add_randomness</li>
+</ul>
+<h1 id="CHOMP-与-OMPL-轨迹的区别"><a href="#CHOMP-与-OMPL-轨迹的区别" class="headerlink" title="CHOMP 与 OMPL 轨迹的区别"></a><strong>CHOMP 与 OMPL 轨迹的区别</strong></h1><p>Optimizing planners 优化成本函数，这有时可能会导致令人惊讶的结果: 通过一个薄薄的障碍可能比通过一个长而曲折的轨迹来避免所有碰撞的成本更低。在本节中，将对从 CHOMP 获得的路径进行区分，并将其与从 OMPL 获得的路径进行对比。</p>
+<p>OMPL 是一个开放源码库，用于<strong>基于采样&#x2F;随机化</strong>的 motion planning 算法。基于抽样的算法在概率上是完整的：如果一个解决方案存在，那么它最终会被找到，但是解决方案的不存在是不能被报告的。这些算法是有效的，通常能快速找到解决方案。<strong>OMPL 不包含任何与碰撞检查或可视化相关的代码</strong>，因为 OMPL 的设计者不希望将其绑定到任何特定的碰撞检查器或可视化前端。这个库被设计成可以很容易地集成到提供附加组件的系统中。MoveIt 直接与 OMPL 集成，并使用 OMPL 中的 motion planner 作为默认的 planner 集。OMPL 中的 planner 是抽象的：也就是说，OMPL 没有机器人的概念。相反，MoveIt 配置 OMPL 并为 OMPL 提供后端以处理机器人技术中的问题。</p>
+<p>CHOMP：虽然大多数高维 motion planners 将轨迹生成划分为不同的 <strong>planning 和 optimization 阶段</strong>，但 CHOMP 将<strong>协变梯度和函数梯度</strong>方法用于 optimization 阶段，设计一个完全基于轨迹优化的 motion planning 算法。给定一个不可行的初始轨迹，CHOMP 通过对周围环境的反应，快速地将轨迹从碰撞中拉出，同时优化关节速度、加速度等动力学量。它迅速收敛到一个光滑的无碰撞的轨迹，可以有效地执行机器人。协变更新规则确保 CHOMP 快速收敛到局部最优轨迹。</p>
+<p>对于含有障碍物的场景，CHOMP 通常会在代价函数中加入一些噪声[<strong>ridge_factor</strong>]来计算机器人的动力学量[如加速度、速度]，从而生成不喜欢平滑轨迹的路径。CHOMP 在大多数情况下可以避开障碍物，但如果由于对轨迹的初始猜测错误而陷入局部极小值，则会失败。OMPL 可以用来为 CHOMP 生成无碰撞的 seed 轨迹来缓解这个问题。</p>
+<h1 id="CHOMP-作为-OMPL-的-post-processor"><a href="#CHOMP-作为-OMPL-的-post-processor" class="headerlink" title="CHOMP 作为 OMPL 的 post-processor"></a><strong>CHOMP 作为 OMPL 的 post-processor</strong></h1><p>此节证明了 CHOMP 也可以作为其他规划算法得到的规划的后处理优化技术。这背后的直觉是，一些随机规划算法产生了 CHOMP 的初始猜测。CHOMP 然后根据这个初步猜测，进一步优化轨迹。要做到这一点，请遵循以下步骤:</p>
+<p>① 创建 ompl-chomp_planning_pipeline.launch 文件中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- load OMPL planning pipeline, but add the CHOMP planning adapter. --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/launch/ompl_planning_pipeline.launch.xml&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;planning_adapters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/AddTimeParameterization</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixWorkspaceBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateCollision</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStatePathConstraints</span></span></span><br><span class="line"><span class="string"><span class="tag">       chomp/OptimizerAdapter&quot;</span></span></span><br><span class="line"><span class="tag">       /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- load chomp config --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/config/chomp_planning.yaml&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- override trajectory_initialization_method --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;trajectory_initialization_method&quot;</span> <span class="attr">value</span>=<span class="string">&quot;fillTrajectory&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<p>② 该 launch 文件定义了新的 planning pipeline：ompl-CHOMP，它派生于 ompl pipeline，但是添加了 CHOMP pose-processor 作为规划适配器。此外，为了使用 ompl 生成的轨迹，将重写trajectory_initialization_method。</p>
+<p>③ 启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch pipeline:=ompl-chomp</span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<p>将启动 RViz，在 context 选项卡下的运动规划面板中选择 OMPL。通过移动末端执行器来设置所需的起始和目标状态，方法与上面对 CHOMP 所做的相同。最后单击 Plan 按钮开始规划。规划器现在将首先运行 OMPL，然后在 OMPL 的输出上运行 CHOMP 以生成一个优化的路径。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E4%BD%BF%E7%94%A8%E8%BF%91%E4%BC%BC%E7%BA%A6%E6%9D%9F%E6%B5%81%E5%BD%A2%E8%BF%9B%E8%A1%8C%E8%A7%84%E5%88%92/" rel="prev" title="使用近似约束流形进行规划">
+                  <i class="fa fa-angle-left"></i> 使用近似约束流形进行规划
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/" rel="next" title="OMPL">
+                  OMPL <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

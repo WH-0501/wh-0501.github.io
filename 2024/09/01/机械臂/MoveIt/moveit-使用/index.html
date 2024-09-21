@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MoveIt! 使用流程：  创建 URDF 模型 配置：使用 MoveIt! Setup Assistant 生成配置文件 添加机器人控制器插件 controller MoveIt! 控制机器人运动  MoveIt! 输入用户指令，比如起始位置，输出轨迹数据，每个点通过位置速度加速度描述，为了通过话题发出来，还需要一个 Follow Joint Trajectory 功能，通过通信接口发给机器人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="moveit-使用">
+<meta property="og:url" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="MoveIt! 使用流程：  创建 URDF 模型 配置：使用 MoveIt! Setup Assistant 生成配置文件 添加机器人控制器插件 controller MoveIt! 控制机器人运动  MoveIt! 输入用户指令，比如起始位置，输出轨迹数据，每个点通过位置速度加速度描述，为了通过话题发出来，还需要一个 Follow Joint Trajectory 功能，通过通信接口发给机器人">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204813263.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204818625.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204823140.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901205228107.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%9C%BA%E6%A2%B0%E8%87%82\MoveIt\moveit-%E4%BD%BF%E7%94%A8\image-20240901205303338.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901205308525.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240917200217931.png">
+<meta property="og:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240917200304420.png">
+<meta property="article:published_time" content="2024-09-01T12:46:31.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.000Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="机械臂">
+<meta property="article:tag" content="MoveIt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204813263.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/","path":"2024/09/01/机械臂/MoveIt/moveit-使用/","title":"moveit-使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>moveit-使用 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RobotModel-%E4%B8%8E-RobotState"><span class="nav-number">1.</span> <span class="nav-text">RobotModel 与 RobotState</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95-RobotState"><span class="nav-number">1.3.</span> <span class="nav-text">调试 RobotState</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Controllers%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Controllers配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%BA%A6%E6%9D%9F-Kinematic-constraints"><span class="nav-number">3.</span> <span class="nav-text">运动学约束(Kinematic constraints)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.</span> <span class="nav-text">主题及服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#follow-joint-trajectory"><span class="nav-number">5.1.</span> <span class="nav-text">follow_joint_trajectory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trajectory-execution-event"><span class="nav-number">5.2.</span> <span class="nav-text">trajectory_execution_event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action"><span class="nav-number">5.3.</span> <span class="nav-text">action</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#move-group"><span class="nav-number">5.3.1.</span> <span class="nav-text">move_group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#execute-trajectory"><span class="nav-number">5.3.2.</span> <span class="nav-text">execute_trajectory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ACM"><span class="nav-number">6.</span> <span class="nav-text">ACM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS-I"><span class="nav-number">7.</span> <span class="nav-text">ROS-I</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Planner-%E8%AF%84%E4%BB%B7%E6%A0%87%E5%87%86"><span class="nav-number">8.</span> <span class="nav-text">Planner 评价标准</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#time-from-start"><span class="nav-number">9.</span> <span class="nav-text">time_from_start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Plan-Execute"><span class="nav-number">10.</span> <span class="nav-text">Plan &amp; Execute</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Joystick"><span class="nav-number">11.</span> <span class="nav-text">Joystick</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="moveit-使用 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          moveit-使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 20:46:31" itemprop="dateCreated datePublished" datetime="2024-09-01T20:46:31+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>28 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>MoveIt! 使用流程：</p>
+<ul>
+<li>创建 URDF 模型</li>
+<li>配置：使用 MoveIt! Setup Assistant 生成配置文件</li>
+<li>添加机器人控制器插件 controller</li>
+<li>MoveIt! 控制机器人运动</li>
+</ul>
+<p>MoveIt! 输入用户指令，比如起始位置，输出轨迹数据，每个点通过位置速度加速度描述，为了通过话题发出来，还需要一个 <strong>Follow Joint Trajectory</strong> 功能，通过通信接口发给机器人，机器人还需要对轨迹进行<strong>精插补</strong>，再驱动电机同步运动。机器人控制器还需要将每个电机的状态数据反馈给 MoveIt! 来确定机器人是否到达指定位置，这样完成一个闭环。</p>
+<h1 id="RobotModel-与-RobotState"><a href="#RobotModel-与-RobotState" class="headerlink" title="RobotModel 与 RobotState"></a>RobotModel 与 RobotState</h1><blockquote>
+<p>介绍通过 C++ API 使用 MoveIt 中的运动学(kinematics)。包括正运动学求解、逆运动学求解以及雅可比矩阵求解。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_core/html/classmoveit_1_1core_1_1RobotModel.html"><strong>RobotModel</strong></a> 和 <a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_core/html/classmoveit_1_1core_1_1RobotState.html"><strong>RobotState</strong></a> 是访问机器人运动学的两个核心类。</p>
+<p><strong>RobotModel 类包含所有 links 和 joints 之间的关系，包括从 URDF 加载的关节限制属性</strong>。RobotModel 还将机器人的 links 和 joints 分开到 SRDF 中定义的规划组中。</p>
+<p><strong>RobotState 类包含机器人在某一时刻的信息</strong>，存储关节<strong>位置、速度、加速度向量</strong>等。这些信息可以用来获得机器人的运动学信息，依赖于它的当前状态，例如末端执行器的 Jacobian。</p>
+<p>RobotState 还包含辅助函数，用于根据末端执行器位置(笛卡尔姿态)设置手臂位置和计算笛卡尔轨迹。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials robot_model_and_robot_state_tutorial.launch</span></span><br></pre></td></tr></table></figure>
+
+<p>运行输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[ INFO] : Loading robot model &#x27;panda&#x27;...</span><br><span class="line">[ INFO] : Model frame: world</span><br><span class="line">[ INFO] : Joint panda_joint1: 0.000000</span><br><span class="line">[ INFO] : Joint panda_joint2: 0.000000</span><br><span class="line">[ INFO] : Joint panda_joint3: 0.000000</span><br><span class="line">[ INFO] : Joint panda_joint4: -1.570800</span><br><span class="line">[ INFO] : Joint panda_joint5: 0.000000</span><br><span class="line">[ INFO] : Joint panda_joint6: 0.000000</span><br><span class="line">[ INFO] : Joint panda_joint7: 0.000000</span><br><span class="line">[ INFO] : Current state is not valid</span><br><span class="line">[ INFO] : Current state is valid</span><br><span class="line">[ INFO] : Translation:</span><br><span class="line">0.166555</span><br><span class="line">0.244931</span><br><span class="line">0.408155</span><br><span class="line"></span><br><span class="line">[ INFO] : Rotation:</span><br><span class="line"> -0.119873   0.251145  -0.960498</span><br><span class="line"> -0.735699   -0.67209 -0.0839164</span><br><span class="line"> -0.666617   0.696578   0.265332</span><br><span class="line"></span><br><span class="line">[ INFO] : Joint panda_joint1: -0.887238</span><br><span class="line">[ INFO] : Joint panda_joint2: -1.243671</span><br><span class="line">[ INFO] : Joint panda_joint3: 1.581131</span><br><span class="line">[ INFO] : Joint panda_joint4: -2.349818</span><br><span class="line">[ INFO] : Joint panda_joint5: -0.471360</span><br><span class="line">[ INFO] : Joint panda_joint6: 0.152547</span><br><span class="line">[ INFO] : Joint panda_joint7: -0.966377</span><br><span class="line">[ INFO] : Jacobian:</span><br><span class="line">   -0.244931    0.0474647   -0.0235218     0.043507   -0.0249171    0.0993464  6.07153e-18</span><br><span class="line">    0.166555   -0.0582701    0.0984654     0.281663   -0.0230651   -0.0965234 -3.81639e-17</span><br><span class="line">           0    0.0847139    -0.268771    0.0624676   -0.0974941  -0.00255494  8.67362e-18</span><br><span class="line">           0      0.77533    -0.598064     0.210935     0.970394     0.241357    -0.960498</span><br><span class="line">           0     0.631556     0.734214    -0.242591   -0.0646234     0.223418   -0.0839164</span><br><span class="line">           1  4.89619e-12     0.321323     0.946919     -0.23272     0.944368     0.265332</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>实例化 <a target="_blank" rel="noopener" href="http://docs.ros.org/melodic/api/moveit_ros_planning/html/classrobot__model__loader_1_1RobotModelLoader.html">RobotModelLoader</a> 对象，该对象会在 ROS parameter 中查找 robot description 参数，并构建 RobotModel。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">robot_model_loader::RobotModelLoader <span class="title">robot_model_loader</span><span class="params">(<span class="string">&quot;robot_description&quot;</span>)</span></span>;</span><br><span class="line">robot_model::RobotModelPtr kinematic_model = robot_model_loader.<span class="built_in">getModel</span>();</span><br><span class="line"><span class="built_in">ROS_INFO</span>(<span class="string">&quot;Model frame: %s&quot;</span>, kinematic_model-&gt;<span class="built_in">getModelFrame</span>().<span class="built_in">c_str</span>());</span><br></pre></td></tr></table></figure>
+
+<p>然后，使用 RobotModel 构建 RobotState 对象来维护机器人的配置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">robot_state::RobotStatePtr <span class="title">kinematic_state</span><span class="params">(<span class="keyword">new</span> robot_state::RobotState(kinematic_model))</span></span>;</span><br><span class="line">kinematic_state-&gt;<span class="built_in">setToDefaultValues</span>(); <span class="comment">// 将各 joints 设置为默认值</span></span><br><span class="line"><span class="comment">// 根据 group name 获取 JointModelGroup 信息</span></span><br><span class="line"><span class="type">const</span> robot_state::JointModelGroup* joint_model_group = </span><br><span class="line">                    kinematic_model-&gt;<span class="built_in">getJointModelGroup</span>(<span class="string">&quot;panda_arm&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> std::vector&lt;std::string&gt;&amp; joint_names = </span><br><span class="line">                    joint_model_group-&gt;<span class="built_in">getVariableNames</span>();</span><br></pre></td></tr></table></figure>
+
+<p>获取当前关节值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; joint_values;</span><br><span class="line">kinematic_state-&gt;<span class="built_in">copyJointGroupPositions</span>(joint_model_group, joint_values);</span><br><span class="line"><span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; joint_names.<span class="built_in">size</span>(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Joint %s: %f&quot;</span>, joint_names[i].<span class="built_in">c_str</span>(), joint_values[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关节限制，setJointGroupPositions() 本身不会强制执行 joint limit，但是调用 enforceBounds()可以实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Set one joint in the Panda arm outside its joint limit */</span></span><br><span class="line">joint_values[<span class="number">0</span>] = <span class="number">5.57</span>;</span><br><span class="line">kinematic_state-&gt;<span class="built_in">setJointGroupPositions</span>(joint_model_group, joint_values);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Check whether any joint is outside its joint limits */</span></span><br><span class="line"><span class="built_in">ROS_INFO_STREAM</span>(<span class="string">&quot;Current state is &quot;</span> &lt;&lt; (kinematic_state-&gt;<span class="built_in">satisfiesBounds</span>() ? <span class="string">&quot;valid&quot;</span> : <span class="string">&quot;not valid&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Enforce the joint limits for this state and check again*/</span></span><br><span class="line">kinematic_state-&gt;<span class="built_in">enforceBounds</span>();</span><br><span class="line"><span class="built_in">ROS_INFO_STREAM</span>(<span class="string">&quot;Current state is &quot;</span> &lt;&lt; (kinematic_state-&gt;<span class="built_in">satisfiesBounds</span>() ? <span class="string">&quot;valid&quot;</span> : <span class="string">&quot;not valid&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>正运动学(Forward Kinematics)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对一组随机的关节值计算正运动学</span></span><br><span class="line">kinematic_state-&gt;<span class="built_in">setToRandomPositions</span>(joint_model_group);</span><br><span class="line"><span class="comment">// 此例中，要找到机器人 panda_arm 组中最远端的 panda_link8 的位姿</span></span><br><span class="line"><span class="type">const</span> Eigen::Isometry3d&amp; end_effector_state = </span><br><span class="line">                kinematic_state-&gt;<span class="built_in">getGlobalLinkTransform</span>(<span class="string">&quot;panda_link8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Print end-effector pose. Remember that this is in the model frame */</span></span><br><span class="line"><span class="built_in">ROS_INFO_STREAM</span>(<span class="string">&quot;Translation: \n&quot;</span> &lt;&lt; end_effector_state.<span class="built_in">translation</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>);</span><br><span class="line"><span class="built_in">ROS_INFO_STREAM</span>(<span class="string">&quot;Rotation: \n&quot;</span> &lt;&lt; end_effector_state.<span class="built_in">rotation</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>逆运动学(Inverse Kinematics，即：IK)。要求解 IK，需要以下数据：</p>
+<ul>
+<li>期望的 end-effector 的位姿：前面计算得到的 end_effector_state</li>
+<li>超时时间：0.1</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> timeout = <span class="number">0.1</span>;</span><br><span class="line"><span class="type">bool</span> found_ik = kinematic_state-&gt;<span class="built_in">setFromIK</span>(joint_model_group, </span><br><span class="line">                                        end_effector_state, timeout);</span><br><span class="line">                                        </span><br><span class="line"><span class="comment">// 打印 IK 解</span></span><br><span class="line"><span class="keyword">if</span> (found_ik) &#123;</span><br><span class="line">  kinematic_state-&gt;<span class="built_in">copyJointGroupPositions</span>(joint_model_group, joint_values);</span><br><span class="line">  <span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; joint_names.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Joint %s: %f&quot;</span>, joint_names[i].<span class="built_in">c_str</span>(), joint_values[i]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Did not find IK solution&quot;</span>);</span><br><span class="line">&#125;                                        </span><br></pre></td></tr></table></figure>
+
+<p>获取 Jacobian</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Eigen::Vector3d <span class="title">reference_point_position</span><span class="params">(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>;</span><br><span class="line">Eigen::MatrixXd jacobian;</span><br><span class="line">kinematic_state-&gt;<span class="built_in">getJacobian</span>(joint_model_group,</span><br><span class="line">                             kinematic_state-&gt;<span class="built_in">getLinkModel</span>(joint_model_group-&gt;<span class="built_in">getLinkModelNames</span>().<span class="built_in">back</span>()),</span><br><span class="line">                             reference_point_position, jacobian);</span><br><span class="line"><span class="built_in">ROS_INFO_STREAM</span>(<span class="string">&quot;Jacobian: \n&quot;</span> &lt;&lt; jacobian &lt;&lt; <span class="string">&quot;\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>launch 文件。要运行代码，launch 文件中需要完成以下任务：</p>
+<ul>
+<li>加载 URDF 和 SRDF 到参数服务器</li>
+<li>将 MoveIt Setup Assistant 生成的 kinematics_solver 配置放到 ROS 参数服务器上</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">  &lt;include file=<span class="string">&quot;$(find panda_moveit_config)/launch/planning_context.launch&quot;</span>&gt;</span><br><span class="line">    &lt;arg name=<span class="string">&quot;load_robot_description&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">  &lt;/include&gt;</span><br><span class="line"></span><br><span class="line">  &lt;node name=<span class="string">&quot;robot_model_and_robot_state_tutorial&quot;</span></span><br><span class="line">        pkg=<span class="string">&quot;moveit_tutorials&quot;</span></span><br><span class="line">        type=<span class="string">&quot;robot_model_and_robot_state_tutorial&quot;</span></span><br><span class="line">        respawn=<span class="string">&quot;false&quot;</span> output=<span class="string">&quot;screen&quot;</span>&gt;</span><br><span class="line">    &lt;rosparam command=<span class="string">&quot;load&quot;</span></span><br><span class="line">              file=<span class="string">&quot;$(find panda_moveit_config)/config/kinematics.yaml&quot;</span>/&gt;</span><br><span class="line">  &lt;/node&gt;</span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中，plan_context.launch 中会加载 URDF 和 SRDF。</p>
+<h2 id="调试-RobotState"><a href="#调试-RobotState" class="headerlink" title="调试 RobotState"></a>调试 RobotState</h2><p>可使用命令行工具帮助调试 robot state</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_ros_planning moveit_print_planning_model_info</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Controllers配置"><a href="#Controllers配置" class="headerlink" title="Controllers配置"></a>Controllers配置</h1><p> moveit_controller_manager 参数，在 xxx_moveit_controller_manager.launch.xml 中设置。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Define the controller manager plugin to use for trajectory execution --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> <span class="attr">default</span>=<span class="string">&quot;moveit_simple_controller_manager/MoveItSimpleControllerManager&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg moveit_controller_manager)&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- loads controller list to the param server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find mr2000_aubo_i5_moveit_config)/config/ros_controllers.yaml&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>trajectory_execution_manager.cpp 中读取该参数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (controller_manager_loader_)</span><br><span class="line">&#123;</span><br><span class="line">    std::string controller;</span><br><span class="line">    <span class="keyword">if</span> (!node_handle_.<span class="built_in">getParam</span>(<span class="string">&quot;moveit_controller_manager&quot;</span>, controller))</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// 获取 moveit_core 支持的所有插件的名称列表  </span></span><br><span class="line">      <span class="type">const</span> std::vector&lt;std::string&gt;&amp; classes = controller_manager_loader_-&gt;<span class="built_in">getDeclaredClasses</span>();</span><br><span class="line">      <span class="keyword">if</span> (classes.<span class="built_in">size</span>() == <span class="number">1</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        controller = classes[<span class="number">0</span>];</span><br><span class="line">        <span class="built_in">ROS_WARN_NAMED</span>(name_,</span><br><span class="line">                       <span class="string">&quot;Parameter &#x27;~moveit_controller_manager&#x27; is not specified but only one &quot;</span></span><br><span class="line">                       <span class="string">&quot;matching plugin was found: &#x27;%s&#x27;. Using that one.&quot;</span>,</span><br><span class="line">                       controller.<span class="built_in">c_str</span>());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">ROS_FATAL_NAMED</span>(name_, <span class="string">&quot;Parameter &#x27;~moveit_controller_manager&#x27; not specified. This is needed to &quot;</span></span><br><span class="line">                               <span class="string">&quot;identify the plugin to use for interacting with controllers. No paths can &quot;</span></span><br><span class="line">                               <span class="string">&quot;be executed.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!controller.<span class="built_in">empty</span>())</span><br><span class="line">      <span class="keyword">try</span></span><br><span class="line">      &#123;</span><br><span class="line">        controller_manager_ = controller_manager_loader_-&gt;<span class="built_in">createUniqueInstance</span>(controller);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">catch</span> (pluginlib::PluginlibException&amp; ex)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">ROS_FATAL_STREAM_NAMED</span>(name_,</span><br><span class="line">                               <span class="string">&quot;Exception while loading controller manager &#x27;&quot;</span> &lt;&lt; controller &lt;&lt; <span class="string">&quot;&#x27;: &quot;</span> &lt;&lt; ex.<span class="built_in">what</span>());</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若设置了 <code>moveit_controller_manager</code> 参数，则以该参数指定的插件实例化 ***<code>controller_manger_</code>***。否则使用 moveit_core 支持的插件列表中的第一个。</p>
+<p><code>controller_manger_loader_</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">controller_manager_loader_.<span class="built_in">reset</span>(<span class="keyword">new</span> pluginlib::<span class="built_in">ClassLoader</span>&lt;moveit_controller_manager::MoveItControllerManager&gt;(</span><br><span class="line">        <span class="string">&quot;moveit_core&quot;</span>, <span class="string">&quot;moveit_controller_manager::MoveItControllerManager&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>pluginlib::ClassLoader</code> 先获取指定包 moveit_core 的所有支持的插件的 xml 文件路径，等价于使用以下指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rospack plugins --attrib=plugin moveit_core</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rospack plugins --attrib=plugin moveit_core</span></span><br><span class="line">aubo_kinematics /home/robuster/grasp_ws/src/aubo_robot/aubo_kinematics/aubo_moveit_plugins.xml</span><br><span class="line">moveit_ros_control_interface /opt/ros/melodic/share/moveit_ros_control_interface/moveit_core_plugins.xml</span><br><span class="line">moveit_ros_planning /opt/ros/melodic/share/moveit_ros_planning/planning_request_adapters_plugin_description.xml</span><br><span class="line">moveit_planners_chomp /opt/ros/melodic/share/moveit_planners_chomp/chomp_interface_plugin_description.xml</span><br><span class="line">industrial_trajectory_filters /opt/ros/melodic/share/industrial_trajectory_filters/planning_request_adapters_plugin_description.xml</span><br><span class="line">moveit_kinematics /opt/ros/melodic/share/moveit_kinematics/kdl_kinematics_plugin_description.xml</span><br><span class="line">moveit_kinematics /opt/ros/melodic/share/moveit_kinematics/lma_kinematics_plugin_description.xml</span><br><span class="line">moveit_kinematics /opt/ros/melodic/share/moveit_kinematics/srv_kinematics_plugin_description.xml</span><br><span class="line">moveit_kinematics /opt/ros/melodic/share/moveit_kinematics/cached_ik_kinematics_plugin_description.xml</span><br><span class="line">moveit_planners_ompl /opt/ros/melodic/share/moveit_planners_ompl/ompl_interface_plugin_description.xml</span><br><span class="line">moveit_fake_controller_manager /opt/ros/melodic/share/moveit_fake_controller_manager/moveit_fake_controller_manager_plugin_description.xml</span><br><span class="line">moveit_simple_controller_manager /opt/ros/melodic/share/moveit_simple_controller_manager/moveit_simple_controller_manager_plugin_description.xml</span><br><span class="line">moveit_core /opt/ros/melodic/share/moveit_core/collision_detector_fcl_description.xml</span><br></pre></td></tr></table></figure>
+
+<p>然后，调用 <code>determineAvailableClasses</code> 根据这些 plugin.xml 文件返回可用的 classes，并赋值给 <code>classes_available_</code> 变量</p>
+<h1 id="运动学约束-Kinematic-constraints"><a href="#运动学约束-Kinematic-constraints" class="headerlink" title="运动学约束(Kinematic constraints)"></a><strong>运动学约束(Kinematic constraints)</strong></h1><p>MoveIt! 内置的约束为运动学约束，包括：</p>
+<ul>
+<li>Position constraints：限制 link 的运动区域</li>
+<li>Orientation constraints：限制 link 的运动方向</li>
+<li>Visibility constraints：限制 link 上某点在某区域的可见性</li>
+<li>Joint constraints：限制 joint 的运动范围</li>
+<li>User-specified constraints：用户自定义的约束条件</li>
+</ul>
+<h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a><strong>调试</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调试 RobotState</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_ros_planning moveit_print_planning_model_info</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调试 Planning Scene Monitor</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_ros_planning moveit_print_planning_scene_info</span>  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">MoveIt Commander Scripting</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_commander moveit_commander_cmdline.py</span>  </span><br></pre></td></tr></table></figure>
+
+<p>​                            </p>
+<h1 id="主题及服务"><a href="#主题及服务" class="headerlink" title="主题及服务"></a><strong>主题及服务</strong></h1><p><strong>move_group 节点通过 ROS</strong> <strong>topics</strong> <strong>和</strong> <strong>actions</strong> <strong>与机器人通信</strong>，获取机器人状态、传感器数据等</p>
+<h2 id="follow-joint-trajectory"><a href="#follow-joint-trajectory" class="headerlink" title="follow_joint_trajectory"></a><strong>follow_joint_trajectory</strong></h2><p>action，MoveIt! 最终规划发布的 action 消息，机器人控制器接收该消息后控制机器人完成运动。这就需要在 MoveIt!端配置一个控制器插件，实现该接口的功能。该插件的配置在 MoveIt! 配置包中已经实现，可以查看配置包中的 controllers.yaml 文件：</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204813263.png" class="" title="image-20240901204813263">
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204818625.png" class="" title="image-20240901204818625">
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901204823140.png" class="" title="image-20240901204823140">
+
+
+
+<h2 id="trajectory-execution-event"><a href="#trajectory-execution-event" class="headerlink" title="trajectory_execution_event"></a><strong>trajectory_execution_event</strong></h2><p>该主题为轨迹执行事件，在接收到 stop() 请求时，会发布 stop 事件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/pickup/cancel</span><br><span class="line">/pickup/feedback</span><br><span class="line">/pickup/goal</span><br><span class="line">/pickup/result</span><br><span class="line">/pickup/statu</span><br><span class="line">/place/cancel</span><br><span class="line">/place/feedback</span><br><span class="line">/place/goal</span><br><span class="line">/place/result</span><br><span class="line">/place/status</span><br><span class="line">/planning_scene</span><br><span class="line">/planning_scene_world</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a><strong>action</strong></h2><h3 id="move-group"><a href="#move-group" class="headerlink" title="move_group"></a><strong>move_group</strong></h3><p><code>go()</code> 函数通过调用 <code>move()/async_move()</code>，其中 <code>async_move()</code> 实际是调用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">move(<span class="literal">False</span>) <span class="comment"># 即：wait 参数为 False, 非阻塞</span></span><br></pre></td></tr></table></figure>
+
+<p><code>move()</code> 接口通过 actionlib 向 move_group 发送 <strong>moveit_msgs::MoveGroupGoal</strong>  类型 goal。相关主题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/move_group/goal</span><br><span class="line">/move_group/status</span><br><span class="line">/move_group/feedback</span><br><span class="line">/move_group/result</span><br><span class="line">/move_group/cancel</span><br></pre></td></tr></table></figure>
+
+<h3 id="execute-trajectory"><a href="#execute-trajectory" class="headerlink" title="execute_trajectory"></a><strong>execute_trajectory</strong></h3><p><code>execute()</code> 接口，通过 actionlib 向 <strong>execute_trajectory</strong> 发送 <code>moveit_msgs::ExecuteTrajectoryGoal</code> 类型 goal。相关主题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/execute_trajectory/goal</span><br><span class="line">/execute_trajectory/status</span><br><span class="line">/execute_trajectory/feedback</span><br><span class="line">/execute_trajectory/result</span><br><span class="line">/execute_trajectory/cancel</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;attached_collision_object</p>
+<p>&#x2F;collision_object</p>
+<h1 id="ACM"><a href="#ACM" class="headerlink" title="ACM"></a><strong>ACM</strong></h1><p><a target="_blank" rel="noopener" href="http://docs.ros.org/melodic/api/moveit_core/html/classcollision__detection_1_1AllowedCollisionMatrix.html">AllowedCollisionMatrix</a> - 碰撞免检矩阵。ACM 提供了一种机制来告诉 collision world 忽略某些对象之间的碰撞。</p>
+<h1 id="ROS-I"><a href="#ROS-I" class="headerlink" title="ROS-I"></a><strong>ROS-I</strong></h1><p>将 ROS 功能应用到工业生产过程中，为工业机器人提供工业级 ROS 应用开发支持。</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901205228107.png" class="" title="image-20240901205228107">
+
+
+
+<h1 id="Planner-评价标准"><a href="#Planner-评价标准" class="headerlink" title="Planner 评价标准"></a><strong>Planner 评价标准</strong></h1><ul>
+<li>Optimality：最优性。路径最短，规划速度最快等</li>
+<li>Complete：完备性。在有限时间内解决所有有解的问题</li>
+</ul>
+<p>调试</p>
+<p>依次打印轨迹中每个关节的位置及时间，可生成各关节的运动曲线，来判断运动稳定性</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">trajectory_msgs::JointTrajectory::_points_type::iterator iter;</span><br><span class="line">trajectory = as_.<span class="built_in">acceptNewGoal</span>()-&gt;trajectory;</span><br><span class="line"><span class="keyword">for</span>(iter= trajectory.points.<span class="built_in">begin</span>(); iter!=trajectory.points.<span class="built_in">end</span>(); iter++) </span><br><span class="line">    cout&lt;&lt;iter-&gt;positions[<span class="number">0</span>]&lt;&lt;” ”;</span><br><span class="line">cout&lt;&lt;endl;</span><br><span class="line"><span class="keyword">for</span>(iter=trajectory.points.<span class="built_in">begin</span>(); iter!=trajectory.points.<span class="built_in">end</span>(); iter++)</span><br><span class="line">    cout&lt;&lt;iter-&gt;positions[<span class="number">1</span>]&lt;&lt;””;</span><br><span class="line">cout&lt;&lt;endl;</span><br><span class="line"><span class="keyword">for</span>(iter=trajectory.points.<span class="built_in">begin</span>(); iter!=trajectory.points.<span class="built_in">end</span>(); iter++)</span><br><span class="line">    cout&lt;&lt;iter-&gt;time_from_start&lt;&lt;” ”;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\workspace\my-notes\blog\source_posts\机械臂\MoveIt\moveit-使用\image-20240901205303338.png" alt="image-20240901205303338"></p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240901205308525.png" class="" title="image-20240901205308525">
+
+<h1 id="time-from-start"><a href="#time-from-start" class="headerlink" title="time_from_start"></a><strong>time_from_start</strong></h1><p>轨迹规划完成后，通过 IPTP 来添加时间、速度等信息。首先 </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trajectory_processing::IterativeParabolicTimeParameterization time_param;</span><br><span class="line">time_param.<span class="built_in">computeTimeStamps</span>(rt, <span class="number">1.0</span>);</span><br><span class="line">rt.<span class="built_in">getRobotTrajectoryMsg</span>(res.solution) <span class="comment">// res.solution 即生成的轨迹(解决方案)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>computeTimeStamps</code> 接口中根据轨迹点数计算相邻轨迹点之间的时间差 time_diff 数组。初始时，time_diff 数组中的时间差均为 0.0。然后添加速度约束，即：根据允许的最大速度计算相邻轨迹点 t_min, 若 t_min 大于该点的 time_diff，则将该点 time_diff 设置为 t_min；再添加加速度约束。添加速度约束和加速度约束的过程实际是更新 time_diff。</p>
+<p>更新完 time_diff 之后，再根据 <strong>time_diff</strong> 数组通过 <strong>duration_from_previous_</strong> 设置轨迹点的 time_from_start(实际就是通过 time_diff 来依次计算各轨迹点的 time_from_start)</p>
+<h1 id="Plan-Execute"><a href="#Plan-Execute" class="headerlink" title="Plan &amp; Execute"></a>Plan &amp; Execute</h1><p>RViz MontionPlanning 界面提供 Plan&#x2F;Execute&#x2F;Plan&amp;Execute 按钮。</p>
+<p>Plan: 规划轨迹</p>
+<p>Execute: 按规划的轨迹控制机械臂</p>
+<p>Plan 按键对应 <em><strong>MotionPlanningFrame::computePlanButtonClicked()</strong></em> 接口。根据 <em>use_cartesian_path</em> 参数，调用 <strong>computeCartesianPlan()</strong> 或 <em><strong>computeJointSpacePlan()</strong></em> 接口规划轨迹，规划完成后，触发 <em><strong>planningFinished()</strong></em> 信号。</p>
+<p>Execute 按键对应 <em><strong>MotionPlanningFrame::computeExecuteButtonClicked()</strong></em> 接口，该接口调用 <em><strong>execute(current_plan_)</strong></em> 执行轨迹，执行完成后，调用 <em><strong>onFinishedExecution(bool success)</strong></em> 更新状态。</p>
+<p><em>Plan &amp; Execute 按键对应</em>  <em><strong>MotionPlanningFrame::computePlanAndExecuteButtonClicked()</strong></em> 接口，该接口调用 <em><strong>computeCartesianPlan()</strong></em> 进行轨迹规划，然后调用 <em><strong>computeExecuteButtonClicked()</strong></em> 接口执行轨迹。</p>
+<p>若选择 “Use Cartesian Path”，则使用笛卡尔轨迹规划(move_group_-&gt;<strong>computeCartesianPath</strong>(…))，否则使用 joint space 轨迹规划(move_group_-&gt;<strong>plan</strong>(*current_plan_))。</p>
+<p>plan 规划完成后，会在 <strong>&#x2F;move_group&#x2F;goal</strong> 主题发布规划信息给 move_group 节点；点击 Execute 执行轨迹，实际是通过 <strong>&#x2F;execute_trajectory&#x2F;goal</strong> 主题发布轨迹信息给 move_group 节点</p>
+<p><strong>rotbotNamespace</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>aubo_i5<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;robotNamespace&gt;/&lt;/robotNamespace&gt; --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>gazebo_ros_control 插件指定 robotNamespace 后，<strong>controller_manager 服务会添加上该命名空间</strong>，变为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/&lt;robotNamespace&gt;/controller_manager</span><br></pre></td></tr></table></figure>
+
+
+
+<p>因此，所有 gazebo controllers 都应在该命名空间中，才能正常加载。此时才可通过 controller_manager&#x2F;list_controllers 服务进行查看。</p>
+<p><strong>robtoNamespace 与 controller_spawner 节点的 ns 参数，以及 _gazebo_control.yaml 中的命名空间需要一致</strong>。同样，moveit 中加载的 controller(通常位于 _moveit_config&#x2F;config&#x2F;congrollers.yaml 中) 也要确保命名空间一致。</p>
+<p>注意：controller_manager 相关 services 不受 ns 参数影响，只与 robotNamespace 相关。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># robotNamespace 参数设置为 aubo_i5</span><br><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>aubo_i5<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;robotNamespace&gt;/&lt;/robotNamespace&gt; --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># controller_manager 节点 ns 参数设置为 aubo_i5_test</span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;aubo_i5_test&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">args</span>=<span class="string">&quot;joint_state_controller&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>提示如下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">: Could not load controller &#x27;joint_state_controller&#x27; because the type was not specified. Did you load the controller configuration on the parameter server (namespace: &#x27;/aubo_i5/joint_state_controller&#x27;)?</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Joystick"><a href="#Joystick" class="headerlink" title="Joystick"></a><strong>Joystick</strong></h1><p>启动 moveit 程序，RViz 中使能 “External Comm”</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240917200217931.png" class="" title="image-20240917200217931">
+
+<p>启动 joystick_control.launch</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch &lt;YOURROBOT&gt;_moveit_config joystick_control.launch</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或手动指定遥控器端口</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch YOURROBOT_moveit_config joystick_control.launch dev:=/dev/input/js1</span></span><br></pre></td></tr></table></figure>
+
+<p>该脚本可读取三种类型的 joy sticks</p>
+<ul>
+<li>XBox360</li>
+<li>PS3 USB 接口</li>
+<li>PS3 蓝牙接口</li>
+<li>Arctic USB Wireless Gamepad</li>
+</ul>
+<p>请注意，只有对其所 有End executor 父组都具有 IK 求解器的规划组才能工作。</p>
+<p>此外，需在 rviz 中添加 &#x2F;rviz&#x2F;moveit&#x2F;move_marker&#x2F;goal_link_tcp 主题才能控制，否则提示</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-%E4%BD%BF%E7%94%A8/image-20240917200304420.png" class="" title="image-20240917200304420">
+
+<p>按键映射</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>PS3 Controller</th>
+<th>Xbox Controller</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+-x&#x2F;y</td>
+<td>left analog stick</td>
+<td>left analog stick</td>
+</tr>
+<tr>
+<td>+-z</td>
+<td>L2&#x2F;R2</td>
+<td>LT&#x2F;RT</td>
+</tr>
+<tr>
+<td>+-yaw</td>
+<td>L1&#x2F;R1</td>
+<td>LB&#x2F;RB</td>
+</tr>
+<tr>
+<td>+-roll</td>
+<td>left&#x2F;right</td>
+<td>left&#x2F;right</td>
+</tr>
+<tr>
+<td>+-pitch</td>
+<td>up&#x2F;down</td>
+<td>up&#x2F;down</td>
+</tr>
+<tr>
+<td>change planning group</td>
+<td>select&#x2F;start</td>
+<td>Y&#x2F;A</td>
+</tr>
+<tr>
+<td>change end effector</td>
+<td>triangle&#x2F;cross</td>
+<td>back&#x2F;start</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>square</td>
+<td>X</td>
+</tr>
+<tr>
+<td>execute</td>
+<td>circle</td>
+<td>B</td>
+</tr>
+</tbody></table>
+<p>RViz 中可添加 “Pose” 订阅 “&#x2F;joy_pose” 来显示 joystick 的输出位置。</p>
+<p>[FATAL] [&#x2F;moveit_joy-592]: Check if you started movegroups. Exiting.</p>
+<p>需定义 end_effector </p>
+<p>延时较大，待调试</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E6%A2%B0%E8%87%82/" rel="tag"># 机械臂</a>
+              <a href="/tags/MoveIt/" rel="tag"># MoveIt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Realtime%20Arm%20Servoing/" rel="prev" title="Servoing">
+                  <i class="fa fa-angle-left"></i> Servoing
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Gazebo/" rel="next" title="moveit-Gazebo">
+                  moveit-Gazebo <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

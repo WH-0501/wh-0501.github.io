@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。   在使用 zsock_new() 新建套接字时，最终会调用 socket_base_t::create(...) 方法创建 socket 并注册其 mailbox。   socket_base_t::create">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mailbox">
+<meta property="og:url" content="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。   在使用 zsock_new() 新建套接字时，最终会调用 socket_base_t::create(...) 方法创建 socket 并注册其 mailbox。   socket_base_t::create">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-07T12:37:29.000Z">
+<meta property="article:modified_time" content="2024-09-21T12:01:38.201Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ZeroMQ">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/","path":"2024/09/07/数据通信/ZeroMQ/mailbox/","title":"Mailbox"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mailbox | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mailbox-t"><span class="nav-number">2.</span> <span class="nav-text">mailbox_t</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ypipe-t"><span class="nav-number">2.1.</span> <span class="nav-text">ypipe_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yqueue-t"><span class="nav-number">2.2.</span> <span class="nav-text">yqueue_t</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Mailbox | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mailbox
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。  </p>
+<p>在使用 <code>zsock_new()</code> 新建套接字时，最终会调用 <code>socket_base_t::create(...)</code> 方法创建 socket 并注册其 mailbox。  </p>
+<p><code>socket_base_t::create(...)</code> 中会根据指定的套接字类型创建不同的套接字，例如：  </p>
+<ul>
+<li><code>ZMQ_PAIR</code>：pair_t</li>
+<li><code>ZMQ_PUB</code>：pub_t</li>
+<li><code>ZMQ_SUB</code>：sub_t</li>
+<li>…</li>
+</ul>
+<p>所有套接字基类均为 <code>socket_base_t</code>，该类构造函数中创建 mailbox：  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (_thread_safe) &#123;</span><br><span class="line">    _mailbox = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_safe_t</span> (&amp;_sync);</span><br><span class="line">    <span class="built_in">zmq_assert</span> (_mailbox);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">mailbox_t</span> *m = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    <span class="built_in">zmq_assert</span> (m);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m-&gt;<span class="built_in">get_fd</span> () != retired_fd)</span><br><span class="line">        _mailbox = m;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">LIBZMQ_DELETE</span> (m);</span><br><span class="line">        _mailbox = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="mailbox-t"><a href="#mailbox-t" class="headerlink" title="mailbox_t"></a>mailbox_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">mailbox_t</span> ZMQ_FINAL : <span class="keyword">public</span> i_mailbox</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    ~<span class="built_in">mailbox_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">fd_t</span> <span class="title">get_fd</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">send</span> <span class="params">(<span class="type">const</span> <span class="type">command_t</span> &amp;cmd_)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">recv</span> <span class="params">(<span class="type">command_t</span> *cmd_, <span class="type">int</span> timeout_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">valid</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> HAVE_FORK</span></span><br><span class="line">    <span class="comment">// close the file descriptors in the signaller. This is used in a forked</span></span><br><span class="line">    <span class="comment">// child process to close the file descriptors so that they do not interfere</span></span><br><span class="line">    <span class="comment">// with the context in the parent process.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">forked</span> <span class="params">()</span> ZMQ_FINAL</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _signaler.forked ();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 存储实际指令的队列</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">ypipe_t</span>&lt;<span class="type">command_t</span>, command_pipe_granularity&gt; <span class="type">cpipe_t</span>;</span><br><span class="line">    <span class="type">cpipe_t</span> _cpipe;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用于从 writer 线程发送信号到 reader 线程</span></span><br><span class="line">    <span class="type">signaler_t</span> _signaler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只有一个线程从 mailbox 接收消息，但可以有任意数量的线程向 mailbox 发送消息。</span></span><br><span class="line">    <span class="comment">// 假设管道需要在它的两个端点上同步访问，必须同步发送端。</span></span><br><span class="line">    <span class="type">mutex_t</span> _sync;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果底层管道处于活动状态，则为 True。例如：当被允许从它读取命令时</span></span><br><span class="line">    <span class="type">bool</span> _active;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">mailbox_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ypipe-t"><a href="#ypipe-t" class="headerlink" title="ypipe_t"></a>ypipe_t</h2><p><code>ypipe_t</code> 是无锁队列(Lock-free queue)实现。  </p>
+<ul>
+<li>同一时刻只有一个线程可以从管道中读取数据  </li>
+<li>同一时刻只有一个线程可以向管道写入数据</li>
+</ul>
+<p>使用 <code>yqueue_t</code> 队列存储数据。  </p>
+<p>其中 yqueue 是用来设计队列，ypipe 用来设计队列的写入&#x2F;读取时机、回滚以及 flush  </p>
+<h2 id="yqueue-t"><a href="#yqueue-t" class="headerlink" title="yqueue_t"></a>yqueue_t</h2><p>参考：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/33309228">https://www.zhihu.com/question/33309228</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://gopher.blog.csdn.net/article/details/126284313">https://gopher.blog.csdn.net/article/details/126284313</a></li>
+</ul>
+<p><code>yqueue</code> 是一个高效的队列实现。主要目的是最小化 <code>allocations/deallocations</code> 次数。  </p>
+<p><code>yqueue</code> 中的使用 chunk 块机制，每次批量分配一批元素，这样可以减少内存的分配和释放。<code>yqueue_t</code> 由一组 chunk 组成，每个 chunk 保存 N 个元素：<code>spare_chunk</code>，当需要分配 <code>chunk_t</code> 时，从 <code>spare_chunk</code> 中获取。  </p>
+<p>当队列空间不足时，每次分配一个 <code>chunk_t</code>，每个 <code>chunk_t</code> 能存储 N 个元素。在数据出队列后，队列有多余空间时，回收的 chunk 也不会立即释放，而是根据局部性原理先回收到队列中。  </p>
+<p><code>yqueue_t</code> 类中的 <code>spare_chunk</code> 用于保存最近的空闲块。即：在将一个 chunk 中的所有元素都 <code>pop</code> 掉之后，就可以释放这个 chunk。但是可以保存一块最近的空闲块，以后如果 chunk 不够用时，扩容 chunk 就不用 malloc，直接复用该 <code>spare_chunk</code> 即可。根据局部性原理，这个 <code>spare_chunk</code> 的地址或者内存也很可能还在 cache 中，这样的机制可以减少一次 malloc 以及存入 cache 操作。  </p>
+<p><code>yqueue_t</code> 内部有三个 <code>chunk_t</code> 类型指针以及对应的索引位置：  </p>
+<ul>
+<li><code>begin_chunk/begin_pos</code>：指向队列中第一个 chunk，begin_pos 指向第一个 chunk 中第一个元素的索引位置，因为 <code>pop()</code>，所以第一个元素不可能永远为 0，会随着 <code>pop()</code> 而改变。同理，第一个 chunk 也会被回收，也需记录第一个 chunk 的位置</li>
+<li><code>back_chunk/back_pos</code>：用于指向队列最后一个 chunk，back_pos 指向之后一个 chunk 的最后一个元素的索引位置</li>
+<li><code>end_chunk/end_pos</code>：在最后一个 chunk 未满时，end_chunk 和 back_chunk 相同，back_pos 的下一个就是 end_pos。最后一个 chunk 已满时，end_chunk 指向新分配的 chunk，end_pos 为 0。即：end_chunk 和 end_pos 是辅助 back_chunk&#x2F;back_pos 的</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * ALIGN 是在 posix_memalign 可用的情况下使用的内存对齐大小。默认值是 64，</span></span><br><span class="line"><span class="comment"> * 这种对齐将防止两个队列块占用同一 CPU 缓存线(Cache line)，在缓存线 &lt;= 64字节的架构</span></span><br><span class="line"><span class="comment"> * (例如，除了POWER之外的大多数内容)。它是在构建时检测到的，以尝试考虑 POWER 和 s390x 等其他平台。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N, <span class="type">size_t</span> ALIGN = ZMQ_CACHELINE_SIZE&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//  Create the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> <span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        _begin_chunk = <span class="built_in">allocate_chunk</span> ();</span><br><span class="line">        <span class="built_in">alloc_assert</span> (_begin_chunk);</span><br><span class="line">        _begin_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// back_chunk总是指向队列中最后一个元素所在的 chunk，初始为空</span></span><br><span class="line">        _back_chunk = <span class="literal">NULL</span>;</span><br><span class="line">        _back_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// end_chunk 总是指向链表的最后一个 chunk</span></span><br><span class="line">        _end_chunk = _begin_chunk;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Destroy the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> ~<span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (_begin_chunk == _end_chunk) &#123;</span><br><span class="line">                <span class="built_in">free</span> (_begin_chunk);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            <span class="built_in">free</span> (o);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">free</span> (sc);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  返回队列首元素.注意：若队列为空，行为未定义</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">front</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _begin_chunk-&gt;values[_begin_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">back</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _back_chunk-&gt;values[_back_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">push</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _back_chunk = _end_chunk;</span><br><span class="line">        _back_pos = _end_pos;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (++_end_pos != N) <span class="comment">// 当前 chunk 未满</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (sc) &#123; <span class="comment">// 若有 spare_chunk，则继续复用</span></span><br><span class="line">            _end_chunk-&gt;next = sc;</span><br><span class="line">            sc-&gt;prev = _end_chunk;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 若没有 spare_chunk，则重新分配 chunk</span></span><br><span class="line">            _end_chunk-&gt;next = <span class="built_in">allocate_chunk</span> (); <span class="comment">// 分配一个 chunk</span></span><br><span class="line">            <span class="built_in">alloc_assert</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next-&gt;prev = _end_chunk;</span><br><span class="line">        &#125;</span><br><span class="line">        _end_chunk = _end_chunk-&gt;next;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除队列末尾元素。即：回滚最后一次推送到队列的元素。注意：调用者负责销毁 unpushed 的对象。</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">unpush</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//  First, move &#x27;back&#x27; one position backwards.</span></span><br><span class="line">        <span class="keyword">if</span> (_back_pos)</span><br><span class="line">            --_back_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123; </span><br><span class="line">            _back_pos = N - <span class="number">1</span>;</span><br><span class="line">            _back_chunk = _back_chunk-&gt;prev;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Now, move &#x27;end&#x27; position backwards. Note that obsolete end chunk</span></span><br><span class="line">        <span class="comment">//  is not used as a spare chunk. The analysis shows that doing so</span></span><br><span class="line">        <span class="comment">//  would require free and atomic operation per chunk deallocated</span></span><br><span class="line">        <span class="comment">//  instead of a simple free.</span></span><br><span class="line">        <span class="keyword">if</span> (_end_pos)</span><br><span class="line">            --_end_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _end_pos = N - <span class="number">1</span>;</span><br><span class="line">            _end_chunk = _end_chunk-&gt;prev;</span><br><span class="line">            <span class="built_in">free</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Removes an element from the front end of the queue.</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">pop</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (++_begin_pos == N) &#123; <span class="comment">// 删除满一个 chunk 才回收 chunk</span></span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            _begin_chunk-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">            _begin_pos = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//  &#x27;o&#x27; has been more recently used than _spare_chunk,</span></span><br><span class="line">            <span class="comment">//  so for cache reasons we&#x27;ll get rid of the spare and</span></span><br><span class="line">            <span class="comment">//  use &#x27;o&#x27; as the spare.</span></span><br><span class="line">            <span class="comment">// 根据局部性原理，总是保存最新的空闲块儿释放先前的空闲块</span></span><br><span class="line">            <span class="type">chunk_t</span> *cs = _spare_chunk.<span class="built_in">xchg</span> (o); </span><br><span class="line">            <span class="built_in">free</span> (cs);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// Individual memory chunk to hold N elements. 链表节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">chunk_t</span></span><br><span class="line">    &#123;</span><br><span class="line">        T values[N];</span><br><span class="line">        <span class="type">chunk_t</span> *prev;</span><br><span class="line">        <span class="type">chunk_t</span> *next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">chunk_t</span> *<span class="title">allocate_chunk</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 分配的内存空间大小：sizeof(T) * N + 8 (32bit系统，+ 16：64bit系统) </span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line">        <span class="type">void</span> *pv;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">posix_memalign</span> (&amp;pv, ALIGN, <span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">chunk_t</span> *) pv;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">chunk_t</span> *&gt; (<span class="built_in">malloc</span> (<span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)));</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果队列为空，返回位置可能指向无效内存，而开始和结束位置总是有效的。</span></span><br><span class="line"><span class="comment">     * 开始位置由队列读取器(front/pop)独占访问，而back和结束位置由队列写入器(back/push)独占访问。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">chunk_t</span> *_begin_chunk;</span><br><span class="line">    <span class="type">int</span> _begin_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_back_chunk;</span><br><span class="line">    <span class="type">int</span> _back_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_end_chunk;</span><br><span class="line">    <span class="type">int</span> _end_pos;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生产和消费速度可能接近。此时，保留最近释放的块使得不必调用 malloc/free。 </span></span><br><span class="line">    <span class="type">atomic_ptr_t</span>&lt;<span class="type">chunk_t</span>&gt; _spare_chunk;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">yqueue_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/logger/" rel="prev" title="logger">
+                  <i class="fa fa-angle-left"></i> logger
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" rel="next" title="io_thread">
+                  io_thread <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">454k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
