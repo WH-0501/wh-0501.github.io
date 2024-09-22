@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="工具及网站：  Euler Angler Visualization Tool 3D Rotation Converter 2x2 Matrix Visualization matrix-transformations 3d-rotations-and-euler-angles-in-python  三维旋转的表示方法：  欧拉角 Euler Angle：本文参考旋转顺序为 ZXY 四元数 Qua">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三维旋转">
+<meta property="og:url" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="工具及网站：  Euler Angler Visualization Tool 3D Rotation Converter 2x2 Matrix Visualization matrix-transformations 3d-rotations-and-euler-angles-in-python  三维旋转的表示方法：  欧拉角 Euler Angle：本文参考旋转顺序为 ZXY 四元数 Qua">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E6%97%8B%E8%BD%AC%E5%BA%8F%E5%88%97.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E5%9B%9B%E5%85%83%E6%95%B0.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/image-20240922141359897.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92.png">
+<meta property="og:image" content="http://example.com/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC%5C%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95X%E6%97%8B%E8%BD%AC.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95Y%E6%97%8B%E8%BD%AC.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95Z%E6%97%8B%E8%BD%AC.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-1.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92.png">
+<meta property="og:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92-1.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142132369.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142139494.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142147439.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142159106.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142201522.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142222288.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142232591.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142236057.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142323002.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922142344829.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922143418150.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922143513081.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922143603479.png">
+<meta property="og:image" content="d:\workspace\my-notes\blog\source_posts\%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80\%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC\image-20240922143652557.png">
+<meta property="article:published_time" content="2024-09-22T06:08:14.000Z">
+<meta property="article:modified_time" content="2024-09-22T06:42:30.770Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="数学基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/","path":"2024/09/22/数学基础/三维旋转/","title":"三维旋转"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>三维旋转 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E4%B8%8E%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">欧拉角与四元数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">欧拉角转四元数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">1.2.</span> <span class="nav-text">四元数转欧拉角</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E4%B8%8E%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">欧拉角与旋转矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">2.1.</span> <span class="nav-text">旋转矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95x%E8%BD%B4%E6%97%8B%E8%BD%AC"><span class="nav-number">2.1.1.</span> <span class="nav-text">绕x轴旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95Y%E8%BD%B4%E6%97%8B%E8%BD%AC"><span class="nav-number">2.1.2.</span> <span class="nav-text">绕Y轴旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95Z%E8%BD%B4%E6%97%8B%E8%BD%AC"><span class="nav-number">2.1.3.</span> <span class="nav-text">绕Z轴旋转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">2.2.</span> <span class="nav-text">欧拉角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">2.3.</span> <span class="nav-text">欧拉角转旋转矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">2.4.</span> <span class="nav-text">旋转矩阵转欧拉角</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0%E4%B8%8E%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">3.</span> <span class="nav-text">四元数与旋转矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">3.1.</span> <span class="nav-text">四元数转旋转矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">旋转矩阵转四元数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%B4%E8%A7%92"><span class="nav-number">4.</span> <span class="nav-text">轴角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%B4%E8%A7%92%E5%88%B0%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">轴角到四元数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%B4%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="nav-number">4.2.</span> <span class="nav-text">轴角转旋转矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E8%BD%B4%E8%A7%92"><span class="nav-number">4.3.</span> <span class="nav-text">旋转矩阵转轴角</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eigen-%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">Eigen 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E4%B8%8E%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">欧拉角与四元数转换示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E5%9B%9B%E5%85%83%E6%95%B0-1"><span class="nav-number">6.1.</span> <span class="nav-text">欧拉角转四元数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9A%E4%BD%BF%E7%94%A8-tf"><span class="nav-number">6.1.1.</span> <span class="nav-text">例 1：使用 tf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9Apython"><span class="nav-number">6.1.2.</span> <span class="nav-text">例 2：python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92-1"><span class="nav-number">6.2.</span> <span class="nav-text">四元数转欧拉角</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9A%E4%BD%BF%E7%94%A8-tf-1"><span class="nav-number">6.2.1.</span> <span class="nav-text">例 1：使用 tf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9A%E4%BD%BF%E7%94%A8-tf2"><span class="nav-number">6.2.2.</span> <span class="nav-text">例 2：使用 tf2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-3%EF%BC%9Apython-tf"><span class="nav-number">6.2.3.</span> <span class="nav-text">例 3：python tf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-4%EF%BC%9Apython-math"><span class="nav-number">6.2.4.</span> <span class="nav-text">例 4：python math</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E4%B8%8E%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">7.</span> <span class="nav-text">欧拉角与旋转矩阵转换示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-1"><span class="nav-number">7.1.</span> <span class="nav-text">欧拉角转旋转矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9AC-Eigen"><span class="nav-number">7.1.1.</span> <span class="nav-text">例 1：C++ Eigen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9Apython-1"><span class="nav-number">7.1.2.</span> <span class="nav-text">例 2：python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92-1"><span class="nav-number">7.2.</span> <span class="nav-text">旋转矩阵转欧拉角</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9AC-eigen"><span class="nav-number">7.2.1.</span> <span class="nav-text">例 1：C++ eigen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9Apython-2"><span class="nav-number">7.2.2.</span> <span class="nav-text">例 2：python</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E4%B8%8E%E5%9B%9B%E5%85%83%E6%95%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.</span> <span class="nav-text">旋转矩阵与四元数示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E5%9B%9B%E5%85%83%E6%95%B0-1"><span class="nav-number">8.1.</span> <span class="nav-text">旋转矩阵转四元数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9AC-Eigen-1"><span class="nav-number">8.1.1.</span> <span class="nav-text">例 1：C++ Eigen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9Apython-3"><span class="nav-number">8.1.2.</span> <span class="nav-text">例 2：python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-1"><span class="nav-number">8.2.</span> <span class="nav-text">四元数转旋转矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1%EF%BC%9AC-Eigen-2"><span class="nav-number">8.2.1.</span> <span class="nav-text">例 1：C++ Eigen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2%EF%BC%9Apython-4"><span class="nav-number">8.2.2.</span> <span class="nav-text">例 2：python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-3%EF%BC%9Atf"><span class="nav-number">8.2.3.</span> <span class="nav-text">例 3：tf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-4%EF%BC%9Ascipy"><span class="nav-number">8.2.4.</span> <span class="nav-text">例 4：scipy</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">122</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="三维旋转 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          三维旋转
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-22 14:08:14 / 修改时间：14:42:30" itemprop="dateCreated datePublished" datetime="2024-09-22T14:08:14+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>20 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>工具及网站：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://danceswithcode.net/engineeringnotes/rotations_in_3d/demo3D/rotations_in_3d_tool.html">Euler Angler Visualization Tool</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.andre-gaschler.com/rotationconverter/">3D Rotation Converter</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.sygreer.com/projects/matrix/">2x2 Matrix Visualization</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.khanacademy.org/math/linear-algebra/matrix-transformations/linear-transformations/a/visualizing-linear-transformations">matrix-transformations</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.meccanismocomplesso.org/en/3d-rotations-and-euler-angles-in-python/">3d-rotations-and-euler-angles-in-python</a></li>
+</ul>
+<p>三维旋转的表示方法：</p>
+<ul>
+<li>欧拉角 Euler Angle：本文参考旋转顺序为 ZXY</li>
+<li>四元数 Quaternion</li>
+<li>旋转矩阵 Rotation Matrix</li>
+<li>轴角 Axis-Angle</li>
+</ul>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC.png" class="" title="三维旋转">
+
+
+
+<p>**内旋(Intrinsic rotation)**：其每个 elemental 绕的是 object space basis 的轴</p>
+<p>**外旋(Extrinsic rotation)**：其每个 elemental rotation 绕的是world space basis 的轴</p>
+<p>欧拉角旋转序列(Euler Angle Rotational Sequence)共有 12 种顺序：</p>
+<ul>
+<li><p>6 种绕三个轴的旋转，即 Tait-Bryan Angle：</p>
+</li>
+<li><ul>
+<li>XYZ、XZY、YXZ、YZX、ZXY、ZYX</li>
+</ul>
+</li>
+<li><p>6 种只绕两个轴的旋转，即 Proper Euler Angle：</p>
+</li>
+<li><ul>
+<li>XYX、YXY、XZX、ZXZ、YZY、ZYZ</li>
+</ul>
+</li>
+</ul>
+<p>如果相邻两次旋转是绕同一轴，如 XXY，则可以坍缩为 XY。也就是说，一共有 12 种基础旋转的组合顺序，它们可以旋转出三维的所有旋转状态。</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E6%97%8B%E8%BD%AC%E5%BA%8F%E5%88%97.png" class="" title="欧拉角旋转序列">
+
+
+
+<h1 id="欧拉角与四元数"><a href="#欧拉角与四元数" class="headerlink" title="欧拉角与四元数"></a>欧拉角与四元数</h1><p>使用四元数是因为没有万向节死锁问题。</p>
+<p>万向节锁是指物体的两个旋转轴指向同一个方向。实际上,当两个旋转轴平行时，即万向节锁现象发生了，换句话说，绕一个轴旋转可能会覆盖住另一个轴的旋转，从而失去一维自由度。</p>
+<p>通常说来，万向节锁发生在使用 <strong>Eular Angles</strong>（欧拉角）的旋转操作中,原因是 Eular Angles 按照一定的顺序依次独立地绕轴旋转。想象一个具体的旋转场景，首先物体先绕转 X 轴旋转，然后再绕 Y 轴，最后绕 Z 轴旋转，从而完成一个旋转操作（实际是想绕某一个轴旋转,然而 Eular Angle 将这个旋转分成三个独立的步骤进行）,当你绕 Y 轴旋转 90 度之后万向节锁的问题就出现了，因为 X 轴已经被求值了，它不再随同其他两个轴旋转，这样 X 轴与 Z 轴就指向同一个方向（它们相当于同一个轴了）。</p>
+<p>定义：</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92.png" class="" title="欧拉角">
+
+<p><strong>分别为绕 Z 轴、Y 轴、X 轴的旋转角度(即:Yaw、Pitch、Roll)</strong></p>
+<h2 id="欧拉角转四元数"><a href="#欧拉角转四元数" class="headerlink" title="欧拉角转四元数"></a>欧拉角转四元数</h2><p>欧拉角构造四元数，跟欧拉角构造旋转矩阵一样，就是把三个基础旋转Elemental Rotation 组合在一起。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q = ((x，y，z)，w)</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E5%9B%9B%E5%85%83%E6%95%B0.png" class="" title="四元数">
+
+<p>即：</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/image-20240922141359897.png" class="" title="image-20240922141359897">
+
+
+
+<h2 id="四元数转欧拉角"><a href="#四元数转欧拉角" class="headerlink" title="四元数转欧拉角"></a>四元数转欧拉角</h2><img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E5%9B%9B%E5%85%83%E6%95%B0%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92.png" class="" title="四元数转欧拉角">
+
+<p>四元数转 Eular Angle 最直接的方法是用四元数的元素运算和反三角函数凑出公式来。但这样计算展开后的每一项都是六次多项式，计算复杂。因此可借助 <strong>四元数 -&gt; 旋转矩阵 -&gt; 欧拉角</strong> 方式进行转换。</p>
+<h1 id="欧拉角与旋转矩阵"><a href="#欧拉角与旋转矩阵" class="headerlink" title="欧拉角与旋转矩阵"></a>欧拉角与旋转矩阵</h1><h2 id="旋转矩阵"><a href="#旋转矩阵" class="headerlink" title="旋转矩阵"></a><strong>旋转矩阵</strong></h2><h3 id="绕x轴旋转"><a href="#绕x轴旋转" class="headerlink" title="绕x轴旋转"></a>绕x轴旋转</h3><p><img src="/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC%5C%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95X%E6%97%8B%E8%BD%AC.png" alt="旋转矩阵-绕X旋转.png"></p>
+<h3 id="绕Y轴旋转"><a href="#绕Y轴旋转" class="headerlink" title="绕Y轴旋转"></a>绕Y轴旋转</h3><img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95Y%E6%97%8B%E8%BD%AC.png" class="" title="旋转矩阵-绕Y旋转">
+
+
+
+<h3 id="绕Z轴旋转"><a href="#绕Z轴旋转" class="headerlink" title="绕Z轴旋转"></a>绕Z轴旋转</h3><img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-%E7%BB%95Z%E6%97%8B%E8%BD%AC.png" class="" title="旋转矩阵-绕Z旋转">
+
+<h2 id="欧拉角"><a href="#欧拉角" class="headerlink" title="欧拉角"></a>欧拉角</h2><p>静态：即绕世界坐标系三个轴的旋转，由于物体旋转过程中坐标轴保持静止，所以称为静态。 </p>
+<p>动态：即绕物体坐标系三个轴的旋转，由于物体旋转过程中坐标轴随着物体做相同的转动，所以称为动态。</p>
+<p> （<strong>动态欧拉角会出现万向锁现象；静态欧拉角不存在万向锁的问题</strong>）</p>
+<h2 id="欧拉角转旋转矩阵"><a href="#欧拉角转旋转矩阵" class="headerlink" title="欧拉角转旋转矩阵"></a><strong>欧拉角转旋转矩阵</strong></h2><p>欧拉角构造旋转矩阵就直接把三个 Elemental Rotation Matrix 相乘即可：</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5.png" class="" title="欧拉角转旋转矩阵">
+
+<p>其中：</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%AC%A7%E6%8B%89%E8%A7%92%E8%BD%AC%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5-1.png" class="" title="欧拉角转旋转矩阵-1">
+
+
+
+<h2 id="旋转矩阵转欧拉角"><a href="#旋转矩阵转欧拉角" class="headerlink" title="旋转矩阵转欧拉角"></a>旋转矩阵转欧拉角</h2><img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92.png" class="" title="旋转矩阵转欧拉角">
+
+<p>即：</p>
+<img src="/2024/09/22/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E4%B8%89%E7%BB%B4%E6%97%8B%E8%BD%AC/%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%AC%A7%E6%8B%89%E8%A7%92-1.png" class="" title="旋转矩阵转欧拉角-1">
+
+<h1 id="四元数与旋转矩阵"><a href="#四元数与旋转矩阵" class="headerlink" title="四元数与旋转矩阵"></a>四元数与旋转矩阵</h1><h2 id="四元数转旋转矩阵"><a href="#四元数转旋转矩阵" class="headerlink" title="四元数转旋转矩阵"></a><strong>四元数转旋转矩阵</strong></h2><p>方法一：</p>
+<p>假设四元数为</p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142132369.png" alt="image-20240922142132369"></p>
+<p>其中 </p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142139494.png" alt="image-20240922142139494"></p>
+<p>根据 <a target="_blank" rel="noopener" href="http://mathworld.wolfram.com/RodriguesRotationFormula.html">RodriguesRotation</a> 公式，可知旋转矩阵(Column major)为：</p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142147439.png" alt="image-20240922142147439"></p>
+<p>方法二：</p>
+<p>先将四元数转换为轴角 θ 与向量 (x,y,z)，再计算旋转矩阵：</p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142159106.png" alt="image-20240922142159106"></p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142201522.png" alt="image-20240922142201522"></p>
+<h2 id="旋转矩阵转四元数"><a href="#旋转矩阵转四元数" class="headerlink" title="旋转矩阵转四元数"></a><strong>旋转矩阵转四元数</strong></h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142222288.png" alt="image-20240922142222288"></p>
+<p>如果 q0 趋近于 0，tr(R) 趋近于 -1,则求解四元数的过程为：</p>
+<p>(**tr(M)**：表示矩阵 M 的迹 - trace，也就是矩阵对角元素的和)</p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142232591.png" alt="image-20240922142232591"></p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142236057.png" alt="image-20240922142236057"></p>
+<h1 id="轴角"><a href="#轴角" class="headerlink" title="轴角"></a>轴角</h1><p>轴-角(Axis-Angle)：绕某条单位轴旋转一定角度。也称：旋转向量。由一个旋转轴和旋转角组成。</p>
+<h2 id="轴角到四元数"><a href="#轴角到四元数" class="headerlink" title="轴角到四元数"></a><strong>轴角到四元数</strong></h2><p>给定一个单位长度的旋转轴 (x, y, z) 和一个角度 θ。对应的四元数为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q(x,y,z,w) = ( (x,y,z)\*(sinθ/2), cos(θ/2) )</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles">https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles</a></p>
+<h2 id="轴角转旋转矩阵"><a href="#轴角转旋转矩阵" class="headerlink" title="轴角转旋转矩阵"></a><strong>轴角转旋转矩阵</strong></h2><p>Axis Angle 转 Rotation Matrix 可以从罗德里格斯旋转公式 <a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula">Rodrigues Rotation Formula</a> 开始推导。</p>
+<p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142323002.png" alt="image-20240922142323002"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># Scientific computing library </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 轴角转旋转矩阵  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">axis_angle_rot_matrix</span>(<span class="params">k,q</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Creates a 3x3 rotation matrix in 3D space from an axis and an angle.</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">    Input</span></span><br><span class="line"><span class="string">    :param k: A 3 element array containing the unit axis to rotate around (kx,ky,kz) </span></span><br><span class="line"><span class="string">    :param q: The angle (in radians) to rotate by</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">    Output</span></span><br><span class="line"><span class="string">    :return: A 3x3 element matix containing the rotation matrix</span></span><br><span class="line"><span class="string">     </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">     </span><br><span class="line">    <span class="comment">#15 pts </span></span><br><span class="line">    c_theta = np.cos(q)</span><br><span class="line">    s_theta = np.sin(q)</span><br><span class="line">    v_theta = <span class="number">1</span> - np.cos(q)</span><br><span class="line">    kx = k[<span class="number">0</span>]</span><br><span class="line">    ky = k[<span class="number">1</span>]</span><br><span class="line">    kz = k[<span class="number">2</span>]   </span><br><span class="line">     </span><br><span class="line">    <span class="comment"># First row of the rotation matrix</span></span><br><span class="line">    r00 = kx * kx * v_theta + c_theta</span><br><span class="line">    r01 = kx * ky * v_theta - kz * s_theta</span><br><span class="line">    r02 = kx * kz * v_theta + ky * s_theta</span><br><span class="line">     </span><br><span class="line">    <span class="comment"># Second row of the rotation matrix</span></span><br><span class="line">    r10 = kx * ky * v_theta + kz * s_theta</span><br><span class="line">    r11 = ky * ky * v_theta + c_theta</span><br><span class="line">    r12 = ky * kz * v_theta - kx * s_theta</span><br><span class="line">     </span><br><span class="line">    <span class="comment"># Third row of the rotation matrix</span></span><br><span class="line">    r20 = kx * kz * v_theta - ky * s_theta</span><br><span class="line">    r21 = ky * kz * v_theta + kx * s_theta</span><br><span class="line">    r22 = kz * kz * v_theta + c_theta</span><br><span class="line">     </span><br><span class="line">    <span class="comment"># 3x3 rotation matrix</span></span><br><span class="line">    rot_matrix = np.array([[r00, r01, r02],</span><br><span class="line">                           [r10, r11, r12],</span><br><span class="line">                           [r20, r21, r22]])</span><br><span class="line">                            </span><br><span class="line">    <span class="keyword">return</span> rot_matrix</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="旋转矩阵转轴角"><a href="#旋转矩阵转轴角" class="headerlink" title="旋转矩阵转轴角"></a>旋转矩阵转轴角</h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922142344829.png" alt="image-20240922142344829"></p>
+<h1 id="Eigen-示例"><a href="#Eigen-示例" class="headerlink" title="Eigen 示例"></a><strong>Eigen 示例</strong></h1><p>此例依赖 eigen 库（<code>sudo apt-get install libeigen3-dev</code>）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> yaw = PI/<span class="number">3</span>;</span><br><span class="line"><span class="type">double</span> pitch = PI/<span class="number">4</span>;</span><br><span class="line"><span class="type">double</span> roll = PI/<span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 欧拉角转旋转矩阵</span></span><br><span class="line">::<span class="function">Eigen::Vector3d <span class="title">ea0</span><span class="params">(yaw, pitch, roll)</span></span>;</span><br><span class="line">::Eigen::Matrix3d R;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Eigen::AngleAxisd - 旋转向量(3x1)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">R = ::Eigen::<span class="built_in">AngleAxisd</span>(ea0[<span class="number">0</span>], ::Eigen::Vector3d::<span class="built_in">UintZ</span>())</span><br><span class="line">   * ::Eigen::<span class="built_in">AngleAxisd</span>(ea0[<span class="number">1</span>], ::Eigen::Vector3d::<span class="built_in">UintY</span>())</span><br><span class="line">   * ::Eigen::<span class="built_in">AngleAxisd</span>(ea0[<span class="number">2</span>], ::Eigen::Vector3d::<span class="built_in">UintX</span>());</span><br><span class="line">cout &lt;&lt; R &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 旋转矩阵转四元数</span></span><br><span class="line">::Eigen::Quaterniond q;</span><br><span class="line">q = R;</span><br><span class="line">cout &lt;&lt; q.<span class="built_in">x</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; q.<span class="built_in">y</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; q.<span class="built_in">z</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; q.<span class="built_in">w</span>() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 四元数转旋转矩阵</span></span><br><span class="line">::Eigen::Matrix3d Rx = q.<span class="built_in">toRotationMatrix</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 旋转矩阵转欧拉角</span></span><br><span class="line">::Eigen::Vector3d ea1 = Rx.<span class="built_in">eulerAngles</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">cout &lt;&lt; ea1 / PI * <span class="number">180</span> &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="欧拉角与四元数转换示例"><a href="#欧拉角与四元数转换示例" class="headerlink" title="欧拉角与四元数转换示例"></a>欧拉角与四元数转换示例</h1><h2 id="欧拉角转四元数-1"><a href="#欧拉角转四元数-1" class="headerlink" title="欧拉角转四元数"></a>欧拉角转四元数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">geometry_msgs::Quaternion </span><br><span class="line">tf::createQuaternionMsgFromRollPitchYaw</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-1：使用-tf"><a href="#例-1：使用-tf" class="headerlink" title="例 1：使用 tf"></a>例 1：使用 tf</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tf/tf.h&gt;</span></span></span><br><span class="line">tf::Quaternion q;</span><br><span class="line">q.<span class="built_in">setRPY</span>(roll, pitch, yaw);</span><br><span class="line"><span class="meta">#create ros msg</span></span><br><span class="line"><span class="function">tf::Quaternion <span class="title">createQuaternionFromRPY</span><span class="params">(<span class="type">double</span> roll,<span class="type">double</span> pitch,<span class="type">double</span> yaw)</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：python"><a href="#例-2：python" class="headerlink" title="例 2：python"></a>例 2：python</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rpy2quaternion</span>(<span class="params">roll, pitch, yaw</span>):</span><br><span class="line">    x=sin(pitch/<span class="number">2</span>)sin(yaw/<span class="number">2</span>)cos(roll/<span class="number">2</span>)+cos(pitch/<span class="number">2</span>)cos(yaw/<span class="number">2</span>)sin(roll/<span class="number">2</span>)</span><br><span class="line">    y=sin(pitch/<span class="number">2</span>)cos(yaw/<span class="number">2</span>)cos(roll/<span class="number">2</span>)+cos(pitch/<span class="number">2</span>)sin(yaw/<span class="number">2</span>)sin(roll/<span class="number">2</span>)</span><br><span class="line">    z=cos(pitch/<span class="number">2</span>)sin(yaw/<span class="number">2</span>)cos(roll/<span class="number">2</span>)-sin(pitch/<span class="number">2</span>)cos(yaw/<span class="number">2</span>)sin(roll/<span class="number">2</span>)</span><br><span class="line">    w=cos(pitch/<span class="number">2</span>)cos(yaw/<span class="number">2</span>)cos(roll/<span class="number">2</span>)-sin(pitch/<span class="number">2</span>)sin(yaw/<span class="number">2</span>)sin(roll/<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> x, y, z, w</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四元数转欧拉角-1"><a href="#四元数转欧拉角-1" class="headerlink" title="四元数转欧拉角"></a>四元数转欧拉角</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double th = tf::getYaw(transform.getRotation())</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf::<span class="built_in">Matrix3x3</span>(transform.<span class="built_in">getRotation</span>()).<span class="built_in">getRPY</span>(roll, pitch, yaw);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-1：使用-tf-1"><a href="#例-1：使用-tf-1" class="headerlink" title="例 1：使用 tf"></a>例 1：使用 tf</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> roll, pitch, yaw;</span><br><span class="line">tf::Quaternion orientation;</span><br><span class="line"></span><br><span class="line"><span class="comment">// geometry_msgs/Quaternion 转 tf::Quaternion</span></span><br><span class="line">tf::<span class="built_in">quaternionMsgToTF</span>(imuIn-&gt;orientation, orientation);</span><br><span class="line"><span class="comment">// tf::Quaternion 转欧拉角</span></span><br><span class="line">tf::<span class="built_in">Matrix3x3</span>(orientation).<span class="built_in">getRPY</span>(roll, pitch, yaw);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：使用-tf2"><a href="#例-2：使用-tf2" class="headerlink" title="例 2：使用 tf2"></a>例 2：使用 tf2</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tf2_geometry_msgs/tf2_geometry_msgs.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">tf2::Quaternion quat_tf;</span><br><span class="line">geometry_msgs::Quaternion quat_msg = ...;</span><br><span class="line"></span><br><span class="line">tf2::<span class="built_in">convert</span>(quat_msg , quat_tf);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">tf2::<span class="built_in">fromMsg</span>(quat_msg, quat_tf);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">double</span> roll, pitch, yaw;</span><br><span class="line">tf2::<span class="built_in">Matrix3x3</span>(quat).<span class="built_in">getRPY</span>(roll, pitch, yaw); <span class="comment">// 四元数转欧拉角</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// or for the other conversion direction</span></span><br><span class="line">quat_msg = tf2::<span class="built_in">toMsg</span>(quat_tf); <span class="comment">// ros 消息格式转换</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-3：python-tf"><a href="#例-3：python-tf" class="headerlink" title="例 3：python tf"></a>例 3：python tf</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 四元数转欧拉角</span></span><br><span class="line"><span class="keyword">from</span> tf.transformations <span class="keyword">import</span> quaternion_multiply, quaternion_from_euler，</span><br><span class="line">                                euler_from_quaternion</span><br><span class="line"></span><br><span class="line">pos = Pose()</span><br><span class="line">q = quaternion_from_euler(<span class="number">0</span>, <span class="number">0</span>, point.z) <span class="comment"># 欧拉角转四元数</span></span><br><span class="line">pos.orientation.x = q[<span class="number">0</span>]</span><br><span class="line">pos.orientation.y = q[<span class="number">1</span>]</span><br><span class="line">pos.orientation.z = q[<span class="number">2</span>]</span><br><span class="line">pos.orientation.w = q[<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 四元数转欧拉角</span></span><br><span class="line">(r, p, y) = tf.transformations.euler_from_quaternion([</span><br><span class="line">        msg.orientation.x, msg.orientation.y, </span><br><span class="line">        msg.orientation.z, msg.orientation.w])</span><br><span class="line"><span class="variable language_">self</span>.fill_euler_msg(msg, r, p, y)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-4：python-math"><a href="#例-4：python-math" class="headerlink" title="例 4：python math"></a>例 4：python math</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="comment"># 四元数转欧拉角  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">euler_from_quaternion</span>(<span class="params">x, y, z, w</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Convert a quaternion into euler angles (roll, pitch, yaw)</span></span><br><span class="line"><span class="string">    roll is rotation around x in radians (counterclockwise)</span></span><br><span class="line"><span class="string">    pitch is rotation around y in radians (counterclockwise)</span></span><br><span class="line"><span class="string">    yaw is rotation around z in radians (counterclockwise)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    t0 = +<span class="number">2.0</span> * (w * x + y * z)</span><br><span class="line">    t1 = +<span class="number">1.0</span> - <span class="number">2.0</span> * (x * x + y * y)</span><br><span class="line">    roll_x = math.atan2(t0, t1)</span><br><span class="line"> </span><br><span class="line">    t2 = +<span class="number">2.0</span> * (w * y - z * x)</span><br><span class="line">    t2 = +<span class="number">1.0</span> <span class="keyword">if</span> t2 &gt; +<span class="number">1.0</span> <span class="keyword">else</span> t2</span><br><span class="line">    t2 = -<span class="number">1.0</span> <span class="keyword">if</span> t2 &lt; -<span class="number">1.0</span> <span class="keyword">else</span> t2</span><br><span class="line">    pitch_y = math.asin(t2)</span><br><span class="line"> </span><br><span class="line">    t3 = +<span class="number">2.0</span> * (w * z + x * y)</span><br><span class="line">    t4 = +<span class="number">1.0</span> - <span class="number">2.0</span> * (y * y + z * z)</span><br><span class="line">    yaw_z = math.atan2(t3, t4)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> roll_x, pitch_y, yaw_z <span class="comment"># in radians</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 简化版本</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">quart_to_rpy</span>(<span class="params">x, y, z, w</span>):</span><br><span class="line">    roll = math.atan2(<span class="number">2</span> * (w * x + y * z), <span class="number">1</span> - <span class="number">2</span> * (x * x + y * y))</span><br><span class="line">    pitch = math.asin(<span class="number">2</span> * (w * y - x * z))</span><br><span class="line">    yaw = math.atan2(<span class="number">2</span> * (w * z + x * y), <span class="number">1</span> - <span class="number">2</span> * (z * z + y * y))</span><br><span class="line">    <span class="keyword">return</span> roll, pitch, yaw</span><br><span class="line">            </span><br><span class="line"><span class="built_in">print</span>(euler_from_quaternion(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.7072</span>, <span class="number">0.7072</span>))   </span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：0.0, 0.0, 1.5710599</p>
+<p>以 Axis-Angle 方式表示为：</p>
+<blockquote>
+<p><strong>{[x, y, z], angle} &#x3D; { [ 0, 0, 1 ], 1.571 }</strong></p>
+</blockquote>
+<h1 id="欧拉角与旋转矩阵转换示例"><a href="#欧拉角与旋转矩阵转换示例" class="headerlink" title="欧拉角与旋转矩阵转换示例"></a>欧拉角与旋转矩阵转换示例</h1><h2 id="欧拉角转旋转矩阵-1"><a href="#欧拉角转旋转矩阵-1" class="headerlink" title="欧拉角转旋转矩阵"></a><strong>欧拉角转旋转矩阵</strong></h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922143418150.png" alt="image-20240922143418150"></p>
+<h3 id="例-1：C-Eigen"><a href="#例-1：C-Eigen" class="headerlink" title="例 1：C++ Eigen"></a><strong>例 1：C++ Eigen</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输入角度顺序：ZYX - yaw、pitch、roll</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">static</span> Eigen::Matrix&lt;<span class="keyword">typename</span> Derived::Scalar, 3, 3&gt; <span class="title">ypr2R</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="type">const</span> Eigen::MatrixBase&lt;Derived&gt; &amp;ypr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> Derived::Scalar Scalar_t;</span><br><span class="line"></span><br><span class="line">    Scalar_t y = <span class="built_in">ypr</span>(<span class="number">0</span>) / <span class="number">180.0</span> * M_PI;</span><br><span class="line">    Scalar_t p = <span class="built_in">ypr</span>(<span class="number">1</span>) / <span class="number">180.0</span> * M_PI;</span><br><span class="line">    Scalar_t r = <span class="built_in">ypr</span>(<span class="number">2</span>) / <span class="number">180.0</span> * M_PI;</span><br><span class="line"></span><br><span class="line">    Eigen::Matrix&lt;Scalar_t, <span class="number">3</span>, <span class="number">3</span>&gt; Rz;</span><br><span class="line">    Rz &lt;&lt; <span class="built_in">cos</span>(y), -<span class="built_in">sin</span>(y), <span class="number">0</span>,</span><br><span class="line">        <span class="built_in">sin</span>(y), <span class="built_in">cos</span>(y), <span class="number">0</span>,</span><br><span class="line">        <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    Eigen::Matrix&lt;Scalar_t, <span class="number">3</span>, <span class="number">3</span>&gt; Ry;</span><br><span class="line">    Ry &lt;&lt; <span class="built_in">cos</span>(p), <span class="number">0.</span>, <span class="built_in">sin</span>(p),</span><br><span class="line">        <span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>,</span><br><span class="line">        -<span class="built_in">sin</span>(p), <span class="number">0.</span>, <span class="built_in">cos</span>(p);</span><br><span class="line"></span><br><span class="line">    Eigen::Matrix&lt;Scalar_t, <span class="number">3</span>, <span class="number">3</span>&gt; Rx;</span><br><span class="line">    Rx &lt;&lt; <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>,</span><br><span class="line">        <span class="number">0.</span>, <span class="built_in">cos</span>(r), -<span class="built_in">sin</span>(r),</span><br><span class="line">        <span class="number">0.</span>, <span class="built_in">sin</span>(r), <span class="built_in">cos</span>(r);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Rz * Ry * Rx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：python-1"><a href="#例-2：python-1" class="headerlink" title="例 2：python"></a><strong>例 2：python</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">eulerAnglesToRotationMatrix</span>(<span class="params">theta</span>) :</span><br><span class="line">    </span><br><span class="line">    R_x = np.array([[<span class="number">1</span>,         <span class="number">0</span>,                  <span class="number">0</span>                   ],</span><br><span class="line">                    [<span class="number">0</span>,         math.cos(theta[<span class="number">0</span>]), -math.sin(theta[<span class="number">0</span>]) ],</span><br><span class="line">                    [<span class="number">0</span>,         math.sin(theta[<span class="number">0</span>]), math.cos(theta[<span class="number">0</span>])  ]</span><br><span class="line">                    ])</span><br><span class="line">                  </span><br><span class="line">    R_y = np.array([[math.cos(theta[<span class="number">1</span>]),    <span class="number">0</span>,      math.sin(theta[<span class="number">1</span>])  ],</span><br><span class="line">                    [<span class="number">0</span>,                     <span class="number">1</span>,      <span class="number">0</span>                   ],</span><br><span class="line">                    [-math.sin(theta[<span class="number">1</span>]),   <span class="number">0</span>,      math.cos(theta[<span class="number">1</span>])  ]</span><br><span class="line">                    ])</span><br><span class="line">                </span><br><span class="line">    R_z = np.array([[math.cos(theta[<span class="number">2</span>]),    -math.sin(theta[<span class="number">2</span>]),    <span class="number">0</span>],</span><br><span class="line">                    [math.sin(theta[<span class="number">2</span>]),    math.cos(theta[<span class="number">2</span>]),     <span class="number">0</span>],</span><br><span class="line">                    [<span class="number">0</span>,                     <span class="number">0</span>,                      <span class="number">1</span>]</span><br><span class="line">                    ])</span><br><span class="line">                    </span><br><span class="line">    <span class="comment"># np.dot()：向量点积和矩阵乘法  </span></span><br><span class="line">    <span class="comment"># 向量点积：(x1, y1) 与 (x2, y2) 点积为 x1*x2 + y1*y2</span></span><br><span class="line">    <span class="comment"># 矩阵乘法： M1(mxn) 与 M2(nxm) 乘法结果为 mxm 矩阵             </span></span><br><span class="line">    R = np.dot(R_z, np.dot( R_y, R_x ))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> R</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="旋转矩阵转欧拉角-1"><a href="#旋转矩阵转欧拉角-1" class="headerlink" title="旋转矩阵转欧拉角"></a><strong>旋转矩阵转欧拉角</strong></h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922143513081.png" alt="image-20240922143513081"></p>
+<h3 id="例-1：C-eigen"><a href="#例-1：C-eigen" class="headerlink" title="例 1：C++ eigen"></a><strong>例 1：C++ eigen</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> Eigen::Vector3d <span class="title">R2ypr</span><span class="params">(<span class="type">const</span> Eigen::Matrix3d &amp;R)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Eigen::Vector3d n = R.<span class="built_in">col</span>(<span class="number">0</span>);</span><br><span class="line">    Eigen::Vector3d o = R.<span class="built_in">col</span>(<span class="number">1</span>);</span><br><span class="line">    Eigen::Vector3d a = R.<span class="built_in">col</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function">Eigen::Vector3d <span class="title">ypr</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    <span class="type">double</span> y = <span class="built_in">atan2</span>(<span class="built_in">n</span>(<span class="number">1</span>), <span class="built_in">n</span>(<span class="number">0</span>));</span><br><span class="line">    <span class="type">double</span> p = <span class="built_in">atan2</span>(-<span class="built_in">n</span>(<span class="number">2</span>), <span class="built_in">n</span>(<span class="number">0</span>) * <span class="built_in">cos</span>(y) + <span class="built_in">n</span>(<span class="number">1</span>) * <span class="built_in">sin</span>(y));</span><br><span class="line">    <span class="type">double</span> r = <span class="built_in">atan2</span>(<span class="built_in">a</span>(<span class="number">0</span>) * <span class="built_in">sin</span>(y) - <span class="built_in">a</span>(<span class="number">1</span>) * <span class="built_in">cos</span>(y), -<span class="built_in">o</span>(<span class="number">0</span>) * <span class="built_in">sin</span>(y) + <span class="built_in">o</span>(<span class="number">1</span>) * <span class="built_in">cos</span>(y));</span><br><span class="line">    <span class="built_in">ypr</span>(<span class="number">0</span>) = y;</span><br><span class="line">    <span class="built_in">ypr</span>(<span class="number">1</span>) = p;</span><br><span class="line">    <span class="built_in">ypr</span>(<span class="number">2</span>) = r;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ypr / M_PI * <span class="number">180.0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：python-2"><a href="#例-2：python-2" class="headerlink" title="例 2：python"></a><strong>例 2：python</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isRotationMatrix</span>(<span class="params">R</span>):</span><br><span class="line">    <span class="comment"># square matrix test</span></span><br><span class="line">    <span class="keyword">if</span> R.ndim != <span class="number">2</span> <span class="keyword">or</span> R.shape[<span class="number">0</span>] != R.shape[<span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    should_be_identity = np.allclose(R.dot(R.T), np.identity(R.shape[<span class="number">0</span>], np.<span class="built_in">float</span>))</span><br><span class="line">    should_be_one = np.allclose(np.linalg.det(R), <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> should_be_identity <span class="keyword">and</span> should_be_one</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rotationMatrixToEulerAngles</span>(<span class="params">R</span>) :</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span>(isRotationMatrix(R))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0]) # 错误</span></span><br><span class="line">    sy = math.sqrt(R[<span class="number">2</span>,<span class="number">1</span>] * R[<span class="number">2</span>,<span class="number">1</span>] + R[<span class="number">2</span>,<span class="number">2</span>] * R[<span class="number">2</span>,<span class="number">2</span>])</span><br><span class="line">    </span><br><span class="line">    singular = sy &lt; <span class="number">1e-6</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>  <span class="keyword">not</span> singular :</span><br><span class="line">        x = math.atan2(R[<span class="number">2</span>,<span class="number">1</span>] , R[<span class="number">2</span>,<span class="number">2</span>])</span><br><span class="line">        y = math.atan2(-R[<span class="number">2</span>,<span class="number">0</span>], sy)</span><br><span class="line">        z = math.atan2(R[<span class="number">1</span>,<span class="number">0</span>], R[<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        x = math.atan2(-R[<span class="number">1</span>,<span class="number">2</span>], R[<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line">        y = math.atan2(-R[<span class="number">2</span>,<span class="number">0</span>], sy)</span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> np.array([x, y, z])</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="旋转矩阵与四元数示例"><a href="#旋转矩阵与四元数示例" class="headerlink" title="旋转矩阵与四元数示例"></a><strong>旋转矩阵与四元数示例</strong></h1><h2 id="旋转矩阵转四元数-1"><a href="#旋转矩阵转四元数-1" class="headerlink" title="旋转矩阵转四元数"></a><strong>旋转矩阵转四元数</strong></h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922143603479.png" alt="image-20240922143603479"></p>
+<h3 id="例-1：C-Eigen-1"><a href="#例-1：C-Eigen-1" class="headerlink" title="例 1：C++ Eigen"></a><strong>例 1：C++ Eigen</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Eigen::Quaterniond <span class="title">rotationMatrix2Quaterniond</span><span class="params">(Eigen::Matrix3d R)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    Eigen::Quaterniond q = Eigen::<span class="built_in">Quaterniond</span>(R);  </span><br><span class="line">    q.<span class="built_in">normalize</span>();  </span><br><span class="line">    cout &lt;&lt; “RotationMatrix2Quaterniond result is:” &lt;&lt;endl;  </span><br><span class="line">    cout &lt;&lt; ”x = ” &lt;&lt; q.<span class="built_in">x</span>() &lt;&lt;endl;  </span><br><span class="line">    cout &lt;&lt; ”y = ” &lt;&lt; q.<span class="built_in">y</span>() &lt;&lt;endl;  </span><br><span class="line">    cout &lt;&lt; ”z = ” &lt;&lt; q.<span class="built_in">z</span>() &lt;&lt;endl;  </span><br><span class="line">    cout &lt;&lt; ”w = ” &lt;&lt; q.<span class="built_in">w</span>() &lt;&lt;endl&lt;&lt;endl;  </span><br><span class="line">    <span class="keyword">return</span> q;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：python-3"><a href="#例-2：python-3" class="headerlink" title="例 2：python"></a>例 2：python</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">function q = vgg_quat_from_rotation_matrix( R )</span><br><span class="line">% vgg_quat_from_rotation_matrix Generates quaternion <span class="keyword">from</span> rotation matrix </span><br><span class="line">%            q = vgg_quat_from_rotation_matrix(R)</span><br><span class="line"></span><br><span class="line">q = [   (<span class="number">1</span> + R(<span class="number">1</span>,<span class="number">1</span>) + R(<span class="number">2</span>,<span class="number">2</span>) + R(<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">    (<span class="number">1</span> + R(<span class="number">1</span>,<span class="number">1</span>) - R(<span class="number">2</span>,<span class="number">2</span>) - R(<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">    (<span class="number">1</span> - R(<span class="number">1</span>,<span class="number">1</span>) + R(<span class="number">2</span>,<span class="number">2</span>) - R(<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">    (<span class="number">1</span> - R(<span class="number">1</span>,<span class="number">1</span>) - R(<span class="number">2</span>,<span class="number">2</span>) + R(<span class="number">3</span>,<span class="number">3</span>)) ];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ~issym(q)</span><br><span class="line">  % Pivot to avoid division by small numbers</span><br><span class="line">  [b I] = <span class="built_in">max</span>(<span class="built_in">abs</span>(q));</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  % For symbolic quats, just make sure we<span class="string">&#x27;re nonzero</span></span><br><span class="line"><span class="string">  for k=1:4</span></span><br><span class="line"><span class="string">    if q(k) ~= 0</span></span><br><span class="line"><span class="string">      I = k;</span></span><br><span class="line"><span class="string">      break</span></span><br><span class="line"><span class="string">    end</span></span><br><span class="line"><span class="string">  end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">q(I) = sqrt(q(I)) / 2 ;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if I == 1 </span></span><br><span class="line"><span class="string">    q(2) = (R(3,2) - R(2,3)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(3) = (R(1,3) - R(3,1)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(4) = (R(2,1) - R(1,2)) / (4*q(I));</span></span><br><span class="line"><span class="string">elseif I==2</span></span><br><span class="line"><span class="string">    q(1) = (R(3,2) - R(2,3)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(3) = (R(2,1) + R(1,2)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(4) = (R(1,3) + R(3,1)) / (4*q(I));</span></span><br><span class="line"><span class="string">elseif I==3</span></span><br><span class="line"><span class="string">    q(1) = (R(1,3) - R(3,1)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(2) = (R(2,1) + R(1,2)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(4) = (R(3,2) + R(2,3)) / (4*q(I));</span></span><br><span class="line"><span class="string">elseif I==4</span></span><br><span class="line"><span class="string">    q(1) = (R(2,1) - R(1,2)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(2) = (R(1,3) + R(3,1)) / (4*q(I));</span></span><br><span class="line"><span class="string">    q(3) = (R(3,2) + R(2,3)) / (4*q(I));</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四元数转旋转矩阵-1"><a href="#四元数转旋转矩阵-1" class="headerlink" title="四元数转旋转矩阵"></a><strong>四元数转旋转矩阵</strong></h2><p><img src="D:\workspace\my-notes\blog\source_posts\数学基础\三维旋转\image-20240922143652557.png" alt="image-20240922143652557"></p>
+<h3 id="例-1：C-Eigen-2"><a href="#例-1：C-Eigen-2" class="headerlink" title="例 1：C++ Eigen"></a><strong>例 1：C++ Eigen</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Eigen::Matrix3d <span class="title">Quaternion2RotationMatrix</span><span class="params">(<span class="type">const</span> <span class="type">double</span> x,<span class="type">const</span> <span class="type">double</span> y,<span class="type">const</span> <span class="type">double</span> z,<span class="type">const</span> <span class="type">double</span> w)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    Eigen::Quaterniond q;  </span><br><span class="line">    q.<span class="built_in">x</span>() = x;  </span><br><span class="line">    q.<span class="built_in">y</span>() = y;  </span><br><span class="line">    q.<span class="built_in">z</span>() = z;  </span><br><span class="line">    q.<span class="built_in">w</span>() = w;  </span><br><span class="line">  </span><br><span class="line">    Eigen::Matrix3d R = q.<span class="built_in">normalized</span>().<span class="built_in">toRotationMatrix</span>();  </span><br><span class="line">    cout &lt;&lt; “Quaternion2RotationMatrix result is:” &lt;&lt;endl;  </span><br><span class="line">    cout &lt;&lt; ”R = ” &lt;&lt; endl &lt;&lt; R &lt;&lt; endl&lt;&lt; endl;  </span><br><span class="line">    <span class="keyword">return</span> R;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-2：python-4"><a href="#例-2：python-4" class="headerlink" title="例 2：python"></a><strong>例 2：python</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">quaternion_to_rotation_matrix</span>(<span class="params">q</span>):  <span class="comment"># x, y ,z ,w</span></span><br><span class="line">    rot_matrix = np.array(</span><br><span class="line">        [[<span class="number">1.0</span> - <span class="number">2</span> * (q[<span class="number">1</span>] * q[<span class="number">1</span>] + q[<span class="number">2</span>] * q[<span class="number">2</span>]), <span class="number">2</span> * (q[<span class="number">0</span>] * q[<span class="number">1</span>] - q[<span class="number">3</span>] * q[<span class="number">2</span>]), <span class="number">2</span> * (q[<span class="number">3</span>] * q[<span class="number">1</span>] + q[<span class="number">0</span>] * q[<span class="number">2</span>])],</span><br><span class="line">         [<span class="number">2</span> * (q[<span class="number">0</span>] * q[<span class="number">1</span>] + q[<span class="number">3</span>] * q[<span class="number">2</span>]), <span class="number">1.0</span> - <span class="number">2</span> * (q[<span class="number">0</span>] * q[<span class="number">0</span>] + q[<span class="number">2</span>] * q[<span class="number">2</span>]), <span class="number">2</span> * (q[<span class="number">1</span>] * q[<span class="number">2</span>] - q[<span class="number">3</span>] * q[<span class="number">0</span>])],</span><br><span class="line">         [<span class="number">2</span> * (q[<span class="number">0</span>] * q[<span class="number">2</span>] - q[<span class="number">3</span>] * q[<span class="number">1</span>]), <span class="number">2</span> * (q[<span class="number">1</span>] * q[<span class="number">2</span>] + q[<span class="number">3</span>] * q[<span class="number">0</span>]), <span class="number">1.0</span> - <span class="number">2</span> * (q[<span class="number">0</span>] * q[<span class="number">0</span>] + q[<span class="number">1</span>] * q[<span class="number">1</span>])]],</span><br><span class="line">        dtype=q.dtype)</span><br><span class="line">    <span class="keyword">return</span> rot_matrix</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-3：tf"><a href="#例-3：tf" class="headerlink" title="例 3：tf"></a>例 3：tf</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tf</span></span><br><span class="line"><span class="keyword">from</span> tf.listener <span class="keyword">import</span> xyzw_to_mat44</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">oritation</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.x = <span class="number">0</span></span><br><span class="line">        <span class="variable language_">self</span>.y = <span class="number">0</span></span><br><span class="line">        <span class="variable language_">self</span>.z = <span class="number">0</span></span><br><span class="line">        <span class="variable language_">self</span>.w = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">ori = oritation()</span><br><span class="line">ori.x = rot[<span class="number">0</span>]</span><br><span class="line">ori.y = rot[<span class="number">1</span>]</span><br><span class="line">ori.z = rot[<span class="number">2</span>]</span><br><span class="line">ori.w = rot[<span class="number">3</span>]</span><br><span class="line">mat44 = xyzw_to_mat44(ori) <span class="comment"># 转换的结果为4 × 4 矩阵</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="例-4：scipy"><a href="#例-4：scipy" class="headerlink" title="例 4：scipy"></a>例 4：scipy</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.transform <span class="keyword">import</span> Rotation <span class="keyword">as</span> R</span><br><span class="line"></span><br><span class="line"><span class="comment"># (x, y, z, w) format</span></span><br><span class="line">r = R.from_quat([-<span class="number">0.716556549511624</span>,-<span class="number">0.6971278819736084</span>, -<span class="number">0.010016582945017661</span>,  <span class="number">0.02142651612120239</span>])</span><br><span class="line">r.as_matrix()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;rotation:\n&#x27;</span>,r.as_matrix())</span><br><span class="line">rotation_matrix = r.as_matrix()</span><br><span class="line"><span class="built_in">print</span>(rotation_matrix)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" rel="tag"># 数学基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/22/Docker/Docker%E4%BD%BF%E7%94%A8/" rel="next" title="Docker使用">
+                  Docker使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">477k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:28</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

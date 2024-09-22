@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,299 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/AMCL%E8%B0%83%E8%AF%95%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Localization/AMCL%E8%B0%83%E8%AF%95%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">AMCL调试记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>79</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="AMCL-问题调试记录"><a href="#AMCL-问题调试记录" class="headerlink" title="AMCL 问题调试记录"></a>AMCL 问题调试记录</h2><p>1、转圈时 AMCL 定位漂移<br>因为转圈时机器人的X,Y偏差比kobuki大，因此需修改amcl_odom.cpp中的：<img src="/images/amcl_drift_while_rotate.png" alt="amcl_drift"><br>将0.01修改为0.05</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/AMCL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Localization/AMCL/" class="post-title-link" itemprop="url">AMCL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="AMCL（Adaptive-Monte-Carlo-Localization）"><a href="#AMCL（Adaptive-Monte-Carlo-Localization）" class="headerlink" title="AMCL（Adaptive Monte Carlo Localization）"></a>AMCL（Adaptive Monte Carlo Localization）</h2><p>（AMCL中A指代 adaptive or Augmented？）<br>MCL不能从机器人绑架中或全局定位失效中恢复。在某个时候，只有单一位姿的粒子能够“幸存”，如果这个位姿碰巧是错误的，算法不能恢复。这个问题是有意义的。实际上，任何随机算法，如蒙特卡罗定位算法，在重采样步骤中可能意外地丢弃所有正确位姿附近的粒子。当粒子数很小（如M&#x3D;50) 。并且，当粒子扩散到整个比较大的体积（如全局定位过程）时，这个问题就显得特别重要。  </p>
+<p>AMCL算法在机器人遭到绑架的时候，会随机的注入粒子（injection of random particles）。  </p>
+<p>AMCL是MCL的升级版，结合Augmented_MCL 和 KDL_Sampling_MCL，使用自适应的 KLD 方法来更新粒子。<br><img src="/images/augmented_mcl.png" alt="amcl"></p>
+<p>许多算法机器参数在 <Probabilistic Robotics> 有详细描述，尤其是此处用到的算法： <strong>sample_motion_model_odometry、beam_range_finder_model、likehood_field_range_finder_model、Augmented_MCL及KDL_Sampling_MCL</strong>。</p>
+<h2 id="Navigation-AMCL-transforms"><a href="#Navigation-AMCL-transforms" class="headerlink" title="Navigation AMCL transforms"></a>Navigation AMCL transforms</h2><p>amcl将输入的激光扫描器数据转换到odometry坐标系(<del>odom_frame_id)。所以，tf树中必须存在从激光扫描器所在的坐标系发布消息到odometry坐标系的路径。<br>实现细节：在收到第一个激光扫描时。amcl在激光器坐标系和基础坐标系(</del>base_frame_id)中查找，并永久锁存。因此amcl不能处理激光器相对于基础坐标系(base)的移动。<br>下图展示使用odometry及amcl定位的不同处。在操作过程中，AMCL预测base frame(<del>base_frame_id)相对于global frame(</del>global_frame_id)的transform(转换)，但它只在global frame和odometry frame(~odom_frame_id)之间发布该转换。Essentially, this transform accounts for the drift that occurs using Dead Reckoning(从本质上讲，这种变换在使用Dead Reckoning(航位推算)时会发生偏移(drift)。)<br><img src="/images/amcl_transforms.png" alt="amcl transforms"></p>
+<p>Odometry Location – 只是通过里程计的数据来处理&#x2F;base_frame和&#x2F;odom_frame之间的TF转换；<br>AMCL  Map Location – 查找&#x2F;base_frame和激光的TF。&#x2F;base_frame通过&#x2F;odom在&#x2F;map中行走，机器人根据已知激光数据，估计&#x2F;base_frame相对于相对于&#x2F;global的TF，那么我们可以知道&#x2F;map和&#x2F;base之间的TF，从而估计位置。  </p>
+<h2 id="map、odom与base-link之间的关系"><a href="#map、odom与base-link之间的关系" class="headerlink" title="map、odom与base_link之间的关系"></a>map、odom与base_link之间的关系</h2><p>Odom-&gt;base_link 由底盘驱动发布，数据内容即为里程计数据，其意义是：以odom坐标系作为参考坐标系，base_link（即机器人）相对于odom坐标系的位置，反应了机器人相对于odom坐标系的移动状态。<br><strong>AMCL中会根据odom-&gt;base_link数据（即:里程计数据）结合粒子滤波算法，确定base_link(即机器人)在map坐标系上的位姿，即map -&gt; base_link数据。然后根据map-&gt;base_link及odom-&gt;base_link得出map-&gt;odom。（odom-&gt;base_link可理解为实际测量得到的量，map-&gt;base_link可理解为算法算出的计算值。因AMCL定位的偏差，会体现出odom坐标系也在相对map坐标系变动）</strong>。   </p>
+<p>amcl发布odom到map 坐标系tf的流程如下：(已知amcl_pose(base_link坐标系原点在map坐标系位姿)，odom到base_link tf关系)<br>①. 调用tf接口将amcl_pose取反，即将base_link坐标系原点在map坐标系的位姿转化为map坐标系原点在base_link坐标系的位姿。<br>②. 已知base_link与odom tf 关系，调用transformPose接口，将步骤1的结果map坐标系原点在base_link坐标系的位姿转化为map坐标系原点在odom坐标系的位姿。<br>③. 调用tf接口取反，即将步骤2的结果map坐标系原点在odom坐标系的位姿转化为odom坐标系原点在map坐标系的位姿，调用sendTransform发送odom到map tf关系。  </p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>AMCL 订阅scan、tf、initialpose(定位数据)及map等数据，发布amcl_pose、particle cloud及tf(odom –&gt; map)。<strong>amcl与move_base通过tf关联。move_base不会订阅amcl发布的amcl_pose及particlecloud主题，只会监听amcl发布的odom –&gt; map的转换</strong>。  </p>
+<p>AMCL需要 initialpose 主题上的消息来初始化filter。  </p>
+<p>在移动过程中AMCL需要通过订阅TF(base_frame–&gt;odom)来更新filter。在每个filter过程，AMCL执行两步操作：<br>①、Prediction(预测 – 在AMCL源码中为UpdateAction)<br>②、Measure incorporation(在AMCL中称为UpdateSensor，Likelihood Field模式或Beam模式)<br>Prediciton过程使用TF来完成，因此需提供运动估计，然后通过通过读取的sensor数据来纠正&#x2F;提高预先估计的精度。  </p>
+<p>仅当粒子聚集(converged)时才会更新机器人的位姿。<br>AMCL发布的PoseWithCovarianceStamped消息中的convariance，表明了估算的位姿的可信度，但并未直接表明估算的位姿有多精确。若想知道精确度，需在该位姿上使用sensor model。也可修改amcl_laser.cpp文件，在位姿上调用pf_get_cluster_stats来查看权重。该权重值基于map指明位姿与当前激光扫描到的环境的接近程度。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/%E8%B0%83%E8%AF%95%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/%E8%B0%83%E8%AF%95%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">调试说明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1、不闭合"><a href="#1、不闭合" class="headerlink" title="1、不闭合"></a>1、不闭合</h2><p>若闭合点很难完全闭合，可尝试调整costraint_builder.min_score评分值。SPARSE_POSE_GRAPH.constraint_builder.min_score<br>该值越小越容易闭合,即要求精度变低。  </p>
+<h2 id="2、IMU"><a href="#2、IMU" class="headerlink" title="2、IMU"></a>2、IMU</h2><p>建议IMU的角速度和线加速度都要发布。并根据IMU数据的准确性调整IMU的估计位姿的方差（方差越大则越不信任该数据）。也可调整IMU的相关权重：（trajectory_builder_2d.lua文件中）<br>orientation_model_variance  角速度权重<br>position_model_variance<br>velocity_model_variance  线加速度权重<br>（因此，<strong>IMU主题数据中的方差信息填不填写没影响</strong>）</p>
+<h2 id="3、odom数据方差"><a href="#3、odom数据方差" class="headerlink" title="3、odom数据方差"></a>3、odom数据方差</h2><p><strong>cartographer中odom的方差并不是从&#x2F;odom主题中读取，而是从配置文件的constant_odometry_translational_variance和constant_odometry_rotational_variance参数获取，因此&#x2F;odom中的方差信息填不填写不影响</strong>:(astra_camera_2d.lua文件中)  </p>
+<p>（走廊长度变长或变短时需要增加里程计的权重；平行环境变成交叉的，多半是数据角度问题，此时应该提高IMU的权重，减少配置文件中其方差值）  </p>
+<h2 id="4、num-laser-fans参数"><a href="#4、num-laser-fans参数" class="headerlink" title="4、num_laser_fans参数"></a>4、num_laser_fans参数</h2><p>影响全局匹配和局部匹配的权衡。越小说明传感器累计误差比较大，要更注重全局匹配。  </p>
+<h2 id="5、地图提前闭合问题"><a href="#5、地图提前闭合问题" class="headerlink" title="5、地图提前闭合问题"></a>5、地图提前闭合问题</h2><p>建图时离应该闭合的时候还有距离就闭合了。是因为环境相似，此时可继续再往前走，由于它提前闭环，前面肯定会出现不能闭环的情况，这时候就会自己发现闭环错误，从而修正了。<br>三种解决方法：<br>①、继续往前走，走到下一个特征明显的地方，等待重新闭环<br>②、增大里程计权重(前提是里程计准确)，修改odom中的方差值（协方差值若全写0，则表示odom完全没误差）<br>③、减小cartographer里面的配置文件astra_camera_2d.lua里面的huber_scale(该参数为激光匹配的权重(即闭环权重))<br>注意：减少闭环权重会使得闭环变慢。  </p>
+<p>里程计还要融合其它数据之后得出的数据(如：IMU等)才是真正跟激光对比的数据。若将里程计的方差都写0，则表示里程计完全没误差，建图时理论上就会忽略里程计之外的其他数据。（但是单个数据的方差为零，不能使得融合出来的数据方差为零）  </p>
+<h2 id="6、SPARSE-PISE-GRAPH-optimize-every-n-scans"><a href="#6、SPARSE-PISE-GRAPH-optimize-every-n-scans" class="headerlink" title="6、SPARSE_PISE_GRAPH.optimize_every_n_scans"></a>6、SPARSE_PISE_GRAPH.optimize_every_n_scans</h2><p>指定每多少帧闭环一次，增大该值会减少闭环次数。减少闭环压力，不用过于频繁的匹配，传感器的误差不会瞬间增大的很快。<br>（30改为75）  </p>
+<h2 id="7、real-time-correlative-scan-matcher中的rotation-delta-cost-weight"><a href="#7、real-time-correlative-scan-matcher中的rotation-delta-cost-weight" class="headerlink" title="7、real_time_correlative_scan_matcher中的rotation_delta_cost_weight"></a>7、real_time_correlative_scan_matcher中的rotation_delta_cost_weight</h2><p>（1e-1改为2e-1）<br>提高局部闭环的时候对odom的角度置信度，局部闭环的时候odom还是挺准的，也是为了解决当时工厂的错误闭环，但要说到减少闭环压力的话，主要还是30改为75，不用过于频繁的匹配，传感器的误差不会瞬间增大得很快  </p>
+<h2 id="8、ceres-scan-matching-初值"><a href="#8、ceres-scan-matching-初值" class="headerlink" title="8、ceres scan matching 初值"></a>8、ceres scan matching 初值</h2><p>好的初始 pose 对 ceres scan matching 求解有很大的影响。 因此，可用 IMU 来提供 pose 初值的旋转量。 在没有 IMU 时，可通过提高 scan match 频率或匹配精度来进行优化。  </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -209,9 +502,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -300,9 +599,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -442,9 +747,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -738,9 +1049,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -847,9 +1164,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -945,9 +1268,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -1105,9 +1434,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
 
   
@@ -1163,269 +1498,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/SPA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Map/cartographer/SPA/" class="post-title-link" itemprop="url">SPA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20ImuTracker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20ImuTracker/" class="post-title-link" itemprop="url">cartographer - ImuTracker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>832</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ImuTracker：根据 IMU 的<strong>角速度和线加速度</strong>来计算机器人的姿态(方向)。  </p>
-<p>当 IMU 不处于重力水平面上时，重力加速度会在水平轴(x、y轴)上产生加速度分量。  </p>
-<p>通过各轴的加速度，可以计算出各轴加速度计的倾斜角：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=pitch = \theta=\frac{180}{PI} * atan(\frac{a_x}{\sqrt{a_y^2 %2B a_z^2}})" style="border:none;"><br><img src="http://chart.googleapis.com/chart?cht=tx&chl=roll = \varphi=\frac{180}{PI} * atan(\frac{a_y}{\sqrt{a_x^2 %2B a_z^2}})" style="border:none;"><br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\psi=\frac{180}{PI} * atan(\frac{\sqrt{a_x^2 %2B a_y^2}}{a_z})" style="border:none;">  </p>
-<p><strong>ImuTracker::Advance</strong><br>根据 IMU 角速度计算姿态，若没有 IMU 数据，则使用从 pose或odom 得到的角速度来计算姿态。并通过该姿态得到各个轴的重力分量 gravity_vector_。  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void ImuTracker::Advance(const common::Time time) &#123;</span><br><span class="line">  CHECK_LE(time_, time);</span><br><span class="line">  const double delta_t = common::ToSeconds(time - time_);</span><br><span class="line">  // 根据 imu 角速度(当没有imu数据时,使用从pose或odom计算的角速度代替)计算方向</span><br><span class="line">  const Eigen::Quaterniond rotation =</span><br><span class="line">      transform::AngleAxisVectorToRotationQuaternion(</span><br><span class="line">          Eigen::Vector3d(imu_angular_velocity_ * delta_t)); // 陀螺仪积分得到的姿态</span><br><span class="line">  // 角度方向 : 当前姿态 * 姿态偏转</span><br><span class="line">  orientation_ = (orientation_ * rotation).normalized();</span><br><span class="line">  // 得到各个轴向的重力分量</span><br><span class="line">  gravity_vector_ = rotation.conjugate()/*共轭矩阵*/ * gravity_vector_;</span><br><span class="line">  time_ = time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ImuTracker::AddImuLinearAccelerationObservation</strong><br>该函数只有在存在有效 IMU 数据时才会实际生效。 根据 IMU 线加速度 imu_linear_acceleration 计算姿态，采用<strong>滑动平均</strong>与前面计算得到的 grivaty_vector_ 进行融合；并修正最终姿态。  </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/" class="post-title-link" itemprop="url">Real-Time Correlative Scan Matching</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-21 19:30:31 / 修改时间：20:01:37" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>108</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>介绍了三种几率概率网格的 2D scan matching 算法：Brute Force、Computing 2D Slices、Multi-Level Resolution。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mafuqiang/p/10885616.html">cartographer 3D scan matching 理解</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1448,14 +1522,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">454k</span>
+    <span title="站点总字数">477k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">13:46</span>
+    <span title="站点阅读时长">14:28</span>
   </span>
 </div>
 <div class="busuanzi-count">

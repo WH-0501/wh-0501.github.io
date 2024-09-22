@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,224 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/mesh%20filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/mesh%20filter/" class="post-title-link" itemprop="url">mesh filter</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:04:31" itemprop="dateCreated datePublished" datetime="2024-09-17T20:04:31+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>184</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>MoveIt 的网格过滤器功能从点云中移除机器人的几何形状。如果机器人的手臂在深度传感器的视图中，则与手臂相关的点将从点云中减去。</p>
+<p>这是通过将原始点云、机器人的变换(\tf)和机器人的 URDF 作为输入来实现的。然后，过滤器发布一个修改后的点云，该点云不包含与当前机器人状态重叠的点。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials mesh_filter.launch</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">多段序列</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:01:00" itemprop="dateCreated datePublished" datetime="2024-09-17T20:01:00+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>439</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Sequence of multiple segments。</p>
+<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这<strong>减少了规划开销，并允许遵循预先描述的路径而不停留在中间点</strong>。</p>
+<p>请注意: 如果序列命令规划失败，则该序列命令将不被执行。</p>
+<p>请注意: 序列命令允许包含多个组的命令(例如“机械手”，“夹持器”)</p>
+<h1 id="User-interface-sequence-capability"><a href="#User-interface-sequence-capability" class="headerlink" title="User interface sequence capability"></a><strong>User interface sequence capability</strong></h1><p>一个专门的 MoveIt 功能将 <code>moveit_msgs::MotionSequenceRequest</code> 作为输入。该请求包含如上所述的后续目标列表和附加的 <strong>blend_radius</strong> 参数。如果给定的以米为单位的 blend_radius 大于零，则将相应的轨迹与以下目标合并在一起，以使机器人不会停在当前目标处。当 TCP 比给定的 <strong>blend_radius</strong> 更接近目标时，允许它朝下一个目标前进。当离开当前目标周围的球体时，机器人会返回到它在没有混合的情况下所采用的轨迹。</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/image-20240917200130040.png" class="" title="image-20240917200130040">
+
+<p>详细实现参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -217,7 +435,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -618,7 +836,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -774,7 +992,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -898,7 +1116,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1062,7 +1280,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:38" itemprop="dateModified" datetime="2024-09-21T20:01:38+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1198,7 +1416,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1682,7 +1900,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1871,7 +2089,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2067,790 +2285,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/modules/ExternalProject/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/modules/ExternalProject/" class="post-title-link" itemprop="url">ExternalProject</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/modules/" itemprop="url" rel="index"><span itemprop="name">modules</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>用于添加外部项目到本地 cmake 项目。</p>
-<h1 id="外部项目定义"><a href="#外部项目定义" class="headerlink" title="外部项目定义"></a>外部项目定义</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 必须，否则会出现 Unknown CMake command &quot;ExternalProject_Add&quot;. 错误 </span></span><br><span class="line"><span class="keyword">include</span>(ExternalProject)</span><br><span class="line"></span><br><span class="line">ExternalProject_Add(&lt;name&gt; [&lt;<span class="keyword">option</span>&gt;...])              </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="目录选项"><a href="#目录选项" class="headerlink" title="目录选项"></a>目录选项</h2><p>大部分情况下，默认目录布局就足够了。主要是通常不需要更改主项目的实施细节。但是，在某些情况下，控制目录布局可能是有用的或必要的。</p>
-<table>
-<thead>
-<tr>
-<th>PREFIX</th>
-<th align="left">外部项目的根目录</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>TMP_DIR</td>
-<td align="left">存储零时文件的目录</td>
-</tr>
-<tr>
-<td>STAMP_DIR</td>
-<td align="left">存储每一步的 timestamps.除非被 LOG_DIR，否则还会在此创建每个步骤的日志文件</td>
-</tr>
-<tr>
-<td>LOG_DIR</td>
-<td align="left">存储每一步的日志文件的目录</td>
-</tr>
-<tr>
-<td>DOWNLOAD_DIR</td>
-<td align="left">存放下载的文件(解压前).<strong>该参数只有在使用URL下载时有效</strong>，其它的下载方法直接使用 SOURCE_DIR</td>
-</tr>
-<tr>
-<td>SOURCE_DIR</td>
-<td align="left">下载的源码目录</td>
-</tr>
-<tr>
-<td>BINARY_DIR</td>
-<td align="left">编译目录位置。若指定了 BUILD_IN_SOURCE,则该参数失效</td>
-</tr>
-<tr>
-<td>INSTALL_DIR</td>
-<td align="left">安装路径</td>
-</tr>
-</tbody></table>
-<p>若未指定上面的目录选项，则使用如下默认路径(假设指定了 <code>PREFIX</code> 选项或设置了 <code>EP_PREFIX</code> 属性)：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TMP_DIR      = &lt;prefix&gt;/tmp</span><br><span class="line">STAMP_DIR    = &lt;prefix&gt;/src/&lt;name&gt;-stamp</span><br><span class="line">DOWNLOAD_DIR = &lt;prefix&gt;/src</span><br><span class="line">SOURCE_DIR   = &lt;prefix&gt;/src/&lt;name&gt;</span><br><span class="line">BINARY_DIR   = &lt;prefix&gt;/src/&lt;name&gt;-build</span><br><span class="line">INSTALL_DIR  = &lt;prefix&gt;</span><br><span class="line">LOG_DIR      = &lt;STAMP_DIR&gt;</span><br></pre></td></tr></table></figure>
-
-<p>否则，如果设置了 <code>EP_BASE</code> 属性：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TMP_DIR      = &lt;base&gt;/tmp/&lt;name&gt;</span><br><span class="line">STAMP_DIR    = &lt;base&gt;/Stamp/&lt;name&gt;</span><br><span class="line">DOWNLOAD_DIR = &lt;base&gt;/Download/&lt;name&gt;</span><br><span class="line">SOURCE_DIR   = &lt;base&gt;/Source/&lt;name&gt;</span><br><span class="line">BINARY_DIR   = &lt;base&gt;/Build/&lt;name&gt;</span><br><span class="line">INSTALL_DIR  = &lt;base&gt;/<span class="keyword">Install</span>/&lt;name&gt;</span><br><span class="line">LOG_DIR      = &lt;STAMP_DIR&gt;</span><br></pre></td></tr></table></figure>
-
-<p>若既未设置 <code>PREFIX</code>、<code>EP_PREFIX</code>，也未设置 <code>EP_BASE</code>，则设置默认的 <code>PREFIX</code> 为：<code>&lt;name&gt;-prefix</code>。例如：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CGAL_VERSION <span class="number">4.14</span>.<span class="number">1</span>)</span><br><span class="line">ExternalProject_Add(cgal</span><br><span class="line">  URL https://github.com/CGAL/cgal/archive/releases/CGAL-<span class="variable">$&#123;CGAL_VERSION&#125;</span>.tar.gz</span><br><span class="line">  UPDATE_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line">  CMAKE_ARGS</span><br><span class="line">    -DCMAKE_INSTALL_PREFIX=<span class="variable">$&#123;CATKIN_DEVEL_PREFIX&#125;</span></span><br><span class="line">    -DWITH_CGAL_Qt5:BOOL=<span class="keyword">OFF</span></span><br><span class="line">    -DWITH_CGAL_ImageIO:BOOL=<span class="keyword">OFF</span></span><br><span class="line">    -DCMAKE_BUILD_TYPE:<span class="keyword">STRING</span>=Release</span><br><span class="line">  <span class="keyword">BUILD_COMMAND</span> $(MAKE)</span><br><span class="line">  INSTALL_COMMAND $(MAKE) <span class="keyword">install</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>未指定 <code>PREFIX</code>、<code>EP_PREFIX</code>、<code>EP_BASE</code> 时，其下载路径为 <code>&lt;name&gt;-prefix</code>，即: </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin_ws/build/&lt;package_name&gt;/&lt;name&gt;-prefix/src</span><br></pre></td></tr></table></figure>
-
-<p>此例中，package name 为 cgal_catkin， 为 ExternalProject_Add 第一个参数 cgal。因此其下载路径为：catkin_ws&#x2F;build&#x2F;cgal&#x2F;cgal-prefix&#x2F;src&#x2F;CGAL-4.14.1.tar.gz</p>
-<h2 id="下载选项"><a href="#下载选项" class="headerlink" title="下载选项"></a>下载选项</h2><p>如果使用 <strong>SOURCE_DIR 指定了本地的非空目录，则会忽略指定的下载方法</strong>。否则必须指定下载方法(不能指定多个下载方法)。下载方法包括指定下载指令(DOWNLOAD_COMMAND)、URL下载、Git下载、SVN下载、Mercurial下载、CVS下载等：</p>
-<table>
-<thead>
-<tr>
-<th><code>DOWNLOAD_COMMAND</code></th>
-<th>覆盖下载步骤的指令(支持 generator expressions)。<strong>若指定了该选项，则会忽略所有其它下载选项。将该选项设置为空，可以有效的禁用下载步骤</strong></th>
-</tr>
-</thead>
-</table>
-<h3 id="URL-下载"><a href="#URL-下载" class="headerlink" title="URL 下载"></a>URL 下载</h3><table>
-<thead>
-<tr>
-<th><code>URL &lt;url1&gt;  [&lt;url2&gt;......]</code></th>
-<th>外部项目源的路径。指定多个URL时，会依次尝试直到成功。URL可以是本地文件系统中的普通路径(此时URL必须是唯一的)或file命令支持的任何可下载URL。使用本地文件系统路径时可以引用现有的目录或压缩文件。使用压缩文件时，除非设置DOWNLOAD_NO_EXTRACT选项防止解压，<strong>否则将自动解压</strong>。压缩格式通过检查实际内容而不是通过扩展名来确定</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>URL_HASH &lt;algo&gt;=&lt;hashvalue&gt;</code></td>
-<td>algo为hashing算法名，例如:MD5等。</td>
-</tr>
-</tbody></table>
-<h3 id="GIT-下载"><a href="#GIT-下载" class="headerlink" title="GIT 下载"></a>GIT 下载</h3><h3 id="SVN-下载"><a href="#SVN-下载" class="headerlink" title="SVN 下载"></a>SVN 下载</h3><h3 id="Mercurial-下载"><a href="#Mercurial-下载" class="headerlink" title="Mercurial 下载"></a>Mercurial 下载</h3><h3 id="CVS-下载"><a href="#CVS-下载" class="headerlink" title="CVS 下载"></a>CVS 下载</h3><h2 id="update-patch-步骤选项"><a href="#update-patch-步骤选项" class="headerlink" title="update&#x2F;patch 步骤选项"></a>update&#x2F;patch 步骤选项</h2><p>每当重新运行CMake时，如果下载方法支持更新，则默认情况下将更新外部项目的源</p>
-<table>
-<thead>
-<tr>
-<th>UPDATE_COMMAND …</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>UPDATE_DISCONNECTED</td>
-<td></td>
-</tr>
-<tr>
-<td>PATCH_COMMAND …</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="configure-步骤选项"><a href="#configure-步骤选项" class="headerlink" title="configure 步骤选项"></a>configure 步骤选项</h2><p>configure 步骤在下载和更新步骤之后。默认情况下，假设外部项目也是一个 cmake 项目，但可根据需要进行配置</p>
-<h2 id="Build-步骤选项"><a href="#Build-步骤选项" class="headerlink" title="Build 步骤选项"></a>Build 步骤选项</h2><p>根据 configure 步骤确定默认的编译指令为 cmake 还是普通的 Makefile</p>
-<table>
-<thead>
-<tr>
-<th>BUILD_COMMAND …</th>
-<th>重载默认的编译指令。将该选项设置为空字符串，可以使编译步骤不做任何处理</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BUILD_IN_SOURCE</td>
-<td>在外部项目源码目录进行编译。</td>
-</tr>
-<tr>
-<td>BUILD_ALWAYS</td>
-<td>强制每次都编译</td>
-</tr>
-<tr>
-<td>BUILD_BYPRODUCTS …</td>
-<td>指定将由build指令生成的文件，但是其修改时间可能会或可能不会由后续的构建更新。</td>
-</tr>
-</tbody></table>
-<h2 id="Install-步骤选项"><a href="#Install-步骤选项" class="headerlink" title="Install 步骤选项"></a>Install 步骤选项</h2><table>
-<thead>
-<tr>
-<th>INSTALL_COMMAND …</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="Test-步骤选项"><a href="#Test-步骤选项" class="headerlink" title="Test 步骤选项"></a>Test 步骤选项</h2><table>
-<thead>
-<tr>
-<th>TEST_COMMAND …</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>TEST_BEFORE_INSTALL</td>
-<td>在 install 之前执行测试步骤</td>
-</tr>
-<tr>
-<td>TEST_AFTER_INSTALL</td>
-<td></td>
-</tr>
-<tr>
-<td>TEST_EXCLUDE_FROM_MAIN</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="输出日志选项"><a href="#输出日志选项" class="headerlink" title="输出日志选项"></a>输出日志选项</h2><table>
-<thead>
-<tr>
-<th>LOG_DOWNLOAD</th>
-<th>使能下载日志</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>LOG_UPDATE</td>
-<td>使能更新日志</td>
-</tr>
-<tr>
-<td>LOG_PATCH</td>
-<td>使能Patch日志</td>
-</tr>
-<tr>
-<td>LOG_CONFIGURE</td>
-<td>使能configure日志</td>
-</tr>
-<tr>
-<td>LOG_BULD</td>
-<td>使能编译日志</td>
-</tr>
-<tr>
-<td>LOG_INSTALL</td>
-<td>使能安装日志</td>
-</tr>
-<tr>
-<td>LOG_TEST</td>
-<td>使能测试日志</td>
-</tr>
-<tr>
-<td>LOG_MERGED_STDOUTERR</td>
-<td>合并stdout和stderr</td>
-</tr>
-<tr>
-<td>LOG_OUTPUT_ONFAILURE</td>
-<td>该选项只有在上面的选项中至少使能一项时有效。若设置为 True，则各步骤的错误日志输出到对应文件的同时，也会输出到终端显示。</td>
-</tr>
-</tbody></table>
-<h2 id="终端访问选项"><a href="#终端访问选项" class="headerlink" title="终端访问选项"></a>终端访问选项</h2><p>在某些情况下，各个步骤可以直接访问终端。</p>
-<table>
-<thead>
-<tr>
-<th>USES_TERMINAL_DOWNLOAD</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>USES_TERMINAL_UPDATE</td>
-<td></td>
-</tr>
-<tr>
-<td>USES_TERMINAL_CONFIGURE</td>
-<td></td>
-</tr>
-<tr>
-<td>USES_TERMINAL_BUILD</td>
-<td></td>
-</tr>
-<tr>
-<td>USES_TERMINAL_INSTALL</td>
-<td></td>
-</tr>
-<tr>
-<td>USES_TERMINAL_TEST</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="Target-选项"><a href="#Target-选项" class="headerlink" title="Target 选项"></a>Target 选项</h2><table>
-<thead>
-<tr>
-<th>DEPENDS …</th>
-<th>指定该外部项目依赖的一起目标</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>EXCLUDE_FROM_ALL</td>
-<td>将该外部项目排除在 ALL 目标之外</td>
-</tr>
-<tr>
-<td>STEP_TARGETS …</td>
-<td>为指定的步骤生成自定义的目标</td>
-</tr>
-<tr>
-<td>INDEPENDENT_STEP_TARGETS …</td>
-<td>为指定的步骤生成自定义目标，并防止这些目标具有通常的依赖项</td>
-</tr>
-</tbody></table>
-<h2 id="Miscellaneous-选项"><a href="#Miscellaneous-选项" class="headerlink" title="Miscellaneous 选项"></a>Miscellaneous 选项</h2><table>
-<thead>
-<tr>
-<th>LIST_SEPARATOR</th>
-<th>将所有 …_COMMAND 选项的 ‘;’ 替换为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>COMMAND …</td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="获取项目属性"><a href="#获取项目属性" class="headerlink" title="获取项目属性"></a>获取项目属性</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Get_Property(&lt;name&gt; &lt;prop1&gt; [&lt;prop2&gt;...])</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Explicit-Step-Management"><a href="#Explicit-Step-Management" class="headerlink" title="Explicit Step Management"></a><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/module/ExternalProject.html#explicit-step-management">Explicit Step Management</a></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add_Step(&lt;name&gt; &lt;step&gt; [&lt;<span class="keyword">option</span>&gt;...])</span><br><span class="line"></span><br><span class="line">ExternalProject_Add_StepTargets(&lt;name&gt; [NO_DEPENDS] &lt;step1&gt; [&lt;step2&gt;...])</span><br><span class="line"></span><br><span class="line">ExternalProject_Add_StepDependencies(&lt;name&gt; &lt;step&gt; &lt;target1&gt; [&lt;target2&gt;...])</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><h2 id="例一：从-github-下载并编译-FooBar-项目"><a href="#例一：从-github-下载并编译-FooBar-项目" class="headerlink" title="例一：从 github 下载并编译 FooBar 项目"></a>例一：从 github 下载并编译 FooBar 项目</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(ExternalProject)</span><br><span class="line">ExternalProject_Add(foobar</span><br><span class="line">  GIT_REPOSITORY    git@github.com:FooCo/FooBar.git</span><br><span class="line">  GIT_TAG           origin/release/<span class="number">1.2</span>.<span class="number">3</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="例二：从-web-服务器下载-SecretSauce-包"><a href="#例二：从-web-服务器下载-SecretSauce-包" class="headerlink" title="例二：从 web 服务器下载 SecretSauce 包"></a>例二：从 web 服务器下载 SecretSauce 包</h2><p>此例指定了两个 URL，以便选择更快的网络。该项目是一个 Makefile 项目，无需 configure 步骤，因此清空默认指令 CONFIGURE_COMMAND 。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_program</span>(MAKE_EXE NAMES gmake nmake make)</span><br><span class="line">ExternalProject_Add(secretsauce</span><br><span class="line">  URL               http://intranet.somecompany.com/artifacts/sauce-<span class="number">2.7</span>.tgz</span><br><span class="line">                    https://www.somecompany.com/downloads/sauce-<span class="number">2.7</span>.zip</span><br><span class="line">  URL_HASH          MD5=d41d8cd98f00b204e9800998ecf8427e</span><br><span class="line">  CONFIGURE_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="keyword">BUILD_COMMAND</span>     <span class="variable">$&#123;MAKE_EXE&#125;</span> sauce</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="例三"><a href="#例三" class="headerlink" title="例三"></a>例三</h2><p>假设 secretsauce 依赖于 foobar</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add_StepDependencies(secretsauce build foobar)</span><br></pre></td></tr></table></figure>
-
-<p>​              </p>
-<p>另一种选择是 foobar 编译生成一个自定义目标，并使 secretsauce 依赖于该目标，而不是整个 foobar 项目。这意味着，foobar 只需要编译，而无需执行 install 及 test 步骤。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add_StepTargets(foobar build)</span><br><span class="line">ExternalProject_Add(secretsauce</span><br><span class="line">  URL               http://intranet.somecompany.com/artifacts/sauce-<span class="number">2.7</span>.tgz</span><br><span class="line">                    https://www.somecompany.com/downloads/sauce-<span class="number">2.7</span>.zip</span><br><span class="line">  URL_HASH          MD5=d41d8cd98f00b204e9800998ecf8427e</span><br><span class="line">  CONFIGURE_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="keyword">BUILD_COMMAND</span>     <span class="variable">$&#123;MAKE_EXE&#125;</span> sauce</span><br><span class="line">  DEPENDS           foobar-build</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>也可在 foobar 项目中定义，而不使用 <code>ExternalProject_Add_StepTargets()</code>:</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add(foobar</span><br><span class="line">  GIT_REPOSITORY git@github.com:FooCo/FooBar.git</span><br><span class="line">  GIT_TAG        origin/release/<span class="number">1.2</span>.<span class="number">3</span></span><br><span class="line">  STEP_TARGETS   build</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="例四"><a href="#例四" class="headerlink" title="例四"></a>例四</h2><p>假设 secretsauce 提供了 makedoc 脚本用于生成其文档，且该脚本要求 输出目录 作为唯一参数，并且应从 secretsauce 源目录运行该脚本：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add_Step(secretsauce docs</span><br><span class="line">  <span class="keyword">COMMAND</span>           &lt;SOURCE_DIR&gt;/makedoc &lt;BINARY_DIR&gt;</span><br><span class="line">  WORKING_DIRECTORY &lt;SOURCE_DIR&gt;</span><br><span class="line">  COMMENT           <span class="string">&quot;Building secretsauce docs&quot;</span></span><br><span class="line">  ALWAYS            <span class="keyword">TRUE</span></span><br><span class="line">  EXCLUDE_FROM_MAIN <span class="keyword">TRUE</span></span><br><span class="line">)</span><br><span class="line">ExternalProject_Add_StepTargets(secretsauce docs)</span><br></pre></td></tr></table></figure>
-
-<p>可通过 <strong><code>cmake --build . --target secretsauce-docs</code></strong>  指令触发该步骤</p>
-<h2 id="例五"><a href="#例五" class="headerlink" title="例五"></a>例五</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CGAL_VERSION <span class="number">4.14</span>.<span class="number">1</span>)</span><br><span class="line"> <span class="number">14</span> ExternalProject_Add(cgal</span><br><span class="line"> <span class="number">15</span>   URL https://github.com/CGAL/cgal/archive/releases/CGAL-<span class="variable">$&#123;CGAL_VERSION&#125;</span>.tar.gz</span><br><span class="line"> <span class="number">16</span>   UPDATE_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line"> <span class="number">17</span>   CMAKE_ARGS</span><br><span class="line"> <span class="number">18</span>     -DCMAKE_INSTALL_PREFIX=<span class="variable">$&#123;CATKIN_DEVEL_PREFIX&#125;</span></span><br><span class="line"> <span class="number">19</span>     -DWITH_CGAL_Qt5:BOOL=<span class="keyword">OFF</span></span><br><span class="line"> <span class="number">20</span>     -DWITH_CGAL_ImageIO:BOOL=<span class="keyword">OFF</span></span><br><span class="line"> <span class="number">21</span>     -DCMAKE_BUILD_TYPE:<span class="keyword">STRING</span>=Release</span><br><span class="line"> <span class="number">22</span>   <span class="keyword">BUILD_COMMAND</span> $(MAKE)</span><br><span class="line"> <span class="number">23</span>   INSTALL_COMMAND $(MAKE) <span class="keyword">install</span></span><br><span class="line"> <span class="number">24</span> )</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="例六：使用本地压缩文件"><a href="#例六：使用本地压缩文件" class="headerlink" title="例六：使用本地压缩文件"></a>例六：使用本地压缩文件</h2><p>假设 package 路径为 catkin_ws&#x2F;src&#x2F;smach_test，预先将 SDL2-2.0.8.tar.gz 放置到 catkin_ws&#x2F;<strong>build</strong>&#x2F;smach_test&#x2F;smach-prefix&#x2F;src&#x2F;smach 目录下</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ExternalProject_Add(smach</span><br><span class="line"><span class="comment">#  URL &quot;https://www.libsdl.org/release/SDL2-2.0.8.tar.gz&quot;</span></span><br><span class="line">  URL <span class="string">&quot;SDL2-2.0.8.tar.gz&quot;</span></span><br><span class="line">  UPDATE_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="comment">#  CMAKE_ARGS</span></span><br><span class="line"><span class="comment">#    -DCMAKE_INSTALL_PREFIX=$&#123;CATKIN_DEVEL_PREFIX&#125;</span></span><br><span class="line"><span class="comment">#    -DWITH_CGAL_Qt5:BOOL=OFF</span></span><br><span class="line"><span class="comment">#    -DWITH_CGAL_ImageIO:BOOL=OFF</span></span><br><span class="line"><span class="comment">#    -DCMAKE_BUILD_TYPE:STRING=Release</span></span><br><span class="line"><span class="comment">#  BUILD_COMMAND $(MAKE)</span></span><br><span class="line"><span class="comment">#  INSTALL_COMMAND $(MAKE) install</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>执行 catkin_make 编译时，会读取指定的压缩文件，并解压</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src=&#x27;/home/ros/test/catkin/catkin_ws/build/smach_test/smach-prefix/src/SDL2-2.0.8.tar.gz&#x27;</span><br><span class="line">dst=&#x27;/home/ros/test/catkin/catkin_ws/build/smach_test/smach-prefix/src/smach&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>注意：URL 若给定的是相对路径，则始终是相对于 catkin_ws&#x2F;build&#x2F;smach_test&#x2F;smach-prefix&#x2F;src&#x2F; 。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/" class="post-title-link" itemprop="url">find</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-21 20:01:37" itemprop="dateModified" datetime="2024-09-21T20:01:37+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>8.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="FIND-PATH"><a href="#FIND-PATH" class="headerlink" title="FIND_PATH"></a>FIND_PATH</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_path</span> (&lt;VAR&gt; name1 [path1 path2 ...])</span><br><span class="line"><span class="keyword">find_path</span> (</span><br><span class="line">          &lt;VAR&gt;</span><br><span class="line">          name | NAMES name1 [name2 ...]</span><br><span class="line">          [HINTS path1 [path2 ... ENV var]]</span><br><span class="line">          [PATHS path1 [path2 ... ENV var]]</span><br><span class="line">          [PATH_SUFFIXES suffix1 [suffix2 ...]]</span><br><span class="line">          [DOC <span class="string">&quot;cache documentation string&quot;</span>]</span><br><span class="line">          [NO_DEFAULT_PATH]</span><br><span class="line">          [NO_PACKAGE_ROOT_PATH]</span><br><span class="line">          [NO_CMAKE_PATH]</span><br><span class="line">          [NO_CMAKE_ENVIRONMENT_PATH]</span><br><span class="line">          [NO_SYSTEM_ENVIRONMENT_PATH]</span><br><span class="line">          [NO_CMAKE_SYSTEM_PATH]</span><br><span class="line">          [CMAKE_FIND_ROOT_PATH_BOTH |</span><br><span class="line">           ONLY_CMAKE_FIND_ROOT_PATH |</span><br><span class="line">           NO_CMAKE_FIND_ROOT_PATH]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;var&gt;</code> 变量用于存储搜索结果。若未找到，则结果为 <code>&lt;var&gt;-NOTFOUND</code></p>
-<h1 id="FIND-PACKAGE"><a href="#FIND-PACKAGE" class="headerlink" title="FIND_PACKAGE"></a>FIND_PACKAGE</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>( &lt;package&gt; [version] [EXACT] [QUIET] \</span><br><span class="line">    [MODULE][[REQUIRED|COMPONENTS] [components...]]    \</span><br><span class="line">    [OPTIONAL_COMPONENTS components...][NO_POLICY_SCOPE])</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>该函数会设置 <code>&lt;package&gt;_FOUND</code> 变量来指明是否找到该 。若找到了指定 package，则会设置该 package 的相关变量，通过这些变量及相应的 <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#imported-targets">Imported Targets</a> 可获得该 package 的相关信息。</p>
-<p>参数说明：</p>
-<ul>
-<li><strong>QUIET</strong> 选项将会关闭包未找到时的警告信息；</li>
-<li><strong>REQUIRED</strong> 选项表示：如果包未找到，则 cmake 的过程会终止，并输出警告信息；</li>
-<li><strong>EXACT</strong> 选项表示版本号必须精确匹配；</li>
-<li><strong>COMPONENTS</strong> 选项(或未指定 REQUIRED 时)表示可以列出一些与包相关的部件清单；</li>
-<li><strong>version</strong> 参数为版本信息，格式为: <code>major[.minor[.patch[.tweak]]]</code></li>
-</ul>
-<h2 id="module-与-config-模式"><a href="#module-与-config-模式" class="headerlink" title="module 与 config 模式"></a>module 与 config 模式</h2><p>find_package 在搜索 package 时，有两种模式：”<strong>Module</strong>“ 模式和 “<strong>Config</strong>“ 模式</p>
-<img src="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/find/image-20240916112611108.png" class="" title="image-20240916112611108">
-
-<ul>
-<li><p><strong>Module 模式</strong>：该模式下，cmake 搜索所有名为 <strong>Find.cmake</strong> 的文件（例如：FindProtobuf.cmake）。这些文件的路径由 <strong>CMAKE_MODULE_PATH</strong> 变量指定。若找到该文件，则读取并处理。该模式负责查找 package、检查版本并生成必要的信息。许多模块都只提供了有限的信息，而没有版本化相关的信息。<strong>若未找到任何模块，且未明确指定 MOUDLE 选项，则进入 Config 模式</strong></p>
-</li>
-<li><p><strong>Config 模式</strong>：完整的 Config 模式的命令格式为：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(&lt;package&gt; [version] [EXACT] [QUIET]</span><br><span class="line">       [REQUIRED] [[COMPONENTS] [components...]]</span><br><span class="line">       [CONFIG|NO_MODULE]</span><br><span class="line">       [NO_POLICY_SCOPE]</span><br><span class="line">       [NAMES name1 [name2 ...]]</span><br><span class="line">       [CONFIGS config1 [config2 ...]]</span><br><span class="line">       [HINTS path1 [path2 ... ]]</span><br><span class="line">       [PATHS path1 [path2 ... ]]</span><br><span class="line">       [PATH_SUFFIXES suffix1 [suffix2 ...]]</span><br><span class="line">       [NO_DEFAULT_PATH]</span><br><span class="line">       [NO_CMAKE_ENVIRONMENT_PATH]</span><br><span class="line">       [NO_CMAKE_PATH]</span><br><span class="line">       [NO_SYSTEM_ENVIRONMENT_PATH]</span><br><span class="line">       [NO_CMAKE_PACKAGE_REGISTRY]</span><br><span class="line">       [NO_CMAKE_BUILDS_PATH] <span class="comment"># Deprecated; does nothing.</span></span><br><span class="line">       [NO_CMAKE_SYSTEM_PATH]</span><br><span class="line">       [NO_CMAKE_SYSTEM_PACKAGE_REGISTRY]</span><br><span class="line">       [CMAKE_FIND_ROOT_PATH_BOTH |</span><br><span class="line">        ONLY_CMAKE_FIND_ROOT_PATH |</span><br><span class="line">        NO_CMAKE_FIND_ROOT_PATH])</span><br></pre></td></tr></table></figure>
-
-<p><strong>CONFIG</strong> 选项可用于明确指定跳过 Module 模式，直接进入 Config 模式，<strong>NO_MODULE</strong> 选项与 CONFIG 选项类似。Config 模式尝试查找一个由待查找的包提供的配置文件的位置。包含该文件的路径会被存储在名为 <strong>_DIR</strong> 的缓存变量中。默认情况下，该命令搜索名为  的包。若指定了 NAMES 选项，则其后的 names 参数会替代 。该指令为每个指定的 name 参数搜索名为 <strong>Config.cmake</strong> 或 <strong>-config.cmake</strong> 的文件。<strong>可通过 CONFIGS 选项改变可能的配置文件的名字</strong>。如果找到了配置文件，它将会被 CMake 读取并处理。由于该文件是由包自身提供的，它已经知道包中内容的位置。配置文件的完整路径存储在 cmake 的 <strong>_CONFIG</strong> 变量中。所有 CMake 要处理的配置文件将会搜索对应包的安装信息，并且将该安装匹配的 appropriate version 存储在 cmake 变量 _CONSIDERED_CONFIGS 中，与之相关的版本号（associated version）将被存储在 _CONSIDERED_VERSIONS 中。</p>
-<p>若未找到 package 的配置文件，cmake 会生成一个错误描述文件（除非指定了 QUIET 选项）。若设置了 <strong>_DIR</strong> 变量，但是该变量所指的路径下并没有包含配置文件信息，则会直接忽略该变量，并重新开始查找。</p>
-<p>CMake3.12 新增了 <strong>_ROOT</strong> 变量，可通过设置 CMP0074 Policy 来关闭。若定义了 <strong>_DIR</strong> 变量，那么 <strong>_ROOT</strong> 不起作用。</p>
-</li>
-</ul>
-<p>版本相关变量</p>
-<table>
-<thead>
-<tr>
-<th>PACKAGE_FIND_NAME</th>
-<th>名字。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PACKAGE_FIND_VERSION</td>
-<td>请求的完整版本字符串</td>
-</tr>
-<tr>
-<td>PACKAGE_FIND_VERSION_MAJOR</td>
-<td>如果被请求了，那么它是major版本号，否则是0。</td>
-</tr>
-<tr>
-<td>PACKAGE_FIND_VERSION_MINOR</td>
-<td>如果被请求了，那么它是minor版本号，否则是0。</td>
-</tr>
-<tr>
-<td>PACKAGE_FIND_VERSION_PATCH</td>
-<td>如果被请求了，那么它是patch版本号，否则是0。</td>
-</tr>
-<tr>
-<td>PACKAGE_FIND_VERSION_TWEAK</td>
-<td>如果被请求了，那么它是tweak版本号，否则是0。</td>
-</tr>
-<tr>
-<td>PACKAGE_FIND_VERSION_COUNT</td>
-<td>版本号包含几部分，0到4。</td>
-</tr>
-</tbody></table>
-<p>版本匹配规则</p>
-<table>
-<thead>
-<tr>
-<th>PACKAGE_VERSION</th>
-<th>提供的完整的版本字符串。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PACKAGE_VERSION_EXACT</td>
-<td>如果版本号精确匹配，返回true。</td>
-</tr>
-<tr>
-<td>PACKAGE_VERSION_COMPATIBLE</td>
-<td>如果版本号相兼容，返回true。</td>
-</tr>
-<tr>
-<td>PACKAGE_VERSION_UNSUITABLE</td>
-<td>如果不适合任何版本，返回true。</td>
-</tr>
-</tbody></table>
-<p>find_package 指令会使用上面的这些变量来检查版本是否可接受。在find_package 返回之后，上面这些变量就不再可用。若版本可接受，则会设置下面的变量：</p>
-<table>
-<thead>
-<tr>
-<th>_VERSION</th>
-<th>提供的完整的版本字符串</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>_VERSION_MAJOR</td>
-<td>major版本号，否则是0</td>
-</tr>
-<tr>
-<td>_VERSION_MINOR</td>
-<td>minor版本号，否则是0</td>
-</tr>
-<tr>
-<td>_VERSION_PATCH</td>
-<td>patch版本号，否则是0</td>
-</tr>
-<tr>
-<td>_VERSION_TWEAK</td>
-<td>tweak版本号，否则是0</td>
-</tr>
-<tr>
-<td>_VERSION_COUNT</td>
-<td>版本号包含几部分，0到4</td>
-</tr>
-</tbody></table>
-<p>当有多个版本满足要求时，选择使用哪个包是不确定的。此时可以使用 <strong>CMAKE_FIND_PACKAGE_SORT_ORDER</strong> 和 <strong>CMAKE_FIND_PACKAGE_SORT_DIRECTION</strong> 指令来设置选择顺序。例如，如下指令可以设置优先选择最高版本（需写在 find_package 之前，且 cmake 3 之前的版本未必支持该指令）：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(CMAKE_FIND_PACKAGE_SORT_ORDER NATURAL)</span><br><span class="line"><span class="keyword">SET</span>(CMAKE_FIND_PACKAGE_SORT_DIRECTION DEC)</span><br></pre></td></tr></table></figure>
-
-<p>Config 模式提供了精细的接口和搜索过程。提供的大部分接口都是为了完整性，并由 Module 模式加载的 find-modules 内部使用。大多数用户代码应该只是调用：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(&lt;package&gt; [major[.minor]] [EXACT] [REQUIRED|QUIET])</span><br></pre></td></tr></table></figure>
-
-<p>（建议提供 CMake 软件包配置文件的软件包维护者命名和安装它们，以便下面列出的过程可以找到它们而无需使用其他选项）</p>
-<h2 id="package-前缀及查找路径"><a href="#package-前缀及查找路径" class="headerlink" title="package 前缀及查找路径"></a>package 前缀及查找路径</h2><p>CMake 为 package 构造了一组可能的安装前缀。在每个前缀下，多个目录会被搜索，用来查找配置文件。下述的表格展示了待搜索的路径。每个条目都是专门为Windows(W)，UNIX(U)或者Apple(A)约定的安装树指定的：</p>
-<table>
-<thead>
-<tr>
-<th>路径</th>
-<th>OS</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><prefix>&#x2F;</td>
-<td>(W)</td>
-</tr>
-<tr>
-<td><prefix>&#x2F;(cmake|CMake)&#x2F;</td>
-<td>(W)</td>
-</tr>
-<tr>
-<td><prefix>&#x2F;<name>*&#x2F;</td>
-<td>(W)</td>
-</tr>
-<tr>
-<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;&lt;****name****&gt;*&#x2F;</strong></strong>(cmake**</strong>|<strong><strong>CMake)</strong></strong>&#x2F;**</td>
-<td>(W)</td>
-</tr>
-<tr>
-<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;***<em>arch****&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;<strong><strong>cmake</strong></strong>&#x2F;&lt;****name****&gt;*&#x2F;</em>*</td>
-<td>(U)</td>
-</tr>
-<tr>
-<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;***<em>arch****&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;&lt;****name****&gt;*&#x2F;</em>*</td>
-<td>(U)</td>
-</tr>
-<tr>
-<td><strong>&lt;<strong><strong>prefix</strong><strong>&gt;&#x2F;</strong></strong>(lib**</strong>&#x2F;&lt;<strong><strong>arch</strong>**&gt;|<strong><strong>lib</strong></strong>|<strong><strong>share)</strong></strong>&#x2F;&lt;**<strong>name****&gt;*&#x2F;</strong></strong>(cmake****|<strong><strong>CMake)</strong></strong>&#x2F;**</td>
-<td>(U)</td>
-</tr>
-<tr>
-<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;cmake&#x2F;<name></em>&#x2F;</td>
-<td>(W&#x2F;U)</td>
-</tr>
-<tr>
-<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;<name></em>&#x2F;</td>
-<td>(W&#x2F;U)</td>
-</tr>
-<tr>
-<td><prefix>&#x2F;<name><em>&#x2F;(lib&#x2F;<arch>|lib|share)&#x2F;<name></em>&#x2F;(cmake|CMake)&#x2F;</td>
-<td>(W&#x2F;U)</td>
-</tr>
-<tr>
-<td>&#x2F;.framework&#x2F;Resources&#x2F;</td>
-<td>(A)</td>
-</tr>
-<tr>
-<td>&#x2F;.framework&#x2F;Resources&#x2F;CMake&#x2F;</td>
-<td>(A)</td>
-</tr>
-<tr>
-<td>&#x2F;.framework&#x2F;Versions&#x2F;*&#x2F;Resources&#x2F;</td>
-<td>(A)</td>
-</tr>
-<tr>
-<td>&#x2F;.framework&#x2F;Versions&#x2F;*&#x2F;Resources&#x2F;CMake&#x2F;</td>
-<td>(A)</td>
-</tr>
-<tr>
-<td>&#x2F;.app&#x2F;Contents&#x2F;Resources&#x2F;</td>
-<td>(A)</td>
-</tr>
-<tr>
-<td>&#x2F;.app&#x2F;Contents&#x2F;Resources&#x2F;CMake&#x2F;</td>
-<td>(A)</td>
-</tr>
-</tbody></table>
-<p>安装前缀  通过以下步骤构建，若指定了 <strong>NO_DEFAULT_PATH</strong> 选项，所有 NO_* 选项都会被激活：</p>
-<p>①、搜索 cmake-specific 缓存变量指定的路径。这些变量是为了在命令行中用 -DVAR&#x3D;value 选项而设计的。通过指定 NO_CMAKE_PATH 选项可以跳过该搜索路径。搜索路径还包括：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_PREFIX_PATH</span><br><span class="line">CMAKE_FRAMEWORK_PATH</span><br><span class="line">CMAKE_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
-
-<p>②、搜索 cmake-specific 环境变量指定的路径。这些变量是为了用户在 shell 中进行配置而设计的。通过指定NO_CMAKE_ENVIRONMENT_PATH选项可以跳过该路径。搜索的路径包括：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;package&gt;_DIR</span><br><span class="line">CMAKE_PREFIX_PATH</span><br><span class="line">CMAKE_FRAMEWORK_PATH</span><br><span class="line">CMAKE_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
-
-<p>③、搜索 <strong>HINTS</strong> 选项指定的路径。</p>
-<p>④、搜索**标准的系统环境变量(eg.PATH)**。可通过设置 NO_SYSTEM_ENVIRONMENT_PATH 选项跳过该路径。PATH 中以 “&#x2F;bin” 或 “&#x2F;sbin” 结尾的路径会被自动转换为它们的父路径。例如：PATH 中包含 &#x2F;usr&#x2F;bin，则cmake会自动到 &#x2F;usr&#x2F;(lib&#x2F;|lib|share)&#x2F;cmake&#x2F;&#x2F; 目录下进行搜索</p>
-<p>⑤、搜索在 CMake GUI 中最新配置过的工程的构建树。可通过 NO_CMAKE_BUILDS_PATH 跳过该路径</p>
-<p>⑥、搜索存储在 CMake <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.0/manual/cmake-packages.7.html#user-package-registry">User Package Registry</a> 中的路径。可通过 NO_CMAKE_PACKAGE_REGISTRY 跳过该路径</p>
-<p>⑦、搜索当前系统中定义的 cmake 变量指定的路径。可通过 NO_CMAKE_SYSTEM_PATH 跳过该路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_SYSTEM_PREFIX_PATH</span><br><span class="line">CMAKE_SYSTEM_FRAMEWORK_PATH</span><br><span class="line">CMAKE_SYSTEM_APPBUNDLE_PATH</span><br></pre></td></tr></table></figure>
-
-<p>⑧、搜索存储在 CMake System Package Registry 中的路径。可通过 NO_CMAKE_SYSTEM_PACKAGE_REGISTRY 跳过该路径</p>
-<p>⑨、搜索 PATHS 选项指定的路径</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(PCL REQUIRED</span><br><span class="line">             PATHS /home/xxx/<span class="number">3</span>rdlibs/pcl/pcl-<span class="number">1.8</span> <span class="comment"># look here</span></span><br><span class="line">             NO_DEFAULT_PATH)</span><br><span class="line">             </span><br><span class="line"><span class="comment"># 指定路径，同时通过 EXACT 来匹配特定版本      </span></span><br><span class="line"><span class="keyword">find_package</span>(OpenCV <span class="number">3.1</span> EXACT REQUIRED PATHS /usr/local/opencv3.<span class="number">1</span>)             </span><br></pre></td></tr></table></figure>
-
-
-
-<p>总结：根据上面描述，主要包括以下几个重要查找目录：</p>
-<ul>
-<li><p><code>&lt;package&gt;_DIR</code></p>
-</li>
-<li><p><code>CMAKE_PREFIX_PATH</code></p>
-</li>
-<li><p>&#96;&#96;CMAKE_FRAMEWORK_PATH&#96;</p>
-</li>
-<li><p><code>CMAKE_APPBUNDLE_PATH PATH</code></p>
-</li>
-</ul>
-<p>优先级最高的是 <code>&lt;package&gt;_DIR</code> 路径。该路径可在调用 cmake 时传入。</p>
-<p>例如：假设在 &#x2F;usr&#x2F;local&#x2F;share 目录下编译了 OpenCV3.3.4:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">OpenCV_DIR=/usr/local/share/opencv-3.3.4/build/ cmake</span></span><br></pre></td></tr></table></figure>
-
-<p>也可在 CMakeLists.txt 中通过 <strong><code>set(OpenCV_DIR &quot;/usr/local/share/opencv-3.3.4/build&quot;)</code></strong> 语句指定 <strong>_DIR 可解决系统中包含不同版本的包的问题</strong> </p>
-<p>由于 &#x2F;usr&#x2F;bin 通常都包含在环境变量 PATH 之中，因此 cmake 会自动到 &#x2F;usr&#x2F;(lib&#x2F;|lib|share)&#x2F;cmake&#x2F;&#x2F; 目录下查找模块，因而大部分通过 apt-get 安装的库都可以被找到</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># VTK_DIR是一个缓存变量，它在CMake调用中保持其状态。</span></span><br><span class="line"><span class="keyword">SET</span>(VTK_DIR <span class="string">&quot;/usr/include/vtk-5.8&quot;</span> CACHE PATH <span class="string">&quot;VTK directory override&quot;</span> FORCE)  </span><br></pre></td></tr></table></figure>
-
-
-
-<p>module 模式下，首先会在模块路径中寻找 Find.cmake，这是查找库的一个典型方式。具体查找路径依次为CMake：</p>
-<ul>
-<li>变量 ${CMAKE_MODULE_PATH} 中的所有目录。</li>
-<li>如果没有，然后再查看它自己的模块目录&#x2F;share&#x2F;cmake-x.y&#x2F;Modules&#x2F;（可通过 CMAKE_ROOT 变量查看. 例如：ubuntu上为 &#x2F;usr&#x2F;share&#x2F;cmake-3.5&#x2F;Modules&#x2F;）。</li>
-</ul>
-<p>(可通过 <strong>SET(CMAKE_MODULE_PATH dir)</strong> 设置查找路径)</p>
-<p>示例：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span> (&lt;package&gt; PATHS paths... NO_DEFAULT_PATH)</span><br><span class="line"><span class="comment"># eg. </span></span><br><span class="line"><span class="keyword">find_package</span>(OpenCV <span class="number">3.1</span> EXACT REQUIRED PATHS /usr/local/opencv3.<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(OpenCV_DIR /usr/local/opencv-<span class="number">4.5</span>.<span class="number">5</span>/lib/cmake/opencv4)</span><br><span class="line"><span class="keyword">find_package</span>( OpenCV <span class="number">4.5</span>.<span class="number">5</span> REQUIRED )</span><br><span class="line"><span class="comment">#set(OpenCV_DIR /opt/ros/kinetic/share/OpenCV-3.3.1-dev)</span></span><br><span class="line"><span class="comment">#find_package( OpenCV 3.3.1 REQUIRED )</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>总结：</p>
-<ul>
-<li><p>判断 find_package() 执行的是 module 模式还是 config 模式</p>
-<ul>
-<li><p>要看 CMAKE_MODULE_PATH 或 cmake 安装路径下是否有 Find.cmake 脚本存在，并且这个脚本能否正确找到包；如果不存在，或这个脚本执行失败，则进入 config 模式</p>
-</li>
-<li><p>通过 CONFIG、NO_MODULE、CONFIG 模式特有字段设定 config 模式</p>
-</li>
-</ul>
-</li>
-<li><p><strong>_DIR</strong> 是 config 模式特有的缓存变量</p>
-<ul>
-<li><p>可在 find_package() 前设定 _DIR，指向包含Config.cmake 或 -config.cmake 的目录</p>
-</li>
-<li><p>module 模式下在 find_package() 前设定 _DIR，并不能用来帮助 find_package() 找到包；并且在 find_package() 后，也没有 _DIR 变量自动存在</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="protobuf-版本"><a href="#protobuf-版本" class="headerlink" title="protobuf 版本"></a><strong>protobuf 版本</strong></h3><p>假设系统中有两个版本的 protobuf</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. apt 安装</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libprotobuf-dev protobuf-compiler</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2. 源码编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">/home/test/thirdlibs/protobuf-3.14.0</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(Protobuf_PREFIX_PATH</span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/include&quot;</span></span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/lib&quot;</span></span><br><span class="line">    <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/bin&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">list</span>(APPEND CMAKE_PREFIX_PATH <span class="string">&quot;$&#123;Protobuf_PREFIX_PATH&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(Protobuf REQUIRED)</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误示例</span></span><br><span class="line"><span class="keyword">set</span>(Protobuf_DIR <span class="string">&quot;/home/zz/soft/protobuf-3.8.0/lib/cmake/protobuf&quot;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(Protobuf REQUIRED)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>需注意 find_package 工作在 module 还是 config 模式。当 cmake 安装路径下提供了 FindProtobuf.cmake 时，工作在 module 模式；而不设定 CMAKE_PREFIX_PATH 等预定义变量，仅设置 Protobuf_DIR 的情况下，并不能进入 config 模式，此时 Protobuf_DIR 并未起作用。</p>
-<h1 id="FIND-LIBRARY"><a href="#FIND-LIBRARY" class="headerlink" title="FIND_LIBRARY"></a>FIND_LIBRARY</h1>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -2873,14 +2309,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">454k</span>
+    <span title="站点总字数">477k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">13:46</span>
+    <span title="站点阅读时长">14:28</span>
   </span>
 </div>
 <div class="busuanzi-count">
