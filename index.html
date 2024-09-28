@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">122</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,274 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/28/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-I/%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/28/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-I/%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/" class="post-title-link" itemprop="url">接口规范</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-28 12:27:43 / 修改时间：13:34:12" itemprop="dateCreated datePublished" datetime="2024-09-28T12:27:43+08:00">2024-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-Industrial/" itemprop="url" rel="index"><span itemprop="name">ROS-Industrial</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>提供一些关于 ROS 工业机器人应提供哪些特定 ROS 接口的指南，以确保最大的兼容性。</p>
+<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>参考：<a target="_blank" rel="noopener" href="https://github.com/ros-industrial/rep/blob/master/rep-I0006.rst">https://github.com/ros-industrial/rep/blob/master/rep-I0006.rst</a></p>
+<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>关于初始化：</p>
+<ul>
+<li><p>ROS node 需自动初始化与机器人控制器的所有连接</p>
+<ul>
+<li>不应该出现需手动连接的需求</li>
+</ul>
+</li>
+<li><p>机械臂端代码最好在控制器启动时自动运行</p>
+</li>
+</ul>
+<p>关于通信：</p>
+<ul>
+<li>机械臂和 ROS 节点都需要处理通信断连情况<ul>
+<li>ROS 节点端：<ul>
+<li>以固定频率（如 1Hz）重连</li>
+<li>断连后停止发送大部分消息</li>
+<li>继续发送 state 消息，其中 <code>connected=false</code></li>
+</ul>
+</li>
+<li>机械臂端：<ul>
+<li>停止运动，并将驱动断电</li>
+<li>重新初始化所有连接，等待新的连接请求</li>
+</ul>
+</li>
+<li>如果接口不能直接检测到通信中断，则需要在机器人&#x2F;ROS双方之间实现心跳消息</li>
+</ul>
+</li>
+</ul>
+<h1 id="ROS-API"><a href="#ROS-API" class="headerlink" title="ROS API"></a>ROS API</h1><p>定义机器人应该提供的 ROS 接口。</p>
+<h2 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a>通用参数</h2><ul>
+<li><code>robot_ip_address</code></li>
+<li><code>robot_description</code>：URDF</li>
+</ul>
+<h2 id="State-Feedback"><a href="#State-Feedback" class="headerlink" title="State Feedback"></a>State Feedback</h2><p>通过 Topics 发布状态信息</p>
+<ul>
+<li><code>feedback_states</code><ul>
+<li>ROS-I <a target="_blank" rel="noopener" href="https://github.com/ros-industrial/industrial_core/blob/groovy-devel/industrial_robot_client/src/joint_trajectory_action.cpp">joint_trajectory_action</a> 订阅该主题数据来监测正在执行的运动</li>
+</ul>
+</li>
+<li><code>joint_state</code>：关节位姿信息（及 速度&#x2F;力）</li>
+<li><code>robot_status</code>：<a target="_blank" rel="noopener" href="https://docs.ros.org/en/groovy/api/industrial_msgs/html/msg/RobotStatus.html">industrial_msgs&#x2F;RobotStatus</a> 类型</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">std_msgs/Header header</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * UNKNOWN: -1</span></span><br><span class="line"><span class="comment"> * MANUAL: 1 # 手动控制</span></span><br><span class="line"><span class="comment"> * AUTO: 2</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">industrial_msgs/RobotMode mode</span><br><span class="line">industrial_msgs/TriState e_stopped</span><br><span class="line">industrial_msgs/TriState drives_powered</span><br><span class="line">industrial_msgs/TriState motion_possible</span><br><span class="line">industrial_msgs/TriState in_motion</span><br><span class="line">industrial_msgs/TriState in_error</span><br><span class="line">int32 error_code</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="运动控制"><a href="#运动控制" class="headerlink" title="运动控制"></a>运动控制</h2><h3 id="订阅主题"><a href="#订阅主题" class="headerlink" title="订阅主题"></a>订阅主题</h3><ul>
+<li><p><code>joint_path_command</code> </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// trajectory_msgs/JointTrajectory 类型</span></span><br><span class="line"></span><br><span class="line">std_msgs/Header header</span><br><span class="line"><span class="comment">// 关节列表</span></span><br><span class="line">string[] joint_names </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 轨迹点链表。每个轨迹点包含：</span></span><br><span class="line"><span class="comment"> * 	float64[] positions # 该轨迹点时各关节的位姿</span></span><br><span class="line"><span class="comment"> * 	float64[] velocities # 该轨迹点上各关节的速度</span></span><br><span class="line"><span class="comment"> * 	float64[] accelerations # 该轨迹点上各关节的加速度</span></span><br><span class="line"><span class="comment"> *	float64[] effort # 该轨迹点上各关节的力</span></span><br><span class="line"><span class="comment"> *  duration time_from_start # 该轨迹点与轨迹起点间隔（即：多久运行到该轨迹点）</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *  time_from_stat 可替代速度参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">trajectory_msgs/JointTrajectoryPoint[] points</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>joint_command</code> ：消息类型为 <a target="_blank" rel="noopener" href="http://docs.ros.org/en/api/trajectory_msgs/html/msg/JointTrajectoryPoint.html">trajectory_msgs&#x2F;JointTrajectoryPoint</a> 。流式下路径点</p>
+</li>
+</ul>
+<h3 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h3><ul>
+<li><p><code>stop_motion</code>：停止当前运动</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">industrial_msgs/ServiceReturnCode code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>joint_path_command</code>：执行运动轨迹，与 <code>joint_path_command</code> 主题功能相同</p>
+</li>
+</ul>
+<h3 id="Kinematics"><a href="#Kinematics" class="headerlink" title="Kinematics"></a>Kinematics</h3><p>为了实现实时运动规划和避撞，节点应该提供机器人特定的逆运动学求解器。ROS 提供了一个通用求解器，但它的运行速度太慢，无法进行避障路径规划。</p>
+<p>这类求解器应该作为插件而不是服务与 ROS 集成，以避免昂贵的通信相关开销（可使用共享内存解决通信开销问题）。</p>
+<h3 id="路径精度"><a href="#路径精度" class="headerlink" title="路径精度"></a>路径精度</h3><p>上面提到的运动接口没有指定遵循特定轨迹所需的精度。实现的路径精度水平将取决于特定机器人、控制器和 ROS 接口驱动程序的限制。</p>
+<p>ROS 路径规划器和碰撞检查器使用<strong>高阶平滑</strong>路径点之间的轨迹。由机器人控制器执行的最终轨迹将遵循类似的“平滑”轨迹，“但可能与“理想的”计划轨迹不完全匹配”。出于这个原因，ROS 路径规划器在机器人模型中添加了一定数量的 padding，以考虑规划路径与实际路径之间的差异。这将导致无碰撞运动的概率非常高。增加 padding 的级别可以减少碰撞的概率。</p>
+<p>路径规划器和机器人控制器之间的紧密集成将减少路径执行误差和碰撞填充要求。然而，这种集成水平超出了当前 ROS-Industrial 努力的范围，可能需要机器人特定的解决方案。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/28/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-I/ROS-Industrial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/28/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-I/ROS-Industrial/" class="post-title-link" itemprop="url">ROS-Industrial</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-28 12:16:44 / 修改时间：12:31:20" itemprop="dateCreated datePublished" datetime="2024-09-28T12:16:44+08:00">2024-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-Industrial/" itemprop="url" rel="index"><span itemprop="name">ROS-Industrial</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>43</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+
+
+
+<p>将不同供应商的机器人的控制与通用 ROS 框架集成，实现不同供应商的机器人之间的互操作性。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1936,215 +2204,6 @@ build:
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/Augmented_MCL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Localization/Augmented_MCL/" class="post-title-link" itemprop="url">Augmented_MCL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>283</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Augmented-MCL"><a href="#Augmented-MCL" class="headerlink" title="Augmented_MCL"></a>Augmented_MCL</h2><p>Augmented_MCL解决的是从机器人绑架或全局定位失效中恢复的问题。recovery_alpha_slow 及 recovery_alpha_fast 配置参数就是用于失效恢复的。随机采样以max{0.0,1.0-w(fast)&#x2F;w(slow)}概率增加。如果短期似然劣于长期似然则增加随机采样，这种方法，测量似然的一个突然衰减将引起随机采样的数目增加。w&#x3D;w+α(Wavg-w)–Wavg当前测量模型的权重，w为短期（w(fast)）或长期(w(slow))平滑估计，α为与w对应的recovery_alpha_参数。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/AMCL%E5%8F%82%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Localization/AMCL%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">AMCL参数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="AMCL参数说明"><a href="#AMCL参数说明" class="headerlink" title="AMCL参数说明"></a>AMCL参数说明</h2><p>ROS AMCL节点有三类参数：<strong>overall filter、laser model、odometry model</strong>。  </p>
-<h3 id="1、overall-filter-参数"><a href="#1、overall-filter-参数" class="headerlink" title="1、overall filter 参数"></a>1、overall filter 参数</h3><p>min_particles(default: 100)、max_particles(default: 5000)<br>• 允许的最小粒子数、最大粒子数.    </p>
-<p>kld_err (double, default: 0.01)<br>• 实际分布与估算的分布之间的误差的最大值.<br>kld_z (double, default: 0.99)<br>• Upper standard normal quantile for (1 - p), where p is the probability that the error on the estimated distrubition will be less than kld_err.<br>这两个参数是针对 KDL_Sampling_MCL(AMCL的一部分)。</p>
-<p>update_min_d (default: 0.2 meters)、update_min_a (default: π&#x2F;6.0 radians)<br>• 执行过滤器更新前的移动距离、转动角度。即移动距离或转动角度超过该值就会触发过滤器刷新    </p>
-<p>resample_interval (int, default: 2)<br>• 重采样间隔  </p>
-<p>transform_tolerance (double, default: 0.1 seconds)<br>• 发布的 map-&gt;odom 的 tf 的容错公差.   </p>
-<p>recovery_alpha_slow (double, default: 0.0 (disabled))<br>• 慢速平均加权滤波器(slow average weight filter)的指数衰减速率，通过增加随机的位姿来决定何时recover。a good value might be 0.001  </p>
-<p>recovery_alpha_fast (double, default: 0.0 (disabled))<br>• 快速平均加权滤波器(fast average weight filter)的指数衰减速率，通过增加随机的位姿来决定何时recover。a good value might be 0.1  </p>
-<p>initial_pose_x、initial_pose_y、initial_pose_a (default:0,0,0)<br>• 初始位姿(x,y,yaw), 用于初始化带高斯分布的滤波器(即：初始粒子云分布, initial_pose_x 及 initial_pose_y 确定粒子云的中心位置，initial_pose_a 确定粒子云中粒子的朝向)  </p>
-<p>initial_cov_xx、initial_cov_yy、initial_cov_aa (default: 0.5<em>0.5,0.5</em>0.5,0.5<em>0.5 meters)<br>• 初始位姿协方差(x</em>x, y<em>y, yaw</em>yaw), 用于初始化带高斯分布的滤波器(即：初始粒子云分布，initial_cov_xx 及 initial_cov_yy 参数决定初始粒子集的范围, initial_cov_aa 确定粒子朝向的偏差)    </p>
-<p>gui_publish_rate (default: -1.0 Hz)<br>• scans及paths的最大发布速率(用于可视化)。-1则禁用(即:不发布)  </p>
-<p>save_pose_rate (double, default: 0.5 Hz)<br>• 存储最后估算的位姿和协方差(对应于initial_pose_* 及 initial_cov_<em>变量)到参数服务器的速率(即:更新参数服务器中initial_pose_</em> 及 initial_cov_*的值)。该存储的位姿可用于初始化后续运行的滤波器。-1.0则禁用  </p>
-<p>use_map_topic (bool, default: false)<br>• 设置为true时，AMCL将订阅map主题而不是执行服务调用(static_map 服务)来接收地图。  </p>
-<p>first_map_only (bool, default: false)<br>• 设置为true时，AMCL将只使用其订阅到的第一张地图，而不会每收到新的地图就进行更新。</p>
-<h3 id="2、laser-model-参数"><a href="#2、laser-model-参数" class="headerlink" title="2、laser model 参数"></a>2、laser model 参数</h3><p>注意：使用的混合权重总和始终为1。 beam model 使用所有4个参数： z_hit, z_short, z_max, 及 z_rand。  likelihood_field model 只使用 z_hit 和 z_rand。 通过 laser_model_type 来选择使用的 model。  </p>
-<p>laser_min_range、laser_max_range (default: -1.0, -1.0)<br>• 激光有效扫描范围。 激光最小扫描范围。-1.0表示：使用测量到的最小&#x2F;最大距离，否则，超出该范围的不考虑  </p>
-<p>laser_max_beams (int, default: 30)<br>• 更新滤波器时，使用的最大激光束数目.  </p>
-<p>laser_z_hit(0.95)、laser_z_short(0.1)、laser_z_max(0.05)、laser_z_rand(0.05)<br>• 分别为模型的 z_hit、z_short、z_max、z_rand 部分的混合权重.  </p>
-<p>laser_sigma_hit (double, default: 0.2 meters)<br>• 在模型的z_hit部分中使用的高斯模型的标准偏差.  </p>
-<p>laser_lambda_short (double, default: 0.1)<br>• 模型的z_short部分的指数衰减参数.  </p>
-<p>laser_likelihood_max_dist (double, default: 2.0 meters)<br>• 在地图上进行障碍物膨胀的最大距离，用于 likelihood_field 模型.  </p>
-<p>laser_model_type (string, default: “likelihood_field”)<br>• 选择使用的模型，可以是：beam, likelihood_field, 或者 likelihood_field_prob (与likelihood_field 类似，但合并了 beamskip feature).  </p>
-<h3 id="3、odometry-model-参数"><a href="#3、odometry-model-参数" class="headerlink" title="3、odometry model 参数"></a>3、odometry model 参数</h3><p>若<strong>odom_model_type</strong>设置为”<strong>diff</strong>“，则使用probabilisitic Robotics中p136页中的<strong>sample_motion_model_odometry</strong>算法，该模式使用噪声参数odom_alpha_1到odom_alpha_4。<br><img src="/images/sample_motion_model_odometry.png" alt="sample_motion_model_odometry"></p>
-<p>若<strong>odom_mode_type</strong>设置为”<strong>omni</strong>“，则会为全向底盘使用custom model，该model使用odom_alpha_1到odom_alpha_5参数。前四个参数与”diff” model相似。第五个参数odom_alpha_5采集机器人垂直于观察到的平移方向移动的趋势。<br>注意：为了修复<a target="_blank" rel="noopener" href="https://github.com/ros-planning/navigation/issues/20">bug</a>,增加了”diff-corrected”及”omni-corrected”模型。odom_alpha 参数的默认值不再适用于新的 model，<a target="_blank" rel="noopener" href="http://answers.ros.org/question/227811/tuning-amcls-diff-corrected-and-omni-corrected-odom-models/">新的 model 这些值更低</a>。</p>
-<p>odom_model_type(default:”diff”)<br>• 指定使用的odom模型。可以为：”diff”, “omni”, “diff-corrected” or “omni-corrected”。  </p>
-<p>odom_alpha1 (0.2)<br>• 指定在根据机器人的运动的<strong>旋转分量</strong>估算odometry的旋转时期望的噪声<br>odom_alpha2 (0.2)<br>• 指定在根据机器人的运动的<strong>平移分量</strong>估算odometry的旋转时期望的噪声<br>odom_alpha3 (0.2)<br>• 指定在根据机器人的运动的<strong>平移分量</strong>估算odometry的平移时期望的噪声<br>odom_alpha4 (0.2)<br>• 指定在根据机器人的运动的<strong>旋转分量</strong>估算odometry的平移时期望的噪声<br>odom_alpha5 (0.2)<br>• 与平移相关的噪声参数。只对 omni 模型有效  </p>
-<p>odom_frame_id (default:”odom”)<br>base_frame_id (default:”base_link”)<br>global_frame_id (default:”map”)  </p>
-<p>tf_broadcast(default:true)<br>• 将此设置为false可禁止发布 全局坐标系 -&gt; odometry坐标系(即: map-&gt;odom) 之间的转换。。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2169,14 +2228,14 @@ build:
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">477k</span>
+    <span title="站点总字数">479k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:28</span>
+    <span title="站点阅读时长">14:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

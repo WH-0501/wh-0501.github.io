@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">122</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,435 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">jetson内核编译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 11:52:53" itemprop="dateCreated datePublished" datetime="2024-09-17T11:52:53+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/Jetson/" itemprop="url" rel="index"><span itemprop="name">Jetson</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>注：不同版本编译不一样，参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/">https://docs.nvidia.com/jetson/archives/</a></p>
+<h1 id="确认-L4T-版本"><a href="#确认-L4T-版本" class="headerlink" title="确认 L4T 版本"></a>确认 L4T 版本</h1><p>以 r36.3 为例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看版本信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">head</span> -n 1 /etc/nv_tegra_release</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">R36 (release), REVISION: 3.0, GCID: 36191598, BOARD: generic, EABI: aarch64, DATE: Mon May  6 17:34:21 UTC 2024</span></span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/image-20240917115757754.png" class="" title="image-20240917115757754">
+
+
+
+<h1 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装依赖</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install bison flex libssl-dev zip libncurses-dev make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install build-essential bc</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="源码及交叉编译环境"><a href="#源码及交叉编译环境" class="headerlink" title="源码及交叉编译环境"></a>源码及交叉编译环境</h1><p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r35.4.1/DeveloperGuide/text/AT/JetsonLinuxToolchain.html#at-jetsonlinuxtoolchain">Jetson Linux Toolchain</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r35.4.1/DeveloperGuide/text/SD/Kernel/KernelCustomization.html#building-the-kernel">Building the Kernel</a></li>
+</ul>
+<img src="/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/image-20240917120004288.png" class="" title="image-20240917120004288">
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压内核源码</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tar xf public_sources.tbz2 -C &lt;install-path&gt;/Linux_for_Tegra/..</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;install-path&gt;/Linux_for_Tegra/source</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tar xf kernel_src.tbz2  <span class="comment"># 会将内核源码解压到 source/kernel 目录</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tar xf kernel_oot_modules_src.tbz2</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tar xf nvidia_kernel_display_driver_source.tbz2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置交叉编译链"><a href="#配置交叉编译链" class="headerlink" title="配置交叉编译链"></a><strong>配置交叉编译链</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">假设交叉编译工具解压路径为：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="variable">$HOME</span>/aarch64--glibc--stable-2022.08-1</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> CROSS_COMPILE=<span class="variable">$HOME</span>/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若编译 real-time 内核，则需使能相关配置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./generic_rt_build.sh <span class="string">&quot;enable&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译内核</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make -C kernel</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">install kernel 和 modules</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 注意：需手动创建该目录 和 rootfs/boot 目录</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> INSTALL_MOD_PATH=&lt;install-path&gt;/Linux_for_Tegra/rootfs/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> -E make install -C kernel</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rootfs/boot/ 目录下已有 Image，是否必要？</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cp</span> kernel/kernel-jammy-src/arch/arm64/boot/Image \</span></span><br><span class="line"><span class="language-bash">  &lt;install-path&gt;/Linux_for_Tegra/kernel/Image</span> </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编译-Out-of-Tree-Modules"><a href="#编译-Out-of-Tree-Modules" class="headerlink" title="编译 Out-of-Tree Modules"></a><strong>编译 Out-of-Tree Modules</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> xx/Linux_for_Tegra/source</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若针对实时内核</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> IGNORE_PREEMPT_RT_PRESENCE=1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> KERNEL_HEADERS=<span class="variable">$PWD</span>/kernel/kernel-jammy-src</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make modules</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">install</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> INSTALL_MOD_PATH=&lt;install-path&gt;/Linux_for_Tegra/rootfs/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> -E make modules_install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新 initranfs</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;install-path&gt;/Linux_for_Tegra</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> ./tools/l4t_update_initrd.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 若在目标板直接编译，则执行 sudo nv-update-initrd</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编译-DTBs"><a href="#编译-DTBs" class="headerlink" title="编译 DTBs"></a><strong>编译 DTBs</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> &lt;install-path&gt;/Linux_for_Tegra/source</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> KERNEL_HEADERS=<span class="variable">$PWD</span>/kernel/kernel-jammy-src</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make dtbs</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">install</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cp</span> nvidia-oot/device-tree/platform/generic-dts/dtbs/* \</span></span><br><span class="line"><span class="language-bash">     &lt;install-path&gt;/Linux_for_Tegra/kernel/dtb/</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>KERNEL_HEADERS</code> 指向源目录而不是导出的标头目录，则需要运行 <code>make ARCH=arm64 defconfig</code> 脚本或等效脚本才能构建 dtc</p>
+<h1 id="签名及加密"><a href="#签名及加密" class="headerlink" title="签名及加密"></a>签名及加密</h1><p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r36.3/DeveloperGuide/SD/Security/SecureBoot.html#sd-security-secureboot">https://docs.nvidia.com/jetson/archives/r36.3/DeveloperGuide/SD/Security/SecureBoot.html#sd-security-secureboot</a></p>
+<h2 id="Kernel-Module-Signing"><a href="#Kernel-Module-Signing" class="headerlink" title="Kernel Module Signing"></a><strong>Kernel Module Signing</strong></h2><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r36.3/DeveloperGuide/SD/Security/SecureBoot.html#kernel-module-signing">https://docs.nvidia.com/jetson/archives/r36.3/DeveloperGuide/SD/Security/SecureBoot.html#kernel-module-signing</a></p>
+<p>内核模块签名工具在 install 期间对模块进行签名，然后在加载模块时检查签名。这可以通过禁止加载未签名的模块或使用无效密钥签名的模块来提高内核安全性。</p>
+<p>以下是内核模块签名的内核配置选项：</p>
+<ul>
+<li><p>要启用内核模块签名验证，需启用 <code>CONFIG_MODULE_SIG</code></p>
+</li>
+<li><p>要选择内核模块签名验证模式，请将 <code>CONFIG_MODULE_SIG_FORCE</code> 设置为以下选项之一：</p>
+<ul>
+<li><code>off</code>：宽容模式<ul>
+<li>如果模块已签名，则必须具有受信任的签名</li>
+<li>如果模块未签名，则可以加载，并且内核被标记为受污染</li>
+</ul>
+</li>
+<li><code>on</code>：限制模式<ul>
+<li>模块只有在使用受信任的签名签名后才能加载</li>
+<li>其他模块将生成错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>要在构建时启用自动内核模块签名，要设置 <code>CONFIG_MODULE_SIG_ALL</code></p>
+</li>
+</ul>
+<p>默认情况下，即使启用了内核模块签名验证，内核模块在构建时也不会签名。</p>
+<ul>
+<li>要指定签名密钥，需使用自己的 PEM 格式私钥设置 <code>CONFIG_MODULE_SIG_KEY</code><ul>
+<li>默认情况下，如果 <code>CONFIG_MODULE_SIG_KEY=&quot;certs/signing_key.pem&quot;</code> 未更改，则内核会自动生成用于内核模块签名的 PEM 格式签名密钥</li>
+<li>将 <code>CONFIG_MODULE_SIG_KEY</code> 设置为除 <code>certs/signing_key.pem</code> 默认值以外的值会禁用签名密钥的自动生成，并允许使用选择的密钥对内核模块进行签名。</li>
+</ul>
+</li>
+</ul>
+<p><code>CONFIG_SYSTEM_TRUSTED_KEYS</code> 内核选项也可以设置为包含其他证书的 PEM 编码文件的文件名。它是编译到内核中的 X.509 证书，用于对内核构建时未签名的模块进行内核模块验证。</p>
+<h1 id="内核使用"><a href="#内核使用" class="headerlink" title="内核使用"></a>内核使用</h1><h1 id="内核配置"><a href="#内核配置" class="headerlink" title="内核配置"></a>内核配置</h1><p>在 Linux_for_Tegra&#x2F;source&#x2F; 目录下执行 make 时，会调用 Linux_for_Tegra&#x2F;source&#x2F;kernel&#x2F;Makefile。</p>
+<img src="/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/image-20240917120647966.png" class="" title="image-20240917120647966">
+
+<p>通过在 <code>KERNEL_DEF_CONFIG</code> 中指定 <code>defconfig</code> 名称来自定义。</p>
+<p>按如下方式编译内核时，每次都会重新生成 <code>.config</code> 配置，因此在 kernel-jammy-src 目录下执行 <code>make menuconfig &amp; make savedefconfig</code> 后，再按如下方式编译是不生效的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> xxx/public_sources/Linux_for_Tegra/source</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make -C kernel</span></span><br></pre></td></tr></table></figure>
+
+<p>因此，可修改 <code>xxx/public_sources/Linux_for_Tegra/source/kernel/kernel-jammy-src/arch/arm64/configs/defconfig</code> 来配置内核。</p>
+<p>例如，使能编译 rndis_host 及 rndis_wlan 驱动（需留意依赖关系）</p>
+<img src="/2024/09/17/NVIDIA/Jetson/jetson%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/image-20240917120751784.png" class="" title="image-20240917120751784">
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/NVIDIA/NVIDIA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/NVIDIA/NVIDIA/" class="post-title-link" itemprop="url">NVIDIA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 11:19:43" itemprop="dateCreated datePublished" datetime="2024-09-17T11:19:43+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h1><p>查看显卡型号：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看显卡信号</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ubuntu-drivers devices</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">lshw -numeric -C display</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">lspci | grep -i vga</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="nouveau"><a href="#nouveau" class="headerlink" title="nouveau"></a><strong>nouveau</strong></h2><p>Xorg 项目下的支持 Nvidia 显卡的开源驱动。该项目的目标是利用逆向工程Nvidia的专有Linux 驱动创造一个开源驱动程序。nouveau 性能较低。</p>
+<p>NVK 是为 NVIDIA 图形硬件开发的新的开源 Vulkan 驱动程序，旨在成为新的图形驱动程序。</p>
+<p>Ubuntu 默认使用 X.Org X server - Nouveau 驱动。</p>
+<p>安装 NVIDIA GPU 驱动前，需禁用 nouveau。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看是否禁用</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"> lsmod | grep nouveau <span class="comment"># 若出现 nouveau 表示未禁用</span></span></span><br><span class="line">nouveau              2842624  0</span><br><span class="line">mxm_wmi                12288  1 nouveau</span><br><span class="line">drm_ttm_helper         12288  1 nouveau</span><br><span class="line">ttm                   110592  3 drm_ttm_helper,i915,nouveau</span><br><span class="line">drm_display_helper    241664  2 i915,nouveau</span><br><span class="line">drm_kms_helper        270336  4 drm_display_helper,nvidia_drm,i915,nouveau</span><br><span class="line">i2c_algo_bit           16384  3 nvidiafb,i915,nouveau</span><br><span class="line">drm                   761856  30 drm_kms_helper,drm_display_helper,nvidia,drm_buddy,drm_ttm_helper,nvidia_drm,i915,ttm,nouveau</span><br><span class="line">video                  73728  5 nvidia_wmi_ec_backlight,ideapad_laptop,i915,nouveau,nvidia_modeset</span><br><span class="line">wmi                    40960  6 video,nvidia_wmi_ec_backlight,wmi_bmof,ideapad_laptop,mxm_wmi,nouveau</span><br></pre></td></tr></table></figure>
+
+<p>注意：在 Intel Core i7-1465HX + RTX4060Ti 平台，ubuntu2204 测试，未屏蔽 nouveau，也能正常安装和使用 NVIDIA driver</p>
+<h2 id="NVIDIA-driver"><a href="#NVIDIA-driver" class="headerlink" title="NVIDIA driver"></a><strong>NVIDIA driver</strong></h2><p>方式一：通过系统自带软件中心，选择 NVIDIA 驱动(如 <em>NVIDIA  driver metapackage from nvidia-driver-xxx</em> 下图是已手动安装 NVIDIA 驱动后的截图)安装，会自动禁用 nouveau。</p>
+<img src="/2024/09/17/NVIDIA/NVIDIA/image-20240917112604604.png" class="" title="image-20240917112604604">
+
+
+
+<p>方式二：</p>
+<p>下载官方驱动 <a target="_blank" rel="noopener" href="https://www.nvidia.cn/drivers/lookup/">https://www.nvidia.cn/drivers/lookup/</a> OR <a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/geforce/drivers/">https://www.nvidia.com/en-us/geforce/drivers/</a></p>
+<img src="/2024/09/17/NVIDIA/NVIDIA/image-20240917112655871.png" class="" title="image-20240917112655871">
+
+<p>卸载原有驱动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt remove --purge nvidia*</span></span><br></pre></td></tr></table></figure>
+
+<p>更新依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt update</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install g++</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install gcc</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install make</span></span><br></pre></td></tr></table></figure>
+
+<p>禁用 nouveau</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 修改 /etc/modprobe.d/blacklist.conf 或 blacklist-nouveau.conf</span><br><span class="line"># 或 /etc/modprobe.d/blacklist-nvidia-nouveau.conf</span><br><span class="line"># 在末尾添加以下语句</span><br><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"></span><br><span class="line"># 然后在终端输入更新指令</span><br><span class="line">$ sudo update-initramfs -u</span><br></pre></td></tr></table></figure>
+
+<p>关闭当前显示服务，进入 tty</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ctrl + Alt + F1~F6 进入 TTY</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> systemctl gdm3 stop  <span class="comment"># 关闭显示服务</span></span></span><br></pre></td></tr></table></figure>
+
+<p>安装驱动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> ./NVIDIA-Linux-x86_64-xxxx.run</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装完，重启显示服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> systemctl restart gdm3</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：NVIDI CUDA 库中自带有 driver，因此，可直接安装 CUDA 即可。</p>
+<h1 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h1><p>cuda 安装参考：</p>
+<p>安装完成，需配置环境变量，例如：在  中添加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export CUDA_HOME=/usr/local/cuda-12.5</span><br><span class="line">export PATH=$CUDA_HOME/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$&#123;LD_LIBRARY_PATH&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="GCC-版本不匹配"><a href="#GCC-版本不匹配" class="headerlink" title="GCC 版本不匹配"></a>GCC 版本不匹配</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The kernel was built by： x86_64-linux-gnu-gcc-12(xxxx) 12.3.0</span><br><span class="line">You are using: CC(XXX) 11.3</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：更新 gcc 版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install gcc-12 g++-12</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 20</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc --version <span class="comment"># 验证版本信息</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="无法加载-nvidia-drm"><a href="#无法加载-nvidia-drm" class="headerlink" title="无法加载 nvidia-drm"></a><strong>无法加载 nvidia-drm</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable to load the &quot;nvidia-drm&quot; kernel module</span><br></pre></td></tr></table></figure>
+
+<p>尝试切换到终端命名模式，无效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到终端命令模式，不启动图形界面</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> systemctl set-default multi-user.target</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> reboot 0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt purge nvidia*</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt autoremmove</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> reboot 0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再次安装 CUDA</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> ./cuda-xxx.run</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换会图形界面模式</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> systemctl set-default graphical.target</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>最终解决方法</strong> : NVIDIA 驱动被列入黑名单(blacklisted)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 注意：prime-select 会生成 /lib/modprobe.d/nvidia-kms.conf 文件</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select nvidia <span class="comment"># 需安装 nvidia-prime</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看是否加入黑名单</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">grep nvidia /etc/modprobe.d/* /lib/modprobe.d/*</span></span><br><span class="line">/etc/modprobe.d/blacklist-framebuffer.conf:blacklist nvidiafb</span><br><span class="line">/lib/modprobe.d/nvidia-kms.conf:#This file was generated by nvidia-prime</span><br><span class="line">/lib/modprobe.d/nvidia-kms.conf:options nvidia-drm modeset=1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此处找到 /etc/modprobe.d/blacklist-framembuffer.conf 中有 nvidia，删除该文件中的 nvidia 相关行，然后执行</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span>  update-initramfs -u</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> reboot 0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然后重装即可</span></span><br></pre></td></tr></table></figure>
+
+<p>若 nvidia 驱动已安装，但在 settings 中看不到显卡信息，或者 nvidia-smi 无法查看信息，也可先检查是否有黑名单</p>
+<h3 id="prime-select-切换-nvidia-后无法进入图形界面"><a href="#prime-select-切换-nvidia-后无法进入图形界面" class="headerlink" title="prime-select 切换 nvidia 后无法进入图形界面"></a><strong>prime-select 切换 nvidia 后无法进入图形界面</strong></h3><p><code>prime-select</code> 会生成 <code>/lib/modprobe.d/nvidia-kms.conf</code> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This file was generated by nvidia-prime</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set value to 0 to <span class="built_in">disable</span> modesetting</span></span><br><span class="line">options nvidia-drm modeset=1</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：删除该文件</p>
+<h1 id="cuDNN"><a href="#cuDNN" class="headerlink" title="cuDNN"></a>cuDNN</h1><p>下载 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">cuDNN</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install zlib1g</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> dpkg -i cudnn-local-repo-ubuntu2204-8.9.7.29_1.0-1_amd64.deb</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> <span class="built_in">cp</span> /var/cudnn-local-repo-ubuntu2204-8.9.7.29/cudnn-local-08A7D361-keyring.gpg /usr/share/keyrings/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt update</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装其他库</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libcudnn8 libcudnn8-dev libcudnn8-samples</span></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libfreeimage3 libfreeimage-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> -r /usr/src/cudnn_samples_v8/ ~/workspaces/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span>  ~/workspaces/cudnn_samples_v8/mnistCUDNN</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make clean &amp;&amp; make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./mnistCUDNN</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="切换显卡"><a href="#切换显卡" class="headerlink" title="切换显卡"></a>切换显卡</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install nvidia-prime</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select nvidia <span class="comment"># 支持 intel/nvidia/on-demand/query</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> reboot</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态显示切换"><a href="#动态显示切换" class="headerlink" title="动态显示切换"></a>动态显示切换</h2><p>NVIDIA Advanced Optimus 动态显示切换，能自动选择由 GeForce GPU 还是集成显卡来驱动内部显示器，并根据正在运行的应用、根据需要进行切换，从而降低整体功耗，延长笔记本续航。</p>
+<p>NVIDIA Advanced Optimus 引入了基于硬件的动态显示开关，使 GPU 能够直接控制显示器，而不通过 IGP 进行路由。</p>
+<p><code>prime-select on-demand</code> 即动态选择显卡。</p>
+<p>指定使用独显启动程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia rviz2</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">~/.bashrc 中添加以下语句，然后使用 nvrun &lt;<span class="built_in">command</span>&gt; 方式运行</span></span><br><span class="line">alias nvrun=&#x27;env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.x86_64.json &#x27;</span><br></pre></td></tr></table></figure>
+
+<p>或创建 <code>/bin/optirun</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">export __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia</span><br><span class="line">for i in &quot;$@&quot;</span><br><span class="line">do      </span><br><span class="line">        cmd=$cmd&#x27; &#x27;&#x27;&quot;&#x27;$i&#x27;&quot;&#x27;</span><br><span class="line">done    </span><br><span class="line">echo $cmd | exec sh</span><br></pre></td></tr></table></figure>
+
+<p>然后使用 <code>optirun &lt;command&gt;</code>  运行指令。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1188458/how-to-use-prime-select-on-demand-in-latest-kubuntu-19-10/1226557#1226557">https://askubuntu.com/questions/1188458/how-to-use-prime-select-on-demand-in-latest-kubuntu-19-10/1226557#1226557</a> 可知，ubuntu20.04 对 Xorg 进行了更新才支持该特性。</p>
+<p>或右键要启动的程序，选择 “Launch using Discrete Graphics Card”</p>
+<h1 id="其它操作"><a href="#其它操作" class="headerlink" title="其它操作"></a>其它操作</h1><h2 id="查看显卡使用情况"><a href="#查看显卡使用情况" class="headerlink" title="查看显卡使用情况"></a>查看显卡使用情况</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvidia-smi</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> fuser -v /dev/nvidia*</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="查看当前显卡"><a href="#查看当前显卡" class="headerlink" title="查看当前显卡"></a>查看当前显卡</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有 <span class="keyword">in</span> use 状态的 VGA 设备</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">lspci -nnk | grep -i vga -A3 | grep <span class="string">&#x27;in use&#x27;</span></span></span><br><span class="line">Kernel driver in use: i915</span><br><span class="line">Kernel driver in use: nvidia</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">lspci -vnn | grep -A12 <span class="string">&#x27;\&#x27;</span><span class="string">&#x27;[030[02]\]&#x27;</span> | grep -Ei <span class="string">&quot;vga|3d|display|kernel&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> lshw -c display</span></span><br><span class="line">  *-display                 </span><br><span class="line">       description: VGA compatible controller</span><br><span class="line">       product: NVIDIA Corporation</span><br><span class="line">       vendor: NVIDIA Corporation</span><br><span class="line">       physical id: 0</span><br><span class="line">       bus info: pci@0000:01:00.0</span><br><span class="line">       logical name: /dev/fb0</span><br><span class="line">       version: a1</span><br><span class="line">       width: 64 bits</span><br><span class="line">       clock: 33MHz</span><br><span class="line">       capabilities: pm msi pciexpress vga_controller bus_master cap_list rom fb</span><br><span class="line">       configuration: depth=32 driver=nvidia latency=0 mode=2560x1600 visual=truecolor xres=2560 yres=1600</span><br><span class="line">       resources: iomemory:600-5ff iomemory:620-61f irq:152 memory:81000000-81ffffff memory:6000000000-61ffffffff memory:6200000000-6201ffffff ioport:5000(size=128) memory:82000000-8207ffff</span><br><span class="line">  *-display</span><br><span class="line">       description: VGA compatible controller</span><br><span class="line">       product: Intel Corporation</span><br><span class="line">       vendor: Intel Corporation</span><br><span class="line">       physical id: 2</span><br><span class="line">       bus info: pci@0000:00:02.0</span><br><span class="line">       logical name: /dev/fb0</span><br><span class="line">       version: 04</span><br><span class="line">       width: 64 bits</span><br><span class="line">       clock: 33MHz</span><br><span class="line">       capabilities: pciexpress msi pm vga_controller bus_master cap_list rom fb</span><br><span class="line">       configuration: depth=32 driver=i915 latency=0 resolution=2560,1600</span><br><span class="line">       resources: iomemory:620-61f iomemory:400-3ff irq:150 memory:6202000000-6202ffffff memory:4000000000-400fffffff ioport:6000(size=64) memory:c0000-dffff memory:4010000000-4016ffffff memory:4020000000-40ffffffff</span><br></pre></td></tr></table></figure>
+
+<p>此例中，系统有两个显卡设备，Intel 集成显卡(i915) 和 NVIDIA 独立显卡，且都在使用中。</p>
+<h2 id="查看显卡信息"><a href="#查看显卡信息" class="headerlink" title="查看显卡信息"></a>查看显卡信息</h2><h3 id="deviceQuery"><a href="#deviceQuery" class="headerlink" title="deviceQuery"></a>deviceQuery</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需安装好 CUDA</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /usr/local/cuda-10.2/samples/1_Utilities/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> make -j4</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 ./deviceQuery</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若为桌面显卡，可直接运行</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">. /usr/local/cuda-11.7/extras/demo_suite/deviceQuery</span></span><br></pre></td></tr></table></figure>
+
+<p>输出信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">./deviceQuery Starting...</span><br><span class="line"></span><br><span class="line"> CUDA Device Query (Runtime API) version (CUDART static linking)</span><br><span class="line"></span><br><span class="line">Detected 1 CUDA Capable device(s)</span><br><span class="line"></span><br><span class="line">Device 0: &quot;NVIDIA Tegra X2&quot;</span><br><span class="line">  CUDA Driver Version / Runtime Version          10.2 / 10.2</span><br><span class="line">  CUDA Capability Major/Minor version number:    6.2</span><br><span class="line">  Total amount of global memory:                 3825 MBytes (4011302912 bytes)</span><br><span class="line">  ( 2) Multiprocessors, (128) CUDA Cores/MP:     256 CUDA Cores</span><br><span class="line">  GPU Max Clock rate:                            1300 MHz (1.30 GHz)</span><br><span class="line">  Memory Clock rate:                             1300 Mhz</span><br><span class="line">  Memory Bus Width:                              128-bit</span><br><span class="line">  L2 Cache Size:                                 524288 bytes</span><br><span class="line">  Maximum Texture Dimension Size (x,y,z)         1D=(131072), 2D=(131072, 65536), 3D=(16384, 16384, 16384)</span><br><span class="line">  Maximum Layered 1D Texture Size, (num) layers  1D=(32768), 2048 layers</span><br><span class="line">  Maximum Layered 2D Texture Size, (num) layers  2D=(32768, 32768), 2048 layers</span><br><span class="line">  Total amount of constant memory:               65536 bytes</span><br><span class="line">  Total amount of shared memory per block:       49152 bytes</span><br><span class="line">  Total number of registers available per block: 32768</span><br><span class="line">  Warp size:                                     32</span><br><span class="line">  Maximum number of threads per multiprocessor:  2048</span><br><span class="line">  Maximum number of threads per block:           1024</span><br><span class="line">  Max dimension size of a thread block (x,y,z): (1024, 1024, 64)</span><br><span class="line">  Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)</span><br><span class="line">  Maximum memory pitch:                          2147483647 bytes</span><br><span class="line">  Texture alignment:                             512 bytes</span><br><span class="line">  Concurrent copy and kernel execution:          Yes with 1 copy engine(s)</span><br><span class="line">  Run time limit on kernels:                     No</span><br><span class="line">  Integrated GPU sharing Host Memory:            Yes</span><br><span class="line">  Support host page-locked memory mapping:       Yes</span><br><span class="line">  Alignment requirement for Surfaces:            Yes</span><br><span class="line">  Device has ECC support:                        Disabled</span><br><span class="line">  Device supports Unified Addressing (UVA):      Yes</span><br><span class="line">  Device supports Compute Preemption:            Yes</span><br><span class="line">  Supports Cooperative Kernel Launch:            Yes</span><br><span class="line">  Supports MultiDevice Co-op Kernel Launch:      Yes</span><br><span class="line">  Device PCI Domain ID / Bus ID / location ID:   0 / 0 / 0</span><br><span class="line">  Compute Mode:</span><br><span class="line">     &lt; Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) &gt;</span><br><span class="line"></span><br><span class="line">deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 10.2, CUDA Runtime Version = 10.2, NumDevs = 1</span><br><span class="line">Result = PASS</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="查看版本信息"><a href="#查看版本信息" class="headerlink" title="查看版本信息"></a>查看版本信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 CUDA 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvcc -V</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /usr/local/cuda/version.txt</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="prime-select"><a href="#prime-select" class="headerlink" title="prime-select"></a>prime-select</h2><p>需安装 <code>nvidia-prime</code> 包。</p>
+<p>用法：<code>prime-select nvidia/intel/on-demand/query</code></p>
+<ul>
+<li><p>on-demand：表示需要手动选择</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select query <span class="comment"># 查看当前显卡驱动</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select intel <span class="comment"># 切换 intel 显卡</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select nvidia <span class="comment"># 切换 NVIDIA 显卡</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>prime-select</code> 切换 Intel 显卡禁用 NVIDIA 显卡时：</p>
+<ul>
+<li><p>在 grub 的 <code>GRUB_LINUX_DEFAULT</code>  参数添加了 ，禁用 nouveau 进行电源管理</p>
+</li>
+<li><p><code>/lib/modprobe.d</code> 中创建 <code>blacklist-nvidia.conf</code> 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Do not modify</span><br><span class="line"># This file was generated by nvidia-prime</span><br><span class="line">blacklist nvidia</span><br><span class="line">blacklist nvidia-drm</span><br><span class="line">blacklist nvidia-modeset</span><br><span class="line">alias nvidia off</span><br><span class="line">alias nvidia-drm off</span><br><span class="line">alias nvidia-modeset off</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用 <code>update-initramfs -u</code> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select intel</span></span><br><span class="line">Info: selecting the intel profile</span><br><span class="line">Updating the initramfs. Please wait for the operation to complete:</span><br><span class="line">Done</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>prime-select</code> 切换 NVIDIA 显卡时：</p>
+<ul>
+<li><p>删除 grub 的 <code>GRUB_CMDLINE_LINUX_DEFAULT</code> 参数里面的 <code>noveau.runpm=0</code> </p>
+</li>
+<li><p>删除在 <code>/lib/modprobe.d</code> 目录下的 <code>blacklist-nvidia.conf</code></p>
+</li>
+<li><p>使用 <code>update-initramfs -u</code>  更新</p>
+</li>
+<li><p><code>systemctl disable nvidia-prime-boot.service</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> prime-select nvidia</span></span><br><span class="line">Info: selecting the nvidia profile</span><br><span class="line">Deleting /lib/modprobe.d/nvidia-runtimepm.conf</span><br><span class="line">Updating the initramfs. Please wait for the operation to complete:</span><br><span class="line">Done</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="bumblebee"><a href="#bumblebee" class="headerlink" title="bumblebee"></a>bumblebee</h1><p>主要应用场景是 Intel + Nvidia 双显卡笔记本，默认关闭 N 卡，降低功耗，当需要更强图形渲染功能时开启 Nvidia 显卡。</p>
+<p>安装 bumblebee 后，默认使用集显。当使用 optirun 或 primusrun 时，会使用独显。</p>
+<p>bumblebee 安装的是 NVIDIA 闭源驱动。</p>
+<p>bumblebee 安装时会默认安装 bbswitch，没有bbswitch（也没启用nouveau）的话，独显处于常开状态，不仅费电，而且起不到任何作用。bbswitch 的作用是控制 optimus 独显的电源。（注：optimus 是 NVIDIA 针对笔记本电脑的显示切换技术，可以实现独显与集显之间无缝、自动、实时的切换（使用者无需重启或手动调整），从而实现降低功耗）</p>
+<p>同时，bumblebee 可以在用户层直接手动调用独显来运行程序，程序关闭后独显也自动关闭。</p>
+<p>bumblebee vs Prime</p>
+<p>prime 同时只能用一种显卡，要么独显要么集显；而 bumblebee 实现了两种显卡同时交互使用，互不影响。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2180,286 +2609,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/CMake%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/CMake%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">CMake使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-15 21:24:52" itemprop="dateCreated datePublished" datetime="2024-09-15T21:24:52+08:00">2024-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="指定依赖库及增加宏定义"><a href="#指定依赖库及增加宏定义" class="headerlink" title="指定依赖库及增加宏定义"></a><strong>指定依赖库及增加宏定义</strong></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(PkgConfig)</span><br><span class="line">pkg_check_modules(NEW_YAMLCPP yaml-cpp&gt;=<span class="number">0.5</span>)</span><br><span class="line"><span class="keyword">if</span>(NEW_YAMLCPP_FOUND)</span><br><span class="line">  <span class="keyword">add_definitions</span>(-DHAVE_NEW_YAMLCPP)</span><br><span class="line"><span class="keyword">endif</span>(NEW_YAMLCPP_FOUND)</span><br><span class="line">……</span><br><span class="line"><span class="keyword">target_link_libraries</span>(sanbot_app <span class="variable">$&#123;catkin_LIBRARIES&#125;</span> usb-<span class="number">1.0</span> yaml-cpp)</span><br></pre></td></tr></table></figure>
-
-<p> 上例中，查找 yaml-cpp 库，并判断库的版本是否大于 0.5，若是，则通过 <code>add_definitions</code> 函数增加 <em><code>HAVE_NEW_YAML_CPP</code></em> 宏</p>
-<h1 id="查找某个路径下的所有源文件"><a href="#查找某个路径下的所有源文件" class="headerlink" title="查找某个路径下的所有源文件"></a><strong>查找某个路径下的所有源文件</strong></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">aux_source_directory</span>(&lt; dir &gt; &lt; variable &gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="指定编译选项"><a href="#指定编译选项" class="headerlink" title="指定编译选项"></a><strong>指定编译选项</strong></h1><h2 id="指定-C-11"><a href="#指定-C-11" class="headerlink" title="指定 C++11"></a><strong>指定 C++11</strong></h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：</span></span><br><span class="line"><span class="keyword">add_definitions</span>(-std=c++<span class="number">11</span>)</span><br><span class="line"><span class="comment">#方法二：</span></span><br><span class="line"><span class="keyword">SET</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11&quot;</span>)</span><br><span class="line"><span class="comment">#方法三：</span></span><br><span class="line"><span class="keyword">add_compile_options</span>(-std=c++<span class="number">11</span>)</span><br><span class="line"><span class="comment">#方法四：</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="msg-编译顺序"><a href="#msg-编译顺序" class="headerlink" title="msg 编译顺序"></a><strong>msg 编译顺序</strong></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;PROJECT_NAME&#125;</span>_generate_headers</span><br></pre></td></tr></table></figure>
-
-<p>可确保在编译包时，先根据 msg 目录生成头文件在编译，否则可能出现找不到头文件的错误。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_dependencies</span>(control_master_node <span class="variable">$&#123;PROJECT_NAME&#125;</span>_generate_headers <span class="variable">$&#123;PROJECT_NAME&#125;</span>_generate_messages_cpp)</span><br><span class="line"><span class="comment"># 或者：</span></span><br><span class="line"><span class="keyword">set</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS <span class="variable">$&#123;PROJECT_NAME&#125;</span>_generate_headers)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="catkin-package"><a href="#catkin-package" class="headerlink" title="catkin_package()"></a><strong>catkin_package()</strong></h1><p><strong>该方法不能缺少，即便没有内容</strong>，也需指出，例如：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">catkin_package(</span><br><span class="line"><span class="comment">#  INCLUDE_DIRS include</span></span><br><span class="line"><span class="comment">#  LIBRARIES sanbot_navigation</span></span><br><span class="line"><span class="comment">#  CATKIN_DEPENDS roscpp rospy</span></span><br><span class="line"><span class="comment">#  DEPENDS system_lib</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p><strong>否则，可能出现 <code>CATKIN_PACKAGE_SHARE_DESTINATION</code> 等环境变量为空的问题</strong>。</p>
-<p><strong>6、设置系统环境变量</strong></p>
-<p>例如：PKG_CONFIG_PATH</p>
-<p>首先会在模块路径中寻找 Find.cmake，这是查找库的一个典型方式。具体查找路径依次为 CMake：变量 ${<strong>CMAKE_MODULE_PATH</strong>} 中的所有目录。如果没有，然后再查看它自己的模块目录 &#x2F;share&#x2F;cmake-x.y&#x2F;Modules&#x2F;（例如：ubuntu上为 &#x2F;usr&#x2F;share&#x2F;cmake-3.5&#x2F;Modules&#x2F;）。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(ENV&#123;PKG_CONFIG_PATH&#125; <span class="string">&quot;/path_to_protobuf/lib/pkgconfig:$ENV&#123;PKG_CONFIG_PATH&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="编译异常时退出"><a href="#编译异常时退出" class="headerlink" title="编译异常时退出"></a><strong>编译异常时退出</strong></h1><p>CMakeLists.txt 中没有 EXIT 类似的语法指令. 但可使用如下方式退出:</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>(FATAL_ERROR  <span class="string">&quot;Error&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="install-python-脚本"><a href="#install-python-脚本" class="headerlink" title="install python 脚本"></a><strong>install python 脚本</strong></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">catkin_install_python(PROGRAMS scripts/<span class="keyword">test</span>.py</span><br><span class="line">            DESTINATION <span class="variable">$&#123;CATKIN_PACKAGE_SHARE_DESTINATION&#125;</span>/scripts) </span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="catkin-add-gtest"><a href="#catkin-add-gtest" class="headerlink" title="catkin_add_gtest"></a><strong>catkin_add_gtest</strong></h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CATKIN_ENABLE_TESTING)  </span><br><span class="line">	catkin_add_gtest(myUnitTest <span class="keyword">test</span>/utest.cpp) </span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
-
-<p>注意：</p>
-<ul>
-<li>不要在 manifest 中声明依赖于 gtest。catkin_add_gtest()宏将引入必要的标志</li>
-<li>如果想构建一个针对 gtest 的可执行文件，但是不声明它是一个单独的测试(例如，当想要这个可执行文件由 rostest 运行时)，使用catkin_add_executable_with_gtest()</li>
-</ul>
-<h1 id="deprecated-报错"><a href="#deprecated-报错" class="headerlink" title="deprecated 报错"></a><strong>deprecated 报错</strong></h1><p>在 CMakeLists.txt 中添加：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -Wno-error=deprecated-declarations&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/properties%E5%B1%9E%E6%80%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/properties%E5%B1%9E%E6%80%A7/" class="post-title-link" itemprop="url">configure_file</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-15 21:24:52" itemprop="dateCreated datePublished" datetime="2024-09-15T21:24:52+08:00">2024-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">基础指令</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>932</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[target properties</p>
-<p><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html#target-properties"></a></p>
-<h1 id="SET-TARGET-PROPERTIES"><a href="#SET-TARGET-PROPERTIES" class="headerlink" title="SET_TARGET_PROPERTIES"></a>SET_TARGET_PROPERTIES</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置目标属性。可使用任意想要的 Properties 键值对，然后使用</span></span><br><span class="line"><span class="comment"># get_property/get_target_property 获取这些属性。</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(&lt;targets&gt; ...</span><br><span class="line">                      PROPERTIES &lt;prop1&gt; &lt;value1&gt;</span><br><span class="line">                      [&lt;prop2&gt; &lt;value2&gt;] ...)</span><br></pre></td></tr></table></figure>
-
-<p>常用属性包括：</p>
-<ul>
-<li><code>CXX_STANDARD/C_STANDARD</code> : 设置 C&#x2F;C++ 版本</li>
-<li><code>CXX_EXTENSIONS/C_EXTENSIONS</code> : 设置是否启用 C&#x2F;C++ 标准库扩展</li>
-<li><code>OUTPUT_NAME</code> : 设置生成的文件的名称</li>
-<li><code>RUNTIME_OUTPUT_DIRECTORY</code> : 设置文件运行时的输出目录  </li>
-<li><code>INCLUDE_DIRECTORIES</code> : 设置目标的包含目录</li>
-<li><code>COMPILE_DEFINITIONS</code> : 为目标设置编译时宏定义</li>
-</ul>
-<h1 id="GET-TARGET-PROPERTY"><a href="#GET-TARGET-PROPERTY" class="headerlink" title="GET_TARGET_PROPERTY"></a>GET_TARGET_PROPERTY</h1><p>从 target 获取属性。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET_TARGET_PROPERTY</span>(&lt;VAR&gt; <span class="keyword">target</span> property)</span><br></pre></td></tr></table></figure>
-
-<p>该属性的值存储在变量 <code>&lt;var&gt;</code> 中。如果没有找到目标属性，则行为取决于它是否被定义为 <code>INHERITED</code> 属性(参见 <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/command/define_property.html#command:define_property">define_property()</a>)。非继承属性将 <code>&lt;var&gt;</code> 设置为 <code>&lt;var&gt;-NOTFOUND</code>，而继承属性将按照 <code>define_property()</code> 命令的描述搜索相关的父范围，如果仍然无法找到该属性，则将 <code>&lt;var&gt;</code> 设置为空字符串。</p>
-<p>使用 <code>set_target_properties()</code> 设置 target 属性值。属性通常用于控制如何构建 target，但有些则用于查询 target。该命令可以获取到目前为止创建的任何 target 的属性。target 不需要在当前的 CMakeLists.txt 文件中。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET_TARGET_PROPERTY</span>(CAT_CUTIFIER_PUBLIC_HEADER_DIR CatCutifier INTERFACE_INCLUDE_DIRECTORIES)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2484,14 +2633,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">477k</span>
+    <span title="站点总字数">479k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:28</span>
+    <span title="站点阅读时长">14:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

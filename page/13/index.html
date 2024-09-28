@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">122</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,387 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/" class="post-title-link" itemprop="url">moveit-MoveGroup-Interface</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 20:17:12" itemprop="dateCreated datePublished" datetime="2024-09-01T20:17:12+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 MoveIt 中，最简单的用户接口通过 <code>MoveGroupInterface</code> 类。为用户可能想要执行的大多数操作提供了易于使用的功能，特别是设置关节或位姿目标、创建运动计划、移动机器人、将对象添加到环境中以及从机器人上附加&#x2F;分离对象。此接口通过 ROS topic、service 和 action <strong>与 MoveGroup 节点进行通信</strong>。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a><strong>测试</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials move_group_interface_tutorial.launch</span></span><br></pre></td></tr></table></figure>
+
+<p>启动后，点击 rviz 中 RvizVisualToolsGui 插件中的 next 依次执行设定好的操作</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901201434422.png" class="" title="image-20240901201434422">
+
+<p>包括：</p>
+<ul>
+<li>移动到前方的 pose goal</li>
+<li>移动到侧方的 joint goal</li>
+<li>在保持末端执行器水平的同时，将手臂移回到一个新的 pose goal</li>
+<li>沿着笛卡尔路径移动手臂(一个下、右、上、左的三角形)</li>
+</ul>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901201518555.png" class="" title="image-20240901201518555">
+
+<ul>
+<li>在手臂右侧添加一个 box object</li>
+<li>移动到 pose goal，同时避开障碍物(box object)</li>
+</ul>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901201556603.png" class="" title="image-20240901201556603">
+
+<ul>
+<li>object 附着到 wrist(颜色切换为 紫&#x2F;橙&#x2F;绿)</li>
+<li>object 从 wrist 断开(颜色变回绿色)</li>
+<li>移除 box object</li>
+</ul>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a><strong>源码分析</strong></h1><p><code>moveit_tutorials/doc/move_group_interface/src</code></p>
+<p>MoveIt! 对 planning groups 进行操作，并将他们存储在 JointModelGroup 类对象中。在 MoveIt! 中，术语 planning groups 和 joint model group 可以互换使用</p>
+<p>① 设置</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// panda_arm 为要操作的 planning group. panda_arm 已在 moveit setup assistant 中设置 </span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> std::string PLANNING_GROUP = <span class="string">&quot;panda_arm&quot;</span>; moveit::<span class="function">planning_interface::MoveGroupInterface <span class="title">move_group</span><span class="params">(PLANNING_GROUP)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 将使用 PlanningSceneInterface 类对象来添加/删除 collision object </span></span><br><span class="line">moveit::planning_interface::PlanningSceneInterface planning_scene_interface; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 raw pointers 引用 planning group 以提高性能.  </span></span><br><span class="line"><span class="comment">// 注意：planning groups 和 joint model group 可以互换使用 </span></span><br><span class="line"><span class="type">const</span> robot_state::JointModelGroup* joint_model_group =    move_group.<span class="built_in">getCurrentState</span>()-&gt;<span class="built_in">getJointModelGroup</span>(PLANNING_GROUP); </span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<p>② 可视化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MoveItVisualTools 提供了许多在 RViz 中可视化对象、机器人和轨迹的功能，</span></span><br><span class="line"><span class="comment">// 以及调试工具，如 step-by-step introspection of a script</span></span><br><span class="line"><span class="keyword">namespace</span> rvt = rviz_visual_tools;</span><br><span class="line"><span class="function">moveit_visual_tools::MoveItVisualTools <span class="title">visual_tools</span><span class="params">(<span class="string">&quot;panda_link0&quot;</span>)</span></span>;</span><br><span class="line">visual_tools.<span class="built_in">deleteAllMarkers</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 远程控制是一种内省工具，允许用户通过 RViz 中的按钮/快捷键逐步执行高级脚本</span></span><br><span class="line">visual_tools.<span class="built_in">loadRemoteControl</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// RViz提供了许多类型的标记，该例中将使用文本、柱面和球体</span></span><br><span class="line">Eigen::Isometry3d text_pose = Eigen::Isometry3d::<span class="built_in">Identity</span>();</span><br><span class="line">text_pose.<span class="built_in">translation</span>().<span class="built_in">z</span>() = <span class="number">1.75</span>; <span class="comment">// 位于机器人上方</span></span><br><span class="line">visual_tools.<span class="built_in">publishText</span>(text_pose, <span class="string">&quot;MoveGroupInterface Demo&quot;</span>, </span><br><span class="line">                            rvt::WHITE, rvt::XLARGE);</span><br><span class="line">                            </span><br><span class="line"><span class="comment">// Batch publishing 用于减少发送到 RViz 的大块可视化消息的数量            </span></span><br><span class="line">visual_tools.<span class="built_in">trigger</span>();   </span><br></pre></td></tr></table></figure>
+
+
+
+<p>③ 获取基础信息                    </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取机器人的参考坐标系</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Planning frame: %s&quot;</span>, </span><br><span class="line">                move_group.<span class="built_in">getPlanningFrame</span>().<span class="built_in">c_str</span>());</span><br><span class="line">                </span><br><span class="line"><span class="comment">// 获取 group 中 end-effort link 的名字</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;End effector link: %s&quot;</span>, </span><br><span class="line">                move_group.<span class="built_in">getEndEffectorLink</span>().<span class="built_in">c_str</span>());                </span><br><span class="line">                </span><br><span class="line"><span class="comment">// 获取所有 groups</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Available Planning Groups:&quot;</span>);</span><br><span class="line">std::<span class="built_in">copy</span>(move_group.<span class="built_in">getJointModelGroupNames</span>().<span class="built_in">begin</span>(), </span><br><span class="line">            move_group.<span class="built_in">getJointModelGroupNames</span>().<span class="built_in">end</span>(),</span><br><span class="line">              std::<span class="built_in">ostream_iterator</span>&lt;std::string&gt;(std::cout, <span class="string">&quot;, &quot;</span>));  </span><br></pre></td></tr></table></figure>
+
+
+
+<p>④ 启动 demo</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">visual_tools.<span class="built_in">prompt</span>(<span class="string">&quot;Press &#x27;next&#x27; in the RvizVisualToolsGui window </span></span><br><span class="line"><span class="string">                    to start the demo&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901202128716.png" class="" title="image-20240901202128716">
+
+
+
+<p>⑤ Planning to a pose goal</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">geometry_msgs::Pose target_pose1;</span><br><span class="line">target_pose<span class="number">1.</span>orientation.w = <span class="number">1.0</span>;</span><br><span class="line">target_pose<span class="number">1.</span>position.x = <span class="number">0.28</span>;</span><br><span class="line">target_pose<span class="number">1.</span>position.y = <span class="number">-0.2</span>;</span><br><span class="line">target_pose<span class="number">1.</span>position.z = <span class="number">0.5</span>;</span><br><span class="line">move_group.<span class="built_in">setPoseTarget</span>(target_pose1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用规划器进行规划并可视化。注意，此处只是在计划，不会实际移动机器人</span></span><br><span class="line">moveit::planning_interface::MoveGroupInterface::Plan my_plan;</span><br><span class="line"><span class="type">bool</span> success = (move_group.<span class="built_in">plan</span>(my_plan) == </span><br><span class="line">        moveit::planning_interface::MoveItErrorCode::SUCCESS);</span><br><span class="line"></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Visualizing plan 1 (pose goal) %s&quot;</span>, </span><br><span class="line">        success ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;FAILED&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901202152977.png" class="" title="image-20240901202152977">
+
+
+
+<p>⑥ 可视化规划的轨迹</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Visualizing plan 1 as trajectory line&quot;</span>);</span><br><span class="line">visual_tools.<span class="built_in">publishAxisLabeled</span>(target_pose1, <span class="string">&quot;pose1&quot;</span>);</span><br><span class="line">visual_tools.<span class="built_in">publishText</span>(text_pose, <span class="string">&quot;Pose Goal&quot;</span>, rvt::WHITE, rvt::XLARGE);</span><br><span class="line">visual_tools.<span class="built_in">publishTrajectoryLine</span>(my_plan.trajectory_, joint_model_group);</span><br><span class="line">visual_tools.<span class="built_in">trigger</span>();</span><br><span class="line">visual_tools.<span class="built_in">prompt</span>(</span><br><span class="line">    <span class="string">&quot;Press &#x27;next&#x27; in the RvizVisualToolsGui window to continue the demo&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑦ 运动到 pose goal</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Uncomment below line when working with a real robot. 阻塞函数，需要控制器</span></span><br><span class="line"><span class="comment">    处于活动状态并上报轨迹执行成功 */</span></span><br><span class="line"><span class="comment">/* move_group.move(); */</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑧ planning to a joint-space goal</p>
+<p>关节空间的规划结果会覆盖掉上文的工作空间规划结果</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取机器人当前状态. RobotState 中包含当前的 position/velocity/acceleration</span></span><br><span class="line">moveit::core::RobotStatePtr current_state = move_group.<span class="built_in">getCurrentState</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前 group 的所有 joint 值</span></span><br><span class="line">std::vector&lt;<span class="type">double</span>&gt; joint_group_positions;</span><br><span class="line">current_state-&gt;<span class="built_in">copyJointGroupPositions</span>(</span><br><span class="line">        joint_model_group, joint_group_positions);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改某个 joint 的值, 然后进行规划</span></span><br><span class="line">joint_group_positions[<span class="number">0</span>] = <span class="number">-1.0</span>;  <span class="comment">// radians</span></span><br><span class="line">move_group.<span class="built_in">setJointValueTarget</span>(joint_group_positions);</span><br><span class="line">success = (move_group.<span class="built_in">plan</span>(my_plan) == </span><br><span class="line">        moveit::planning_interface::MoveItErrorCode::SUCCESS);</span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Visualizing plan 2 (joint space goal) %s&quot;</span>, </span><br><span class="line">        success ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;FAILED&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 轨迹可视化</span></span><br><span class="line">visual_tools.<span class="built_in">deleteAllMarkers</span>();</span><br><span class="line">visual_tools.<span class="built_in">publishText</span>(text_pose, <span class="string">&quot;Joint Space Goal&quot;</span>, </span><br><span class="line">    rvt::WHITE, rvt::XLARGE);</span><br><span class="line">visual_tools.<span class="built_in">publishTrajectoryLine</span>(my_plan.trajectory_, joint_model_group);</span><br><span class="line">visual_tools.<span class="built_in">trigger</span>();</span><br><span class="line">visual_tools.<span class="built_in">prompt</span>(</span><br><span class="line">    <span class="string">&quot;Press &#x27;next&#x27; in the RvizVisualToolsGui window to continue the demo&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑨ 路径约束下的规划</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义路径约束</span></span><br><span class="line">moveit_msgs::OrientationConstraint ocm;</span><br><span class="line">ocm.link_name = <span class="string">&quot;panda_link7&quot;</span>;</span><br><span class="line">ocm.header.frame_id = <span class="string">&quot;panda_link0&quot;</span>;</span><br><span class="line">ocm.orientation.w = <span class="number">1.0</span>;</span><br><span class="line">ocm.absolute_x_axis_tolerance = <span class="number">0.1</span>;</span><br><span class="line">ocm.absolute_y_axis_tolerance = <span class="number">0.1</span>;</span><br><span class="line">ocm.absolute_z_axis_tolerance = <span class="number">0.1</span>;</span><br><span class="line">ocm.weight = <span class="number">1.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为 group 设置约束</span></span><br><span class="line">moveit_msgs::Constraints test_constraints;</span><br><span class="line">test_constraints.orientation_constraints.<span class="built_in">push_back</span>(ocm);</span><br><span class="line">move_group.<span class="built_in">setPathConstraints</span>(test_constraints);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为规划组设定新的起始位姿，且该新位姿要满足路径约束</span></span><br><span class="line"><span class="function">robot_state::RobotState <span class="title">start_state</span><span class="params">(*move_group.getCurrentState())</span></span>;</span><br><span class="line">geometry_msgs::Pose start_pose2;</span><br><span class="line">start_pose<span class="number">2.</span>orientation.w = <span class="number">1.0</span>;</span><br><span class="line">start_pose<span class="number">2.</span>position.x = <span class="number">0.55</span>;</span><br><span class="line">start_pose<span class="number">2.</span>position.y = <span class="number">-0.05</span>;</span><br><span class="line">start_pose<span class="number">2.</span>position.z = <span class="number">0.8</span>;</span><br><span class="line"><span class="comment">// 如果start_pose2对应的规划组joint_model_group是 chain,且有解算器可用，</span></span><br><span class="line"><span class="comment">// 则可通过 moveit 中自带的逆运动学求解器进行计算得到规划组中各关节位置值，</span></span><br><span class="line"><span class="comment">// 前提是设置的start_pose2要在运动模型的参考系中</span></span><br><span class="line">start_state.<span class="built_in">setFromIK</span>(joint_model_group, start_pose2);</span><br><span class="line"><span class="comment">// 由于改变了规划组的起始位姿，需要将设定的位姿作为规划组的启动状态</span></span><br><span class="line">move_group.<span class="built_in">setStartState</span>(start_state);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 规划</span></span><br><span class="line">move_group.<span class="built_in">setPoseTarget</span>(target_pose1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用约束进行规划可能会很慢，因为每个样本都必须调用反向运动学求解器，</span></span><br><span class="line"><span class="comment">// 因此，将规划时间从默认的 5 秒增加到 10 秒，以保证规划器完成规划</span></span><br><span class="line">move_group.<span class="built_in">setPlanningTime</span>(<span class="number">10.0</span>);</span><br><span class="line"></span><br><span class="line">success = (move_group.<span class="built_in">plan</span>(my_plan) == </span><br><span class="line">    moveit::planning_interface::MoveItErrorCode::SUCCESS);</span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Visualizing plan 3 (constraints) %s&quot;</span>, </span><br><span class="line">    success ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;FAILED&quot;</span>);</span><br><span class="line">...</span><br><span class="line"><span class="comment">// 规划完成，清除约束</span></span><br><span class="line">move_group.<span class="built_in">clearPathConstraints</span>();    </span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑩ Cartesian Paths</p>
+<p>可以通过指定一组末端执行器要经过的 waypoints 来直接规划一条笛卡尔路径。注意，从上面的新 start state 开始。初始姿态(start state)不需要添加到路径点列表中，但添加它可以帮助可视化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将起始位姿 start_pose2、三个waypoints 依次添加到 waypoints 数组中</span></span><br><span class="line">std::vector&lt;geometry_msgs::Pose&gt; waypoints;</span><br><span class="line">waypoints.<span class="built_in">push_back</span>(start_pose2);</span><br><span class="line"></span><br><span class="line">geometry_msgs::Pose target_pose3 = start_pose2;</span><br><span class="line"></span><br><span class="line">target_pose<span class="number">3.</span>position.z -= <span class="number">0.2</span>;</span><br><span class="line">waypoints.<span class="built_in">push_back</span>(target_pose3);  <span class="comment">// down</span></span><br><span class="line"></span><br><span class="line">target_pose<span class="number">3.</span>position.y -= <span class="number">0.2</span>;</span><br><span class="line">waypoints.<span class="built_in">push_back</span>(target_pose3);  <span class="comment">// right</span></span><br><span class="line"></span><br><span class="line">target_pose<span class="number">3.</span>position.z += <span class="number">0.2</span>;</span><br><span class="line">target_pose<span class="number">3.</span>position.y += <span class="number">0.2</span>;</span><br><span class="line">target_pose<span class="number">3.</span>position.x -= <span class="number">0.2</span>;</span><br><span class="line">waypoints.<span class="built_in">push_back</span>(target_pose3);  <span class="comment">// up and left</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 笛卡尔运动经常需要慢一些的动作，如接近和撤退抓握动作。</span></span><br><span class="line"><span class="comment">// 此例中，演示了如何通过每个关节的最大速度的比例因子来降低机器人手臂的速度。</span></span><br><span class="line"><span class="comment">// 注意，这不是末端执行器点的速度。</span></span><br><span class="line">move_group.<span class="built_in">setMaxVelocityScalingFactor</span>(<span class="number">0.1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对笛卡尔路径以 1cm 的分辨率进行插值，因此将笛卡尔平移最大步长设置为 0.01</span></span><br><span class="line">moveit_msgs::RobotTrajectory trajectory;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> jump_threshold = <span class="number">0.0</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eef_step = <span class="number">0.01</span>;</span><br><span class="line"><span class="comment">// 计算笛卡尔路径. </span></span><br><span class="line"><span class="comment">//   waypoints: 路径需经过的点</span></span><br><span class="line"><span class="comment">//   eef_step: 步长</span></span><br><span class="line"><span class="comment">//   jump_threshold: 机器人位姿空间中距离的变化的阈值。操作真实硬件时，若将该</span></span><br><span class="line"><span class="comment">//      参数设置为 0，可能会导致冗余连接发送大量不可预测的动作</span></span><br><span class="line"><span class="type">double</span> fraction = move_group.<span class="built_in">computeCartesianPath</span>(waypoints, eef_step, </span><br><span class="line">                                    jump_threshold, trajectory);</span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, </span><br><span class="line">    <span class="string">&quot;Visualizing plan 4 (Cartesian path) (%.2f%% acheived)&quot;</span>, </span><br><span class="line">    fraction * <span class="number">100.0</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑪ 添加&#x2F;删除及attach&#x2F;deattach object</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个碰撞目标</span></span><br><span class="line">moveit_msgs::CollisionObject collision_object;</span><br><span class="line">collision_object.header.frame_id = move_group.<span class="built_in">getPlanningFrame</span>();</span><br><span class="line">collision_object.id = <span class="string">&quot;box1&quot;</span>; <span class="comment">// 设置 ID</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 向环境中添加 box</span></span><br><span class="line">shape_msgs::SolidPrimitive primitive;</span><br><span class="line">primitive.type = primitive.BOX;</span><br><span class="line">primitive.dimensions.<span class="built_in">resize</span>(<span class="number">3</span>);</span><br><span class="line">primitive.dimensions[<span class="number">0</span>] = <span class="number">0.4</span>;</span><br><span class="line">primitive.dimensions[<span class="number">1</span>] = <span class="number">0.1</span>;</span><br><span class="line">primitive.dimensions[<span class="number">2</span>] = <span class="number">0.4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义该 box 的位姿</span></span><br><span class="line">geometry_msgs::Pose box_pose;</span><br><span class="line">box_pose.orientation.w = <span class="number">1.0</span>;</span><br><span class="line">box_pose.position.x = <span class="number">0.4</span>;</span><br><span class="line">box_pose.position.y = <span class="number">-0.2</span>;</span><br><span class="line">box_pose.position.z = <span class="number">1.0</span>;</span><br><span class="line">collision_object.primitives.<span class="built_in">push_back</span>(primitive);</span><br><span class="line">collision_object.primitive_poses.<span class="built_in">push_back</span>(box_pose);</span><br><span class="line">collision_object.operation = collision_object.ADD;</span><br><span class="line"></span><br><span class="line">std::vector&lt;moveit_msgs::CollisionObject&gt; collision_objects;</span><br><span class="line">collision_objects.<span class="built_in">push_back</span>(collision_object);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加到 world 中</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Add an object into the world&quot;</span>);</span><br><span class="line">planning_scene_interface.<span class="built_in">addCollisionObjects</span>(collision_objects);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 规划一条避开障碍物的轨迹</span></span><br><span class="line">move_group.<span class="built_in">setStartState</span>(*move_group.<span class="built_in">getCurrentState</span>());</span><br><span class="line">geometry_msgs::Pose another_pose;</span><br><span class="line">another_pose.orientation.w = <span class="number">1.0</span>;</span><br><span class="line">another_pose.position.x = <span class="number">0.4</span>;</span><br><span class="line">another_pose.position.y = <span class="number">-0.4</span>;</span><br><span class="line">another_pose.position.z = <span class="number">0.9</span>;</span><br><span class="line">move_group.<span class="built_in">setPoseTarget</span>(another_pose);</span><br><span class="line">success = (move_group.<span class="built_in">plan</span>(my_plan) == </span><br><span class="line">    moveit::planning_interface::MoveItErrorCode::SUCCESS);</span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, </span><br><span class="line">    <span class="string">&quot;Visualizing plan 5 (pose goal move around cuboid) %s&quot;</span>, </span><br><span class="line">    success ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;FAILED&quot;</span>);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// attach 碰撞目标到机器人</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Attach the object to the robot&quot;</span>);</span><br><span class="line">move_group.<span class="built_in">attachObject</span>(collision_object.id);</span><br><span class="line"></span><br><span class="line"><span class="comment">// deattch</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Detach the object from the robot&quot;</span>);</span><br><span class="line">move_group.<span class="built_in">detachObject</span>(collision_object.id);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除碰撞目标</span></span><br><span class="line"><span class="built_in">ROS_INFO_NAMED</span>(<span class="string">&quot;tutorial&quot;</span>, <span class="string">&quot;Remove the object from the world&quot;</span>);</span><br><span class="line">std::vector&lt;std::string&gt; object_ids;</span><br><span class="line">object_ids.<span class="built_in">push_back</span>(collision_object.id);</span><br><span class="line">planning_scene_interface.<span class="built_in">removeCollisionObjects</span>(object_ids);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="约束条件"><a href="#约束条件" class="headerlink" title="约束条件"></a><strong>约束条件</strong></h1><h2 id="moveit-msgs-Constraints"><a href="#moveit-msgs-Constraints" class="headerlink" title="moveit_msgs::Constraints"></a><strong>moveit_msgs::Constraints</strong></h2><p>包含 方向约束、关节约束、位置约束、可见性约束。</p>
+<p>例一：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 构建目标点约束. 使用关节约束</span></span><br><span class="line"> moveit_msgs::Constraints pose_goal =</span><br><span class="line">      kinematic_constraints::<span class="built_in">constructGoalConstraints</span>(</span><br><span class="line">              <span class="string">&quot;panda_link8&quot;</span>,  <span class="comment">// link名称</span></span><br><span class="line">              pose, <span class="comment">// 目标点坐标</span></span><br><span class="line">              tolerance_pose, <span class="comment">// 位置允许误差</span></span><br><span class="line">              tolerance_angle <span class="comment">// 转角允许误差</span></span><br><span class="line">      ); </span><br><span class="line">req.group_name = PLANNING_GROUP;            <span class="comment">//设置运动规划组名称</span></span><br><span class="line">req.goal_constraints.<span class="built_in">push_back</span>(pose_goal);     </span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中，</p>
+<ul>
+<li><strong>tolerance_pose</strong>：与 PositionConstraint 的目标区域关联的球体的维度。赋值给 PositionConstraint shape_msgs&#x2F;SolidPrimitive 中的成员变量 <strong>dimensions</strong>。</li>
+<li><strong>tolerance_angle</strong>：方向约束 OrientationConstraint 的绝对公差的值。会将 absolute_x_axis_tolerance、 absolute_y_axis_tolerance、absolute_z_axis_tolerance 均赋值为该参数</li>
+</ul>
+<p>此处构建的约束将包含一个 PositionConstraint 和一个 OrientationConstraint。球体将用于表示 PositionConstraint 的约束区域。</p>
+<p>例二：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pose.pose.position.x = <span class="number">0.32</span>;</span><br><span class="line">pose.pose.position.y = <span class="number">-0.25</span>;</span><br><span class="line">pose.pose.position.z = <span class="number">0.65</span>;</span><br><span class="line">pose.pose.orientation.w = <span class="number">1.0</span>;</span><br><span class="line"><span class="comment">// 位置约束</span></span><br><span class="line">moveit_msgs::Constraints pose_goal_2 =</span><br><span class="line">  kinematic_constraints::<span class="built_in">constructGoalConstraints</span>(</span><br><span class="line">      <span class="string">&quot;panda_link8&quot;</span>, </span><br><span class="line">      pose, </span><br><span class="line">      tolerance_pose, </span><br><span class="line">      tolerance_angle);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now, let&#x27;s try to move to this new pose goal*/</span></span><br><span class="line">req.goal_constraints.<span class="built_in">clear</span>();</span><br><span class="line">req.goal_constraints.<span class="built_in">push_back</span>(pose_goal_2);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* But, let&#x27;s impose a path constraint on the motion.</span></span><br><span class="line"><span class="comment"> Here, we are asking for the end-effector to stay level*/</span></span><br><span class="line"><span class="comment">//方法是：定义一个四元数，只设定旋转位姿，然后将其设置为约束。</span></span><br><span class="line">geometry_msgs::QuaternionStamped quaternion;</span><br><span class="line">quaternion.header.frame_id = <span class="string">&quot;panda_link0&quot;</span>;</span><br><span class="line">quaternion.quaternion.w = <span class="number">1.0</span>;</span><br><span class="line">req.path_constraints = </span><br><span class="line">    kinematic_constraints::<span class="built_in">constructGoalConstraints</span>(</span><br><span class="line">        <span class="string">&quot;panda_link8&quot;</span>, </span><br><span class="line">        quaternion</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>其中，quaternion 参数赋值给 OrientationConstraint 中的 orientation</p>
+<p>例三</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 添加约束，使末端执行器保持水平 */</span></span><br><span class="line">geometry_msgs::QuaternionStamped quaternion;</span><br><span class="line">quaternion.header.frame_id = <span class="string">&quot;torso_lift_link&quot;</span>;</span><br><span class="line">quaternion.quaternion.w = <span class="number">1.0</span>;</span><br><span class="line">req.path_constraints = kinematic_constraints::<span class="built_in">constructGoalConstraints</span>(</span><br><span class="line">    <span class="string">&quot;r_wrist_roll_link&quot;</span>, </span><br><span class="line">    quaternion</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="moveit-msgs-OrientationConstraint"><a href="#moveit-msgs-OrientationConstraint" class="headerlink" title="moveit_msgs::OrientationConstraint"></a><strong><code>moveit_msgs::OrientationConstraint</code></strong></h2><p>方向约束</p>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901202439071.png" class="" title="image-20240901202439071">
+
+<p>其中，orientation 是以四元数形式指定的机器人 link 的期望方向。<code>absolute__axis_tolerance</code> 是轴角误差公差</p>
+<ul>
+<li><code>moveit_msgs::JointConstraint</code>：关节约束。将关节的位置约束在一定的范围内。</li>
+</ul>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901202449906.png" class="" title="image-20240901202449906">
+
+<p>可到达的区域为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[position - tolerance_below, position + tolerance_below]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>moveit_msgs::PositionConstraint</code> &#x2F;&#x2F; 位置约束</li>
+</ul>
+<img src="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-MoveGroup-Interface/image-20240901202512856.png" class="" title="image-20240901202512856">
+
+<p>其中，target_point_offset 为目标点偏移量；constraint_region 为 3D volume</p>
+<ul>
+<li><p><code>moveit_msgs::TrajectoryConstraints</code>：轨迹约束。包含每个轨迹点的约束</p>
+</li>
+<li><p><code>moveit_msgs::VisibilityConstraint</code>：可见性约束。该约束对于在特定坐标系中保持对圆盘(目标)的可见性很有用。该圆盘形成一个可见锥的底部，其尖端位于传感器的原点。通过确保机器人不会阻碍能见度锥来保持能见度。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-API/" class="post-title-link" itemprop="url">moveit-API</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 20:12:12" itemprop="dateCreated datePublished" datetime="2024-09-01T20:12:12+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>设置 Planner</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">move_group_interface::MoveGroup <span class="title">group</span><span class="params">(<span class="string">&quot;manipulator&quot;</span>)</span></span>; </span><br><span class="line"><span class="comment">// See ompl_planning.yaml for a complete list</span></span><br><span class="line">group.<span class="built_in">setPlannerId</span>(<span class="string">&quot;SBLkConfigDefault&quot;</span>);   </span><br></pre></td></tr></table></figure>
+
+<p>或在 ompl_planning.yaml 相应规划组中设置 default_planner_config 参数</p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">manipulator:</span></span><br><span class="line">  <span class="attr">planner_configs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">SBLkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ESTkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">LBKPIECEkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">BKPIECEkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">KPIECEkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">RRTkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">RRTConnectkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">RRTstarkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">TRRTkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">PRMkConfigDefault</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">PRMstarkConfigDefault</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">projection_evaluator:</span> <span class="string">joints(shoulder_pan_joint,shoulder_lift_joint)</span></span><br><span class="line">  <span class="attr">longest_valid_segment_fraction:</span> <span class="number">0.05</span></span><br><span class="line">  <span class="attr">default_planner_config:</span> <span class="string">ESTkConfigDefault</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><p>MoveIt! 接口在 move_group 中。</p>
+<p>MoveGroupCommander 类常用的api列表如下：</p>
+<ul>
+<li>get_current_joint_values</li>
+<li>set_joint_value_target</li>
+<li>get_current_pose</li>
+<li>set_pose_target</li>
+<li><strong>plan</strong></li>
+<li><strong>compute_cartesian_path</strong></li>
+<li>go</li>
+<li>set_max_velocity_scaling_factor</li>
+<li>set_max_acceleration_scaling_factor</li>
+<li>execute</li>
+<li>set_path_constraints</li>
+</ul>
+<p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> moveit_commander</span><br><span class="line"><span class="keyword">import</span> moveit_msgs.msg</span><br><span class="line"><span class="keyword">import</span> geometry_msgs.msg</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;Starting tutorial setup&quot;</span></span><br><span class="line">moveit_commander.roscpp_initialize(sys.argv)</span><br><span class="line">rospy.init_node(<span class="string">&#x27;move_group_python_interface_tutorial&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">robot = moveit_commander.RobotCommander()</span><br><span class="line">group = moveit_commander.MoveGroupCommander(<span class="string">&quot;gauss_arm&quot;</span>)</span><br><span class="line"><span class="comment"># group = robot.get_group(&quot;gauss_arm&quot;) # 方法二</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;planning frame Reference frame: %s&quot;</span> % group.get_planning_frame()</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;end effector Reference frame: %s&quot;</span> % group.get_end_effector_link()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;Printing robot state&quot;</span></span><br><span class="line"><span class="built_in">print</span> robot.get_current_state()</span><br><span class="line"></span><br><span class="line">group_variable_values = group.get_current_joint_values()</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;Joint values: &quot;</span>, group_variable_values</span><br><span class="line"></span><br><span class="line">group_variable_values[<span class="number">0</span>] = <span class="number">1.0</span></span><br><span class="line">group.set_joint_value_target(group_variable_values)</span><br><span class="line"></span><br><span class="line">plan = group.plan()</span><br><span class="line">rospy.sleep(<span class="number">5</span>)</span><br><span class="line">group.go(wait=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;move complete&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="computeCartesianPath"><a href="#computeCartesianPath" class="headerlink" title="computeCartesianPath"></a><strong>computeCartesianPath</strong></h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> moveit::planning_interface::MoveGroupInterface::<span class="built_in">computeCartesianPath</span>(</span><br><span class="line">    <span class="type">const</span> std::vector&lt; geometry_msgs::Pose &gt; &amp;waypoints, </span><br><span class="line">    <span class="type">double</span> eef_step, <span class="type">double</span> jump_threshold, </span><br><span class="line">    moveit_msgs::RobotTrajectory &amp;trajectory, </span><br><span class="line">    <span class="type">bool</span> avoid_collisions=<span class="literal">true</span>, </span><br><span class="line">    moveit_msgs::MoveItErrorCodes *error_code=<span class="literal">NULL</span></span><br><span class="line">)</span><br><span class="line">    </span><br><span class="line"><span class="type">double</span> moveit::planning_interface::MoveGroupInterface::<span class="built_in">computeCartesianPath</span>(</span><br><span class="line">    <span class="type">const</span> std::vector&lt; geometry_msgs::Pose &gt; &amp; 	waypoints,</span><br><span class="line">    <span class="type">double</span> 	eef_step,</span><br><span class="line">    <span class="type">double</span> 	jump_threshold,</span><br><span class="line">    moveit_msgs::RobotTrajectory &amp; 	trajectory,</span><br><span class="line">    <span class="type">const</span> moveit_msgs::Constraints &amp; 	path_constraints,</span><br><span class="line">    <span class="type">bool</span> 	avoid_collisions = <span class="literal">true</span>,</span><br><span class="line">    moveit_msgs::MoveItErrorCodes * 	error_code = <span class="literal">NULL</span> </span><br><span class="line">)	 </span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><strong>waypoints</strong>：轨迹要经过的中间点，waypoints 的参考坐标系由 <a target="_blank" rel="noopener" href="https://docs.ros.org/en/kinetic/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroupInterface.html#aac4b6f7cb3c3257001ccbd64c6d14f46">setPoseReferenceFrame()</a> 函数指定</li>
+<li><strong>eef_step</strong>：step 大小，单位 m</li>
+<li><strong>jump_threshold</strong>：机器人 configuration space 中的距离变化不允许超过 jump_threshold（这是为了防止 IK solutions 中的 “jumps”）。<strong>规划的关节连续运动之间的距离 &lt;&#x3D; Jump_threshold*关节位置的平均距离&#x2F;绝对距离</strong>，其作用是在笛卡尔空间运动时，<strong>避免在经过奇异点时产生关节的抖动</strong>(经过奇异点时，某个轴会短时间内高速运动从而产生抖动)</li>
+<li><strong>trajectory</strong>：</li>
+<li><strong>avoid_collisions</strong>：默认为 true，开启碰撞检测，若规划的轨迹无法避免碰撞，则执行失败</li>
+<li><strong>error_code</strong>：</li>
+</ul>
+<p>返回值 fraction：返回一个介于 0.0 和 1.0 之间的值，表示规划出的路径的分数。出错时返回 -1.0。该返回值描述规划后的运动轨迹在路点列表中的覆盖率。如果 fraction 小于 1 则有路点没有进入规划；等于1的话就可以用execute()执行了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -628,14 +1009,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">477k</span>
+    <span title="站点总字数">479k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:28</span>
+    <span title="站点阅读时长">14:31</span>
   </span>
 </div>
 <div class="busuanzi-count">
