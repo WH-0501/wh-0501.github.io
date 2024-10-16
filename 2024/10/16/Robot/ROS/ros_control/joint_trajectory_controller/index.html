@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述在一组关节上执行关节空间轨迹(joint-space trajectories)的控制器。轨迹被指定为在特定时刻到达的一组 waypoints，控制器试图在允许的情况下执行这些 waypoints。waypoints 由位置、可选速度和加速度组成。 该控制器被模板化以处理多个轨迹表示。默认情况下，提供了**样条插值器(spline interpolator)**。样条插值器根据 waypoin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="joint_trajectory_controller">
+<meta property="og:url" content="http://example.com/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="概述在一组关节上执行关节空间轨迹(joint-space trajectories)的控制器。轨迹被指定为在特定时刻到达的一组 waypoints，控制器试图在允许的情况下执行这些 waypoints。waypoints 由位置、可选速度和加速度组成。 该控制器被模板化以处理多个轨迹表示。默认情况下，提供了**样条插值器(spline interpolator)**。样条插值器根据 waypoin">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-16T00:08:48.000Z">
+<meta property="article:modified_time" content="2024-10-16T00:13:15.000Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="ros_control">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/","path":"2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/","title":"joint_trajectory_controller"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>joint_trajectory_controller | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hardware-interface-type"><span class="nav-number">1.1.</span> <span class="nav-text">Hardware interface type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">其它特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.</span> <span class="nav-text">发送轨迹</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">可用接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#preemption-policy"><span class="nav-number">2.2.</span> <span class="nav-text">preemption policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trajectory-replacement"><span class="nav-number">2.3.</span> <span class="nav-text">trajectory replacement</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%8F%8A%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">参数及接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">源码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="joint_trajectory_controller | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          joint_trajectory_controller
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-16 08:08:48 / 修改时间：08:13:15" itemprop="dateCreated datePublished" datetime="2024-10-16T08:08:48+08:00">2024-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>24 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h1><p>在一组关节上执行关节空间轨迹(<strong>joint-space trajectories</strong>)的控制器。轨迹被指定为在特定时刻到达的一组 waypoints，控制器试图在允许的情况下执行这些 waypoints。waypoints 由位置、可选速度和加速度组成。</p>
+<p>该控制器被模板化以处理多个轨迹表示。默认情况下，提供了**样条插值器(spline interpolator)**。样条插值器根据 waypoint 规范使用以下插值策略:</p>
+<ul>
+<li><strong>Linear</strong>：线性插值。只指定了位置。保证位置的连续性。不理想，因为它会产生速度不连续的轨迹在路径点</li>
+<li><strong>Cubic</strong>：指定了位置和速度。保证速度层级上的连续性</li>
+<li><strong>Quintic</strong>：指定位置，速度和加速度被。保证在加速度层级上的连续性</li>
+</ul>
+<p>controller 类型包括：</p>
+<ul>
+<li>速度控制：<strong>velocity_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>位置控制：<strong>position_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>effort 控制：<strong>effort_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>…</li>
+</ul>
+<h2 id="Hardware-interface-type"><a href="#Hardware-interface-type" class="headerlink" title="Hardware interface type"></a><strong>Hardware interface type</strong></h2><p>控制器被模板化以使用多种硬件接口类型。目前支持具有<strong>位置</strong>、<strong>速度</strong>和<strong>力</strong>接口的关节</p>
+<ul>
+<li>位置控制的关节(<strong>position-controlled joints</strong>)，只需将所需位置转发给关节</li>
+<li>速度（力）关节(<strong>velocity&#x2F;effort joints</strong>)，包含位置+速度的轨迹跟随误差通过 PID 回路映射到速度（力）命令</li>
+</ul>
+<p>与上面的轨迹表示案例类似，可以支持新的硬件接口，或对已支持接口的替代映射（例如，用于生成努力命令的代理控制器）。</p>
+<h2 id="其它特性"><a href="#其它特性" class="headerlink" title="其它特性"></a><strong>其它特性</strong></h2><ul>
+<li>Realtime-safe</li>
+<li>正确处理 wrapping(连续)关节</li>
+<li>Robuster to system clock changes：不连续的系统时钟更改不会导致已经排队的轨迹段执行的不连续。</li>
+</ul>
+<h1 id="发送轨迹"><a href="#发送轨迹" class="headerlink" title="发送轨迹"></a><strong>发送轨迹</strong></h1><h2 id="可用接口"><a href="#可用接口" class="headerlink" title="可用接口"></a><strong>可用接口</strong></h2><p>有两种机制将<strong>轨迹发送到控制器</strong>：</p>
+<ul>
+<li>通过 action interface</li>
+<li>通过 topic interface</li>
+</ul>
+<p>两者都使用 <a target="_blank" rel="noopener" href="http://docs.ros.org/en/api/trajectory_msgs/html/msg/JointTrajectory.html">trajectory_msgs&#x2F;JointTrajectory</a> 类型来描述轨迹。并且，若 <strong>allow_partial_joints_goal</strong> 未设置为 True，则需要为所有控制器关节指定值。</p>
+<p>发送轨迹的主要方式是通过 action interface。Action goals 不仅可以指定要执行的轨迹，还可以（可选）指定路径和目标容差。如果未指定公差，则使用参数服务器中给出的默认值。如果在轨迹执行期间违反了容差，则中止 action goal 并通知客户端。</p>
+<p>注意: <strong>即使目标已中止，控制器仍会尝试尽可能最佳地执行轨迹</strong>。</p>
+<p>topic interface 是一种即发即弃(fire-and-forget)的替代方案。在这种情况下不使用控制器的路径和目标容差规范，因为没有机制来通知发送者有关容差违规的情况。请注意，虽然可以通过 query_state 服务和状态主题进行一定程度的监控，但实现起来比使用操作接口要麻烦得多。</p>
+<h2 id="preemption-policy"><a href="#preemption-policy" class="headerlink" title="preemption policy"></a><strong>preemption policy</strong></h2><p>抢占策略。</p>
+<p>任何时候只能激活一个 action goal。仅针对活动目标的轨迹段检查路径和目标容差。</p>
+<p>当一个活动的 action goal 被来自 action 或 topic interface 的另一个命令抢占时，该目标被取消并通知客户端。</p>
+<p><strong>从 topic interface 发送空轨迹消息将停止所有排队轨迹的执行并进入位置保持模式</strong>。<strong>stop_trajectory_duration</strong> 参数控制停止运动的持续时间。</p>
+<h2 id="trajectory-replacement"><a href="#trajectory-replacement" class="headerlink" title="trajectory replacement"></a><strong>trajectory replacement</strong></h2><p>关节轨迹消息允许通过 header 中的时间戳指定新轨迹应该开始执行的时间，其中零时间（默认值）表示“现在开始”。</p>
+<p>新轨迹命令的到来并不一定意味着控制器将完全丢弃当前运行的轨迹并用新的轨迹代替。相反，控制器将采用两者的有用部分并将它们适当地组合起来。 有关此行为的详细说明，参考：<a target="_blank" rel="noopener" href="http://wiki.ros.org/joint_trajectory_controller/UnderstandingTrajectoryReplacement">understanding trajectory replacement</a>。</p>
+<h1 id="参数及接口"><a href="#参数及接口" class="headerlink" title="参数及接口"></a><strong>参数及接口</strong></h1><p><strong>1）Action interface</strong></p>
+<p>该控制器在控制器的 <strong>follow_joint_trajectory</strong> 命名空间中发布  control_msgs::FollowJointTrajectoryAction 类型的接口。</p>
+<p><strong>2）订阅主题</strong></p>
+<ul>
+<li><strong>command</strong>：类型 trajectory_msgs&#x2F;JointTrajectory。使用 Topic 接口发布的要执行的轨迹</li>
+</ul>
+<p><strong>3）发布主题</strong></p>
+<ul>
+<li><strong>state</strong>：类型 control_msgs&#x2F;JointTrajectoryControllerState。发布控制器的当前状态</li>
+</ul>
+<p><strong>4）Services</strong></p>
+<ul>
+<li>query_state：类型 control_msgs&#x2F;QueryTrajectoryState，查询控制器状态</li>
+</ul>
+<p><strong>5）参数</strong></p>
+<ul>
+<li><strong>joints</strong>：类型 string[]。被控制的关节列表</li>
+<li><strong>constraints&#x2F;goal_time</strong>：如果目标轨迹点的时间戳为 t，则如果在 t ± goal_time 内到达目标，则轨迹成功，否则中止</li>
+<li><strong>constraints&#x2F;stopped_velocity_tolerance</strong>：速度被认为近似等于零</li>
+<li><strong>constraints&#x2F;&#x2F;goal</strong>：指定关节达到目标的位置公差。当关节在 goal_position ± goal_tolerance 范围内时，轨迹可以成功</li>
+<li><strong>constraints&#x2F;&#x2F;trajectory</strong>：整个轨迹中指定关节的位置公差。如果关节位置超出 trajectory_position +&#x2F;- tolerance，则轨迹中止</li>
+<li>**gains&#x2F;**：指定 PID 控制器的参数值</li>
+<li>**velocity_ff&#x2F;**：添加到 PID 控制器输出的速度前馈项(feed-forward)的增益。可选，仅由 effort 和速度接口使用</li>
+<li><strong>stop_trajectory_duration</strong>：启动控制器或取消轨迹时，会进入位置保持模式。此参数指定使当前状态（位置和速度）停止所需的时间。 它的值可以大于或等于零</li>
+<li><strong>state_publish_rate</strong>：控制器状态发布速率</li>
+<li><strong>action_monitor_rate</strong>：监控 action goal 的频率（以赫兹为单位）。这是一个不需要更改的高级参数</li>
+<li><strong>allow_partial_joints_goal</strong>：允许发布带有部分关节集的 JointTrajectory 消息</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h1><p>1）最小描述，位置接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;position_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br></pre></td></tr></table></figure>
+
+<p>2）最小描述，速度接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;velocity_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling a velocity interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）Velocity FF，速度接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;velocity_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling a velocity interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">10</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125; <span class="comment"># Smaller &#x27;p&#x27; term, since ff term does most of the work</span></span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">10</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125; <span class="comment"># Smaller &#x27;p&#x27; term, since ff term does most of the work</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">velocity_ff:</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> <span class="number">1.0</span></span><br><span class="line">    <span class="attr">head_2_joint:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>4）最小描述，effort 接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling an effort interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5）完整示例，effort 接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">constraints:</span></span><br><span class="line">    <span class="attr">goal_time:</span> <span class="number">0.5</span>                   <span class="comment"># Override default</span></span><br><span class="line">    <span class="attr">stopped_velocity_tolerance:</span> <span class="number">0.02</span> <span class="comment"># Override default</span></span><br><span class="line">    <span class="attr">head_1_joint:</span></span><br><span class="line">      <span class="attr">trajectory:</span> <span class="number">0.05</span>               <span class="comment"># Not enforced if unspecified</span></span><br><span class="line">      <span class="attr">goal:</span> <span class="number">0.02</span>                     <span class="comment"># Not enforced if unspecified</span></span><br><span class="line">    <span class="attr">head_2_joint:</span></span><br><span class="line">      <span class="attr">goal:</span> <span class="number">0.01</span>                     <span class="comment"># Not enforced if unspecified</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling an effort interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line"></span><br><span class="line">  <span class="attr">state_publish_rate:</span>  <span class="number">25</span>            <span class="comment"># Override default</span></span><br><span class="line">  <span class="attr">action_monitor_rate:</span> <span class="number">30</span>            <span class="comment"># Override default</span></span><br><span class="line">  <span class="attr">stop_trajectory_duration:</span> <span class="number">0</span>        <span class="comment"># Override default</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a><strong>源码</strong></h1><p><code>JointTrajectoryController::init</code> 接口</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">SegmentImpl</span>, <span class="keyword">class</span> <span class="title class_">HardwareInterface</span>&gt;</span><br><span class="line"><span class="type">bool</span> JointTrajectoryController&lt;SegmentImpl, HardwareInterface&gt;::<span class="built_in">init</span>(</span><br><span class="line">        HardwareInterface* hw,</span><br><span class="line">        ros::NodeHandle&amp;   root_nh,</span><br><span class="line">        ros::NodeHandle&amp;   controller_nh)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> internal;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 缓存控制器节点句柄</span></span><br><span class="line">  controller_nh_ = controller_nh;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取控制器名称</span></span><br><span class="line">  name_ = <span class="built_in">getLeafNamespace</span>(controller_nh_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 状态发布速率</span></span><br><span class="line">  <span class="type">double</span> state_publish_rate = <span class="number">50.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;state_publish_rate&quot;</span>, state_publish_rate);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Controller state will be published at &quot;</span> &lt;&lt; state_publish_rate &lt;&lt; <span class="string">&quot;Hz.&quot;</span>);</span><br><span class="line">  state_publisher_period_ = ros::<span class="built_in">Duration</span>(<span class="number">1.0</span> / state_publish_rate);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Action status checking update rate</span></span><br><span class="line">  <span class="type">double</span> action_monitor_rate = <span class="number">20.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;action_monitor_rate&quot;</span>, action_monitor_rate);</span><br><span class="line">  action_monitor_period_ = ros::<span class="built_in">Duration</span>(<span class="number">1.0</span> / action_monitor_rate);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Action status changes will be monitored at &quot;</span> &lt;&lt; action_monitor_rate &lt;&lt; <span class="string">&quot;Hz.&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stop trajectory duration</span></span><br><span class="line">  stop_trajectory_duration_ = <span class="number">0.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;stop_trajectory_duration&quot;</span>, stop_trajectory_duration_);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Stop trajectory has a duration of &quot;</span> &lt;&lt; stop_trajectory_duration_ &lt;&lt; <span class="string">&quot;s.&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Checking if partial trajectories are allowed</span></span><br><span class="line">  controller_nh_.<span class="built_in">param</span>&lt;<span class="type">bool</span>&gt;(<span class="string">&quot;allow_partial_joints_goal&quot;</span>, allow_partial_joints_goal_, <span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">if</span> (allow_partial_joints_goal_)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_DEBUG_NAMED</span>(name_, <span class="string">&quot;Goals with partial set of joints are allowed&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 控制的关节列表. 通过读取 /&lt;node name&gt;/joints 参数获取节点列表</span></span><br><span class="line">  joint_names_ = <span class="built_in">getStrings</span>(controller_nh_, <span class="string">&quot;joints&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (joint_names_.<span class="built_in">empty</span>()) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125; <span class="comment">// 若节点列表为空则退出</span></span><br><span class="line">  <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> n_joints = joint_names_.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// URDF joints. 读取 robot_description 参数</span></span><br><span class="line">  urdf::ModelSharedPtr urdf = <span class="built_in">getUrdf</span>(root_nh, <span class="string">&quot;robot_description&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (!urdf) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;</span><br><span class="line">  <span class="comment">// 在 URDF 中查找控制关节</span></span><br><span class="line">  std::vector&lt;urdf::JointConstSharedPtr&gt; urdf_joints = <span class="built_in">getUrdfJoints</span>(*urdf, joint_names_);</span><br><span class="line">  <span class="keyword">if</span> (urdf_joints.<span class="built_in">empty</span>()) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125; <span class="comment">// 若 URDF 中未定义控制关节，则退出</span></span><br><span class="line">  <span class="built_in">assert</span>(n_joints == urdf_joints.<span class="built_in">size</span>()); <span class="comment">// 确定在 URDF 中找到了所有控制关节</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize members</span></span><br><span class="line">  joints_.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">  angle_wraparound_.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">  <span class="comment">// 遍历控制关节列表，获取 joint handle</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; n_joints; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Joint handle</span></span><br><span class="line">    <span class="keyword">try</span> &#123;joints_[i] = hw-&gt;<span class="built_in">getHandle</span>(joint_names_[i]);&#125;</span><br><span class="line">    <span class="built_in">catch</span> (...)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">ROS_ERROR_STREAM_NAMED</span>(name_, <span class="string">&quot;Could not find joint &#x27;&quot;</span> &lt;&lt; joint_names_[i] &lt;&lt; <span class="string">&quot;&#x27; in &#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                                    <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;.&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Whether a joint is continuous (ie. has angle wraparound)</span></span><br><span class="line">    angle_wraparound_[i] = urdf_joints[i]-&gt;type == urdf::Joint::CONTINUOUS;</span><br><span class="line">    <span class="type">const</span> std::string not_if = angle_wraparound_[i] ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;non-&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Found &quot;</span> &lt;&lt; not_if &lt;&lt; <span class="string">&quot;continuous joint &#x27;&quot;</span> &lt;&lt; joint_names_[i] &lt;&lt; <span class="string">&quot;&#x27; in &#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                                  <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">assert</span>(joints_.<span class="built_in">size</span>() == angle_wraparound_.<span class="built_in">size</span>());</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Initialized controller &#x27;&quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot;&#x27; with:&quot;</span> &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Number of joints: &quot;</span> &lt;&lt; <span class="built_in">getNumberOfJoints</span>() &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Hardware interface type: &#x27;&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Trajectory segment type: &#x27;&quot;</span> &lt;&lt; hardware_interface::internal::<span class="built_in">demangledTypeName</span>&lt;SegmentImpl&gt;() &lt;&lt; <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Default tolerances</span></span><br><span class="line">  <span class="function">ros::NodeHandle <span class="title">tol_nh</span><span class="params">(controller_nh_, <span class="string">&quot;constraints&quot;</span>)</span></span>;</span><br><span class="line">  default_tolerances_ = <span class="built_in">getSegmentTolerances</span>&lt;Scalar&gt;(tol_nh, joint_names_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Hardware interface adapter</span></span><br><span class="line">  hw_iface_adapter_.<span class="built_in">init</span>(joints_, controller_nh_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Subscribed topics</span></span><br><span class="line">  trajectory_command_sub_ = controller_nh_.<span class="built_in">subscribe</span>(<span class="string">&quot;command&quot;</span>, <span class="number">1</span>, &amp;JointTrajectoryController::trajectoryCommandCB, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Published topics</span></span><br><span class="line">  state_publisher_.<span class="built_in">reset</span>(<span class="keyword">new</span> <span class="built_in">StatePublisher</span>(controller_nh_, <span class="string">&quot;state&quot;</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Action interface</span></span><br><span class="line">  action_server_.<span class="built_in">reset</span>(<span class="keyword">new</span> <span class="built_in">ActionServer</span>(controller_nh_, <span class="string">&quot;follow_joint_trajectory&quot;</span>,</span><br><span class="line">                                        boost::<span class="built_in">bind</span>(&amp;JointTrajectoryController::goalCB,   <span class="keyword">this</span>, _1),</span><br><span class="line">                                        boost::<span class="built_in">bind</span>(&amp;JointTrajectoryController::cancelCB, <span class="keyword">this</span>, _1),</span><br><span class="line">                                        <span class="literal">false</span>));</span><br><span class="line">  action_server_-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Provided services</span></span><br><span class="line">  query_state_service_ = controller_nh_.<span class="built_in">advertiseService</span>(<span class="string">&quot;query_state&quot;</span>,</span><br><span class="line">                                                         &amp;JointTrajectoryController::queryStateService,</span><br><span class="line">                                                         <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Preeallocate resources</span></span><br><span class="line">  current_state_       = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  old_desired_state_   = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  desired_state_       = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  state_error_         = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  desired_joint_state_ = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(<span class="number">1</span>);</span><br><span class="line">  state_joint_error_   = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  successful_joint_traj_ = boost::dynamic_bitset&lt;&gt;(<span class="built_in">getNumberOfJoints</span>());</span><br><span class="line"></span><br><span class="line">  hold_trajectory_ptr_ = <span class="built_in">createHoldTrajectory</span>(n_joints);</span><br><span class="line">  <span class="built_in">assert</span>(joint_names_.<span class="built_in">size</span>() == hold_trajectory_ptr_-&gt;<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (stop_trajectory_duration_ == <span class="number">0.0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    hold_traj_builder_ = std::unique_ptr&lt;TrajectoryBuilder&lt;SegmentImpl&gt; &gt;(<span class="keyword">new</span> <span class="built_in">HoldTrajectoryBuilder</span>&lt;SegmentImpl, HardwareInterface&gt;(joints_));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    hold_traj_builder_ = std::unique_ptr&lt;TrajectoryBuilder&lt;SegmentImpl&gt; &gt;(<span class="keyword">new</span> <span class="built_in">StopTrajectoryBuilder</span>&lt;SegmentImpl&gt;(stop_trajectory_duration_, desired_state_));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    state_publisher_-&gt;<span class="built_in">lock</span>();</span><br><span class="line">    state_publisher_-&gt;msg_.joint_names = joint_names_;</span><br><span class="line">    state_publisher_-&gt;msg_.desired.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.desired.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.desired.accelerations.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.actual.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.actual.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.error.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.error.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;<span class="built_in">unlock</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <strong>&#x2F;<node_name>&#x2F;joints</strong> 参数获取节点列表。返回 std::vector<a href="std::string">std::string</a> 类型的节点列表。若节点列表为空，则直接退出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">SegmentImpl</span>, <span class="keyword">class</span> <span class="title class_">HardwareInterface</span>&gt;</span><br><span class="line"><span class="type">void</span> JointTrajectoryController&lt;SegmentImpl, HardwareInterface&gt;::</span><br><span class="line"><span class="built_in">goalCB</span>(GoalHandle gh)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_,<span class="string">&quot;Received new action goal&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Precondition: Running controller</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>-&gt;<span class="built_in">isRunning</span>()) <span class="comment">// controller 未启动</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Can&#x27;t accept new action goals. Controller is not running.&quot;</span>);</span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_GOAL; <span class="comment">// <span class="doctag">TODO:</span> Add better error status to msg?</span></span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If partial joints goals are not allowed, goal should specify all controller joints</span></span><br><span class="line">  <span class="keyword">if</span> (!allow_partial_joints_goal_)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// goal 中关节数与实际关节数不匹配</span></span><br><span class="line">    <span class="keyword">if</span> (gh.<span class="built_in">getGoal</span>()-&gt;trajectory.joint_names.<span class="built_in">size</span>() != joint_names_.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Joints on incoming goal don&#x27;t match the controller joints.&quot;</span>);</span><br><span class="line">      control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">      result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_JOINTS;</span><br><span class="line">      gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Goal should specify valid controller joints (they can be ordered differently). Reject if this is not the case</span></span><br><span class="line">  <span class="keyword">using</span> internal::mapping;</span><br><span class="line">  std::vector&lt;<span class="type">unsigned</span> <span class="type">int</span>&gt; mapping_vector = <span class="built_in">mapping</span>(gh.<span class="built_in">getGoal</span>()-&gt;trajectory.joint_names, joint_names_);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (mapping_vector.<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Joints on incoming goal don&#x27;t match the controller joints.&quot;</span>);</span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_JOINTS;</span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Try to update new trajectory</span></span><br><span class="line">  <span class="function">RealtimeGoalHandlePtr <span class="title">rt_goal</span><span class="params">(<span class="keyword">new</span> RealtimeGoalHandle(gh))</span></span>;</span><br><span class="line">  std::string error_string;</span><br><span class="line">  <span class="type">const</span> <span class="type">bool</span> update_ok = <span class="built_in">updateTrajectoryCommand</span>(internal::<span class="built_in">share_member</span>(gh.<span class="built_in">getGoal</span>(), gh.<span class="built_in">getGoal</span>()-&gt;trajectory),</span><br><span class="line">                                                 rt_goal,</span><br><span class="line">                                                 &amp;error_string);</span><br><span class="line">  rt_goal-&gt;preallocated_feedback_-&gt;joint_names = joint_names_;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (update_ok)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Accept new goal</span></span><br><span class="line">    <span class="built_in">preemptActiveGoal</span>();</span><br><span class="line">    gh.<span class="built_in">setAccepted</span>();</span><br><span class="line">    rt_active_goal_ = rt_goal;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setup goal status checking timer</span></span><br><span class="line">    goal_handle_timer_ = controller_nh_.<span class="built_in">createTimer</span>(action_monitor_period_,</span><br><span class="line">                                                    &amp;RealtimeGoalHandle::runNonRealtime,</span><br><span class="line">                                                    rt_goal);</span><br><span class="line">    goal_handle_timer_.<span class="built_in">start</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Reject invalid goal</span></span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_GOAL;</span><br><span class="line">    result.error_string = error_string;</span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ROS/" rel="tag"># ROS</a>
+              <a href="/tags/ros-control/" rel="tag"># ros_control</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/16/Robot/ROS/ros_control/%E8%AE%BE%E7%BD%AE%E6%96%B0%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="prev" title="设置新机器人">
+                  <i class="fa fa-angle-left"></i> 设置新机器人
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">507k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:21</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,605 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/16/Robot/ROS/ros_control/joint_trajectory_controller/" class="post-title-link" itemprop="url">joint_trajectory_controller</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-16 08:08:48 / 修改时间：08:13:15" itemprop="dateCreated datePublished" datetime="2024-10-16T08:08:48+08:00">2024-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>24 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h1><p>在一组关节上执行关节空间轨迹(<strong>joint-space trajectories</strong>)的控制器。轨迹被指定为在特定时刻到达的一组 waypoints，控制器试图在允许的情况下执行这些 waypoints。waypoints 由位置、可选速度和加速度组成。</p>
+<p>该控制器被模板化以处理多个轨迹表示。默认情况下，提供了**样条插值器(spline interpolator)**。样条插值器根据 waypoint 规范使用以下插值策略:</p>
+<ul>
+<li><strong>Linear</strong>：线性插值。只指定了位置。保证位置的连续性。不理想，因为它会产生速度不连续的轨迹在路径点</li>
+<li><strong>Cubic</strong>：指定了位置和速度。保证速度层级上的连续性</li>
+<li><strong>Quintic</strong>：指定位置，速度和加速度被。保证在加速度层级上的连续性</li>
+</ul>
+<p>controller 类型包括：</p>
+<ul>
+<li>速度控制：<strong>velocity_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>位置控制：<strong>position_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>effort 控制：<strong>effort_controllers</strong>&#x2F;JointTrajectoryController</li>
+<li>…</li>
+</ul>
+<h2 id="Hardware-interface-type"><a href="#Hardware-interface-type" class="headerlink" title="Hardware interface type"></a><strong>Hardware interface type</strong></h2><p>控制器被模板化以使用多种硬件接口类型。目前支持具有<strong>位置</strong>、<strong>速度</strong>和<strong>力</strong>接口的关节</p>
+<ul>
+<li>位置控制的关节(<strong>position-controlled joints</strong>)，只需将所需位置转发给关节</li>
+<li>速度（力）关节(<strong>velocity&#x2F;effort joints</strong>)，包含位置+速度的轨迹跟随误差通过 PID 回路映射到速度（力）命令</li>
+</ul>
+<p>与上面的轨迹表示案例类似，可以支持新的硬件接口，或对已支持接口的替代映射（例如，用于生成努力命令的代理控制器）。</p>
+<h2 id="其它特性"><a href="#其它特性" class="headerlink" title="其它特性"></a><strong>其它特性</strong></h2><ul>
+<li>Realtime-safe</li>
+<li>正确处理 wrapping(连续)关节</li>
+<li>Robuster to system clock changes：不连续的系统时钟更改不会导致已经排队的轨迹段执行的不连续。</li>
+</ul>
+<h1 id="发送轨迹"><a href="#发送轨迹" class="headerlink" title="发送轨迹"></a><strong>发送轨迹</strong></h1><h2 id="可用接口"><a href="#可用接口" class="headerlink" title="可用接口"></a><strong>可用接口</strong></h2><p>有两种机制将<strong>轨迹发送到控制器</strong>：</p>
+<ul>
+<li>通过 action interface</li>
+<li>通过 topic interface</li>
+</ul>
+<p>两者都使用 <a target="_blank" rel="noopener" href="http://docs.ros.org/en/api/trajectory_msgs/html/msg/JointTrajectory.html">trajectory_msgs&#x2F;JointTrajectory</a> 类型来描述轨迹。并且，若 <strong>allow_partial_joints_goal</strong> 未设置为 True，则需要为所有控制器关节指定值。</p>
+<p>发送轨迹的主要方式是通过 action interface。Action goals 不仅可以指定要执行的轨迹，还可以（可选）指定路径和目标容差。如果未指定公差，则使用参数服务器中给出的默认值。如果在轨迹执行期间违反了容差，则中止 action goal 并通知客户端。</p>
+<p>注意: <strong>即使目标已中止，控制器仍会尝试尽可能最佳地执行轨迹</strong>。</p>
+<p>topic interface 是一种即发即弃(fire-and-forget)的替代方案。在这种情况下不使用控制器的路径和目标容差规范，因为没有机制来通知发送者有关容差违规的情况。请注意，虽然可以通过 query_state 服务和状态主题进行一定程度的监控，但实现起来比使用操作接口要麻烦得多。</p>
+<h2 id="preemption-policy"><a href="#preemption-policy" class="headerlink" title="preemption policy"></a><strong>preemption policy</strong></h2><p>抢占策略。</p>
+<p>任何时候只能激活一个 action goal。仅针对活动目标的轨迹段检查路径和目标容差。</p>
+<p>当一个活动的 action goal 被来自 action 或 topic interface 的另一个命令抢占时，该目标被取消并通知客户端。</p>
+<p><strong>从 topic interface 发送空轨迹消息将停止所有排队轨迹的执行并进入位置保持模式</strong>。<strong>stop_trajectory_duration</strong> 参数控制停止运动的持续时间。</p>
+<h2 id="trajectory-replacement"><a href="#trajectory-replacement" class="headerlink" title="trajectory replacement"></a><strong>trajectory replacement</strong></h2><p>关节轨迹消息允许通过 header 中的时间戳指定新轨迹应该开始执行的时间，其中零时间（默认值）表示“现在开始”。</p>
+<p>新轨迹命令的到来并不一定意味着控制器将完全丢弃当前运行的轨迹并用新的轨迹代替。相反，控制器将采用两者的有用部分并将它们适当地组合起来。 有关此行为的详细说明，参考：<a target="_blank" rel="noopener" href="http://wiki.ros.org/joint_trajectory_controller/UnderstandingTrajectoryReplacement">understanding trajectory replacement</a>。</p>
+<h1 id="参数及接口"><a href="#参数及接口" class="headerlink" title="参数及接口"></a><strong>参数及接口</strong></h1><p><strong>1）Action interface</strong></p>
+<p>该控制器在控制器的 <strong>follow_joint_trajectory</strong> 命名空间中发布  control_msgs::FollowJointTrajectoryAction 类型的接口。</p>
+<p><strong>2）订阅主题</strong></p>
+<ul>
+<li><strong>command</strong>：类型 trajectory_msgs&#x2F;JointTrajectory。使用 Topic 接口发布的要执行的轨迹</li>
+</ul>
+<p><strong>3）发布主题</strong></p>
+<ul>
+<li><strong>state</strong>：类型 control_msgs&#x2F;JointTrajectoryControllerState。发布控制器的当前状态</li>
+</ul>
+<p><strong>4）Services</strong></p>
+<ul>
+<li>query_state：类型 control_msgs&#x2F;QueryTrajectoryState，查询控制器状态</li>
+</ul>
+<p><strong>5）参数</strong></p>
+<ul>
+<li><strong>joints</strong>：类型 string[]。被控制的关节列表</li>
+<li><strong>constraints&#x2F;goal_time</strong>：如果目标轨迹点的时间戳为 t，则如果在 t ± goal_time 内到达目标，则轨迹成功，否则中止</li>
+<li><strong>constraints&#x2F;stopped_velocity_tolerance</strong>：速度被认为近似等于零</li>
+<li><strong>constraints&#x2F;&#x2F;goal</strong>：指定关节达到目标的位置公差。当关节在 goal_position ± goal_tolerance 范围内时，轨迹可以成功</li>
+<li><strong>constraints&#x2F;&#x2F;trajectory</strong>：整个轨迹中指定关节的位置公差。如果关节位置超出 trajectory_position +&#x2F;- tolerance，则轨迹中止</li>
+<li>**gains&#x2F;**：指定 PID 控制器的参数值</li>
+<li>**velocity_ff&#x2F;**：添加到 PID 控制器输出的速度前馈项(feed-forward)的增益。可选，仅由 effort 和速度接口使用</li>
+<li><strong>stop_trajectory_duration</strong>：启动控制器或取消轨迹时，会进入位置保持模式。此参数指定使当前状态（位置和速度）停止所需的时间。 它的值可以大于或等于零</li>
+<li><strong>state_publish_rate</strong>：控制器状态发布速率</li>
+<li><strong>action_monitor_rate</strong>：监控 action goal 的频率（以赫兹为单位）。这是一个不需要更改的高级参数</li>
+<li><strong>allow_partial_joints_goal</strong>：允许发布带有部分关节集的 JointTrajectory 消息</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h1><p>1）最小描述，位置接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;position_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br></pre></td></tr></table></figure>
+
+<p>2）最小描述，速度接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;velocity_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling a velocity interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）Velocity FF，速度接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;velocity_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling a velocity interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">10</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125; <span class="comment"># Smaller &#x27;p&#x27; term, since ff term does most of the work</span></span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">10</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125; <span class="comment"># Smaller &#x27;p&#x27; term, since ff term does most of the work</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">velocity_ff:</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> <span class="number">1.0</span></span><br><span class="line">    <span class="attr">head_2_joint:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>4）最小描述，effort 接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling an effort interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5）完整示例，effort 接口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">head_controller:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">  <span class="attr">joints:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_1_joint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">head_2_joint</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">constraints:</span></span><br><span class="line">    <span class="attr">goal_time:</span> <span class="number">0.5</span>                   <span class="comment"># Override default</span></span><br><span class="line">    <span class="attr">stopped_velocity_tolerance:</span> <span class="number">0.02</span> <span class="comment"># Override default</span></span><br><span class="line">    <span class="attr">head_1_joint:</span></span><br><span class="line">      <span class="attr">trajectory:</span> <span class="number">0.05</span>               <span class="comment"># Not enforced if unspecified</span></span><br><span class="line">      <span class="attr">goal:</span> <span class="number">0.02</span>                     <span class="comment"># Not enforced if unspecified</span></span><br><span class="line">    <span class="attr">head_2_joint:</span></span><br><span class="line">      <span class="attr">goal:</span> <span class="number">0.01</span>                     <span class="comment"># Not enforced if unspecified</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">gains:</span> <span class="comment"># Required because we&#x27;re controlling an effort interface</span></span><br><span class="line">    <span class="attr">head_1_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line">    <span class="attr">head_2_joint:</span> &#123;<span class="attr">p:</span> <span class="number">100</span>,  <span class="attr">d:</span> <span class="number">1</span>, <span class="attr">i:</span> <span class="number">1</span>, <span class="attr">i_clamp:</span> <span class="number">1</span>&#125;</span><br><span class="line"></span><br><span class="line">  <span class="attr">state_publish_rate:</span>  <span class="number">25</span>            <span class="comment"># Override default</span></span><br><span class="line">  <span class="attr">action_monitor_rate:</span> <span class="number">30</span>            <span class="comment"># Override default</span></span><br><span class="line">  <span class="attr">stop_trajectory_duration:</span> <span class="number">0</span>        <span class="comment"># Override default</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a><strong>源码</strong></h1><p><code>JointTrajectoryController::init</code> 接口</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">SegmentImpl</span>, <span class="keyword">class</span> <span class="title class_">HardwareInterface</span>&gt;</span><br><span class="line"><span class="type">bool</span> JointTrajectoryController&lt;SegmentImpl, HardwareInterface&gt;::<span class="built_in">init</span>(</span><br><span class="line">        HardwareInterface* hw,</span><br><span class="line">        ros::NodeHandle&amp;   root_nh,</span><br><span class="line">        ros::NodeHandle&amp;   controller_nh)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> internal;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 缓存控制器节点句柄</span></span><br><span class="line">  controller_nh_ = controller_nh;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取控制器名称</span></span><br><span class="line">  name_ = <span class="built_in">getLeafNamespace</span>(controller_nh_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 状态发布速率</span></span><br><span class="line">  <span class="type">double</span> state_publish_rate = <span class="number">50.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;state_publish_rate&quot;</span>, state_publish_rate);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Controller state will be published at &quot;</span> &lt;&lt; state_publish_rate &lt;&lt; <span class="string">&quot;Hz.&quot;</span>);</span><br><span class="line">  state_publisher_period_ = ros::<span class="built_in">Duration</span>(<span class="number">1.0</span> / state_publish_rate);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Action status checking update rate</span></span><br><span class="line">  <span class="type">double</span> action_monitor_rate = <span class="number">20.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;action_monitor_rate&quot;</span>, action_monitor_rate);</span><br><span class="line">  action_monitor_period_ = ros::<span class="built_in">Duration</span>(<span class="number">1.0</span> / action_monitor_rate);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Action status changes will be monitored at &quot;</span> &lt;&lt; action_monitor_rate &lt;&lt; <span class="string">&quot;Hz.&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stop trajectory duration</span></span><br><span class="line">  stop_trajectory_duration_ = <span class="number">0.0</span>;</span><br><span class="line">  controller_nh_.<span class="built_in">getParam</span>(<span class="string">&quot;stop_trajectory_duration&quot;</span>, stop_trajectory_duration_);</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Stop trajectory has a duration of &quot;</span> &lt;&lt; stop_trajectory_duration_ &lt;&lt; <span class="string">&quot;s.&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Checking if partial trajectories are allowed</span></span><br><span class="line">  controller_nh_.<span class="built_in">param</span>&lt;<span class="type">bool</span>&gt;(<span class="string">&quot;allow_partial_joints_goal&quot;</span>, allow_partial_joints_goal_, <span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">if</span> (allow_partial_joints_goal_)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_DEBUG_NAMED</span>(name_, <span class="string">&quot;Goals with partial set of joints are allowed&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 控制的关节列表. 通过读取 /&lt;node name&gt;/joints 参数获取节点列表</span></span><br><span class="line">  joint_names_ = <span class="built_in">getStrings</span>(controller_nh_, <span class="string">&quot;joints&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (joint_names_.<span class="built_in">empty</span>()) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125; <span class="comment">// 若节点列表为空则退出</span></span><br><span class="line">  <span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> n_joints = joint_names_.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// URDF joints. 读取 robot_description 参数</span></span><br><span class="line">  urdf::ModelSharedPtr urdf = <span class="built_in">getUrdf</span>(root_nh, <span class="string">&quot;robot_description&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (!urdf) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;</span><br><span class="line">  <span class="comment">// 在 URDF 中查找控制关节</span></span><br><span class="line">  std::vector&lt;urdf::JointConstSharedPtr&gt; urdf_joints = <span class="built_in">getUrdfJoints</span>(*urdf, joint_names_);</span><br><span class="line">  <span class="keyword">if</span> (urdf_joints.<span class="built_in">empty</span>()) &#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125; <span class="comment">// 若 URDF 中未定义控制关节，则退出</span></span><br><span class="line">  <span class="built_in">assert</span>(n_joints == urdf_joints.<span class="built_in">size</span>()); <span class="comment">// 确定在 URDF 中找到了所有控制关节</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize members</span></span><br><span class="line">  joints_.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">  angle_wraparound_.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">  <span class="comment">// 遍历控制关节列表，获取 joint handle</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; n_joints; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Joint handle</span></span><br><span class="line">    <span class="keyword">try</span> &#123;joints_[i] = hw-&gt;<span class="built_in">getHandle</span>(joint_names_[i]);&#125;</span><br><span class="line">    <span class="built_in">catch</span> (...)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">ROS_ERROR_STREAM_NAMED</span>(name_, <span class="string">&quot;Could not find joint &#x27;&quot;</span> &lt;&lt; joint_names_[i] &lt;&lt; <span class="string">&quot;&#x27; in &#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                                    <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;.&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Whether a joint is continuous (ie. has angle wraparound)</span></span><br><span class="line">    angle_wraparound_[i] = urdf_joints[i]-&gt;type == urdf::Joint::CONTINUOUS;</span><br><span class="line">    <span class="type">const</span> std::string not_if = angle_wraparound_[i] ? <span class="string">&quot;&quot;</span> : <span class="string">&quot;non-&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Found &quot;</span> &lt;&lt; not_if &lt;&lt; <span class="string">&quot;continuous joint &#x27;&quot;</span> &lt;&lt; joint_names_[i] &lt;&lt; <span class="string">&quot;&#x27; in &#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                                  <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">assert</span>(joints_.<span class="built_in">size</span>() == angle_wraparound_.<span class="built_in">size</span>());</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_, <span class="string">&quot;Initialized controller &#x27;&quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot;&#x27; with:&quot;</span> &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Number of joints: &quot;</span> &lt;&lt; <span class="built_in">getNumberOfJoints</span>() &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Hardware interface type: &#x27;&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;<span class="built_in">getHardwareInterfaceType</span>() &lt;&lt; <span class="string">&quot;&#x27;&quot;</span> &lt;&lt;</span><br><span class="line">                         <span class="string">&quot;\n- Trajectory segment type: &#x27;&quot;</span> &lt;&lt; hardware_interface::internal::<span class="built_in">demangledTypeName</span>&lt;SegmentImpl&gt;() &lt;&lt; <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Default tolerances</span></span><br><span class="line">  <span class="function">ros::NodeHandle <span class="title">tol_nh</span><span class="params">(controller_nh_, <span class="string">&quot;constraints&quot;</span>)</span></span>;</span><br><span class="line">  default_tolerances_ = <span class="built_in">getSegmentTolerances</span>&lt;Scalar&gt;(tol_nh, joint_names_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Hardware interface adapter</span></span><br><span class="line">  hw_iface_adapter_.<span class="built_in">init</span>(joints_, controller_nh_);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Subscribed topics</span></span><br><span class="line">  trajectory_command_sub_ = controller_nh_.<span class="built_in">subscribe</span>(<span class="string">&quot;command&quot;</span>, <span class="number">1</span>, &amp;JointTrajectoryController::trajectoryCommandCB, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Published topics</span></span><br><span class="line">  state_publisher_.<span class="built_in">reset</span>(<span class="keyword">new</span> <span class="built_in">StatePublisher</span>(controller_nh_, <span class="string">&quot;state&quot;</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Action interface</span></span><br><span class="line">  action_server_.<span class="built_in">reset</span>(<span class="keyword">new</span> <span class="built_in">ActionServer</span>(controller_nh_, <span class="string">&quot;follow_joint_trajectory&quot;</span>,</span><br><span class="line">                                        boost::<span class="built_in">bind</span>(&amp;JointTrajectoryController::goalCB,   <span class="keyword">this</span>, _1),</span><br><span class="line">                                        boost::<span class="built_in">bind</span>(&amp;JointTrajectoryController::cancelCB, <span class="keyword">this</span>, _1),</span><br><span class="line">                                        <span class="literal">false</span>));</span><br><span class="line">  action_server_-&gt;<span class="built_in">start</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ROS API: Provided services</span></span><br><span class="line">  query_state_service_ = controller_nh_.<span class="built_in">advertiseService</span>(<span class="string">&quot;query_state&quot;</span>,</span><br><span class="line">                                                         &amp;JointTrajectoryController::queryStateService,</span><br><span class="line">                                                         <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Preeallocate resources</span></span><br><span class="line">  current_state_       = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  old_desired_state_   = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  desired_state_       = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  state_error_         = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(n_joints);</span><br><span class="line">  desired_joint_state_ = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(<span class="number">1</span>);</span><br><span class="line">  state_joint_error_   = <span class="keyword">typename</span> Segment::<span class="built_in">State</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  successful_joint_traj_ = boost::dynamic_bitset&lt;&gt;(<span class="built_in">getNumberOfJoints</span>());</span><br><span class="line"></span><br><span class="line">  hold_trajectory_ptr_ = <span class="built_in">createHoldTrajectory</span>(n_joints);</span><br><span class="line">  <span class="built_in">assert</span>(joint_names_.<span class="built_in">size</span>() == hold_trajectory_ptr_-&gt;<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (stop_trajectory_duration_ == <span class="number">0.0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    hold_traj_builder_ = std::unique_ptr&lt;TrajectoryBuilder&lt;SegmentImpl&gt; &gt;(<span class="keyword">new</span> <span class="built_in">HoldTrajectoryBuilder</span>&lt;SegmentImpl, HardwareInterface&gt;(joints_));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    hold_traj_builder_ = std::unique_ptr&lt;TrajectoryBuilder&lt;SegmentImpl&gt; &gt;(<span class="keyword">new</span> <span class="built_in">StopTrajectoryBuilder</span>&lt;SegmentImpl&gt;(stop_trajectory_duration_, desired_state_));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line">    state_publisher_-&gt;<span class="built_in">lock</span>();</span><br><span class="line">    state_publisher_-&gt;msg_.joint_names = joint_names_;</span><br><span class="line">    state_publisher_-&gt;msg_.desired.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.desired.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.desired.accelerations.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.actual.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.actual.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.error.positions.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;msg_.error.velocities.<span class="built_in">resize</span>(n_joints);</span><br><span class="line">    state_publisher_-&gt;<span class="built_in">unlock</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <strong>&#x2F;<node_name>&#x2F;joints</strong> 参数获取节点列表。返回 std::vector<a href="std::string">std::string</a> 类型的节点列表。若节点列表为空，则直接退出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">SegmentImpl</span>, <span class="keyword">class</span> <span class="title class_">HardwareInterface</span>&gt;</span><br><span class="line"><span class="type">void</span> JointTrajectoryController&lt;SegmentImpl, HardwareInterface&gt;::</span><br><span class="line"><span class="built_in">goalCB</span>(GoalHandle gh)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(name_,<span class="string">&quot;Received new action goal&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Precondition: Running controller</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>-&gt;<span class="built_in">isRunning</span>()) <span class="comment">// controller 未启动</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Can&#x27;t accept new action goals. Controller is not running.&quot;</span>);</span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_GOAL; <span class="comment">// <span class="doctag">TODO:</span> Add better error status to msg?</span></span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If partial joints goals are not allowed, goal should specify all controller joints</span></span><br><span class="line">  <span class="keyword">if</span> (!allow_partial_joints_goal_)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// goal 中关节数与实际关节数不匹配</span></span><br><span class="line">    <span class="keyword">if</span> (gh.<span class="built_in">getGoal</span>()-&gt;trajectory.joint_names.<span class="built_in">size</span>() != joint_names_.<span class="built_in">size</span>())</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Joints on incoming goal don&#x27;t match the controller joints.&quot;</span>);</span><br><span class="line">      control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">      result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_JOINTS;</span><br><span class="line">      gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Goal should specify valid controller joints (they can be ordered differently). Reject if this is not the case</span></span><br><span class="line">  <span class="keyword">using</span> internal::mapping;</span><br><span class="line">  std::vector&lt;<span class="type">unsigned</span> <span class="type">int</span>&gt; mapping_vector = <span class="built_in">mapping</span>(gh.<span class="built_in">getGoal</span>()-&gt;trajectory.joint_names, joint_names_);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (mapping_vector.<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Joints on incoming goal don&#x27;t match the controller joints.&quot;</span>);</span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_JOINTS;</span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Try to update new trajectory</span></span><br><span class="line">  <span class="function">RealtimeGoalHandlePtr <span class="title">rt_goal</span><span class="params">(<span class="keyword">new</span> RealtimeGoalHandle(gh))</span></span>;</span><br><span class="line">  std::string error_string;</span><br><span class="line">  <span class="type">const</span> <span class="type">bool</span> update_ok = <span class="built_in">updateTrajectoryCommand</span>(internal::<span class="built_in">share_member</span>(gh.<span class="built_in">getGoal</span>(), gh.<span class="built_in">getGoal</span>()-&gt;trajectory),</span><br><span class="line">                                                 rt_goal,</span><br><span class="line">                                                 &amp;error_string);</span><br><span class="line">  rt_goal-&gt;preallocated_feedback_-&gt;joint_names = joint_names_;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (update_ok)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Accept new goal</span></span><br><span class="line">    <span class="built_in">preemptActiveGoal</span>();</span><br><span class="line">    gh.<span class="built_in">setAccepted</span>();</span><br><span class="line">    rt_active_goal_ = rt_goal;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setup goal status checking timer</span></span><br><span class="line">    goal_handle_timer_ = controller_nh_.<span class="built_in">createTimer</span>(action_monitor_period_,</span><br><span class="line">                                                    &amp;RealtimeGoalHandle::runNonRealtime,</span><br><span class="line">                                                    rt_goal);</span><br><span class="line">    goal_handle_timer_.<span class="built_in">start</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Reject invalid goal</span></span><br><span class="line">    control_msgs::FollowJointTrajectoryResult result;</span><br><span class="line">    result.error_code = control_msgs::FollowJointTrajectoryResult::INVALID_GOAL;</span><br><span class="line">    result.error_string = error_string;</span><br><span class="line">    gh.<span class="built_in">setRejected</span>(result);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/16/Robot/ROS/ros_control/%E8%AE%BE%E7%BD%AE%E6%96%B0%E6%9C%BA%E5%99%A8%E4%BA%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/16/Robot/ROS/ros_control/%E8%AE%BE%E7%BD%AE%E6%96%B0%E6%9C%BA%E5%99%A8%E4%BA%BA/" class="post-title-link" itemprop="url">设置新机器人</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-16 08:04:55 / 修改时间：08:07:26" itemprop="dateCreated datePublished" datetime="2024-10-16T08:04:55+08:00">2024-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>即：hardware_interface</p>
+<p><strong>1、hardware interfaces</strong></p>
+<p>ROS control 将 hardware interfaces 与可用的 ROS controllers 之一结合使用，以向硬件发送(即: <strong>write()</strong>)命令，并从硬件接收(即: <strong>read()</strong>)关节状态。</p>
+<p>可用硬件接口包括：</p>
+<ul>
+<li><p><strong>Joint Command Interfaces</strong></p>
+</li>
+<li><ul>
+<li>Effort joint interface</li>
+<li>Velocity joint interface</li>
+<li>Position joint interface</li>
+</ul>
+</li>
+<li><p><strong>Joint state interfaces</strong>: 读取指定关节的状态，包括:位置、速度、effort 等</p>
+</li>
+<li><p><strong>Actuator state interfaces</strong> （执行器&#x2F;驱动器状态接口）</p>
+</li>
+<li><p><strong>Actuator Command Interfaces</strong></p>
+</li>
+<li><ul>
+<li>Effort Actuator Interface</li>
+<li>Velocity Actuator Interface</li>
+<li>Position Actuator Interface</li>
+</ul>
+</li>
+<li><p><strong>Force-torque sensor interface</strong> （力 - 扭矩传感器接口）</p>
+</li>
+<li><p><strong>IMU sensor interface</strong></p>
+</li>
+</ul>
+<h1 id="设置新的机器人"><a href="#设置新的机器人" class="headerlink" title="设置新的机器人"></a><strong>设置新的机器人</strong></h1>
+
+<h2 id="使用现有接口"><a href="#使用现有接口" class="headerlink" title="使用现有接口"></a><strong>使用现有接口</strong></h2><p>假设机器人有两个关节：A 和 B。两个关节都是位置控制。这种情况下，为机器人定义的 hardware_interface::RobotHW，应提供标准的 <strong>JointPositionInterface</strong> 和 <strong>JointStateInterface</strong>，以便可以重用所有已编写好的、使用 JointPositionInterface 和 JointStateInterface 的 controllers。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_command_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_state_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/robot_hw.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line"> &#123; </span><br><span class="line">   <span class="comment">// connect and register the joint state interface</span></span><br><span class="line">   <span class="comment">// JointstateHandle为关节状态的资源类，其内部存储有：pos，vel，effort的获取接口</span></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_a</span><span class="params">(<span class="string">&quot;A&quot;</span>, &amp;pos[<span class="number">0</span>], &amp;vel[<span class="number">0</span>], &amp;eff[<span class="number">0</span>])</span></span>;</span><br><span class="line">   <span class="comment">// ResourceManager 注册新的资源，如果资源名已存在，则覆盖之前的</span></span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_b</span><span class="params">(<span class="string">&quot;B&quot;</span>, &amp;pos[<span class="number">1</span>], &amp;vel[<span class="number">1</span>], &amp;eff[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_b);</span><br><span class="line">    </span><br><span class="line">   <span class="comment">// 注册硬件接口 </span></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_state_interface);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// connect and register the joint position interface</span></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_a</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;A&quot;</span>), &amp;cmd[<span class="number">0</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_b</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;B&quot;</span>), &amp;cmd[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_b);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_pos_interface);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  hardware_interface::JointStateInterface jnt_state_interface;</span><br><span class="line">  hardware_interface::PositionJointInterface jnt_pos_interface;</span><br><span class="line">  <span class="type">double</span> cmd[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> pos[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> vel[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> eff[<span class="number">2</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面的功能旨在使 controller manager（以及 controller manager 内部的 controllers）可以访问机器人的关节状态以及机器人的命令。当 controller manager 运行时，<strong>controllers 将从机器人读取 pos，vel 和 eff 变量; 且会将所需的命令写入 cmd 变量</strong>。<strong>使用者需确保 pos，vel 和 eff 变量始终具有最新的可用关节状态，并且还需要确保写入到 cmd 变量中的所有内容都由机器人执行</strong>。例如，可以为 robot 类定义 read() 及 write() 函数，然后在 main() 中调用这些函数确保数据是最新的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">main</span>()</span><br><span class="line">&#123;</span><br><span class="line">  MyRobot robot;</span><br><span class="line">  <span class="function">controller_manager::ControllerManager <span class="title">cm</span><span class="params">(&amp;robot)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">  &#123;</span><br><span class="line">     robot.<span class="built_in">read</span>();</span><br><span class="line">     cm.<span class="built_in">update</span>(robot.<span class="built_in">get_time</span>(), robot.<span class="built_in">get_period</span>());</span><br><span class="line">     robot.<span class="built_in">write</span>();</span><br><span class="line">     <span class="built_in">sleep</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建机器人特定接口"><a href="#创建机器人特定接口" class="headerlink" title="创建机器人特定接口"></a><strong>创建机器人特定接口</strong></h2><p>对于标准的机器人特性，可以使用标准接口(并重用标准 controllers)。与此同时，可以在特定于机器人的接口中公开特定于机器人的特性。</p>
+<p>自定义接口代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// register the joint state and position interfaces</span></span><br><span class="line">    ...</span><br><span class="line">    ... (see the code above)</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// register some robot specific interfaces</span></span><br><span class="line">    <span class="built_in">registerInterface</span>(&amp;cool_interface);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    MyCustomInterface cool_interface;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>或者，也可以注册 MyRobot 类自身：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW, <span class="keyword">public</span> hardware_interface::HardwareInterface</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// register the joint state and position interfaces</span></span><br><span class="line">    ...</span><br><span class="line">    ... (see the code above)</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// register the MyRobot class itself to make the &#x27;someCoolFunction&#x27; available</span></span><br><span class="line">    <span class="comment">// the MyRobot class inherits from HardwareInterface to make this possible</span></span><br><span class="line">    <span class="built_in">registerInterface</span>(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">someCoolFunction</span><span class="params">()</span></span>;</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>因此，自定义接口无非就是向该机器人类添加任意数量的函数调用，以及注册机器人类本身。这些特定于机器人的功能仅适用于专门为该机器人设计的控制器，但与此同时，该机器人仍可使用标准接口与标准 controllers 一起工作。</p>
+<h1 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a><strong>资源管理</strong></h1><p>controller manager 跟踪每个 controller 正在使用的资源。资源可以是诸如 ‘right_elbow_joint’， ‘base’， ‘left_arm’， ‘腕关节’ 等。<strong>资源在硬件接口中指定</strong>。例如，PositionJointInterface 使用关节名作为资源。用户可自定义 hardware interface，并定义自己的资源。控制器初始化时，从硬件接口请求大量资源；这些请求由控制器管理器记录。因此，控制器管理器确切的知道哪个控制器请求了哪些资源。</p>
+<p>RobotHW 具有用于资源管理的简单默认实现：它只简单的防止使用相同资源的两个控制器同时运行。请注意，<strong>使用相同资源的两个控制器可以同时加载，但不能同时运行</strong>。如果此简单的资源管理方案适合您的机器人，则无需执行任何操作，控制器管理器将自动应用此方案。如果您的机器人需要其他方案，则可以通过实现一个功能轻松创建自己的方案：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// register hardware interfaces interfaces</span></span><br><span class="line">    ...</span><br><span class="line">    ... (see the code above)</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Implement robot-specific resouce management</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">checkForConflict</span><span class="params">(<span class="type">const</span> std::list&lt;ControllerInfo&gt;&amp; info)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">       <span class="comment">// this list of controllers cannot be running at the same time</span></span><br><span class="line">       ... </span><br><span class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// this list of controller can be running at the same time</span></span><br><span class="line">       ...</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>checkForConflict 方法的输入是 controller info objects 列表。这些对象中的每一个都与一个控制器匹配，并包含有关该控制器的所有信息。 此信息包括控制器名称，控制器类型，硬件接口类型以及控制器要求的资源列表。根据所有这些信息，用户可以提出自己的方案来确定是否允许同时运行给定的控制器列表。</p>
+<h1 id="综述"><a href="#综述" class="headerlink" title="综述"></a><strong>综述</strong></h1><p>通常，对于真实机器人，需要做的有：</p>
+<ul>
+<li>编写硬件接口(hardware_interface)，读取设备驱动返回的关节状态 </li>
+<li>编写设备驱动，发布关节状态，如编码器脉冲，位置等</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/16/Robot/ROS/ros_control/%E7%A4%BA%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/16/Robot/ROS/ros_control/%E7%A4%BA%E4%BE%8B/" class="post-title-link" itemprop="url">示例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-16 08:02:12 / 修改时间：08:04:26" itemprop="dateCreated datePublished" datetime="2024-10-16T08:02:12+08:00">2024-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Barrett"><a href="#Barrett" class="headerlink" title="Barrett"></a><strong>Barrett</strong></h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BarrettHW</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="built_in">BarrettHW</span>(ros::NodeHandle nh);</span><br><span class="line">   <span class="function"><span class="type">bool</span> <span class="title">configure</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="function"><span class="type">bool</span> <span class="title">start</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="function"><span class="type">bool</span> <span class="title">read</span><span class="params">(<span class="type">const</span> ros::Time time, <span class="type">const</span> ros::Duration period)</span></span>; </span><br><span class="line">   <span class="function"><span class="type">void</span> <span class="title">write</span><span class="params">(<span class="type">const</span> ros::Time time, <span class="type">const</span> ros::Duration period)</span></span>;</span><br><span class="line">   <span class="function"><span class="type">void</span> <span class="title">stop</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">cleanup</span><span class="params">()</span> </span>&#123; &#125; </span><br><span class="line">  ...</span><br><span class="line"><span class="keyword">private</span>:   </span><br><span class="line">  <span class="comment">// ros-controls interface</span></span><br><span class="line">   hardware_interface::JointStateInterface state_interface_;</span><br><span class="line">   hardware_interface::EffortJointInterface effort_interface_;</span><br><span class="line">   barrett_model::SemiAbsoluteJointInterface semi_absolute_interface_;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>wam_server.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">BarrettHW::configure</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span>(barrett_manager-&gt;<span class="built_in">foundWam4</span>()) &#123; </span><br><span class="line">        wam4s_[product_name] = <span class="keyword">this</span>-&gt;<span class="built_in">configure_wam</span>&lt;<span class="number">4</span>&gt;(product_nh, barrett_manager, wam_config);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(barrett_manager-&gt;<span class="built_in">foundWam7</span>()) &#123;</span><br><span class="line">        wam7s_[product_name] = <span class="keyword">this</span>-&gt;<span class="built_in">configure_wam</span>&lt;<span class="number">7</span>&gt;(product_nh, barrett_manager, wam_config);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Could not find WAM on bus!&quot;</span>); </span><br><span class="line">        <span class="keyword">continue</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">size_t</span> DOF&gt;</span><br><span class="line">    boost::shared_ptr&lt;BarrettHW::WamDevice&lt;DOF&gt; &gt; </span><br><span class="line">    BarrettHW::<span class="built_in">configure_wam</span>(</span><br><span class="line">        ros::NodeHandle product_nh,</span><br><span class="line">        boost::shared_ptr&lt;barrett::ProductManager&gt; barrett_manager, </span><br><span class="line">        <span class="type">const</span> libconfig::Setting &amp;wam_config) </span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Store the joint name</span></span><br><span class="line">        wam_device-&gt;joint_names[i] = joint-&gt;name;</span><br><span class="line">        wam_device-&gt;<span class="built_in">effort_limits</span>(i) = joint-&gt;limits-&gt;effort;</span><br><span class="line">        wam_device-&gt;<span class="built_in">velocity_limits</span>(i) = joint-&gt;limits-&gt;velocity;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Joint State Handle</span></span><br><span class="line">        <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle</span><span class="params">(joint-&gt;name,</span></span></span><br><span class="line"><span class="params"><span class="function">            &amp;wam_device-&gt;joint_positions(i),</span></span></span><br><span class="line"><span class="params"><span class="function">            &amp;wam_device-&gt;joint_velocities(i),</span></span></span><br><span class="line"><span class="params"><span class="function">            &amp;wam_device-&gt;joint_effort_cmds(i))</span></span>;</span><br><span class="line">        state_interface_.<span class="built_in">registerHandle</span>(state_handle);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Effort Command Handle</span></span><br><span class="line">        effort_interface_.<span class="built_in">registerHandle</span>(</span><br><span class="line">            hardware_interface::<span class="built_in">JointHandle</span>(</span><br><span class="line">              state_interface_.<span class="built_in">getHandle</span>(joint-&gt;name),</span><br><span class="line">              &amp;wam_device-&gt;<span class="built_in">joint_effort_cmds</span>(i)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Transmission / Calibration handle</span></span><br><span class="line">        semi_absolute_interface_.<span class="built_in">registerJoint</span>(</span><br><span class="line">            effort_interface_.<span class="built_in">getHandle</span>(joint-&gt;name),</span><br><span class="line">            wam_device-&gt;<span class="built_in">resolver_ranges</span>(i),</span><br><span class="line">            &amp;wam_device-&gt;<span class="built_in">resolver_angles</span>(i),</span><br><span class="line">            &amp;wam_device-&gt;<span class="built_in">joint_offsets</span>(i),</span><br><span class="line">            &amp;wam_device-&gt;<span class="built_in">calibrated_joints</span>(i));</span><br><span class="line">    ...</span><br><span class="line">&#125;            </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">BarrettHW::read</span><span class="params">(<span class="type">const</span> ros::Time time, <span class="type">const</span> ros::Duration period)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Iterate over all devices</span></span><br><span class="line">    <span class="keyword">for</span>(Wam4Map::iterator it = wam4s_.<span class="built_in">begin</span>(); it != wam4s_.<span class="built_in">end</span>(); ++it) &#123;</span><br><span class="line">      <span class="comment">// 调用 barrett::LowLevelWam 接口读取设备数据  </span></span><br><span class="line">      <span class="keyword">this</span>-&gt;<span class="built_in">read_wam</span>(time, period, it-&gt;second);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(Wam7Map::iterator it = wam7s_.<span class="built_in">begin</span>(); it != wam7s_.<span class="built_in">end</span>(); ++it) &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;<span class="built_in">read_wam</span>(time, period, it-&gt;second);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">BarrettHW::write</span><span class="params">(<span class="type">const</span> ros::Time time, <span class="type">const</span> ros::Duration period)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Iterate over all devices</span></span><br><span class="line">    <span class="keyword">for</span>(Wam4Map::iterator it = wam4s_.<span class="built_in">begin</span>(); it != wam4s_.<span class="built_in">end</span>(); ++it) &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;<span class="built_in">write_wam</span>(time, period, it-&gt;second);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(Wam7Map::iterator it = wam7s_.<span class="built_in">begin</span>(); it != wam7s_.<span class="built_in">end</span>(); ++it) &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;<span class="built_in">write_wam</span>(time, period, it-&gt;second);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function">barrett_hw::BarrettHW <span class="title">barrett_robot</span><span class="params">(barrett_nh)</span></span>;</span><br><span class="line">    barrett_robot.<span class="built_in">configure</span>();</span><br><span class="line">    barrett_robot.<span class="built_in">start</span>();</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(!g_quit) &#123;</span><br><span class="line">        ...    </span><br><span class="line">        <span class="comment">// Read the state from the WAM</span></span><br><span class="line">        <span class="keyword">if</span>(!barrett_robot.<span class="built_in">read</span>(now, period)) &#123;</span><br><span class="line">          g_quit=<span class="literal">true</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        <span class="comment">// Update the controllers</span></span><br><span class="line">        manager.<span class="built_in">update</span>(now, period);</span><br><span class="line">    </span><br><span class="line">        <span class="comment">// Write the command to the WAM</span></span><br><span class="line">        barrett_robot.<span class="built_in">write</span>(now, period);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;              </span><br></pre></td></tr></table></figure>
+
+
+
+<p>测试 launch</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">launch&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;JOINT_PREFIX&quot;</span> <span class="attr">default</span>=<span class="string">&quot;wam&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- WAM Server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;barrett_hw&quot;</span> <span class="attr">type</span>=<span class="string">&quot;wam_server&quot;</span> <span class="attr">name</span>=<span class="string">&quot;wam_server&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- WAM Parameters --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">ns</span>=<span class="string">&quot;wam&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find barrett_model)/launch/wam_7dof_params.launch&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;wam/can_dev_name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;rtcan0&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Controllers --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">ns</span>=<span class="string">&quot;wam&quot;</span>&gt;</span></span><br><span class="line">    joint_state_controller:</span><br><span class="line">      type: joint_state_controller/JointStateController</span><br><span class="line">      publish_rate: 50</span><br><span class="line">    calibration_controller:</span><br><span class="line">      type: barrett_controllers/CalibrationController</span><br><span class="line">      publish_rate: 50</span><br><span class="line">      joint_names:             [&#x27;wam/YawJoint&#x27;,&#x27;wam/ShoulderPitchJoint&#x27;,&#x27;wam/ShoulderYawJoint&#x27;,&#x27;wam/ElbowJoint&#x27;,&#x27;wam/UpperWristYawJoint&#x27;,&#x27;wam/UpperWristPitchJoint&#x27;,&#x27;wam/LowerWristYawJoint&#x27;]</span><br><span class="line">      static_thresholds:       [0.001, 0.001, 0.001, 0.0005, 0.001, 0.001, 0.0005]</span><br><span class="line">      upper_limits:            [ 2.7,  2.0,  2.9, 3.16,  1.34,  1.5708,  2.970]</span><br><span class="line">      lower_limits:            [-2.7, -2.0, -2.9, -0.9, -4.76, -1.5708, -2.970]</span><br><span class="line">      limit_search_directions: [1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0]</span><br><span class="line">      home_positions:          [0.0, -1.5708, 0.0, 0.0, -1.5708, 0.0, 0.0]</span><br><span class="line">      resolver_offsets:        [-0.0224, 0.0179, -0.1656, -0.28954, 0.2419, -0.09215, -0.054]</span><br><span class="line">      home_positions_:          [0.0, -1.5708, 0.0, 0.0, -1.5708, 0.0, 0.0]</span><br><span class="line">      resolver_offsets_:        [0.0, 0.053, -0.170, -0.289, 0.240, -0.094, -0.054]</span><br><span class="line">      p_gains:                 [280.0, 250.0, 100.0, 60.0, 20.0, 30.0, 2.0]</span><br><span class="line">      i_gains:                 [100.0, 70.0, 70.0, 70.0, 10.0, 10.0, 10.0]</span><br><span class="line">      i_max:                   [20.0, 20.0, 20.0, 20.0, 1.0, 1.0, 0.2]</span><br><span class="line">      d_gains:                 [20.0, 20.0, 2.0, 2.0, 0.5, 0.5, 0.05]</span><br><span class="line">      trap_max_vels:           [0.2, 0.4, 1.5, 0.8, 4.0, 4.0, 8.0]</span><br><span class="line">      trap_max_accs:           [0.2, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]</span><br><span class="line">      trap_durations:          [15.0, 15.0, 15.0, 15.0, 5.0, 5.0, 5.0]</span><br><span class="line">    effort_controller:</span><br><span class="line">      type: effort_controllers/JointEffortController</span><br><span class="line">      joint: wam/ElbowJoint </span><br><span class="line">  <span class="tag">&lt;/<span class="name">rosparam</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Start these controllers by default --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;default_controller_spawner&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">args</span>=<span class="string">&quot;wam/joint_state_controller wam/calibration_controller&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​             </p>
+<p>其中，calibration_controller 继承 controller_interface::Controller</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 操作 joints 的硬件接口(Hardware interface)</span></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">SemiAbsoluteJointInterface</span> : </span><br><span class="line">         <span class="keyword">public</span> hardware_interface::HardwareInterface </span><br><span class="line"> &#123;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">CalibrationController</span> : <span class="keyword">public</span> controller_interface::Controller&lt;barrett_model::SemiAbsoluteJointInterface&gt;</span><br><span class="line"> &#123;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​      </p>
+<h1 id="Husky"><a href="#Husky" class="headerlink" title="Husky"></a><strong>Husky</strong></h1><p>HuskyHardware 继承 hardware_interface::RobotHW</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HuskyHardware</span> : <span class="keyword">public</span> hardware_interface::RobotHW </span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 从 MCU 获取最新的速度和行程测量值，并存储在 ros_control 的 joint structure 中</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">updateJointsFromHardware</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 通过 joint structure 从 ros_control 获取最新的速度指令，并发送到 MCU</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">writeCommandsToHardware</span><span class="params">()</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​       </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/16/Robot/ROS/ros_control/controller_manager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/16/Robot/ROS/ros_control/controller_manager/" class="post-title-link" itemprop="url">controller_manager</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-16 07:48:31 / 修改时间：08:01:16" itemprop="dateCreated datePublished" datetime="2024-10-16T07:48:31+08:00">2024-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>controller_manager 提供了一个硬实时兼容的循环来控制机械臂的机制，该循环由 <code>hardware_interface::RobotHW</code>  实例表示。controller_manager 提供了用于加载，卸载，启动和停止控制器的基础结构。</p>
+<p>当加载一个控制器时，controller_manager 会使用控制器名作为所有特定于控制器的参数的根，最重要的是，type 用来标识加载哪个插件。</p>
+<p>controller manager 提供了与 controller 交互的工具。根据是从启动文件、从命令行还是从 ROS 节点运行 controller，controller manager 提供了不同的工具来运行 controller。</p>
+<h1 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持的 <span class="built_in">command</span> 包括：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	load：加载 controllers(构造和初始化)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	unload：卸载 controllers(析构)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	start：启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	stop：停止 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	spawn：加载并启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	<span class="built_in">kill</span>：停止并卸载 controllers</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt; &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 controllers 状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持以下 <span class="built_in">command</span>：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list：按执行顺序列出所有 controllers，并给出每个 controller 的状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list-type：列出 controller 类型，如果 controller 不在该列表中，将无法执行 spawn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries：重新加载所有可用的控制器库插件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries --restore：重新加载所有可用作为插件的控制器库，并将所有控制器恢复到其原始状态</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--stop：不自动启动</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager spawner [--stopped] &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager unspawner &lt;name1&gt; &lt;name2&gt; ... <span class="comment"># 停止但不卸载，这些controllers 关闭时重启</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rqt_controller_manager rqt_controller_manager</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>ROS API</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">controller_manager/load_controller</span><br><span class="line">controller_manager/unload_controller</span><br><span class="line">controller_manager/switch_controller</span><br><span class="line">controller_manager/list_controllers</span><br><span class="line">controller_manager/list_controller_types</span><br><span class="line">controller_manager/reload_controller_libraries</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="controller-group"><a href="#controller-group" class="headerlink" title="controller_group"></a>controller_group</h1><p>melodic 版本才支持。controller_manager 允许开发者在运行时切换 controllers，但是当出于某些特殊目的想要从一组 controllers 切换到另一组 controllers 时，这样做并不方便。如果在 ROS 参数controller_groups 中定义了此类组，则 controller_group 脚本将使此操作变得容易。它知道所涉及的所有 controllers，然后知道从一组切换到另一组时需要停止和启动的 controllers。因此，不同的组可以共享一些 controllers。</p>
+<p>controller_groups 参数示例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">controller_groups:</span></span><br><span class="line">  <span class="attr">production:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">prod_controller_1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">prod_controller_2</span></span><br><span class="line">  <span class="attr">development:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">devel_controller_1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">devel_controller_2</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shared_controller_3</span></span><br><span class="line">  <span class="attr">diagnostics:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">diag_controller_1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">diag_controller_2</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">shared_controller_3</span></span><br></pre></td></tr></table></figure>
+
+<p>运行 controller_group 脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">可用 commands 包括：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> - list：列出 controllers_groups 参数定义的所有 group</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> - spwan ：加载并启动 group 中的所有 controllers，通常用于 ros launch 文件中</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> - switch ：切换到 group 组。表示停止不在该 group 中的正在运行的 controllers，并启动 group 中定义的尚未启动的 controllers</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_group &lt;<span class="built_in">command</span>&gt; &lt;args&gt;</span>     </span><br></pre></td></tr></table></figure>
+
+<h1 id="加载-controllers"><a href="#加载-controllers" class="headerlink" title="加载 controllers"></a>加载 controllers</h1><h2 id="URDF-中加载"><a href="#URDF-中加载" class="headerlink" title="URDF 中加载"></a>URDF 中加载</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;diff_drive_controller&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_diff_drive.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">legacyMode</span>&gt;</span>false<span class="tag">&lt;/<span class="name">legacyMode</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">alwaysOn</span>&gt;</span>true<span class="tag">&lt;/<span class="name">alwaysOn</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">updateRate</span>&gt;</span>1000.0<span class="tag">&lt;/<span class="name">updateRate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">leftJoint</span>&gt;</span>wheel_left_joint<span class="tag">&lt;/<span class="name">leftJoint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rightJoint</span>&gt;</span>wheel_right_joint<span class="tag">&lt;/<span class="name">rightJoint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用-spawner-加载"><a href="#使用-spawner-加载" class="headerlink" title="使用 spawner 加载"></a>使用 spawner 加载</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find test_gazebo)/config/controller.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">args</span>=<span class="string">&quot;mobile_base_controller&quot;</span> /&gt;</span></span><br><span class="line">&lt;-- 其中, controller.yaml 文件内容为</span><br><span class="line">mobile_base_controller:</span><br><span class="line">  type: &quot;diff_drive_controller/DiffDriveController&quot;</span><br><span class="line">  left_wheel: &#x27;wheel_left_joint&#x27;</span><br><span class="line">  right_wheel: &#x27;wheel_right_joint&#x27;</span><br><span class="line">  pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]</span><br><span class="line">  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者使用命令行指令</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager spawner [--stopped] &lt;name1&gt; &lt;name2&gt; ...</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="通过-controller-manager-节点动态加载"><a href="#通过-controller-manager-节点动态加载" class="headerlink" title="通过 controller_manager 节点动态加载"></a>通过 controller_manager 节点动态加载</h2><h2 id="通过-controller-group-加载"><a href="#通过-controller-group-加载" class="headerlink" title="通过 controller group 加载"></a>通过 controller group 加载</h2><h1 id="launch-文件"><a href="#launch-文件" class="headerlink" title="launch 文件"></a>launch 文件</h1><p>可在 launch 文件中使用 <strong>controller_manager</strong> 来启动 controllers。但即使在 launch 文件被停止后，controllers 仍然会保持运行。而使用 <strong>spawner</strong> 工具从 launch 文件中自动加载、启动、停止和卸载 controllers，当启动 spawner 时，将加载并启动 controllers，当停止 spawner 时(如：launch 文件被停止时)，将停止并卸载 controllers。launch 文件内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">args</span>=<span class="string">&quot;controller_name1 controller_name2&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者只加载 controller，不启动它(<strong>–stopped</strong>)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">args</span>=<span class="string">&quot;--stopped controller_name1 controller_name2&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1821,389 +2420,6 @@ build:
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Graph-based%20SLAM/Graph-based%20SLAM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Graph-based%20SLAM/Graph-based%20SLAM/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%86%85%E5%8F%82-%E5%A4%96%E5%8F%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/%E4%BC%A0%E6%84%9F%E5%99%A8/%E5%86%85%E5%8F%82-%E5%A4%96%E5%8F%82/" class="post-title-link" itemprop="url">内参-外参</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>929</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>机器人系统中，每个传感器都有各自的坐标系，各传感器得到的测量数据都是基于其自身坐标系。<br><strong>传感器标定</strong>：确定各传感器之间的坐标关系，即相对位姿。  </p>
-<p>传感器标定可分为：<strong>外参标定</strong>和<strong>内参标定</strong>。 <strong>内参</strong>决定传感器内部映射关系，例如摄像头焦距、畸变系数等，是传感器自身特性，通常由厂家提供，但有部分需要自行标定，例如：相机焦距的定期矫正、lidar中各激光管的垂直朝向角。 <strong>外参</strong>决定传感器之间的相对位姿，通常由6个自由度表示（旋转+平移）。   </p>
-<p>不同传感器之间标定的问题在于，每个传感器获取的数据类型不一样：</p>
-<ul>
-<li>摄像头得到的是 RGB 图像，但缺乏深度信息</li>
-<li>激光雷达得到的是点云，但信号稀疏，噪音大</li>
-<li>GPS&#x2F;IMU得到的是机器人的位姿<br>因此，不同传感器之间的标定方法不同。</li>
-</ul>
-<p>传感器之间的相对位姿关系可通过转换矩阵 M(4X4) 表示。传感器的位移、旋转、尺寸变化都可以用转换矩阵 M 来表示：<br><img src="/./images/matrix-M.png" alt="转换矩阵"><br>包含 3x3 的旋转矩阵 R 和 3x1 的平移矩阵 T。(只需 4x3?)<br>旋转矩阵 R 具有正交性，且行列值为 1，即： det(R) &#x3D; 1。 因此，旋转局局长可以转换为轻易装换为 四元素向量。</p>
-<p>标定步骤：  </p>
-<ul>
-<li>粗略测量传感器之间的相对位姿</li>
-<li>采集有用的传感器标定数据</li>
-<li>算法优化使得标定误差最小化，得到标定值</li>
-</ul>
-<p>标定方法分为：targetless 和 target 两种。 前者在自然环境中进行，约束条件少，不需要用专门的target；后者则需要专门的控制场，有ground truth的target，比如典型的棋盘格平面板。</p>
-<p>hand-eye calibrate标定算法: <a target="_blank" rel="noopener" href="https://github.com/ethz-asl/hand_eye_calibration">hand_eye_calibration</a><br>lidar-imu 外参标定：<a target="_blank" rel="noopener" href="https://github.com/ethz-asl/lidar_align">lidar_align</a><br>lidar-camera 外参标定：<a target="_blank" rel="noopener" href="https://github.com/ankitdhall/lidar_camera_calibration">lidar_camera_calibration</a><br>lidar-to-lidar 外参标定：<br>相机内参的标定工具，例如：<a target="_blank" rel="noopener" href="http://wiki.ros.org/camera_calibration">ROS Camera Calibration Tools</a> 和 Camera Calibration Toolbox for Matlab。<br>IMU外参标定：<a target="_blank" rel="noopener" href="https://github.com/Kyle-ak/imu_tk">imu_tk</a>  </p>
-<p>参考：<br>  -<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57028341">https://zhuanlan.zhihu.com/p/57028341</a><br>  -<a target="_blank" rel="noopener" href="https://gitbook.cn/books/5cd8e067d7a0dd4c0f47391a/index.html">https://gitbook.cn/books/5cd8e067d7a0dd4c0f47391a/index.html</a>  </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/MCL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Localization/MCL/" class="post-title-link" itemprop="url">MCL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>662</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="MCL（Monte-Carlo-Localization）算法"><a href="#MCL（Monte-Carlo-Localization）算法" class="headerlink" title="MCL（Monte Carlo Localization）算法"></a>MCL（Monte Carlo Localization）算法</h2><p>MC(Monte Carlo)方法：<br>蒙特卡罗方法，也称随机抽样或统计模拟方法。 若所求解的问题是某事件出现的概率或者是某个随机变量的期望值时 。通过某种“实验”的方法，得出事件出现的频率，以此估计出A事件出现的概率，或者得到这个随机变量的期望值。 </p>
-<p>MCL算法基于粒子滤波器（particle filters）。<br>Particle filters的基本步骤为：<br>1、随机生成一堆粒子<br>粒子可以具有位置，方向或需要估计的任何其他状态变量。 每个都有一个权重（概率），表示它与系统的实际状态匹配的可能性。 用相同的权重初始化每个粒子。<br>若初始位姿已知，则只需设定粒子群大小 M，然后用repmat方法复制 M 个初始位置作为初始粒子群；若初始位置未知，则可以使用高斯分布随机采样的方法初始化粒子群。<br>2、预测粒子的下一个状态<br>根据预测真实系统的行为方式移动粒子。例如根据里程计来数值（速度、加速度）来预测粒子的下一个状态。<br>3、更新粒子权重<br>根据测量值更新粒子权重。 每个粒子的加权基于它与测量值的匹配程度。<br>4、重采样<br>丢弃极不可能的粒子（权重低的粒子），并用可能性更高的粒子（权重高的粒子）的副本替换它们。<br>重采样之后，粒子权值归一(权重一致)，但是在机器人可能出现的位置处，粒子数目开始变多。  </p>
-<p>经过数次迭代后，只有少数粒子权重较大，其余粒子的权值可以忽略不计，粒子权值的方差随着时间增大，空间中的有效粒子数目减少，即：<strong>权值退化问题</strong>。<br>5、计算 estimate（<strong>可选</strong>）<br>计算该组粒子的均值和协方差以获得最可能的当前状态。  </p>
-<p><img src="/images/mcl.png" alt="mcl"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Localization/KDL_Sampling_MCL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Localization/KDL_Sampling_MCL/" class="post-title-link" itemprop="url">KDL_Sampling_MCL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>235</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="KLD-Sampling-MCL"><a href="#KLD-Sampling-MCL" class="headerlink" title="KLD_Sampling_MCL"></a>KLD_Sampling_MCL</h2><p>KLD_Sampling_MCL随时间改变粒子数，改良了度过初期后的蒙特卡洛大样本集合的资源浪费。kld_err 及 kld_z 参数就是KLD的参数。对于每次粒子滤波迭代，KLD采样以概率 1-δ 确定样本数（1-δ就是kld_z配置参数），使得真实的后验与基于采样的近似之间的误差小于ε（ε就是kld_err配置参数）.kld_z&#x3D;0.99,kld_err&#x3D;0.05,直方图位大小为15cm<em>15cm</em>15°就能取得良好的结果。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2228,14 +2444,14 @@ build:
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">479k</span>
+    <span title="站点总字数">507k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:31</span>
+    <span title="站点阅读时长">15:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

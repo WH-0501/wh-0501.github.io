@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,691 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/" class="post-title-link" itemprop="url">python调用C++</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">代码编程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="python-调用-C"><a href="#python-调用-C" class="headerlink" title="python 调用 C++"></a><strong>python 调用 C++</strong></h1><p>Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> value) : <span class="built_in">value_</span>(value) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; value_ = value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> value_; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;No arguments&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;Value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// BOOST_PYTHON_MODULE 宏定义 python 模块 my_module </span></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">  <span class="comment">// 使用 bp::class_ 将上面定义的 MyClass 类暴露给 python</span></span><br><span class="line">  <span class="function">bp::class_&lt;MyClass&gt; <span class="title">my_class_interface</span><span class="params">(<span class="string">&quot;MyClass&quot;</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment">// bp::init 用于暴露构造函数</span></span></span></span><br><span class="line"><span class="params"><span class="function">    bp::init&lt;<span class="type">int</span>&gt;())</span></span>;</span><br><span class="line">    <span class="comment">// .def 将 C++ 类的成员函数暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;setValue&quot;</span>, &amp;MyClass::setValue)</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;getValue&quot;</span>, &amp;MyClass::getValue)</span><br><span class="line">    <span class="comment">// 重载函数</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)()&gt;(&amp;MyClass::show))</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)(<span class="type">int</span>)&gt;(&amp;MyClass::show))</span><br><span class="line">    <span class="comment">// .def_readwrite 和 .def_readonly 用于将类成员变量暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def_readonly</span>(<span class="string">&quot;value&quot;</span>, &amp;MyClass::value_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cmake 文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最低版本要求</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">project</span>(MyPythonModule)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 C++ 标准</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 Python 和 Boost Python</span></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源文件</span></span><br><span class="line"><span class="keyword">set</span>(SOURCES my_class.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成共享库</span></span><br><span class="line"><span class="keyword">add_library</span>(my_module SHARED <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_module <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 PREFIX 为空，生成 my_class.so 库，否则默认生成 libmy_class.so 库</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(my_module PROPERTIES PREFIX <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用别名</span></span><br><span class="line">moveit::core::<span class="built_in">MoveItErrorCode</span> (MoveGroupInterfaceWrapper::*pick_1)(<span class="type">const</span> std::string&amp;, <span class="type">bool</span>) =</span><br><span class="line">      &amp;MoveGroupInterfaceWrapper::pick;</span><br><span class="line">move_group_interface_class.<span class="built_in">def</span>(<span class="string">&quot;pick&quot;</span>, pick_1);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>bp::tuple 用于将 C++ 数据转换为 Python 元组的工具。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function">bp::tuple <span class="title">createComplexTuple</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个复杂的元组，包含整数、字符串和向量</span></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">    bp::list pyList;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> v : vec) &#123;</span><br><span class="line">        pyList.<span class="built_in">append</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bp::<span class="built_in">make_tuple</span>(<span class="number">42</span>, <span class="string">&quot;Hello, World&quot;</span>, pyList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">    bp::<span class="built_in">def</span>(<span class="string">&quot;createComplexTuple&quot;</span>, createComplexTuple);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="C-调用-python"><a href="#C-调用-python" class="headerlink" title="C++ 调用 python"></a><strong>C++ 调用 python</strong></h1><p>假设有 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># example.py</span></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">greet</span><span class="params">(name)</span>:</span></span><br><span class="line"><span class="function">  return f<span class="string">&quot;Hello, &#123;name&#125;!&quot;</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">def add(a, b):</span></span><br><span class="line"><span class="function">  return a + b</span></span><br></pre></td></tr></table></figure>
+
+<p>C++ 中通过 boost.python 调用以上 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callPythonFunctions</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 初始化Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 导入 Python 模块</span></span><br><span class="line">    bp::object example_module = bp::<span class="built_in">import</span>(<span class="string">&quot;example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取函数对象</span></span><br><span class="line">    bp::object greet_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;greet&quot;</span>);</span><br><span class="line">    bp::object add_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="comment">// 调用 greet 函数</span></span><br><span class="line">    bp::object result = <span class="built_in">greet_function</span>(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">    std::string greet_result = bp::<span class="built_in">extract</span>&lt;std::string&gt;(result);</span><br><span class="line">    std::cout &lt;&lt; greet_result &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调用 add 函数</span></span><br><span class="line">    bp::object sum_result = <span class="built_in">add_function</span>(<span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="type">int</span> sum = bp::<span class="built_in">extract</span>&lt;<span class="type">int</span>&gt;(sum_result);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="built_in">catch</span> (bp::error_already_set <span class="type">const</span> &amp;) &#123;</span><br><span class="line">    <span class="built_in">PyErr_Print</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 关闭Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">callPythonFunctions</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>对应的 CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"><span class="keyword">project</span>(CppCallPython)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(SOURCES main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(CppCallPython <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(CppCallPython <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/" class="post-title-link" itemprop="url">行为树与状态机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>903</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://robohub.org/introduction-to-behavior-trees/">introduction-to-behavior-trees</a></li>
+<li>The Behavior Trees in Robotics and AI</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/ncnynl/turtlebot3_behavior_demos.git">turtlebot3_behavior_demos</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.epicgames.com/documentation/en-us/unreal-engine/behavior-tree-in-unreal-engine---quick-start-guide?application_version=5.4">Behavior Tree in Unreal Engine - Quick Start Guide | Unreal Engine 5.4 Documentation | Epic Developer Community (epicgames.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/">https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/</a></li>
+</ul>
+<p>BT vs FSM</p>
+<ul>
+<li>理论上，可以将任何东西表述为行为树、有限状态机、其它抽象之一。但不同模型在进行大规模设计时有气优劣</li>
+<li>行为树与状态机，在模块化(modularity)和反应性(reactivity)之间存在一种权衡。通常，行为树更容易组合和修改，而有限状态机在设计反应性行为方面更有优势</li>
+</ul>
+<p>假设有一个移动抓取任务，机器人需要移动到物体旁，抓取物体，然后返回起始位置，其行为树和有限状态机设计分别如下</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203758231.png" class="" title="image-20240907203758231">
+
+<p>若要修改这种行为。例如，先检查抓取前的位置是否有效，必要时先纠正位姿。针对行为树，可以插入一个子树，而 FSM 则需要重新连接多个转换</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203830026.png" class="" title="image-20240907203830026">
+
+<p>此外，针对响应性问题。若机器人电池电量低，必须先返回充电再继续任务。此时使用 FSM 更容易，虽然会导致状态转换看似混乱。而为了使行为树在这类场景更具响应性，增加了 Reactive Sequence 概念，即使返回 SUCCEEDED，仍可对序列中的前面的子节点进行处理</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203852775.png" class="" title="image-20240907203852775">
+
+
+
+<p>（注意：此例中，只会在开始时检查电量，并非 reactive 的。可参考 reactive sequence 进行调整）</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203915759.png" class="" title="image-20240907203915759">
+
+<p>FSM 可通过允许在任意两个状态之间定义转换来实现这种 reactive。</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203936469.png" class="" title="image-20240907203936469">
+
+<p>分层有限状态机(HFSM)可以让结构更加清晰。上例中定义了一个 Nominal 超级状态，从而定义了正常操作与充电之间的工作模式。</p>
+<p>由于这种模块化和反应性的权衡，FSM 在管理更高层级的操作模式(如正常操作与充电)方面表现优秀；而行为树则擅长构建复杂的行为序列，非常擅长处理故障恢复。因此，可考虑混合模式：</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203957318.png" class="" title="image-20240907203957318">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/README/" class="post-title-link" itemprop="url">ZeroMQ使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://hintjens.com/blog:49">Using ZeroMQ Security</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.hivemq.com/article/mqtt-vs-zeromq-for-iot/">MQTT vs ZeroMQ</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zengzy/p/5122634.html">zeromq源码分析</a></li>
+</ul>
+<h1 id="ZeroMQ-部署"><a href="#ZeroMQ-部署" class="headerlink" title="ZeroMQ 部署"></a>ZeroMQ 部署</h1><p>参考：<a target="_blank" rel="noopener" href="https://zeromq.org/download/">https://zeromq.org/download/</a>  </p>
+<p>Ubuntu 安装：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">sudo</span> apt install libzmq3-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install libzmq5 libczmq-dev</span></span><br></pre></td></tr></table></figure>
+
+<p>源码编译：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载源码，切换到相应版本的 tag</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/zeromq/libzmq.git</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> libzmq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./version.sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置及编译 zeromq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./configure --prefix=/usr/local/zeromq</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make &amp;&amp; make install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或使用 cmake 编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置环境变量</span></span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或在 /etc/ld.so.conf.d 中添加 zeromq.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例程序：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> --depth=1 https://github.com/imatix/zguide.git</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/jedisct1/libsodium.git</span><br><span class="line">cd libsodium</span><br><span class="line">./autogen.sh -s</span><br><span class="line">./configure -prefix=/usr/local/libsodium &amp;&amp; make check</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">git clone https://github.com/zeromq/libzmq.git</span><br><span class="line">cd libzmq</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./configure &amp;&amp; make check</span></span><br><span class="line">mkdir build &amp;&amp; cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/libzmq</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ../../</span><br><span class="line"></span><br><span class="line">git clone https://github.com/zeromq/czmq.git</span><br><span class="line">cd czmq</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./autogen.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">./configure &amp;&amp; make check</span></span><br><span class="line">mkdir build &amp;&amp; cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/czmq</span><br><span class="line">sudo make install</span><br><span class="line">sudo ldconfig</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+
+<h1 id="ZeroMQ-使用"><a href="#ZeroMQ-使用" class="headerlink" title="ZeroMQ 使用"></a>ZeroMQ 使用</h1><h2 id="ZeroMQ-Socket-types"><a href="#ZeroMQ-Socket-types" class="headerlink" title="ZeroMQ Socket types"></a>ZeroMQ Socket types</h2><p>ZeroMQ 提供 12 中 Socket 类型：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*  Socket types.  */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PAIR 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PUB 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_SUB 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_REQ 3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_REP 4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_DEALER 5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_ROUTER 6</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PULL 7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_PUSH 8</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_XPUB 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_XSUB 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ZMQ_STREAM 11</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="zsock-t-结构体"><a href="#zsock-t-结构体" class="headerlink" title="zsock_t 结构体"></a>zsock_t 结构体</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">zsock_t</span> &#123;</span></span><br><span class="line">    <span class="type">uint32_t</span> tag; <span class="comment">// object 标记，用于运行时检测</span></span><br><span class="line">    <span class="type">void</span> *handle; <span class="comment">// libzmq 套接字句柄</span></span><br><span class="line">    <span class="type">char</span> *endpoint; <span class="comment">// 最后一个绑定端点(如果有的话)</span></span><br><span class="line">    <span class="type">char</span> *cache; <span class="comment">// 保存最后接收到的 zsock_brecv 字符串</span></span><br><span class="line">    <span class="type">int</span> type; <span class="comment">// 套接字类型</span></span><br><span class="line">    <span class="type">size_t</span> cache_size; <span class="comment">// 缓存大小</span></span><br><span class="line">    <span class="type">uint32_t</span> routing_id; <span class="comment">// server 套接字的 routing ID</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>tag</code> 在 <code>zsock_new</code> 时赋值为 <code>ZSOCK_TAG(0xcafe0004)</code>。zsock_t 实例总是将此标记作为其数据的前 4 个字节，这使得可以执行运行时对象类型和验证。  </p>
+<h2 id="zsock-new"><a href="#zsock-new" class="headerlink" title="zsock_new"></a>zsock_new</h2><p>该接口会自动完成 zsock 泄漏检测 – 不是 zsock 官方接口的一部分。这使 CZMQ 能够智能地报告套接字泄漏 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#   <span class="keyword">define</span> zsock_new(t) zsock_new_checked((t), __FILE__, __LINE__)</span></span><br></pre></td></tr></table></figure>
+<p><code>zsock_new_checked(...)</code> 中创建 socket。这个宏传递调用方文件名和行号，以便 CZMQ 可以智能地报告套接字泄漏。要关闭这种检查，请在编译代码之前定义 <code>ZSOCK_NOCHECK</code>。  </p>
+<p>最终，调用 <code>zsys_socket(...)</code> 创建套接字，并且，若为初次调用该接口，还会自动创建 ZMQ context。调用者负责在进程退出前销毁 ZMQ 套接字，避免 ZMQ 死锁(deadlock)。注意：不要在 CZMQ 应用中直接调用该接口，而应该使用 <code>zsock_new()</code> 方法。  </p>
+<h2 id="zmalloc"><a href="#zmalloc" class="headerlink" title="zmalloc"></a>zmalloc</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined (_ZMALLOC_DEBUG) || defined (_ZMALLOC_PEDANTIC)</span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmalloc(size) calloc(1,(size))</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#   <span class="keyword">define</span> zmalloc(size) safe_malloc((size), __FILE__, __LINE__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>若需要追踪内存泄漏(如使用 mtrace)，则定义 <code>_ZMALLOC_DEBUG</code> 宏。<code>_ZMALLOC_PEDANTIC</code> 做同样的事情，但它的目的是将内存溢出的情况传播到调用堆栈。  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> *</span><br><span class="line"><span class="title function_">safe_malloc</span> <span class="params">(<span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *file, <span class="type">unsigned</span> line)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//     printf (&quot;%s:%u %08d\n&quot;, file, line, (int) size);</span></span><br><span class="line">    <span class="type">void</span> *mem = <span class="built_in">calloc</span> (<span class="number">1</span>, size);</span><br><span class="line">    <span class="keyword">if</span> (mem == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;FATAL ERROR at %s:%u\n&quot;</span>, file, line);</span><br><span class="line">        <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;OUT OF MEMORY (malloc returned NULL)\n&quot;</span>);</span><br><span class="line">        fflush (<span class="built_in">stderr</span>);</span><br><span class="line">        <span class="built_in">abort</span> ();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="zsys-socket"><a href="#zsys-socket" class="headerlink" title="zsys_socket"></a>zsys_socket</h2><p>创建新的 ZMQ 套接字，且若为初次调用，会自动创建 ZMQ context。调用者负责在进程退出时销毁 ZMQ socket，避免 ZMQ 死锁(deadlock)。注意：不要在应用程序中直接调用该接口，而应该使用 <code>zsock_new()</code>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">zsys_socket</span> <span class="params">(<span class="type">int</span> type, <span class="type">const</span> <span class="type">char</span> *filename, <span class="type">size_t</span> line_nbr)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 第一次初始化;如果应用程序将自己的线程调用与zsock混合在一起，如果两个线程试图同时创建套接字，则可能会失败。在这样的应用程序中，它们必须在启动任何线程之前在主程序中创建一个套接字。如果应用程序的线程使用zactor，那么可以保证它始终是安全的</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    zsys_init ();</span><br><span class="line">    ZMUTEX_LOCK (s_mutex);</span><br><span class="line">    <span class="type">void</span> *handle = zmq_socket (s_process_ctx, type);</span><br><span class="line">    <span class="keyword">if</span> (handle) &#123;</span><br><span class="line">        <span class="comment">//  Configure socket with process defaults</span></span><br><span class="line">        zsock_set_linger (handle, (<span class="type">int</span>) s_linger);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> (ZMQ_VERSION_MAJOR == 2)</span></span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> v2/v3 socket api in zsock_option.inc are not public (not</span></span><br><span class="line">        <span class="comment">// added to include/zsock.h) so we have to use zmq_setsockopt directly</span></span><br><span class="line">        <span class="comment">// This should be fixed and zsock_set_hwm should be used instead</span></span><br><span class="line"><span class="meta">#       <span class="keyword">if</span> defined (ZMQ_HWM)</span></span><br><span class="line">        <span class="type">uint64_t</span> value = s_sndhwm;</span><br><span class="line">        <span class="type">int</span> rc = zmq_setsockopt (handle, ZMQ_HWM, &amp;value, <span class="keyword">sizeof</span> (<span class="type">uint64_t</span>));</span><br><span class="line">        assert (rc == <span class="number">0</span> || zmq_errno () == ETERM);</span><br><span class="line"><span class="meta">#       <span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="comment">//  For later versions we use separate SNDHWM and RCVHWM</span></span><br><span class="line">        zsock_set_sndhwm (handle, (<span class="type">int</span>) s_sndhwm);</span><br><span class="line">        zsock_set_rcvhwm (handle, (<span class="type">int</span>) s_rcvhwm);</span><br><span class="line"><span class="meta">#   <span class="keyword">if</span> defined (ZMQ_IPV6)</span></span><br><span class="line">        zsock_set_ipv6 (handle, s_ipv6);</span><br><span class="line"><span class="meta">#   <span class="keyword">else</span></span></span><br><span class="line">        zsock_set_ipv4only (handle, s_ipv6? <span class="number">0</span>: <span class="number">1</span>);</span><br><span class="line"><span class="meta">#   <span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="comment">//  Add socket to reference tracker so we can report leaks; this is</span></span><br><span class="line">        <span class="comment">//  done only when the caller passes a filename/line_nbr</span></span><br><span class="line">        <span class="keyword">if</span> (filename) &#123;</span><br><span class="line">            <span class="type">s_sockref_t</span> *sockref = (<span class="type">s_sockref_t</span> *) zmalloc (<span class="keyword">sizeof</span> (<span class="type">s_sockref_t</span>));</span><br><span class="line">            <span class="keyword">if</span> (sockref) &#123;</span><br><span class="line">                sockref-&gt;handle = handle;</span><br><span class="line">                sockref-&gt;type = type;</span><br><span class="line">                sockref-&gt;filename = filename;</span><br><span class="line">                sockref-&gt;line_nbr = line_nbr;</span><br><span class="line">                zlist_append (s_sockref_list, sockref);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                zmq_close (handle);</span><br><span class="line">                ZMUTEX_UNLOCK (s_mutex);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        s_open_sockets++;</span><br><span class="line">    &#125;</span><br><span class="line">    ZMUTEX_UNLOCK (s_mutex);</span><br><span class="line">    <span class="keyword">return</span> handle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="zsys-init"><a href="#zsys-init" class="headerlink" title="zsys_init"></a>zsys_init</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">zsys_init</span> <span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">    <span class="comment">//To avoid two inits at same time</span></span><br><span class="line">    pthread_once(&amp;init_all_mutex_var, zsys_initialize_mutex);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (s_initialized) &#123;</span><br><span class="line">        assert (s_process_ctx);</span><br><span class="line">        <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ZMUTEX_LOCK (s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Doing this again here... to ensure that after mutex wait if the thread 2 gets execution, it will</span></span><br><span class="line">    <span class="comment">// will get the context right away</span></span><br><span class="line">    <span class="keyword">if</span> (s_initialized) &#123;</span><br><span class="line">        assert (s_process_ctx);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">        <span class="comment">// unlock the mutex before returning the context</span></span><br><span class="line">        ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Pull process defaults from environment</span></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IO_THREADS&quot;</span>))</span><br><span class="line">        s_io_threads = atoi (getenv (<span class="string">&quot;ZSYS_IO_THREADS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_MAX_SOCKETS&quot;</span>))</span><br><span class="line">        s_max_sockets = atoi (getenv (<span class="string">&quot;ZSYS_MAX_SOCKETS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_MAX_MSGSZ&quot;</span>))</span><br><span class="line">        s_max_msgsz = atoi (getenv (<span class="string">&quot;ZSYS_MAX_MSGSZ&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_ZERO_COPY_RECV&quot;</span>))</span><br><span class="line">        s_zero_copy_recv = atoi (getenv (<span class="string">&quot;ZSYS_ZERO_COPY_RECV&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_FILE_STABLE_AGE_MSEC&quot;</span>))</span><br><span class="line">        s_file_stable_age_msec = atoi (getenv (<span class="string">&quot;ZSYS_FILE_STABLE_AGE_MSEC&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LINGER&quot;</span>))</span><br><span class="line">        s_linger = atoi (getenv (<span class="string">&quot;ZSYS_LINGER&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_SNDHWM&quot;</span>))</span><br><span class="line">        s_sndhwm = atoi (getenv (<span class="string">&quot;ZSYS_SNDHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_RCVHWM&quot;</span>))</span><br><span class="line">        s_rcvhwm = atoi (getenv (<span class="string">&quot;ZSYS_RCVHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_PIPEHWM&quot;</span>))</span><br><span class="line">        s_pipehwm = atoi (getenv (<span class="string">&quot;ZSYS_PIPEHWM&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6&quot;</span>))</span><br><span class="line">        s_ipv6 = atoi (getenv (<span class="string">&quot;ZSYS_IPV6&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>), <span class="string">&quot;stdout&quot;</span>))</span><br><span class="line">            s_logstream = <span class="built_in">stdout</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSTREAM&quot;</span>), <span class="string">&quot;stderr&quot;</span>))</span><br><span class="line">            s_logstream = <span class="built_in">stderr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        s_logstream = <span class="built_in">stdout</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>), <span class="string">&quot;true&quot;</span>))</span><br><span class="line">            s_logsystem = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> (streq (getenv (<span class="string">&quot;ZSYS_LOGSYSTEM&quot;</span>), <span class="string">&quot;false&quot;</span>))</span><br><span class="line">            s_logsystem = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_AUTO_USE_FD&quot;</span>))</span><br><span class="line">        s_auto_use_fd = atoi (getenv (<span class="string">&quot;ZSYS_AUTO_USE_FD&quot;</span>));</span><br><span class="line"></span><br><span class="line">    zsys_catch_interrupts ();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__WINDOWS__)</span></span><br><span class="line">    ZMUTEX_INIT (s_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    s_sockref_list = zlist_new ();</span><br><span class="line">    <span class="keyword">if</span> (!s_sockref_list) &#123;</span><br><span class="line">        zsys_shutdown ();</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">        ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    srandom ((<span class="type">unsigned</span>) time (<span class="literal">NULL</span>));</span><br><span class="line"></span><br><span class="line">    assert (!s_process_ctx);</span><br><span class="line">    <span class="comment">//  We use zmq_init/zmq_term to keep compatibility back to ZMQ v2</span></span><br><span class="line">    s_process_ctx = zmq_init ((<span class="type">int</span>) s_io_threads);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (ZMQ_MAX_SOCKETS)</span></span><br><span class="line">    zmq_ctx_set (s_process_ctx, ZMQ_MAX_SOCKETS, (<span class="type">int</span>) s_max_sockets);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    s_initialized = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (__UNIX__)</span></span><br><span class="line">    atexit (zsys_shutdown);</span><br><span class="line">    pthread_atfork(<span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;zsys_pthread_at_fork_handler);</span><br><span class="line">    <span class="comment">//don&#x27;t hold the lock because some of the function will call zsys_init again</span></span><br><span class="line">    ZMUTEX_UNLOCK(s_init_mutex);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//  The following functions call zsys_init(), so they MUST be called after</span></span><br><span class="line">    <span class="comment">//  s_initialized is set in order to avoid an infinite recursion</span></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_INTERFACE&quot;</span>))</span><br><span class="line">        zsys_set_interface (getenv (<span class="string">&quot;ZSYS_INTERFACE&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv6_address (getenv (<span class="string">&quot;ZSYS_IPV6_ADDRESS&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV6_MCAST_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv6_mcast_address (getenv (<span class="string">&quot;ZSYS_IPV6_MCAST_ADDRESS&quot;</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_ipv6_mcast_address (<span class="string">&quot;ff02:0:0:0:0:0:0:1&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_IPV4_MCAST_ADDRESS&quot;</span>))</span><br><span class="line">        zsys_set_ipv4_mcast_address (getenv (<span class="string">&quot;ZSYS_IPV4_MCAST_ADDRESS&quot;</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_ipv4_mcast_address (<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGIDENT&quot;</span>))</span><br><span class="line">        zsys_set_logident (getenv (<span class="string">&quot;ZSYS_LOGIDENT&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_LOGSENDER&quot;</span>))</span><br><span class="line">        zsys_set_logsender (getenv (<span class="string">&quot;ZSYS_LOGSENDER&quot;</span>));</span><br><span class="line"></span><br><span class="line">    zsys_set_max_msgsz (s_max_msgsz);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined ZMQ_ZERO_COPY_RECV</span></span><br><span class="line">    zmq_ctx_set (s_process_ctx, ZMQ_ZERO_COPY_RECV, s_zero_copy_recv);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    zsys_set_file_stable_age_msec (s_file_stable_age_msec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_PRIORITY&quot;</span>))</span><br><span class="line">        zsys_set_thread_priority (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_PRIORITY&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_priority (s_thread_priority);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_SCHED_POLICY&quot;</span>))</span><br><span class="line">        zsys_set_thread_sched_policy (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_SCHED_POLICY&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_sched_policy (s_thread_sched_policy);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX&quot;</span>))</span><br><span class="line">        zsys_set_thread_name_prefix (atoi (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX&quot;</span>)));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        zsys_set_thread_name_prefix (s_thread_name_prefix);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX_STR&quot;</span>))</span><br><span class="line">        zsys_set_thread_name_prefix_str (getenv (<span class="string">&quot;ZSYS_THREAD_NAME_PREFIX_STR&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> s_process_ctx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若为 Unix 系统，则使用 <code>pthread_once</code> 避免在多个线程中同时进行初始化</li>
+<li>若已初始化，则返回进程 context，退出</li>
+<li>获取环境变量</li>
+<li>定义信号处理函数 <code>zsys_catch_interrupts()</code></li>
+<li>初始化 socket 存储列表 <code>s_sockref_list</code>  </li>
+<li>ZMQ 初始化，使用 <strong><code>zmq_init/zmq_term</code></strong> 兼容 ZMQ v2</li>
+<li>若为 Unix 系统，则通过 <code>atexit(zsys_shutdown)</code> 指定退出时执行 <code>zsys_shutdown</code> 函数；并调用 <code>pthread_atfork</code>  </li>
+<li>是否设置零拷贝 <code>ZMQ_ZERO_COPY_RECV</code>  </li>
+<li><code>zsys_set_file_stable_age_msec</code></li>
+<li>设置线程参数：    <ul>
+<li>设置线程优先级 <code>zsys_set_thread_priority</code>  </li>
+<li>设置线程调度策略 <code>zsys_set_thread_sched_polcy</code></li>
+<li>设置线程名字前缀 <code>zsys_set_thread_name_prefix</code>，<code>zsys_set_thread_name_prefix_str</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="zmq-socket"><a href="#zmq-socket" class="headerlink" title="zmq_socket"></a>zmq_socket</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">zmq_socket</span> <span class="params">(<span class="type">void</span> *ctx_, <span class="type">int</span> type_)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!ctx_ || !(static_cast&lt;zmq::<span class="type">ctx_t</span> *&gt; (ctx_))-&gt;check_tag ()) &#123;</span><br><span class="line">        errno = EFAULT;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    zmq::<span class="type">ctx_t</span> *ctx = static_cast&lt;zmq::<span class="type">ctx_t</span> *&gt; (ctx_);</span><br><span class="line">    zmq::<span class="type">socket_base_t</span> *s = ctx-&gt;create_socket (type_);</span><br><span class="line">    <span class="keyword">return</span> static_cast&lt;<span class="type">void</span> *&gt; (s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用 <code>ctx-&gt;create_socket(type_)</code> 来创建套接字。该接口调用 <code>socket_base_t::create(...)</code> 来创建 socket 并注册其 mailbox，该接口中，根据套接字类型，调用相应接口(如：<code>pair_t</code>、<code>pub_t</code>、<code>sub_t</code>、<code>req_t</code>、<code>dealer_t</code>、<code>router_t</code>、<code>pull_t</code>、<code>push_t</code>、<code>xpub_t</code>、<code>xsub_t</code>、<code>stream_t</code>、<code>server_t</code>、<code>client_t</code>、<code>radio_t</code>、<code>dish_t</code>、<code>gather_t</code>、<code>scatter_t</code>、<code>dgram_t</code>、<code>peer_t</code>、<code>channel_t</code>)创建对应类型套接字    </p>
+<h2 id="reaper-t-线程"><a href="#reaper-t-线程" class="headerlink" title="reaper_t 线程"></a>reaper_t 线程</h2><p>ZeroMQ 中的 Reaper 线程是一个后台线程，负责清理不再使用的资源，比如已断开的连接、已完成的消息等等。当一个 socket 或者一个 endpoint 被关闭时，其相关的资源会被标记为不再使用，并放入 Reaper thread 维护的队列中。Reaper thread 在空闲时会扫描这个队列，将不再使用的资源清理掉。</p>
+<p>Reaper thread 的存在可以有效地减少应用程序的内存占用和资源浪费，特别是当应用程序运行时间较长、连接数量较大时。同时，Reaper thread 也可以提高应用程序的运行效率和稳定性。</p>
+<h2 id="主要参数"><a href="#主要参数" class="headerlink" title="主要参数"></a>主要参数</h2><ul>
+<li>ZSYS_IO_THREADS</li>
+<li>ZSYS_MAX_SOCKETS</li>
+<li>ZSYS_MAX_MSGSZ</li>
+<li>ZSYS_ZERO_COPY_RECV</li>
+<li>ZSYS_FILE_STABLE_AGE_MSEC</li>
+<li>ZSYS_LINGER</li>
+<li>ZSYS_SNDHWM</li>
+<li>ZSYS_RCVHWM</li>
+<li>ZSYS_PIPEHWM</li>
+<li>ZSYS_IPV6</li>
+<li>ZSYS_LOGSTREAM：日志路径</li>
+<li>ZSYS_LOGSYSTEM</li>
+<li>ZSYS_AUTO_USE_FD</li>
+</ul>
+<p>以下参数需在 <code>zsys_init()</code> 之后调用：  </p>
+<ul>
+<li>ZSYS_INTERFACE</li>
+<li>ZSYS_IPV6_ADDRESS</li>
+<li>ZSYS_IPV6_MCAST_ADDRESS</li>
+<li>ZSYS_IPV4_MCAST_ADDRESS</li>
+<li>ZSYS_LOGIDENT</li>
+<li>ZSYS_LOGSENDER</li>
+<li>ZSYS_THREAD_PRIORITY</li>
+<li>ZSYS_THREAD_SCHED_POLICY</li>
+<li>ZSYS_THREAD_NAME_PREFIX</li>
+<li>ZSYS_THREAD_NAME_PREFIX_STR</li>
+</ul>
+<h1 id="使用问题"><a href="#使用问题" class="headerlink" title="使用问题"></a>使用问题</h1><h2 id="error-unknown-type-name-‘zctx-t’"><a href="#error-unknown-type-name-‘zctx-t’" class="headerlink" title="error: unknown type name ‘zctx_t’"></a>error: unknown type name ‘zctx_t’</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;czmq.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">zctx_t</span> *ctx = zctx_new ();</span><br><span class="line">    <span class="type">void</span> *publisher = zsocket_new (ctx, ZMQ_PUB);</span><br><span class="line">    zsocket_set_curve_server (publisher, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">puts</span> (<span class="string">&quot;Hello, Curve!&quot;</span>);</span><br><span class="line">    zctx_destroy (&amp;ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>error: unknown type name ‘zctx_t’; did you mean ‘zrex_t’?</code>    </p>
+<p>原因：代码中使用的是 CZMQ v2 API，这些 API 在 v3 中已启用，在 v4 中已被删除。  </p>
+<p>解决方法：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;czmq.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">zsock_t</span> *publisher = zsock_new (ZMQ_PUB);</span><br><span class="line">    zsock_set_curve_server (publisher, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">puts</span> (<span class="string">&quot;Hello, Curve!&quot;</span>);</span><br><span class="line">    zsock_destroy (&amp;publisher);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Missing-Message-Problem-Solver"><a href="#Missing-Message-Problem-Solver" class="headerlink" title="Missing Message Problem Solver"></a>Missing Message Problem Solver</h2><p>在使用 ZeroMQ 构建应用程序时，经常会遇到：丢失期望接收的消息。  </p>
+<p>造成这种情况的最常见原因：<br><img src="/./images/Missing%20Message%20Problem%20Solver.png" alt="Missing Message Problem Solver"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%20Advanced%20Request-Reply%20patterns/" class="post-title-link" itemprop="url">Advance Request-Reply</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><!-- TOC -->
+
+<ul>
+<li><a href="#"></a></li>
+<li><a href="#request-reply-%E6%9C%BA%E5%88%B6">Request-Reply 机制</a><ul>
+<li><a href="#the-simple-reply-envelop">The Simple Reply Envelop</a></li>
+<li><a href="#the-extended-rely-envelope">The Extended Rely Envelope</a></li>
+</ul>
+</li>
+<li><a href="#request-reply-%E7%BB%84%E5%90%88">Request-Reply 组合</a><ul>
+<li><a href="#dealer-to-rep">DEALER to REP</a></li>
+<li><a href="#req-to-router">REQ to ROUTER</a></li>
+<li><a href="#dealer-to-router">DEALER to ROUTER</a></li>
+<li><a href="#dealer-to-dealer">DEALER to DEALER</a></li>
+<li><a href="#router-to-router">ROUTER to ROUTER</a></li>
+</ul>
+</li>
+<li><a href="#router-%E5%A5%97%E6%8E%A5%E5%AD%97">ROUTER 套接字</a><ul>
+<li><a href="#identities-and-addresses">Identities and Addresses</a></li>
+<li><a href="#router-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">ROUTER 异常处理</a></li>
+</ul>
+</li>
+<li><a href="#the-load-balancing-pattern">The Load Balancing Pattern</a><ul>
+<li><a href="#router-broker-and-dealer-workers">ROUTER Broker and DEALER Workers</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Request-Reply-机制"><a href="#Request-Reply-机制" class="headerlink" title="Request-Reply 机制"></a>Request-Reply 机制</h1><p>reply message envelopes  </p>
+<p><strong>Envelopes 是一种用地址安全地包装数据而不接触数据本身的方法</strong>。通过将 Reply 地址分离到一个信封中，可以编写通用的中介，例如 api 和代理，这些中介可以创建、读取和删除地址，而不管消息有效负载或结构是什么。  </p>
+<p>在 Request-reply 模式中，<strong>信封(<em>envelope</em>)保存应答的返回地址</strong>。这也是为什么没有状态的 ZeroMQ 网络创建双向(round-trip)请求-应答对话的方式。  </p>
+<p>使用 REQ 和 REP 套接字时，甚至看不到信封；这些套接字自动处理它们。但是对于大多数有趣的请求-应答模式，需要了解信封，特别是 ROUTER 套接字。  </p>
+<h2 id="The-Simple-Reply-Envelop"><a href="#The-Simple-Reply-Envelop" class="headerlink" title="The Simple Reply Envelop"></a>The Simple Reply Envelop</h2><p>request-reply 通信由请求消息和最终的应答消息组成。在简单的 request-reply 模式中，每个请求都有一个应答。在更高级的模式中，请求和应答可以异步流动。然而，应答信封的工作方式总是一样的。  </p>
+<p>ZeroMQ 应答信封组成结构：  </p>
+<ul>
+<li>零个或多个应答地址</li>
+<li>后面跟着一个空帧(信封分隔符 delimiter)</li>
+<li>然后跟着消息正文(零个或多个帧)<br>信封是由多个套接字在一个链中一起工作创建的。</li>
+</ul>
+<p>例如，以通过 REQ 套接字发送 “Hello” 为例。REQ 套接字创建尽可能简单的 rely 信封，其中没有地址，只有一个空分隔符帧和包含“Hello”字符串的消息帧。这是一个两帧信息。<br><img src="/./images/request%20with%20minimal%20envelope.png" alt="request with minimal envelope">  </p>
+<p><strong>REP 套接字完成匹配工作：去掉信封，直到并包括分隔符帧，保存整个信封</strong>，并将 “Hello” 字符串传递给应用程序。因此，最初的 Hello World 示例在内部使用 request-rely 信封，但应用程序从未看到它们。  </p>
+<p>查看在 hwclient 和 hwserver 之间的网络数据，可以看到的：每个请求和每个应答实际上是两个帧，一个空帧，然后是正文。  </p>
+<h2 id="The-Extended-Rely-Envelope"><a href="#The-Extended-Rely-Envelope" class="headerlink" title="The Extended Rely Envelope"></a>The Extended Rely Envelope</h2><p>现在，在中间添加 ROUTER-DEALER 代理扩展 REQ-REP，看看这会如何影响应答信封。参考：第2章-套接字和模式中已经看到的扩展的请求-应答模式。实际上，可以插入任意数量的代理步骤。机制是一样的。<br><img src="/./images/extended%20request-rely%20pattern.png" alt="extended request-rely pattern"></p>
+<p>Proxy 功能伪代码：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prepare context, frontend and backend sockets</span><br><span class="line">while true:</span><br><span class="line">    poll on both sockets</span><br><span class="line">    if frontend had input:</span><br><span class="line">        read all frames from frontend</span><br><span class="line">        send to backend</span><br><span class="line">    if backend had input:</span><br><span class="line">        read all frames from backend</span><br><span class="line">        send to frontend</span><br></pre></td></tr></table></figure>
+
+<p>ROUTER 套接字与其他套接字不同，它跟踪它拥有的每个连接，并告诉调用者这些连接。它告诉调用者的方式是将连接标识粘贴到接收到的每个消息前面。<strong>标识，也即地址</strong>，是一个二进制字符串，除了“这是连接的唯一句柄”之外没有任何意义。然后，当通过 ROUTER 套接字发送消息时，首先发送一个身份帧。</p>
+<ul>
+<li>从 Router 读取一条消息时，ZeroMQ 会封装一层信封，注明消息的来源</li>
+<li>向 Router 写入一条消息时，ZeroMQ 会将信封拆开，并将消息传递给相应的对象</li>
+</ul>
+<p>ZeroMQ v2.2 及以前版本使用 <code>uid</code> 作为标识。<strong>ZeroMQ v3.0 及以后版本默认生成一个 5 字节的标识(0 +一个随机的 32 位整数)</strong> 。这对网络性能有一些影响，但只有在使用多个代理时才会有影响，这种情况很少见。主要的变化是通过删除对 UUID 库的依赖来简化 libzmq 的编译。  </p>
+<p>假设 REQ 套接字于一个三字节的标识 <code>ABC</code>：<br><img src="/./images/reply%20with%20one%20address.png" alt="Reply with one Address"></p>
+<h1 id="Request-Reply-组合"><a href="#Request-Reply-组合" class="headerlink" title="Request-Reply 组合"></a>Request-Reply 组合</h1><p>有四个请求-应答套接字，每个套接字都有特定的行为。已经了解了它们如何以简单和扩展的 请求-答复 模式进行连接。但这些套接字是可以用来解决许多问题。  </p>
+<p>有效组合：  </p>
+<ul>
+<li>REQ to REP</li>
+<li>DEALER to REP</li>
+<li>REQ to ROUTER</li>
+<li>DEALER to ROUTER</li>
+<li>DEALER to DEALER</li>
+<li>ROUTER to ROUTER</li>
+</ul>
+<p>无效组合：  </p>
+<ul>
+<li>REQ to REQ</li>
+<li>REQ to DEALER</li>
+<li>REP to REP</li>
+<li>REP to ROUTER</li>
+</ul>
+<p>DEALER 就像一个异步 REQ 套接字，而 ROUTER 就像一个异步 REP 套接字。当使用 REQ 套接字时，可以使用 DEALER；只需要自己阅读和书写信封即可。在使用 REP 套接字的地方，可以使用一个 ROUTER；只需要自己管理身份即可。</p>
+<h2 id="DEALER-to-REP"><a href="#DEALER-to-REP" class="headerlink" title="DEALER to REP"></a>DEALER to REP</h2><p>使用 DEALER 替代 REQ，提供了一个可以与多个 REP 服务器通信的异步客户端，发送请求后无需等待应答。  </p>
+<p>使用 DEALER 于 REP 套接字通信时，必须准确的模拟 REQ 套接字将发送的信封，否则 REP 套接字将丢弃该消息。因此，要发送消息，需要：  </p>
+<ul>
+<li>发送一个设置了 MORE 标志的空消息帧</li>
+<li>发送消息正文</li>
+</ul>
+<p>另一端接收到消息时：  </p>
+<ul>
+<li>接收第一帧，若不为空，则丢弃整条消息</li>
+<li>接受下一帧并将其传递给应用程序</li>
+</ul>
+<h2 id="REQ-to-ROUTER"><a href="#REQ-to-ROUTER" class="headerlink" title="REQ to ROUTER"></a>REQ to ROUTER</h2><p>提供了一个可以同时与多个 REQ 客户端通信的异步服务器。  </p>
+<p>可通过两种不同的方式使用 ROUTER：  </p>
+<ul>
+<li>作为在前端和后端套接字之间切换消息的代理</li>
+<li>作为读取消息并对其进行操作的应用程序</li>
+</ul>
+<p>第一种方式，ROUTER 简单读取所有帧，包括身份识别帧，然后直接传送他们。第二种方法，ROUTER 必须知道它所发送的 REPLY 信封的格式。  </p>
+<h2 id="DEALER-to-ROUTER"><a href="#DEALER-to-ROUTER" class="headerlink" title="DEALER to ROUTER"></a>DEALER to ROUTER</h2><p>使异步客户端能够与异步服务器进行通信，双方都可以完全控制消息格式。  </p>
+<p>DEALER 和 ROUTER 都可以处理任意消息格式。  </p>
+<h2 id="DEALER-to-DEALER"><a href="#DEALER-to-DEALER" class="headerlink" title="DEALER to DEALER"></a>DEALER to DEALER</h2><p>使用 DEALER 替换 REP 时，worker 进程可以是完全异步的，发送任意数量的回复。代价是必须自行管理回复信封。  </p>
+<h2 id="ROUTER-to-ROUTER"><a href="#ROUTER-to-ROUTER" class="headerlink" title="ROUTER to ROUTER"></a>ROUTER to ROUTER</h2><p>使用复杂。  </p>
+<h1 id="ROUTER-套接字"><a href="#ROUTER-套接字" class="headerlink" title="ROUTER 套接字"></a>ROUTER 套接字</h1><h2 id="Identities-and-Addresses"><a href="#Identities-and-Addresses" class="headerlink" title="Identities and Addresses"></a>Identities and Addresses</h2><p>ZeroMQ 中的身份(identity)被用作回复信封中的地址。在大多数情况下，标识是任意的并且对于 ROUTER 套接字而言是本地的：它是哈希表中的查找键。独立地，对端可以拥有物理地址（网络端点，如 <code>tcp://192.168.55.117:5670</code>）或逻辑地址（UUID 或电子邮件地址或其他唯一密钥）。  </p>
+<p>使用 ROUTER 套接字与特定对端通信的应用程序可以将逻辑地址转换为标识（如果它已构建了必要的哈希表）。因为 ROUTER 套接字仅在某个对端发送消息时宣布连接的身份（到特定对端），所以只能真正回复消息，而不能自发地与对端通信。  </p>
+<p>即使翻转规则并使 ROUTER 连接到对端而不是等待对端连接到 ROUTER，情况也是如此。但是，可以强制 ROUTER 套接字使用逻辑地址来代替其标识。通过 <code>zmq_setsockopt</code> 配置。其工作原理如下：</p>
+<ul>
+<li>对端应用程序在绑定或连接之前设置其对端套接字（DEALER 或 REQ）的 <code>ZMQ_IDENTITY</code> 选项</li>
+<li>通常，对端会连接到已绑定的 ROUTER 套接字。但 ROUTER 也可以连接到对端</li>
+<li>在连接时，对端套接字告诉 ROUTER 套接字“请使用此身份进行此连接”</li>
+<li>如果对端套接字没有说明这一点，则 ROUTER 会为连接生成任意随机标识</li>
+<li>ROUTER 套接字现在向应用程序提供此逻辑地址，作为来自该对端的任何消息的前缀身份帧</li>
+<li>ROUTER 还期望逻辑地址作为任何传出消息的前缀标识帧</li>
+</ul>
+<p>例如：  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Demonstrate request-reply identities</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;zhelpers.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">void</span> *context = zmq_ctx_new ();</span><br><span class="line">    <span class="type">void</span> *sink = zmq_socket (context, ZMQ_ROUTER);</span><br><span class="line">    zmq_bind (sink, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  First allow 0MQ to set the identity</span></span><br><span class="line">    <span class="type">void</span> *anonymous = zmq_socket (context, ZMQ_REQ);</span><br><span class="line">    zmq_connect (anonymous, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line">    s_send (anonymous, <span class="string">&quot;ROUTER uses a generated 5 byte identity&quot;</span>);</span><br><span class="line">    s_dump (sink);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Then set the identity ourselves</span></span><br><span class="line">    <span class="type">void</span> *identified = zmq_socket (context, ZMQ_REQ);</span><br><span class="line">    zmq_setsockopt (identified, ZMQ_IDENTITY, <span class="string">&quot;PEER2&quot;</span>, <span class="number">5</span>);</span><br><span class="line">    zmq_connect (identified, <span class="string">&quot;inproc://example&quot;</span>);</span><br><span class="line">    s_send (identified, <span class="string">&quot;ROUTER socket uses REQ&#x27;s socket identity&quot;</span>);</span><br><span class="line">    s_dump (sink);</span><br><span class="line"></span><br><span class="line">    zmq_close (sink);</span><br><span class="line">    zmq_close (anonymous);</span><br><span class="line">    zmq_close (identified);</span><br><span class="line">    zmq_ctx_destroy (context);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该示例是链接到 ROUTER 套接字的两个端点的示例，其中一个强加逻辑地址 “PEER2”。  </p>
+<h2 id="ROUTER-异常处理"><a href="#ROUTER-异常处理" class="headerlink" title="ROUTER 异常处理"></a>ROUTER 异常处理</h2><p>ZeroMQ V3.2 开始，可以设置 <code>ZMQ_ROUTER_MANDATORY</code> 来捕获发送失败错误（旧版本无法发送消息时采用丢弃策略）。在 ROUTER 套接字上设置，然后在 send 调用上提供不可路由的标识时，套接字将发出 <code>EHOSTUNREACH</code> 错误。  </p>
+<h1 id="The-Load-Balancing-Pattern"><a href="#The-Load-Balancing-Pattern" class="headerlink" title="The Load Balancing Pattern"></a>The Load Balancing Pattern</h1><p><strong>负载均衡</strong>。  </p>
+<p>以邮局为例，如果每个柜台有一个队列，并且有些人购买邮票(一种快速、简单的交易)，有些人开设新账户(一种非常缓慢的交易)，那么将发现购买邮票的人被不公平地困在队列中。就像在邮局一样，如果消息传递体系结构不公平，人们就会感到恼火。  </p>
+<p>邮局示例的解决方案是创建一个单一队列，这样即使一两个柜台工作缓慢，其他柜台也将继续按照先到先得的原则为客户提供服务。  </p>
+<p>PUSH 和 DEALER 使用简单方法的原因之一是纯粹的性能。如果您到达美国任何一个主要机场，您都会发现入境处排着长队。边境巡逻官员会提前派人在每个柜台排队，而不是单独排队。让人们提前步行五十码可以为每位乘客节省一两分钟。而且由于每次护照检查所需的时间大致相同，因此或多或少是公平的。这就是 <strong>PUSH 和 DEALER 的策略：提前发送工作负载，so that there is less travel distance</strong>。</p>
+<p>回到连接到代理(ROUTER)的 worker (DEALER 或 REQ)的场景。代理必须知道 worker 何时准备好，并保留 worker 列表，以便每次都可以使用最近使用最少的 worker。  </p>
+<p>事实上，解决方案非常简单：worker 在启动时以及完成每项任务后发送一条 <code>ready</code> 消息。代理逐一读取这些消息。每次它读取一条消息时，都是来自最后使用的工作线程。因为使用的是 ROUTER 套接字，所以获得了一个身份，然后可以使用该身份将任务发送回 worker 线程。</p>
+<p>这是请求-答复的一种变形，因为任务是与答复一起发送的，并且任务的任何响应都作为新请求发送。  </p>
+<h2 id="ROUTER-Broker-and-DEALER-Workers"><a href="#ROUTER-Broker-and-DEALER-Workers" class="headerlink" title="ROUTER Broker and DEALER Workers"></a>ROUTER Broker and DEALER Workers</h2><p>任何可以使用 REQ 的地方，都可以使用 DEALER。具体区别有两点：  </p>
+<ul>
+<li>REQ 套接字始终在任何数据帧之前发送一个空定界符帧，而 DEALER 没有</li>
+<li>REQ 套接字在收到回复之前只会发送一条消息，而 DEALER 是完全异步的</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1407,470 +2092,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" class="post-title-link" itemprop="url">io_thread</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ IO 线程类 <code>io_thread_t</code>。包含 I&#x2F;O 线程的通用部分。特定于轮询机制(Polling-mechanism-specific)的特性在单独的“轮询对象”中实现。</p>
-<p>每个 ZeroMQ IO 线程都有与之绑定的 <code>Poller</code>，<code>Poller</code> 采用经典的 Reactor 模式实现。</p>
-<h1 id="io-thread-t"><a href="#io-thread-t" class="headerlink" title="io_thread_t"></a>io_thread_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">io_thread_t</span> ZMQ_FINAL : <span class="keyword">public</span> <span class="type">object_t</span>, <span class="keyword">public</span> i_poll_events</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">io_thread_t</span> (zmq::<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_);</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">io_thread_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">start</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停止线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取与该 I/O 线程关联的 mailbox</span></span><br><span class="line">    <span class="function"><span class="type">mailbox_t</span> *<span class="title">get_mailbox</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i_poll_events implementation.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">in_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">out_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">timer_event</span> <span class="params">(<span class="type">int</span> id_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由 io_objects 用于检索关联的 poller 对象</span></span><br><span class="line">    <span class="function"><span class="type">poller_t</span> *<span class="title">get_poller</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Command handlers.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">process_stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 I/O 线程负载</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get_load</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// I/O 线程通过该 mailbox 访问 incoming commands</span></span><br><span class="line">    <span class="type">mailbox_t</span> _mailbox;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle associated with mailbox&#x27; file descriptor.</span></span><br><span class="line">    <span class="type">poller_t</span>::<span class="type">handle_t</span> _mailbox_handle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I/O 多路复用由 poller 对象执行</span></span><br><span class="line">    <span class="type">poller_t</span> *_poller;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">io_thread_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>poller.hpp</code> 中根据宏定义，选择相应的 I&#x2F;O 模型：</p>
-<ul>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_KQUEUE</code>：使用 <code>kqueue</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_EPOLL</code>：使用 <code>epoll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_DEVPOLL</code>：使用 <code>devpoll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_POLLSET</code>：使用 <code>pollset</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_SELECT</code>：使用 <code>select</code></li>
-<li><code>ZMQ_HAVE_GNU</code> 且 <code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code><br>若同时定义多个宏，则会报错。</li>
-</ul>
-<p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。</p>
-<h2 id="io-thread-t-构造"><a href="#io-thread-t-构造" class="headerlink" title="io_thread_t 构造"></a>io_thread_t 构造</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">zmq::<span class="type">io_thread_t</span>::<span class="built_in">io_thread_t</span> (<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_) :</span><br><span class="line">    <span class="built_in">object_t</span> (ctx_, tid_),</span><br><span class="line">    _mailbox_handle (<span class="built_in">static_cast</span>&lt;<span class="type">poller_t</span>::<span class="type">handle_t</span>&gt; (<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">    _poller = <span class="built_in">new</span> (std::nothrow) <span class="built_in">poller_t</span> (*ctx_);</span><br><span class="line">    <span class="built_in">alloc_assert</span> (_poller);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_mailbox.<span class="built_in">get_fd</span> () != retired_fd) &#123;</span><br><span class="line">        _mailbox_handle = _poller-&gt;<span class="built_in">add_fd</span> (_mailbox.<span class="built_in">get_fd</span> (), <span class="keyword">this</span>);</span><br><span class="line">        _poller-&gt;<span class="built_in">set_pollin</span> (_mailbox_handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>创建 <code>poller_t</code> 类对象 <code>_poller</code></li>
-<li>配置 mailbox</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/" class="post-title-link" itemprop="url">BT 示例代码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ACTION_CLIENT_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTION_CLIENT_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bt_tutorials</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">ActionT</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActionClient</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> BaseClass  = RosActionNode&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionClientType = actionlib::SimpleActionClient&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionType = ActionT;</span><br><span class="line">    <span class="keyword">using</span> GoalType   = <span class="keyword">typename</span> ActionT::_action_goal_type::_goal_type;</span><br><span class="line">    <span class="keyword">using</span> ResultType = <span class="keyword">typename</span> ActionT::_action_result_type::_result_type;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">ActionClient</span>(<span class="type">const</span> std::string&amp; name)</span><br><span class="line">        : <span class="built_in">action_client_</span>(name, <span class="literal">true</span>), <span class="built_in">action_name_</span>(name) <span class="comment">// 实例化 action client</span></span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">ActionClient</span>()</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">sendGoal</span><span class="params">(cost GoalType&amp; goal)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// if server not running, fail after 20ms</span></span><br><span class="line">        <span class="keyword">if</span> (!action_client_.<span class="built_in">waitForServer</span>(<span class="built_in">rosDuration</span>(<span class="number">0.02</span>))) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;%s not running.&quot;</span>, action_name_.<span class="built_in">c_str</span>());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        action_client_.<span class="built_in">sendGoal</span>(goal);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">actionlib::SimpleClientGoalState <span class="title">getState</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> action_client_.<span class="built_in">getState</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ResultType <span class="title">getResult</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="comment">// waitForResult();</span></span><br><span class="line">        <span class="keyword">return</span> action_client_.<span class="built_in">getResult</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">cancelGoal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        action_client_.<span class="built_in">cancelAllGoal</span>(); <span class="comment">// or cancelGoal()</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ActionClientType action_client_;</span><br><span class="line">    std::string action_name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ASYNC_ACTION_INTERFACE_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  ASYNC_ACTION_INTERFACE_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ACTION_INTERFACE_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTION_INTERFACE_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;behaviortree_cpp/action_node.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;behaviortree_cpp/bt_factory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;actionlib/client/simple_action_client.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> BT;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> narwal_behavior_tree</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">ActionT</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AsyncActionInterfaceNode</span>: <span class="keyword">public</span> AsyncActionNode</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> BaseClass  = RosActionNode&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionClientType = actionlib::SimpleActionClient&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionType = ActionT;</span><br><span class="line">    <span class="keyword">using</span> GoalType   = <span class="keyword">typename</span> ActionT::_action_goal_type::_goal_type;</span><br><span class="line">    <span class="keyword">using</span> ResultType = <span class="keyword">typename</span> ActionT::_action_result_type::_result_type;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">AsyncActionInterface</span>(ros::NodeHandle&amp; nh, <span class="type">const</span> std::string&amp; name, <span class="type">const</span> BT::NodeConfiguration&amp; config)</span><br><span class="line">        : <span class="built_in">AsyncActionNode</span>(name, config), <span class="built_in">node_</span>(nh)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">const</span> std::string server_name = <span class="built_in">getInput</span>&lt;std::string&gt;(<span class="string">&quot;server_name&quot;</span>).<span class="built_in">value</span>();</span><br><span class="line">        action_client_ = std::<span class="built_in">make_shared</span>&lt;ActionClientType&gt;(node_, server_name, <span class="literal">true</span> ); <span class="comment">// 实例化 action client</span></span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">AsyncActionInterface</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> BT::PortsList <span class="title">providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123; BT::<span class="built_in">InputPort</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 异步行为，会创建线程执行，不会阻塞主流程，执行过程中该行为返回 RUNNING 状态</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> BT::NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!action_client_-&gt;<span class="built_in">waitForServer</span>(ros::<span class="built_in">Duration</span>(<span class="number">2.0</span>))) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Server not running.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Pose2D goal;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">getInput</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>, goal)) &#123;</span><br><span class="line">            <span class="comment">// if I can&#x27;t get this, there is something wrong with your BT.</span></span><br><span class="line">            <span class="comment">// For this reason throw an exception instead of returning FAILURE</span></span><br><span class="line">            <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;missing required input [goal]&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        aborted_ = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Send goal...&quot;</span>);</span><br><span class="line">        <span class="comment">// GoalType msg;</span></span><br><span class="line">        action_client_-&gt;<span class="built_in">sendGoal</span>(msg);</span><br><span class="line">        <span class="keyword">while</span> (!aborted_ &amp;&amp; !action_client_.<span class="built_in">waitForResult</span>(ros::<span class="built_in">Duration</span>(<span class="number">0.02</span>))) &#123;</span><br><span class="line">            <span class="comment">// 等待结果</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (aborted_) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Goal aborted&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (action_client_-&gt;<span class="built_in">getState</span>() != actionlib::SimpleClientGoalState::SUCCEEDED) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Action Server failed.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal reached.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> BT::NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">halt</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aborted_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::shared_ptr&lt;ActionClientType&gt; action_client_;</span><br><span class="line">    ros::NodeHandle node_;</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> aborted_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MOVE_BASE_CLIENT_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOVE_BASE_CLIENT_H_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Pose2D</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> x, y, quaternion_z, quaternion_w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> BT</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">inline</span></span></span><br><span class="line"><span class="function">Pose2D <span class="title">convertFromString</span><span class="params">(StringView key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// three real numbers separated by semicolons</span></span><br><span class="line">    <span class="keyword">auto</span> parts = BT::<span class="built_in">splitString</span>(key, <span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (parts.<span class="built_in">size</span>() != <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;invalid input)&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Pose2D output;</span><br><span class="line">        output.x     = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">0</span>]);</span><br><span class="line">        output.y     = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">1</span>]);</span><br><span class="line">        output.quaternion_z = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">2</span>]);</span><br><span class="line">        output.quaternion_w = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">3</span>]);</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125; <span class="comment">// end namespace BT</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bt_tutorials</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MoveBaseClient</span>: <span class="keyword">public</span> ActionClient, BT::AsyncActionNode</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">/* data */</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MoveBaseClient</span>(<span class="type">const</span> std::string&amp; action_name, <span class="type">const</span> std::string&amp; node_name,</span><br><span class="line">                    <span class="type">const</span> BT::NodeConfiguration&amp; config)</span><br><span class="line">        : <span class="built_in">ActionClient</span>(<span class="string">&quot;move_base&quot;</span>), <span class="built_in">AsyncActionNode</span>(node_name, config)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">MoveBaseClient</span>()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> BT::PortsList <span class="title">providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123; BT::<span class="built_in">InputPort</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> BT::NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Pose2D goal;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">getInput</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>, goal)) &#123;</span><br><span class="line">            <span class="comment">// 读取不到目标点参数，则抛出异常</span></span><br><span class="line">            <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;missing required input [goal]&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        aborted_ = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">sendGoal</span>(goal)) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Maybe action server not running.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(!aborted_ &amp;&amp; !<span class="built_in">waitForResult</span>(ros::<span class="built_in">Duration</span>(<span class="number">0.02</span>))) &#123; <span class="comment">// timeout: 20ms</span></span><br><span class="line"></span><br><span class="line">        &#125;       </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (aborted_) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;MoveBase aborted&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">getState</span>() != actionlib::SimpleClientGoalState::SUCCEEDED) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;MoveBase failed&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal reached&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> BT::NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">halt</span><span class="params">()</span> <span class="keyword">override</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aborted_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> aborted_;</span><br><span class="line">&#125;;</span><br><span class="line">    </span><br><span class="line">&#125; <span class="comment">// namespace bt_tutorials</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这些方法都是一个 Action 类对应一个行为。若需要在一个类中定义多个异步行为，例如：机械臂控制类中定义移动到指定位置和移动到预定义位姿两类行为，而两类行为通过同一个 action client 进行通信时，可使用依赖注入方式。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/Substitution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/Substitution/" class="post-title-link" itemprop="url">Substitution</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 19:03:19" itemprop="dateCreated datePublished" datetime="2024-09-07T19:03:19+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>396</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>有时，特别是在实现集成和单元测试时，需要有⼀种机制，允许⽤“测试”版本(mock)快速替换特定的 Node 或整个 Node 类。</p>
-<p>从版本4.1开始，引⼊了⼀种名为 <code>substitution rules</code>的新机制，使这个过程更容易。它由 <code>BehaviorTreeFactory</code> 类中的其他⽅法组成，这些⽅法应该在节点注册之后和实际树实例化之前调⽤。</p>
-<p>例如，给定 XML</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">SaySomething</span> <span class="attr">name</span>=<span class="string">&quot;talk&quot;</span> <span class="attr">message</span>=<span class="string">&quot;hello world&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>可能想⽤另⼀个称为 <code>TestMessage</code> 的节点替代这个节点。相应的替换是⽤命令完成的:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory.<span class="built_in">addSubstitutionRule</span>(<span class="string">&quot;talk&quot;</span>, <span class="string">&quot;TestMessage&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>第⼀个参数包含将与 <code>TreeNode::fullPath</code> 匹配的通配符字符串。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/logger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/BehaviorTree.CPP/logger/" class="post-title-link" itemprop="url">logger</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 19:03:19" itemprop="dateCreated datePublished" datetime="2024-09-07T19:03:19+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>BT.cpp 提供了⼀种在运⾏时将 logger 添加到树的⽅法，通常是在树创建之后和开始 ticking 之前。 logger 是⼀个类，每次 TreeNode 改变状态时都会调⽤⼀个回调函数; 它是所谓观察者模式的⾮侵⼊式实现。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">callback</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    BT::Duration timestamp, <span class="comment">// When the transition happened</span></span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="type">const</span> TreeNode&amp; node, <span class="comment">// the node that changed its status</span></span></span></span><br><span class="line"><span class="params"><span class="function">    NodeStatus prev_status, <span class="comment">// the previous status</span></span></span></span><br><span class="line"><span class="params"><span class="function">    NodeStatus status)</span></span>; <span class="comment">// the new status</span></span><br></pre></td></tr></table></figure>
-
-<p><code>TreeObserver</code> 是⼀个简单的⽇志实现，它为树的每个节点收集以下统计信息:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">NodeStatistics</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Last valid result, either SUCCESS or FAILURE</span></span><br><span class="line">    NodeStatus last_result;</span><br><span class="line">    <span class="comment">// Last status. Can be any status, including IDLE or SKIPPED</span></span><br><span class="line">    NodeStatus current_status;</span><br><span class="line">    <span class="comment">// count status transitions, excluding transition to IDLE</span></span><br><span class="line">    <span class="type">unsigned</span> transitions_count;</span><br><span class="line">    <span class="comment">// count number of transitions to SUCCESS</span></span><br><span class="line">    <span class="type">unsigned</span> success_count;</span><br><span class="line">    <span class="comment">// count number of transitions to FAILURE</span></span><br><span class="line">    <span class="type">unsigned</span> failure_count;</span><br><span class="line">    <span class="comment">// count number of transitions to SKIPPED</span></span><br><span class="line">    <span class="type">unsigned</span> skip_count;</span><br><span class="line">    <span class="comment">// timestamp of the last transition</span></span><br><span class="line">    Duration last_timestamp;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>由于观察者允许收集特定节点的统计信息，需要⼀种唯⼀标识该节点的⽅法。</p>
-<p>可以使⽤两种机制:</p>
-<ul>
-<li><code>TreeNode::UID()</code>，它是⼀个唯⼀的数字，对应于树的深度优先遍历。</li>
-<li><code>TreeNode::fullPath()</code>，旨在成为特定节点的唯⼀但⼈类可读的标识符。</li>
-</ul>
-<h1 id="StdCoutLogger"><a href="#StdCoutLogger" class="headerlink" title="StdCoutLogger"></a><strong>StdCoutLogger</strong></h1><p>在终端打印行为树中的节点执行状态变化。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StdCoutLogger <span class="title">logger_cout</span><span class="params">(tree)</span></span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该 logger 在终端输出状态转变</span></span><br><span class="line"><span class="function">StdCoutLogger <span class="title">logger_cout</span><span class="params">(tree)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该 logger 保存状态转变到指定文件</span></span><br><span class="line"><span class="function">FileLogger <span class="title">logger_file</span><span class="params">(tree, <span class="string">&quot;bt_trace.fbl&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该 logger 保存每个节点的执行时间</span></span><br><span class="line"><span class="function">MinitraceLogger <span class="title">logger_minitrace</span><span class="params">(tree, <span class="string">&quot;bt_trace.json&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> ZMQ_FOUND</span></span><br><span class="line">    <span class="comment">// 使用 ZeroMQ 发布状态转变。Groot 使用该数据</span></span><br><span class="line">    <span class="function">PublisherZMQ <span class="title">publisher_zmq</span><span class="params">(tree)</span></span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1895,14 +2116,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">479k</span>
+    <span title="站点总字数">507k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:31</span>
+    <span title="站点阅读时长">15:21</span>
   </span>
 </div>
 <div class="busuanzi-count">
