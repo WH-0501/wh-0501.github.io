@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -172,6 +172,332 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/" class="post-title-link" itemprop="url">list</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>786</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span>(LENGTH &lt;<span class="keyword">list</span>&gt; &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(GET &lt;<span class="keyword">list</span>&gt; &lt;element index&gt; [&lt;element index&gt; ...]</span><br><span class="line">     &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(APPEND &lt;<span class="keyword">list</span>&gt; [&lt;element&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(FIND &lt;<span class="keyword">list</span>&gt; &lt;value&gt; &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(INSERT &lt;<span class="keyword">list</span>&gt; &lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_ITEM &lt;<span class="keyword">list</span>&gt; &lt;value&gt; [&lt;value&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_AT &lt;<span class="keyword">list</span>&gt; &lt;index&gt; [&lt;index&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_DUPLICATES &lt;<span class="keyword">list</span>&gt;)</span><br><span class="line"><span class="keyword">list</span>(REVERSE &lt;<span class="keyword">list</span>&gt;)</span><br><span class="line"><span class="keyword">list</span>(SORT &lt;<span class="keyword">list</span>&gt;)</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>LENGTH</th>
+<th>返回list的长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>返回list中index的element到value中</td>
+</tr>
+<tr>
+<td>APPEND</td>
+<td>添加新element到list中</td>
+</tr>
+<tr>
+<td>FIND</td>
+<td>返回list中element的index,未找到返回-1</td>
+</tr>
+<tr>
+<td>INSERT</td>
+<td>将新element插入到list中index的位置</td>
+</tr>
+<tr>
+<td>REMOVE_ITEM</td>
+<td>从list中删除某个element</td>
+</tr>
+<tr>
+<td>REMOVE_AT</td>
+<td>从list中删除指定index的element</td>
+</tr>
+<tr>
+<td>REMOVE_DUPLICATES</td>
+<td>从list中删除重复的element</td>
+</tr>
+<tr>
+<td>REVERSE</td>
+<td>将list的内容反转</td>
+</tr>
+<tr>
+<td>SORT</td>
+<td>将list按字母顺序排序</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/" class="post-title-link" itemprop="url">target</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="target-include-directories"><a href="#target-include-directories" class="headerlink" title="target_include_directories"></a>target_include_directories</h1><p>指定编译参数给定的 target 时需要包含的目录。该 target 必须经过 <code>add_executable</code> 或 <code>add_library</code> 命令编译，不能是 <code>IMPORTED target</code>。</p>
+<h2 id="与-include-dirctories-区别"><a href="#与-include-dirctories-区别" class="headerlink" title="与 include_dirctories 区别"></a>与 include_dirctories 区别</h2><p><strong><code>include_directories</code></strong> 影响目录范围。该 CMakeLists.txt 中的所有 targets，以及在其调用点之后添加的所有子目录中的目标，均会将 <code>include_directories</code> 指定的目录包含到其路径中</p>
+<p><strong><code>target_include_directories(target x/y)</code></strong> 则具有目标范围，将目录 x&#x2F;y 添加到目标 target 的包含路径。</p>
+<p>如果所有目标使用相关的包含目录，则需要用 <code>include_directories</code>，如果路径特定于某个目标，或想更好地控制路径的可见性，则需要 <code>target_include_directories</code>。</p>
+<h1 id="target-sources"><a href="#target-sources" class="headerlink" title="target_sources"></a>target_sources</h1><p>指定编译给定 target 时用到的源文件。其中 target 必须由 <code>add_executable</code> 或 <code>add_library</code> 之类的命令创建，不能为 <code>ALIASA</code> 目标。</p>
+<h2 id="ADD-CUSTOM-TARGET"><a href="#ADD-CUSTOM-TARGET" class="headerlink" title="ADD_CUSTOM_TARGET"></a>ADD_CUSTOM_TARGET</h2><p>增加一个没有输出的目标，使得它总是被构建</p>
+<h2 id="ADD-CUSTOM-COMMAND"><a href="#ADD-CUSTOM-COMMAND" class="headerlink" title="ADD_CUSTOM_COMMAND"></a>ADD_CUSTOM_COMMAND</h2><p>向生成的构建系统添加自定义构建规则。</p>
+<p><code>ADD_CUSTOM_COMMAND</code> 有两个限制：</p>
+<ul>
+<li>只有在相同的 CMakeLists.txt 中，指定了所有依赖于其输出的目标时才有效</li>
+<li>对于不同的独立目标，使用 <code>ADD_CUSTOM_COMMAND</code>的输出可以重新执行定制命令。这可能会导致冲突，应该避免这种情况的发生</li>
+</ul>
+<p>只有当构建的目标以 <code>ADD_CUSTOM_COMMAND</code> 生成的OUTPUT文件为源代码的情况下，<code>ADD_CUSTOM_COMMAND</code> 中指定的命令才会才会执行。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dcb26b24806b">https://www.jianshu.com/p/dcb26b24806b</a></p>
+<p>该命令主要用于两种场景下。</p>
+<h3 id="生成文件"><a href="#生成文件" class="headerlink" title="生成文件"></a>生成文件</h3><p>添加自定义命令来生成文件。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT output1 [output2 ...]</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [MAIN_DEPENDENCY depend]</span><br><span class="line">                   [DEPENDS [depends...]]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [IMPLICIT_DEPENDS &lt;lang1&gt; depend1</span><br><span class="line">                                    [&lt;lang2&gt; depend2] ...]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [DEPFILE depfile]</span><br><span class="line">                   [VERBATIM] [APPEND] [USES_TERMINAL]</span><br><span class="line">                   [COMMAND_EXPAND_LISTS])</span><br></pre></td></tr></table></figure>
+
+<p>定义了一个命令来生成指定的 OUTPUT 文件。在 CMakeLists.txt 同一目录中创建的目标(该目标指定自定义命令的任何输出作为源文件)将获得一个规则，以便在构建时使用该命令生成该文件。不要在多个可能并行构建的独立目标中列出输出，或者规则的两个实例可能冲突(而是使用add_custom_target()命令来驱动该命令，并使其他目标依赖于该命令)。在 makefile 术语中，这会以以下形式创建一个新目标:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">OUTPUT: MAIN_DEPENDENCY DEPENDS</span></span><br><span class="line">        COMMAND</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)</span><br><span class="line"><span class="keyword">project</span>(<span class="keyword">test</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT COPY_RES</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_directory <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/config <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/log.txt <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_target</span>(CopyTask ALL DEPENDS COPY_RES)</span><br></pre></td></tr></table></figure>
+
+<p><code>add_custom_target</code>：生成一个目标 CopyTask，该目标依赖 COPY_RES。而 COPY_RES 实际上是用来复制文件夹或复制文件，也就是 COMMAND 中定义的操作。</p>
+<p><strong>options</strong>：</p>
+<ul>
+<li><strong>APPEND</strong>：将 COMMAND 和 DEPENDS 选项值附加到指定的第一个输出的自定义命令。之前必须已经调用过具有相同输出的此命令</li>
+<li><strong>BYPRODUCTS</strong>：指定命令预期生成的文件。如果副产品(byproduct)名是相对路径，它将相对于当前源目录相对应的构建树目录进行解释。每个副产品文件都将自动标记为GENERATED源文件属性</li>
+<li><strong>COMMAND</strong>：指定要执行的命令。如果指定了多个 COMMAND，它们将按顺序执行，但不一定组成有状态的 shell 或 batch 脚本。可选的 ARGS 参数是为了向后兼容。</li>
+<li><strong>COMMENT</strong>：在构建时执行命令之前显示给定的消息</li>
+<li><strong>DEPENDS</strong>：指定命令所依赖的文件。每个参数都转换为依赖项。如果未指定 DEPENDS，则只要缺少 OUTPUT，该命令就会运行；如果该命令实际上并未创建 OUTPUT，则该规则将始终运行</li>
+<li><strong>COMMAND_EXPAND_LISTS</strong>：</li>
+<li><strong>IMPLICIT_DEPENDS</strong>：请求扫描输入文件的隐式依赖项。给定的语言指定应使用其相应依赖扫描器的编程语言(programming language).目前仅支持C和CXX语言扫描器。必须为IMPLICIT_DEPENDS列表中的每个文件指定语言。IMPLICIT_DEPENDS选项目前仅支持Makefile生成器，其它生成器将忽略该选项。此选项<strong>不能与DEPFILE选项同时指定</strong>。</li>
+<li><strong>JOB_POOL</strong>：为 Ninja 生成器指定一个 pool。不能与 USES_TERMINAL 一起使用(暗含 console pool)。</li>
+<li><strong>MAIN_DEPENDENCY</strong>：指定命令的主要输入源文件。每个源文件最多可以有一个命令将其指定为其主要依赖项。编译命令(即用于库或可执行文件)算作隐式主要依赖项，它会被自定义命令规范覆盖</li>
+<li><strong>OUTPUT</strong>：指定命令预期生成的输出文件。每个输出文件将自动标记为生成的源文件属性。如果自定义命令的输出实际上没有作为磁盘上的文件创建，则应该使用 SYMBOLIC 源文件属性对其进行标记。如果输出名称是相对路径，则其绝对路径将解析为相对于与当前源目录对应的构建树目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_BINARY_DIR.html#variable:CMAKE_CURRENT_BINARY_DIR"><strong>CMAKE_CURRENT_BINARY_DIR</strong></a>)或当前源目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_SOURCE_DIR.html#variable:CMAKE_CURRENT_SOURCE_DIR"><strong>CMAKE_CURRENT_SOURCE_DIR</strong></a>)。3.20 版本以后，输出参数可使用一组受限的生成器表达式</li>
+<li>USES_TERMINAL：如果可能，该命令将被授予直接访问终端(terminal)的权限</li>
+<li>VERBATIM：命令的所有参数都将为构建工具正确转义(escaped),以便调用的命令接收每个参数不变。建议使用VERBATIM，因为它可以实现正确的行为。当没有给出VERBATIM时，行为是特定于平台的</li>
+<li>WORKING_DIRECTORY：使用给定的当前工作目录执行命令。如果是相对路径，会被解释为相对于当前源目录对应的构建树目录</li>
+<li>DEPFILE：指定一个包含自定义命令依赖项的depfile。它通常由自定义命令本身发出。这个关键字只能在生成器支持的情况下使用</li>
+</ul>
+<p>例一</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加自定义命令来运行 someTool 以生产 out.c 文件，然后将该文件编译为库。当 in.txt 文件发生变化时，会自动重新运行该生成规则。</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT out.c</span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o out.c</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib out.c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.20 版本可以使用生成器表达式来指定每个配置的输出。例如</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">                   -c <span class="string">&quot;$&lt;CONFIG&gt;&quot;</span></span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行 someTool 指令生成 out-.c 文件，config 是编译选项。</p>
+<p>例二：为多个 targets 生成文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果多个独立 targets 需要相同的自定义命令输出，则必须将其附加到它们都依赖的单个自定义 target</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT table.csv</span><br><span class="line">  <span class="keyword">COMMAND</span> makeTable -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">                    -o table.csv</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_custom_target</span>(generate_table_csv DEPENDS table.csv)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT foo.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case foo -o foo.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(foo foo.cxx)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT bar.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case bar -o bar.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(bar bar.cxx)</span><br></pre></td></tr></table></figure>
+
+<p>foo.cxx 只被 foo 使用，bar.cxx 只被 bar 使用。但两个 target 都需要 table.csv。由于 foo 和 bar 是可以并发构建的独立目标，因此通过将其自定义命令放在单独的目标 generate_table_csv 中来防止它们竞相生成 table.csv。生成 foo.cxx 和 bar.cxx 的自定义指令均指定 target-level 依赖 generate_table_csv。</p>
+<h3 id="Build-Events"><a href="#Build-Events" class="headerlink" title="Build Events"></a>Build Events</h3><p>将自定义命令添加到 target，如库或可执行文件。这对于在构建 target 之前或之后执行操作非常有用。该命令将成为 target 的一部分，并且仅在构建 target 本身时执行。如果 target 已构建，则不会执行该命令。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> &lt;<span class="keyword">target</span>&gt;</span><br><span class="line">                   PRE_BUILD | PRE_LINK | POST_BUILD</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [VERBATIM] [USES_TERMINAL])</span><br></pre></td></tr></table></figure>
+
+<p>这将定义一个新命令，该命令将与构建指定的 <code>&lt;target&gt;</code> 关联。 必须在当前目录中定义；不能指定在其它目录中定义的 target。</p>
+<p>命令何时执行由以下指定的选项决定:</p>
+<ul>
+<li><strong>PRE_BUILD</strong>：在 Visual Studio Generators 上，在 target 中执行任何其它规则之前运行。在其它生成器(generator)上,在 PRE_LINK 命令之前运行</li>
+<li><strong>PRE_LINK</strong>：在编译源代码之后但在链接二进制文件(binary)或运行静态库的库管理员(librarian)或存档器工具(archiver tool)之前运行。这不是为 add_custom_target 命令创建的 target 定义的</li>
+<li><strong>POST_BUILD</strong>：在执行 target 中的所有其它规则后运行</li>
+</ul>
+<p>使用 TARGET 格式时，project 应始终指定上述三个关键字之一。出于向后兼容性(backward compatibility)的原因，如果没有给出这样的关键字，则假定为 POST_BUILD，但 project 应明确提供其中一个关键字以明确他们期望的行为。</p>
+<p>例一</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POST_BUILD 事件可用于在链接后对二进制文件进行后处理,例如</span></span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myExe POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;&quot;</span></span><br><span class="line">                     -o <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;.hash&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="comment"># 在链接后，将会运行 someHasher 来生成 .hash 文件</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 3.20 版本</span></span><br><span class="line"><span class="keyword">add_library</span>(myPlugin MODULE myPlugin.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myPlugin POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myPlugin&gt;&quot;</span></span><br><span class="line">                     --as-code <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  BYPRODUCTS <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1624,319 +1950,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/Linux/NAT%E8%BD%AC%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/Linux/NAT%E8%BD%AC%E5%8F%91/" class="post-title-link" itemprop="url">NAT转发</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>321</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">PC2 通过 enx8e01055d1492 与 PC1 相连</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">PC1 通过 wlp8s0 连接互联网</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -A FORWARD -o wlp8s0 -i enx8e01055d1492 -j ACCEPT</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -A FORWARD -o enx8e01055d1492 -i wlp8s0 -m state --state ESTABLISHED,RELATED -j ACCEPT</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -t nat -A POSTROUTING -o wlp8s0 -j MASQUERADE</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确保 PC2 默认网关为 enx8e01055d1492 网卡网关</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看现有规则</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">iptables -L -v -n</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">iptables -t nat -L -v -n</span> </span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/Docker/Docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/Docker/Docker/" class="post-title-link" itemprop="url">Docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 15:48:58" itemprop="dateModified" datetime="2024-09-22T15:48:58+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>BUILD, SHIP, RUN</p>
-<p>即：build – Docker 可以轻易构建用户的应用</p>
-<p>SHIP – Docker 可以将应用快速分发</p>
-<p>RUN – Docker 有能力秒级启动应用</p>
-<p>基于GO开发，遵循Apache2.0。</p>
-<p>Docker是一个基于LXC（即:linux container）技术之上构建的Container容器引擎。</p>
-<p>Docker 使用客户端-服务器 (C&#x2F;S) 架构模式，使用远程API来管理和创建Docker容器。</p>
-<h2 id="Docker特性"><a href="#Docker特性" class="headerlink" title="Docker特性"></a><strong>Docker特性</strong></h2><ul>
-<li>速度飞快以及优雅的隔离框架</li>
-<li>物美价廉</li>
-<li>CPU&#x2F;内存的低消耗</li>
-<li>快速开&#x2F;关机</li>
-<li>跨云计算基础构架</li>
-</ul>
-<h2 id="Docker组件与元素"><a href="#Docker组件与元素" class="headerlink" title="Docker组件与元素"></a><strong>Docker组件与元素</strong></h2><p>Docker有三个组件和三个基本元素。</p>
-<p>三个组件分别是：</p>
-<ul>
-<li><strong>Docker Client</strong> 是用户界面，它支持用户与Docker Daemon之间通信。</li>
-<li><strong>Docker Daemon</strong> 运行于主机上，处理服务请求。</li>
-<li><strong>Docker Index</strong> 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。</li>
-</ul>
-<p>三个基本要素分别是：</p>
-<ul>
-<li><strong>Docker Containers</strong> 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。</li>
-<li><strong>Docker Images</strong> 是一个只读模板，用来运行Docker容器。</li>
-<li><strong>DockerFile</strong> 是文件指令集，用来说明如何自动创建Docker镜像。</li>
-</ul>
-<h2 id="Docker的优势"><a href="#Docker的优势" class="headerlink" title="Docker的优势"></a><strong>Docker的优势</strong></h2><ul>
-<li>Docker层是基于容器技术的轻量级虚拟化，没有Hypervisor层，省去了Hypervisor的开销</li>
-<li>对层级的创新应用，通过写入自己特有的内容后添加新的镜像层，新增的镜像层和下层的镜像一起又可以作为基础镜像被更上层的镜像使用。这种特性可以极大地提高磁盘利用率。同时，多个容器使用同一个基础镜像时，可极大地减少内存占用等方面，因为不同的容器访问同一个文件时，只会占用一份内存。</li>
-</ul>
-<h2 id="Docker-可视化工具"><a href="#Docker-可视化工具" class="headerlink" title="Docker 可视化工具"></a><strong>Docker 可视化工具</strong></h2><ul>
-<li>Portainer</li>
-<li>LazyDocker</li>
-</ul>
-<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a><strong>目标</strong></h1><p><strong>实现轻量级的操作系统虚拟化解决方案。</strong></p>
-<p>Docker产生的目的主要是为了解决如下问题。</p>
-<h2 id="环境管理复杂"><a href="#环境管理复杂" class="headerlink" title="环境管理复杂"></a><strong>环境管理复杂</strong></h2><p>从各种OS到各种中间件再到各种App，一款产品能够成功发布，作为开发者需要关心的东西太多，且难于管理，这个问题在软件行业中普遍存在并需要直接面对。<strong>Docker可以简化部署多种应用实例的工作</strong>，比如Web应用、后台应用、数据库应用、大数据应用比如Hadoop集群、消息队列等等都可以打包成一个Image部署。</p>
-<h2 id="云计算时代的到来"><a href="#云计算时代的到来" class="headerlink" title="云计算时代的到来"></a><strong>云计算时代的到来</strong></h2><p>AWS的成功, 引导开发者将应用转移到云上, 解决了硬件管理的问题，然而软件配置和管理相关的问题依然存在 (AWS cloudformation是这个方向的业界标准)。Docker的出现正好能帮助软件开发者开阔思路，尝试新的软件管理方法来解决这个问题。</p>
-<h2 id="虚拟化手段的变化"><a href="#虚拟化手段的变化" class="headerlink" title="虚拟化手段的变化"></a><strong>虚拟化手段的变化</strong></h2><p>云时代采用标配硬件来降低成本，采用虚拟化手段来满足用户按需分配的资源需求以及保证可用性和隔离性。然而无论是KVM还是Xen，在 Docker 看来都在浪费资源，因为用户需要的是高效运行环境而非OS, GuestOS既浪费资源又难于管理, 更加轻量级的LXC更加灵活和快速。</p>
-<img src="/2024/09/07/Docker/Docker/image-20240916212807488.png" class="" title="image-20240916212807488">
-
-<p><strong>与虚拟机的区别：</strong></p>
-<ul>
-<li>虚拟机是用来进行硬件资源划分的完美解决方案，它利用了硬件虚拟化技术。通过一个 Hypervisor 层来实现对资源的彻底隔离；而容器则是操作系统级别的虚拟化，利用的是内核的 Cgroup 和 Namespace 特性，完全是通过软件来实现，仅仅是进程本身就可以与其它进程隔离开，不需要任何辅助</li>
-<li>Docker 容器与主机共享操作系统内核，不同的容器之间可以共享部分系统资源，因此容器更加轻量级，消耗的资源也更少。而虚拟机会独占分配给自己的资源，几乎不存在资源共享，各个虚拟机实例之间近乎完全隔离，因此虚拟机更加重量级，也会消耗更多的资源</li>
-<li>容器被用来设计运行单进程。但 docker exec 命令已解决了该问题</li>
-</ul>
-<h2 id="LXC的便携性"><a href="#LXC的便携性" class="headerlink" title="LXC的便携性"></a><strong>LXC的便携性</strong></h2><p>LXC在 Linux 2.6 的 Kernel 里就已经存在了，但是其设计之初并非为云计算考虑的，缺少标准化的描述手段和容器的可便携性，决定其构建出的环境难于分发和标准化管理(相对于KVM之类image和snapshot的概念)。Docker就在这个问题上做出了实质性的创新方法。</p>
-<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h1><img src="/2024/09/07/Docker/Docker/docker%E6%9E%B6%E6%9E%84.png" class="" title="docker架构">
-
-<p>(来自&lt;Docker进阶与实战&gt;)</p>
-<p>基于内核的Cgroup和Namespace技术。</p>
-<p>Docker并不会直接与内核交互，而是通过Libcontainer与内核交互。</p>
-<p>Libccontainer通过clone接口直接创建容器，通过pivot_root接口进入容器，并通过直接操作cgroupfs文件实现对资源的管理。</p>
-<img src="/2024/09/07/Docker/Docker/image-20240916213120282.png" class="" title="image-20240916213120282">
-
-
-
-<table>
-<thead>
-<tr>
-<th>Docker 镜像(Images)</th>
-<th>Docker 镜像是用于创建 Docker 容器的模板。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Docker 容器(Container)</td>
-<td>容器是独立运行的一个或一组应用。</td>
-</tr>
-<tr>
-<td>Docker 客户端(Client)</td>
-<td>Docker 客户端通过命令行或者其他工具使用 Docker API (<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/api/docker_remote_api">https://docs.docker.com/reference/api/docker_remote_api</a>) 与 Docker 的守护进程通信。</td>
-</tr>
-<tr>
-<td>Docker 主机(Host)</td>
-<td>一个物理或者虚拟的机器用于执行 Docker 守护进程和容器。</td>
-</tr>
-<tr>
-<td>Docker 仓库(Registry)</td>
-<td>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。Docker Hub(<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com</a>) 提供了庞大的镜像集<a target="_blank" rel="noopener" href="https://hub.docker.com/">合供使用。</a></td>
-</tr>
-<tr>
-<td>Docker Machine</td>
-<td>Docker Machine是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker，比如VirtualBox、 Digital Ocean、Microsoft Azure。</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="built_in">sudo</span> gpg --</span></span><br><span class="line">dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signedby=/usr/share/keyrings/docker-archive-keyring.gpg]</span></span> </span><br><span class="line">https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | </span><br><span class="line">sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt update</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装最新版本</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt install docker-ce docker-ce-cli containerd.io docker-composeplugin</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl start docker</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl enable docker # 使能自启动</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">无需 sudo 运行</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo usermod -aG docker <span class="variable">$USER</span></span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">newgrp docker # 无需重启，立即生效</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装 docker-compose. 需自行选择版本. 或使用 pip 安装：pip install dockercompose</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo curl -L</span></span> </span><br><span class="line">&quot;https://github.com/docker/compose/releases/download/v2.29.2/dockercompose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo chmod +x /usr/local/bin/docker-compose</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>Docker daemon 绑定到 Unix socket，而不是 TCP 端口。默认情况下，Unix Socket 只能被 root 用户使用，其它用户需使用 sudo 来访问Unix socket。Docker daemon 总是以 root 用户运行。</p>
-<p>因此，需使用 sudo 来执行 Docker 指令，或者将需要使用 Dockerclient 的用户加入 docker 用户组。<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface">Docker用户组等价于root用户</a>。</p>
-<p>创建 docker 组：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> groupadd docker</span></span><br></pre></td></tr></table></figure>
-
-<p>将用户加入docket组：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> usermod -aG docker <span class="variable">$USER</span></span></span><br></pre></td></tr></table></figure>
-
-<p>注销并重新登录即可。</p>
-<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a><strong>容器</strong></h1><p>Docker通过 Libcontainer 来实现对容器生命周期的管理、信息的设置和查询，以及监控和通信等功能。容器以镜像为基础，同时又为镜像提供了一个标准的和隔离的执行环境。</p>
-<p>容器首先必须是一个相对独立的运行环境，且在一个容器环境内，应该最小化其对外界的影响。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">容器=cgroup+namespace+rootfs+容器引擎（用户态工具）</span><br></pre></td></tr></table></figure>
-
-<p>Namespace（主要做访问隔离）</p>
-<p>Cgroup（主要做资源控制）</p>
-<p>Rootfs（文件系统隔离）</p>
-<p>容器引擎（生命周期控制）</p>
-<p>Docker 容器是 Docker 镜像的运行态体现。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1961,14 +1974,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">507k</span>
+    <span title="站点总字数">523k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:21</span>
+    <span title="站点阅读时长">15:50</span>
   </span>
 </div>
 <div class="busuanzi-count">

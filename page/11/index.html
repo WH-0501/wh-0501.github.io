@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -172,6 +172,319 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/Linux/NAT%E8%BD%AC%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/Linux/NAT%E8%BD%AC%E5%8F%91/" class="post-title-link" itemprop="url">NAT转发</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>321</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">PC2 通过 enx8e01055d1492 与 PC1 相连</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">PC1 通过 wlp8s0 连接互联网</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -A FORWARD -o wlp8s0 -i enx8e01055d1492 -j ACCEPT</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -A FORWARD -o enx8e01055d1492 -i wlp8s0 -m state --state ESTABLISHED,RELATED -j ACCEPT</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> iptables -t nat -A POSTROUTING -o wlp8s0 -j MASQUERADE</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确保 PC2 默认网关为 enx8e01055d1492 网卡网关</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看现有规则</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">iptables -L -v -n</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">iptables -t nat -L -v -n</span> </span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/Docker/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/Docker/Docker/" class="post-title-link" itemprop="url">Docker</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 15:48:58" itemprop="dateModified" datetime="2024-09-22T15:48:58+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>BUILD, SHIP, RUN</p>
+<p>即：build – Docker 可以轻易构建用户的应用</p>
+<p>SHIP – Docker 可以将应用快速分发</p>
+<p>RUN – Docker 有能力秒级启动应用</p>
+<p>基于GO开发，遵循Apache2.0。</p>
+<p>Docker是一个基于LXC（即:linux container）技术之上构建的Container容器引擎。</p>
+<p>Docker 使用客户端-服务器 (C&#x2F;S) 架构模式，使用远程API来管理和创建Docker容器。</p>
+<h2 id="Docker特性"><a href="#Docker特性" class="headerlink" title="Docker特性"></a><strong>Docker特性</strong></h2><ul>
+<li>速度飞快以及优雅的隔离框架</li>
+<li>物美价廉</li>
+<li>CPU&#x2F;内存的低消耗</li>
+<li>快速开&#x2F;关机</li>
+<li>跨云计算基础构架</li>
+</ul>
+<h2 id="Docker组件与元素"><a href="#Docker组件与元素" class="headerlink" title="Docker组件与元素"></a><strong>Docker组件与元素</strong></h2><p>Docker有三个组件和三个基本元素。</p>
+<p>三个组件分别是：</p>
+<ul>
+<li><strong>Docker Client</strong> 是用户界面，它支持用户与Docker Daemon之间通信。</li>
+<li><strong>Docker Daemon</strong> 运行于主机上，处理服务请求。</li>
+<li><strong>Docker Index</strong> 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。</li>
+</ul>
+<p>三个基本要素分别是：</p>
+<ul>
+<li><strong>Docker Containers</strong> 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。</li>
+<li><strong>Docker Images</strong> 是一个只读模板，用来运行Docker容器。</li>
+<li><strong>DockerFile</strong> 是文件指令集，用来说明如何自动创建Docker镜像。</li>
+</ul>
+<h2 id="Docker的优势"><a href="#Docker的优势" class="headerlink" title="Docker的优势"></a><strong>Docker的优势</strong></h2><ul>
+<li>Docker层是基于容器技术的轻量级虚拟化，没有Hypervisor层，省去了Hypervisor的开销</li>
+<li>对层级的创新应用，通过写入自己特有的内容后添加新的镜像层，新增的镜像层和下层的镜像一起又可以作为基础镜像被更上层的镜像使用。这种特性可以极大地提高磁盘利用率。同时，多个容器使用同一个基础镜像时，可极大地减少内存占用等方面，因为不同的容器访问同一个文件时，只会占用一份内存。</li>
+</ul>
+<h2 id="Docker-可视化工具"><a href="#Docker-可视化工具" class="headerlink" title="Docker 可视化工具"></a><strong>Docker 可视化工具</strong></h2><ul>
+<li>Portainer</li>
+<li>LazyDocker</li>
+</ul>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a><strong>目标</strong></h1><p><strong>实现轻量级的操作系统虚拟化解决方案。</strong></p>
+<p>Docker产生的目的主要是为了解决如下问题。</p>
+<h2 id="环境管理复杂"><a href="#环境管理复杂" class="headerlink" title="环境管理复杂"></a><strong>环境管理复杂</strong></h2><p>从各种OS到各种中间件再到各种App，一款产品能够成功发布，作为开发者需要关心的东西太多，且难于管理，这个问题在软件行业中普遍存在并需要直接面对。<strong>Docker可以简化部署多种应用实例的工作</strong>，比如Web应用、后台应用、数据库应用、大数据应用比如Hadoop集群、消息队列等等都可以打包成一个Image部署。</p>
+<h2 id="云计算时代的到来"><a href="#云计算时代的到来" class="headerlink" title="云计算时代的到来"></a><strong>云计算时代的到来</strong></h2><p>AWS的成功, 引导开发者将应用转移到云上, 解决了硬件管理的问题，然而软件配置和管理相关的问题依然存在 (AWS cloudformation是这个方向的业界标准)。Docker的出现正好能帮助软件开发者开阔思路，尝试新的软件管理方法来解决这个问题。</p>
+<h2 id="虚拟化手段的变化"><a href="#虚拟化手段的变化" class="headerlink" title="虚拟化手段的变化"></a><strong>虚拟化手段的变化</strong></h2><p>云时代采用标配硬件来降低成本，采用虚拟化手段来满足用户按需分配的资源需求以及保证可用性和隔离性。然而无论是KVM还是Xen，在 Docker 看来都在浪费资源，因为用户需要的是高效运行环境而非OS, GuestOS既浪费资源又难于管理, 更加轻量级的LXC更加灵活和快速。</p>
+<img src="/2024/09/07/Docker/Docker/image-20240916212807488.png" class="" title="image-20240916212807488">
+
+<p><strong>与虚拟机的区别：</strong></p>
+<ul>
+<li>虚拟机是用来进行硬件资源划分的完美解决方案，它利用了硬件虚拟化技术。通过一个 Hypervisor 层来实现对资源的彻底隔离；而容器则是操作系统级别的虚拟化，利用的是内核的 Cgroup 和 Namespace 特性，完全是通过软件来实现，仅仅是进程本身就可以与其它进程隔离开，不需要任何辅助</li>
+<li>Docker 容器与主机共享操作系统内核，不同的容器之间可以共享部分系统资源，因此容器更加轻量级，消耗的资源也更少。而虚拟机会独占分配给自己的资源，几乎不存在资源共享，各个虚拟机实例之间近乎完全隔离，因此虚拟机更加重量级，也会消耗更多的资源</li>
+<li>容器被用来设计运行单进程。但 docker exec 命令已解决了该问题</li>
+</ul>
+<h2 id="LXC的便携性"><a href="#LXC的便携性" class="headerlink" title="LXC的便携性"></a><strong>LXC的便携性</strong></h2><p>LXC在 Linux 2.6 的 Kernel 里就已经存在了，但是其设计之初并非为云计算考虑的，缺少标准化的描述手段和容器的可便携性，决定其构建出的环境难于分发和标准化管理(相对于KVM之类image和snapshot的概念)。Docker就在这个问题上做出了实质性的创新方法。</p>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h1><img src="/2024/09/07/Docker/Docker/docker%E6%9E%B6%E6%9E%84.png" class="" title="docker架构">
+
+<p>(来自&lt;Docker进阶与实战&gt;)</p>
+<p>基于内核的Cgroup和Namespace技术。</p>
+<p>Docker并不会直接与内核交互，而是通过Libcontainer与内核交互。</p>
+<p>Libccontainer通过clone接口直接创建容器，通过pivot_root接口进入容器，并通过直接操作cgroupfs文件实现对资源的管理。</p>
+<img src="/2024/09/07/Docker/Docker/image-20240916213120282.png" class="" title="image-20240916213120282">
+
+
+
+<table>
+<thead>
+<tr>
+<th>Docker 镜像(Images)</th>
+<th>Docker 镜像是用于创建 Docker 容器的模板。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Docker 容器(Container)</td>
+<td>容器是独立运行的一个或一组应用。</td>
+</tr>
+<tr>
+<td>Docker 客户端(Client)</td>
+<td>Docker 客户端通过命令行或者其他工具使用 Docker API (<a target="_blank" rel="noopener" href="https://docs.docker.com/reference/api/docker_remote_api">https://docs.docker.com/reference/api/docker_remote_api</a>) 与 Docker 的守护进程通信。</td>
+</tr>
+<tr>
+<td>Docker 主机(Host)</td>
+<td>一个物理或者虚拟的机器用于执行 Docker 守护进程和容器。</td>
+</tr>
+<tr>
+<td>Docker 仓库(Registry)</td>
+<td>Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。Docker Hub(<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com</a>) 提供了庞大的镜像集<a target="_blank" rel="noopener" href="https://hub.docker.com/">合供使用。</a></td>
+</tr>
+<tr>
+<td>Docker Machine</td>
+<td>Docker Machine是一个简化Docker安装的命令行工具，通过一个简单的命令行即可在相应的平台上安装Docker，比如VirtualBox、 Digital Ocean、Microsoft Azure。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="built_in">sudo</span> gpg --</span></span><br><span class="line">dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signedby=/usr/share/keyrings/docker-archive-keyring.gpg]</span></span> </span><br><span class="line">https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | </span><br><span class="line">sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt update</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装最新版本</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo apt install docker-ce docker-ce-cli containerd.io docker-composeplugin</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl start docker</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo systemctl enable docker # 使能自启动</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">无需 sudo 运行</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo usermod -aG docker <span class="variable">$USER</span></span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">newgrp docker # 无需重启，立即生效</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装 docker-compose. 需自行选择版本. 或使用 pip 安装：pip install dockercompose</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo curl -L</span></span> </span><br><span class="line">&quot;https://github.com/docker/compose/releases/download/v2.29.2/dockercompose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo chmod +x /usr/local/bin/docker-compose</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Docker daemon 绑定到 Unix socket，而不是 TCP 端口。默认情况下，Unix Socket 只能被 root 用户使用，其它用户需使用 sudo 来访问Unix socket。Docker daemon 总是以 root 用户运行。</p>
+<p>因此，需使用 sudo 来执行 Docker 指令，或者将需要使用 Dockerclient 的用户加入 docker 用户组。<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface">Docker用户组等价于root用户</a>。</p>
+<p>创建 docker 组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> groupadd docker</span></span><br></pre></td></tr></table></figure>
+
+<p>将用户加入docket组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> usermod -aG docker <span class="variable">$USER</span></span></span><br></pre></td></tr></table></figure>
+
+<p>注销并重新登录即可。</p>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a><strong>容器</strong></h1><p>Docker通过 Libcontainer 来实现对容器生命周期的管理、信息的设置和查询，以及监控和通信等功能。容器以镜像为基础，同时又为镜像提供了一个标准的和隔离的执行环境。</p>
+<p>容器首先必须是一个相对独立的运行环境，且在一个容器环境内，应该最小化其对外界的影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">容器=cgroup+namespace+rootfs+容器引擎（用户态工具）</span><br></pre></td></tr></table></figure>
+
+<p>Namespace（主要做访问隔离）</p>
+<p>Cgroup（主要做资源控制）</p>
+<p>Rootfs（文件系统隔离）</p>
+<p>容器引擎（生命周期控制）</p>
+<p>Docker 容器是 Docker 镜像的运行态体现。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1710,388 +2023,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/ZeroMQ%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">ZeroMQ消息模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <!-- TOC -->
-
-<ul>
-<li><a href="#zeromq-%E6%B6%88%E6%81%AF%E6%A8%A1%E5%BC%8F">ZeroMQ 消息模式</a></li>
-<li><a href="#request-reply">Request-Reply</a><ul>
-<li><a href="#router-and-dealer">Router and Dealer</a></li>
-</ul>
-</li>
-<li><a href="#pub-sub">Pub-Sub</a><ul>
-<li><a href="#%E7%AE%80%E5%8D%95-pub-sub">简单 Pub-Sub</a></li>
-<li><a href="#pub-sub-synchronization">Pub-Sub Synchronization</a><ul>
-<li><a href="#node-coordination%E8%8A%82%E7%82%B9%E5%8D%8F%E8%B0%83">Node Coordination节点协调</a></li>
-</ul>
-</li>
-<li><a href="#pub-sub-network-with-a-proxy">Pub-Sub Network with a Proxy</a></li>
-<li><a href="#pub-sub-forward-proxy">Pub-Sub forward proxy</a></li>
-<li><a href="#extended-pub-sub">Extended Pub-Sub</a></li>
-</ul>
-</li>
-<li><a href="#push-pull">Push-Pull</a><ul>
-<li><a href="#parallel-pipeline">Parallel Pipeline</a></li>
-<li><a href="#fair-queuing">Fair Queuing</a></li>
-</ul>
-</li>
-<li><a href="#exclusive-pair">Exclusive Pair</a></li>
-</ul>
-<!-- /TOC -->
-
-
-<h1 id="ZeroMQ-消息模式"><a href="#ZeroMQ-消息模式" class="headerlink" title="ZeroMQ 消息模式"></a>ZeroMQ 消息模式</h1><p>ZeroMQ 内置四种核心消息模式：  </p>
-<ul>
-<li><strong>Request-reply</strong>：该模式将一组服务端和一组客户端相连，用于远程过程调用会任务分发。是一种 remote procedure call 和任务分发模式  </li>
-<li><strong>Pub-sub</strong>：该模式将一组发布者和一组订阅者相连，用于数据分发</li>
-<li><strong>Pipeline</strong>：该模式以fan-out&#x2F;fan-in形式连接节点，该模式可以有多个步骤和循环。这是一个并行的任务分发和收集模式</li>
-<li><strong>Exclusive pair</strong>：该模式将两个套接字一对一的连接起来。这是一种在进程中连接两个线程的模式，不要与“普通”套接字对混淆</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="http://api.zeromq.org/master:zmq_socket"><code>zmq_socket()</code></a>手册中详细介绍了所有消息模式。  </p>
-<p>以下是合法的套接字连接-绑定对（一端绑定，一端连接即可）：  </p>
-<ul>
-<li>PUB and SUB</li>
-<li>REQ and REP</li>
-<li>REQ and ROUTER (take care, REQ inserts an extra null frame)</li>
-<li>DEALER and REP (take care, REP assumes a null frame)</li>
-<li>DEALER and ROUTER</li>
-<li>DEALER and DEALER</li>
-<li>ROUTER and ROUTER</li>
-<li>PUSH and PULL</li>
-<li>PAIR and PAIR</li>
-</ul>
-<p>还将看到对 XPUB 和 XSUB 套接字的引用。任何其他组合都将产生未记录且不可靠的结果，并且如果尝试它们，ZeroMQ 的未来版本可能会返回错误。当然，可以并且将通过代码桥接其他套接字类型，即从一个套接字类型读取并写入另一个套接字类型。  </p>
-<h1 id="Request-Reply"><a href="#Request-Reply" class="headerlink" title="Request-Reply"></a>Request-Reply</h1><p>是一种同步请求应答模式，发送 request 之后，必须等待 reply 才能继续发送请求。<br><img src="/./images/Request-Reply.png" alt="Request-Reply pattern">  </p>
-<h2 id="Router-and-Dealer"><a href="#Router-and-Dealer" class="headerlink" title="Router and Dealer"></a>Router and Dealer</h2><p><img src="/./images/extended%20request-reply.png" alt="extended request-reply"> <img src="/./images/request-reply%20broker.png" alt="extended request-reply"><br>可用于解决请求分发问题。多个客户端和多个服务器，每个请求可能发送到不同的服务器进行处理。可解决当新增服务器时，每个客户端都需要修改以连接到新增的服务器。    </p>
-<p>向 Router 发送消息，ZeroMQ 会自动带上消息来源帧。同时，由 Router 发送出去的消息，需手动带上目标 ID，该 ID 通常由 <code>zmq_setsockopt()</code> 定义。  </p>
-<p>Router-Dealer 可演变为：  </p>
-<ul>
-<li>Router-Dealer</li>
-<li>Router-REQ</li>
-<li>Router-REP</li>
-</ul>
-<h1 id="Pub-Sub"><a href="#Pub-Sub" class="headerlink" title="Pub-Sub"></a>Pub-Sub</h1><h2 id="简单-Pub-Sub"><a href="#简单-Pub-Sub" class="headerlink" title="简单 Pub-Sub"></a>简单 Pub-Sub</h2><p><img src="/./images/Pub-Sub.png" alt="Pub-Sub pattern"><br>是一种异步模型。Publiser 向所有 subscriber 发布消息。Subscriber 可订阅多种消息，也可以向多个 publishers 订阅消息。  </p>
-<p>要使用 SUB 套接字，必须使用 <code>zmq_setsockopt()</code> 设置 subscription。subscriber 可设置多个 subsciptions，只要消息满足其中一条订阅信息，SUB套接字就会收到。<br>pub-sub 模式需要注意：无法得知 SUB 何时开始接收消息，即便是先开启 SUB，后开启 PUB 发送消息，依然会丢失一部分消息。这是因为建立连接需要一些时间。解决方法：  </p>
-<ul>
-<li>方法一：可在建立连接之后，等待一段时间再发送消息 - 实际使用中不建议该方式，因为该方式太脆弱，且不好控制</li>
-<li>方法二：该方法认为发布者发布的消息流是无穷无尽的，丢失一部分也没关系</li>
-</ul>
-<p>pub-sub 模式说明：  </p>
-<ul>
-<li>订阅者可连接多个发布者，轮流接收消息</li>
-<li>若使用 TCP 协议，那么当订阅者处理速度过慢时，消息会在发布者端堆积(可使用阈值 HWM 进行保护)</li>
-<li>ZeroMQ V3.X 版本，若使用 connected 协议(如: <code>tcp:@&lt;&gt;@</code> 或 <code>ipc:@&lt;&gt;@</code>)，则在 publisher 端进行过滤；若使用 <code>epgm:@&lt;//&gt;@</code> 协议，则在 subscriber 端进行过滤。在 ZeroMQ V2.X，所有过滤都是在 subscriber 端进行</li>
-</ul>
-<p>
-
-<h2 id="Pub-Sub-Synchronization"><a href="#Pub-Sub-Synchronization" class="headerlink" title="Pub-Sub Synchronization"></a>Pub-Sub Synchronization</h2><p><img src="/./images/Pub-Sub%20Synchronization.png" alt="Pub-Sub Synchronization">  </p>
-<p>使用 REQ-REP 来同步 Pub 于 Sub，Pub 等待所有 Sub 启动后再向发布消息。  </p>
-<h3 id="Node-Coordination-节点协调"><a href="#Node-Coordination-节点协调" class="headerlink" title="Node Coordination(节点协调)"></a>Node Coordination(节点协调)</h3><p>要协调网络中的一组节点时，不适合使用 PAIR 套接字。这也是线程和节点之间的不同处之一。若远程节点断开后又重连，PAIR 不会进行处理。  </p>
-<p>线程与节点的第二个重大区别在于：线程的数量一般是固定的，而节点的数量则会经常变化。  </p>
-<p>以气象信息模型为基础，考虑节点的协调，保证客户端不会丢失最开始的消息。  </p>
-<p>程序流程：  </p>
-<ul>
-<li>发布者知道预期的订阅者数量，可以任意指定</li>
-<li>发布者启动后会等待所有订阅者进行连接，也就是节点协调。每个订阅者会使用另一个套接字来告知发布者自己已经就绪</li>
-<li>当所有订阅者准备就绪后，发布者才开始发布消息</li>
-</ul>
-<p>此例中，使用 <code>REQ-REP</code> 套接字来同步发布者和订阅者。  </p>
-<p>当 REQ-REP 请求完成时，仍无法保证 SUB 套接字已成功建立连接。除非使用 inproc 协议，否则对外连接的顺序是不一定的。因此，示例程序中使用了 <code>sleep(1)</code> 的方式来进行处理，随后再发送同步请求。</p>
-<p>更可靠的模型是：  </p>
-<ul>
-<li>发布者打开 PUB 套接字，发送 Hello 消息</li>
-<li>订阅者打开 SUB 套接字，当接收到 Hello 消息后再使用 REQ-REP 套接字进行同步</li>
-<li>当发布者获得所有订阅者的同步消息后，再发送真正的数据</li>
-</ul>
-<h2 id="Pub-Sub-Network-with-a-Proxy"><a href="#Pub-Sub-Network-with-a-Proxy" class="headerlink" title="Pub-Sub Network with a Proxy"></a>Pub-Sub Network with a Proxy</h2><p><img src="/./images/Pub-Sub%20with%20a%20proxy.png" alt="Pub-Sub with a proxy"></p>
-<h2 id="Pub-Sub-forward-proxy"><a href="#Pub-Sub-forward-proxy" class="headerlink" title="Pub-Sub forward proxy"></a>Pub-Sub forward proxy</h2><p>即：**<em>Transport Bridging</em>**<br>ZeroMQ 用户经常提出的一个问题是，“如何将 ZeroMQ 网络与 X 技术连接起来?”其中 X 是其他网络或消息传递技术。</p>
-<p>最简单的答案就是 <em>bridge</em>。Bridge 是一个小应用程序，它在一个套接字上使用一种协议，并在另一个套接字上转换为&#x2F;从另一种协议。可以看做一个协议解释器。ZeroMQ 中常见的桥接问题是桥接两个传输或网络。 </p>
-<p><img src="/./images/pub-sub%20forwarder%20proxy.png" alt="Pub-Sub forward proxy"> </p>
-<h2 id="Extended-Pub-Sub"><a href="#Extended-Pub-Sub" class="headerlink" title="Extended Pub-Sub"></a>Extended Pub-Sub</h2><p><img src="/./images/Extended%20Pub-Sub.png" alt="Extended Pub-Sub"></p>
-<h1 id="Push-Pull"><a href="#Push-Pull" class="headerlink" title="Push-Pull"></a>Push-Pull</h1><p>Push&#x2F;Pull 是消息传输的另一个重要的 pattern。<strong>用于 fan-out、fan-in 单向通信</strong>。  </p>
-<p>Push 会将消息均匀地分发到所有可用的客户端，pull 会将来自所有连接的客户端的消息公平地排队。  </p>
-<p>Push&#x2F;Pull 的特点是 <strong>Push 端和 Pull 端都可以做 server</strong>，<code>bind</code> 到某个地址等待对方访问。如果在 Push 端绑定地址，那么这是一个 Push server，对应的 Pull clients 可以 connect 到这个 Push server 往外拉数据；反之，如果建立一个 Pull server，对应的 Push clients 可以 connect 到这个 Pull server 往里压数据。由此，可以轻松实现一个 task 的 map reduce 的 framework。如下图所示，中间的 worker 可以随需增减。  </p>
-<h2 id="Parallel-Pipeline"><a href="#Parallel-Pipeline" class="headerlink" title="Parallel Pipeline"></a>Parallel Pipeline</h2><p><img src="/./images/parallel%20pipeline.png" alt="Parallel Pipeline">  </p>
-<ul>
-<li>生成可以并行执行的任务的 ventilator</li>
-<li>一组处理这些任务的 workers</li>
-<li>结果收集器(Sink)会在末端接收所有worker的处理结果</li>
-</ul>
-<p>Ventilator 生成任务，并分发到 workers，wokers 处理后将结果发送到 Sink。是一种并行任务处理模型。  </p>
-<p>现实中，workers 可能分布在不同的计算机中，也可能利用 GPU 进行复杂计算。  </p>
-<p>更进一步，当任务处理完成时，干净的关闭进程。如果在后台启动了很多worker，现在希望在批处理完成时关闭它们。通过向 workers 发送一个 kill 消息来实现。最好的地方是 sink，因为它知道什么时候完成了一个批处理。<br><img src="/./images/parallel%20pipeline%20with%20kill%20signaling.png" alt="parallel pipeline with kill signaling">  </p>
-<p>因为 Push-Pull 是单向的。因此需要使用另一种套接字类型，或者可以混合多个套接字流来将 sink 连接到 workers。此例中，如上图，使用 pub-sub 模型向 worker 发送 kill 消息。  </p>
-<h2 id="Fair-Queuing"><a href="#Fair-Queuing" class="headerlink" title="Fair Queuing"></a>Fair Queuing</h2><p><img src="/./images/fair%20queuing.png" alt="Fair Queuing">  </p>
-<p>管道模式也会出现慢连接的情况，让人误以为 PUSH 套接字没有进行负载均衡。如果正在使用 PUSH 和 PULL，并且其中一个 worker 程序比其他 worker 程序获得更多消息，这是因为其 PULL 套接字比其他 worker 程序连接得更快，并且在其他 worker 程序连接之前捕获了大量消息。如果想要适当的负载平衡，可以看看<a target="_blank" rel="noopener" href="https://zguide.zeromq.org/docs/chapter3/#advanced-request-reply">第3章-高级请求-应答模式</a>中的负载平衡模式。</p>
-<h1 id="Exclusive-Pair"><a href="#Exclusive-Pair" class="headerlink" title="Exclusive Pair"></a>Exclusive Pair</h1><p>该模式将两个套接字一对一链接起来。是一种在进程中连接两个线程的模式。<br><img src="/./images/Exclusive%20Pair.png" alt="Exclusive Pair"></p>
-<p>参考：<a target="_blank" rel="noopener" href="https://zguide.zeromq.org/docs/chapter2/#Signaling-Between-Threads-PAIR-Sockets">Signaling Between Threads(PAIR sockets)</a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Multithreaded relay</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;zhelpers.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> *</span></span><br><span class="line"><span class="function"><span class="title">step1</span> <span class="params">(<span class="type">void</span> *context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//  Connect to step2 and tell it we&#x27;re ready</span></span><br><span class="line">    <span class="type">void</span> *xmitter = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_connect</span> (xmitter, <span class="string">&quot;inproc://step2&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Step 1 ready, signaling step 2\n&quot;</span>);</span><br><span class="line">    <span class="built_in">s_send</span> (xmitter, <span class="string">&quot;READY&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_close</span> (xmitter);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> *</span></span><br><span class="line"><span class="function"><span class="title">step2</span> <span class="params">(<span class="type">void</span> *context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//  Bind inproc socket before starting step1</span></span><br><span class="line">    <span class="type">void</span> *receiver = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_bind</span> (receiver, <span class="string">&quot;inproc://step2&quot;</span>);</span><br><span class="line">    <span class="type">pthread_t</span> thread;</span><br><span class="line">    <span class="built_in">pthread_create</span> (&amp;thread, <span class="literal">NULL</span>, step1, context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Wait for signal and pass it on</span></span><br><span class="line">    <span class="type">char</span> *string = <span class="built_in">s_recv</span> (receiver);</span><br><span class="line">    <span class="built_in">free</span> (string);</span><br><span class="line">    <span class="built_in">zmq_close</span> (receiver);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Connect to step3 and tell it we&#x27;re ready</span></span><br><span class="line">    <span class="type">void</span> *xmitter = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_connect</span> (xmitter, <span class="string">&quot;inproc://step3&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Step 2 ready, signaling step 3\n&quot;</span>);</span><br><span class="line">    <span class="built_in">s_send</span> (xmitter, <span class="string">&quot;READY&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_close</span> (xmitter);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">void</span> *context = <span class="built_in">zmq_ctx_new</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Bind inproc socket before starting step2</span></span><br><span class="line">    <span class="type">void</span> *receiver = <span class="built_in">zmq_socket</span> (context, ZMQ_PAIR);</span><br><span class="line">    <span class="built_in">zmq_bind</span> (receiver, <span class="string">&quot;inproc://step3&quot;</span>);</span><br><span class="line">    <span class="type">pthread_t</span> thread;</span><br><span class="line">    <span class="built_in">pthread_create</span> (&amp;thread, <span class="literal">NULL</span>, step2, context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Wait for signal</span></span><br><span class="line">    <span class="type">char</span> *string = <span class="built_in">s_recv</span> (receiver);</span><br><span class="line">    <span class="built_in">free</span> (string);</span><br><span class="line">    <span class="built_in">zmq_close</span> (receiver);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;Test successful!\n&quot;</span>);</span><br><span class="line">    <span class="built_in">zmq_ctx_destroy</span> (context);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这是 ZeroMQ 多线程编程的典型示例：  </p>
-<ul>
-<li>两个线程通过 &#96;inproc&#96;&#96; 通信，使用同一个 context</li>
-<li>父线程创建一个套接字，绑定到 <code>inproc://&lt;端点&gt;</code>，然后启动子线程，将 context 对象传递给它</li>
-<li>子线程创建一个套接字，连接到 <code>inproc://&lt;端点&gt;</code>，然后发送已就绪信号给父线程</li>
-</ul>
-<p>注意：使用这种模式的多线程代码不能扩展到进程。如果使用 <code>inproc</code> 和套接字对，那么会构建一个紧密绑定的应用程序，也就是说，线程在结构上是相互依赖的。当低延迟非常重要时，可以这样做。另一种设计模式是松散绑定(loosely bound)的应用程序，其中线程有自己的 context，并通过 <code>ipc</code> 或 <code>tcp</code> 进行通信。可以轻松地将松散绑定的线程分解为单独的进程。  </p>
-<p>此处使用了 PAIR 套接字，而不使用其他套接字，是考虑到：  </p>
-<ul>
-<li>发送方可以使用 PUSH，接收方使用 PULL。看上去可行，但 <strong>PUSH 发送消息时会进行负载均衡</strong>，若开启了两个接收方，就会丢失一半的信号。而 PAIR 套接字建立的是一对一的链接，具有排他性</li>
-<li>发送方可以使用 DEALER，接收方使用 ROUTER。但 ROUTER 套接字将信息封装在一个“envelope”中，这意味着零大小信号变成了一个 multipart 信息。如果不关心数据并将任何东西视为有效信号，并且如果重复读取套接字，那么这将无关紧要。但是，如果决定发送真实的数据，会突然发现 ROUTER 会提供“错误”的消息。DEALER 同样有负载均衡机制，和 PUSH 套接字有同样的风险</li>
-<li>发送方可以使用 PUB，接收方使用 SUB。这样，消息可以远洋发送，PUB 套接字也不会进行负载均衡。但是，需要对 SUB 套接字设置一个空的订阅消息</li>
-</ul>
-<p>综上，使用 PAIR 套接字是线程协调最合适的方式。  </p>
-<blockquote>
-<hr>
-<ul>
-<li>ZeroMQ 中协调线程应该使用的唯一机制是 ZeroMQ 消息。</li>
-</ul>
-<hr>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/" class="post-title-link" itemprop="url">Mailbox</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。  </p>
-<p>在使用 <code>zsock_new()</code> 新建套接字时，最终会调用 <code>socket_base_t::create(...)</code> 方法创建 socket 并注册其 mailbox。  </p>
-<p><code>socket_base_t::create(...)</code> 中会根据指定的套接字类型创建不同的套接字，例如：  </p>
-<ul>
-<li><code>ZMQ_PAIR</code>：pair_t</li>
-<li><code>ZMQ_PUB</code>：pub_t</li>
-<li><code>ZMQ_SUB</code>：sub_t</li>
-<li>…</li>
-</ul>
-<p>所有套接字基类均为 <code>socket_base_t</code>，该类构造函数中创建 mailbox：  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (_thread_safe) &#123;</span><br><span class="line">    _mailbox = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_safe_t</span> (&amp;_sync);</span><br><span class="line">    <span class="built_in">zmq_assert</span> (_mailbox);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">mailbox_t</span> *m = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    <span class="built_in">zmq_assert</span> (m);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m-&gt;<span class="built_in">get_fd</span> () != retired_fd)</span><br><span class="line">        _mailbox = m;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">LIBZMQ_DELETE</span> (m);</span><br><span class="line">        _mailbox = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="mailbox-t"><a href="#mailbox-t" class="headerlink" title="mailbox_t"></a>mailbox_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">mailbox_t</span> ZMQ_FINAL : <span class="keyword">public</span> i_mailbox</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    ~<span class="built_in">mailbox_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">fd_t</span> <span class="title">get_fd</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">send</span> <span class="params">(<span class="type">const</span> <span class="type">command_t</span> &amp;cmd_)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">recv</span> <span class="params">(<span class="type">command_t</span> *cmd_, <span class="type">int</span> timeout_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">valid</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> HAVE_FORK</span></span><br><span class="line">    <span class="comment">// close the file descriptors in the signaller. This is used in a forked</span></span><br><span class="line">    <span class="comment">// child process to close the file descriptors so that they do not interfere</span></span><br><span class="line">    <span class="comment">// with the context in the parent process.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">forked</span> <span class="params">()</span> ZMQ_FINAL</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _signaler.forked ();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 存储实际指令的队列</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">ypipe_t</span>&lt;<span class="type">command_t</span>, command_pipe_granularity&gt; <span class="type">cpipe_t</span>;</span><br><span class="line">    <span class="type">cpipe_t</span> _cpipe;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用于从 writer 线程发送信号到 reader 线程</span></span><br><span class="line">    <span class="type">signaler_t</span> _signaler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只有一个线程从 mailbox 接收消息，但可以有任意数量的线程向 mailbox 发送消息。</span></span><br><span class="line">    <span class="comment">// 假设管道需要在它的两个端点上同步访问，必须同步发送端。</span></span><br><span class="line">    <span class="type">mutex_t</span> _sync;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果底层管道处于活动状态，则为 True。例如：当被允许从它读取命令时</span></span><br><span class="line">    <span class="type">bool</span> _active;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">mailbox_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="ypipe-t"><a href="#ypipe-t" class="headerlink" title="ypipe_t"></a>ypipe_t</h2><p><code>ypipe_t</code> 是无锁队列(Lock-free queue)实现。  </p>
-<ul>
-<li>同一时刻只有一个线程可以从管道中读取数据  </li>
-<li>同一时刻只有一个线程可以向管道写入数据</li>
-</ul>
-<p>使用 <code>yqueue_t</code> 队列存储数据。  </p>
-<p>其中 yqueue 是用来设计队列，ypipe 用来设计队列的写入&#x2F;读取时机、回滚以及 flush  </p>
-<h2 id="yqueue-t"><a href="#yqueue-t" class="headerlink" title="yqueue_t"></a>yqueue_t</h2><p>参考：  </p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/33309228">https://www.zhihu.com/question/33309228</a>  </li>
-<li><a target="_blank" rel="noopener" href="https://gopher.blog.csdn.net/article/details/126284313">https://gopher.blog.csdn.net/article/details/126284313</a></li>
-</ul>
-<p><code>yqueue</code> 是一个高效的队列实现。主要目的是最小化 <code>allocations/deallocations</code> 次数。  </p>
-<p><code>yqueue</code> 中的使用 chunk 块机制，每次批量分配一批元素，这样可以减少内存的分配和释放。<code>yqueue_t</code> 由一组 chunk 组成，每个 chunk 保存 N 个元素：<code>spare_chunk</code>，当需要分配 <code>chunk_t</code> 时，从 <code>spare_chunk</code> 中获取。  </p>
-<p>当队列空间不足时，每次分配一个 <code>chunk_t</code>，每个 <code>chunk_t</code> 能存储 N 个元素。在数据出队列后，队列有多余空间时，回收的 chunk 也不会立即释放，而是根据局部性原理先回收到队列中。  </p>
-<p><code>yqueue_t</code> 类中的 <code>spare_chunk</code> 用于保存最近的空闲块。即：在将一个 chunk 中的所有元素都 <code>pop</code> 掉之后，就可以释放这个 chunk。但是可以保存一块最近的空闲块，以后如果 chunk 不够用时，扩容 chunk 就不用 malloc，直接复用该 <code>spare_chunk</code> 即可。根据局部性原理，这个 <code>spare_chunk</code> 的地址或者内存也很可能还在 cache 中，这样的机制可以减少一次 malloc 以及存入 cache 操作。  </p>
-<p><code>yqueue_t</code> 内部有三个 <code>chunk_t</code> 类型指针以及对应的索引位置：  </p>
-<ul>
-<li><code>begin_chunk/begin_pos</code>：指向队列中第一个 chunk，begin_pos 指向第一个 chunk 中第一个元素的索引位置，因为 <code>pop()</code>，所以第一个元素不可能永远为 0，会随着 <code>pop()</code> 而改变。同理，第一个 chunk 也会被回收，也需记录第一个 chunk 的位置</li>
-<li><code>back_chunk/back_pos</code>：用于指向队列最后一个 chunk，back_pos 指向之后一个 chunk 的最后一个元素的索引位置</li>
-<li><code>end_chunk/end_pos</code>：在最后一个 chunk 未满时，end_chunk 和 back_chunk 相同，back_pos 的下一个就是 end_pos。最后一个 chunk 已满时，end_chunk 指向新分配的 chunk，end_pos 为 0。即：end_chunk 和 end_pos 是辅助 back_chunk&#x2F;back_pos 的</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * ALIGN 是在 posix_memalign 可用的情况下使用的内存对齐大小。默认值是 64，</span></span><br><span class="line"><span class="comment"> * 这种对齐将防止两个队列块占用同一 CPU 缓存线(Cache line)，在缓存线 &lt;= 64字节的架构</span></span><br><span class="line"><span class="comment"> * (例如，除了POWER之外的大多数内容)。它是在构建时检测到的，以尝试考虑 POWER 和 s390x 等其他平台。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N, <span class="type">size_t</span> ALIGN = ZMQ_CACHELINE_SIZE&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//  Create the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> <span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        _begin_chunk = <span class="built_in">allocate_chunk</span> ();</span><br><span class="line">        <span class="built_in">alloc_assert</span> (_begin_chunk);</span><br><span class="line">        _begin_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// back_chunk总是指向队列中最后一个元素所在的 chunk，初始为空</span></span><br><span class="line">        _back_chunk = <span class="literal">NULL</span>;</span><br><span class="line">        _back_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// end_chunk 总是指向链表的最后一个 chunk</span></span><br><span class="line">        _end_chunk = _begin_chunk;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Destroy the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> ~<span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (_begin_chunk == _end_chunk) &#123;</span><br><span class="line">                <span class="built_in">free</span> (_begin_chunk);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            <span class="built_in">free</span> (o);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">free</span> (sc);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  返回队列首元素.注意：若队列为空，行为未定义</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">front</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _begin_chunk-&gt;values[_begin_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">back</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _back_chunk-&gt;values[_back_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">push</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _back_chunk = _end_chunk;</span><br><span class="line">        _back_pos = _end_pos;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (++_end_pos != N) <span class="comment">// 当前 chunk 未满</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (sc) &#123; <span class="comment">// 若有 spare_chunk，则继续复用</span></span><br><span class="line">            _end_chunk-&gt;next = sc;</span><br><span class="line">            sc-&gt;prev = _end_chunk;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 若没有 spare_chunk，则重新分配 chunk</span></span><br><span class="line">            _end_chunk-&gt;next = <span class="built_in">allocate_chunk</span> (); <span class="comment">// 分配一个 chunk</span></span><br><span class="line">            <span class="built_in">alloc_assert</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next-&gt;prev = _end_chunk;</span><br><span class="line">        &#125;</span><br><span class="line">        _end_chunk = _end_chunk-&gt;next;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除队列末尾元素。即：回滚最后一次推送到队列的元素。注意：调用者负责销毁 unpushed 的对象。</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">unpush</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//  First, move &#x27;back&#x27; one position backwards.</span></span><br><span class="line">        <span class="keyword">if</span> (_back_pos)</span><br><span class="line">            --_back_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123; </span><br><span class="line">            _back_pos = N - <span class="number">1</span>;</span><br><span class="line">            _back_chunk = _back_chunk-&gt;prev;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Now, move &#x27;end&#x27; position backwards. Note that obsolete end chunk</span></span><br><span class="line">        <span class="comment">//  is not used as a spare chunk. The analysis shows that doing so</span></span><br><span class="line">        <span class="comment">//  would require free and atomic operation per chunk deallocated</span></span><br><span class="line">        <span class="comment">//  instead of a simple free.</span></span><br><span class="line">        <span class="keyword">if</span> (_end_pos)</span><br><span class="line">            --_end_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _end_pos = N - <span class="number">1</span>;</span><br><span class="line">            _end_chunk = _end_chunk-&gt;prev;</span><br><span class="line">            <span class="built_in">free</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Removes an element from the front end of the queue.</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">pop</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (++_begin_pos == N) &#123; <span class="comment">// 删除满一个 chunk 才回收 chunk</span></span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            _begin_chunk-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">            _begin_pos = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//  &#x27;o&#x27; has been more recently used than _spare_chunk,</span></span><br><span class="line">            <span class="comment">//  so for cache reasons we&#x27;ll get rid of the spare and</span></span><br><span class="line">            <span class="comment">//  use &#x27;o&#x27; as the spare.</span></span><br><span class="line">            <span class="comment">// 根据局部性原理，总是保存最新的空闲块儿释放先前的空闲块</span></span><br><span class="line">            <span class="type">chunk_t</span> *cs = _spare_chunk.<span class="built_in">xchg</span> (o); </span><br><span class="line">            <span class="built_in">free</span> (cs);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// Individual memory chunk to hold N elements. 链表节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">chunk_t</span></span><br><span class="line">    &#123;</span><br><span class="line">        T values[N];</span><br><span class="line">        <span class="type">chunk_t</span> *prev;</span><br><span class="line">        <span class="type">chunk_t</span> *next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">chunk_t</span> *<span class="title">allocate_chunk</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 分配的内存空间大小：sizeof(T) * N + 8 (32bit系统，+ 16：64bit系统) </span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line">        <span class="type">void</span> *pv;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">posix_memalign</span> (&amp;pv, ALIGN, <span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">chunk_t</span> *) pv;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">chunk_t</span> *&gt; (<span class="built_in">malloc</span> (<span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)));</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果队列为空，返回位置可能指向无效内存，而开始和结束位置总是有效的。</span></span><br><span class="line"><span class="comment">     * 开始位置由队列读取器(front/pop)独占访问，而back和结束位置由队列写入器(back/push)独占访问。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">chunk_t</span> *_begin_chunk;</span><br><span class="line">    <span class="type">int</span> _begin_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_back_chunk;</span><br><span class="line">    <span class="type">int</span> _back_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_end_chunk;</span><br><span class="line">    <span class="type">int</span> _end_pos;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生产和消费速度可能接近。此时，保留最近释放的块使得不必调用 malloc/free。 </span></span><br><span class="line">    <span class="type">atomic_ptr_t</span>&lt;<span class="type">chunk_t</span>&gt; _spare_chunk;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">yqueue_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2116,14 +2047,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">507k</span>
+    <span title="站点总字数">523k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:21</span>
+    <span title="站点阅读时长">15:50</span>
   </span>
 </div>
 <div class="busuanzi-count">

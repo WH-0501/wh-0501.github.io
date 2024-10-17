@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MoveIt使用 moveit! 控制真实机械臂时，控制器中要有一个 action server 来接收 moveit! 的路径消息，然后控制器再将消息下发(write())到硬件执行；同时还要从机器人获取(read())机械臂各关节状态并上报给 moveit!。 示例1 ROS 驱动 6DOF 机械臂。创建两个节点：  joint_controller   实现 action server，接收">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用">
+<meta property="og:url" content="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="MoveIt使用 moveit! 控制真实机械臂时，控制器中要有一个 action server 来接收 moveit! 的路径消息，然后控制器再将消息下发(write())到硬件执行；同时还要从机器人获取(read())机械臂各关节状态并上报给 moveit!。 示例1 ROS 驱动 6DOF 机械臂。创建两个节点：  joint_controller   实现 action server，接收">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-16T23:55:45.000Z">
+<meta property="article:modified_time" content="2024-10-17T00:06:11.506Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="ros_control">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/","path":"2024/10/17/Robot/ROS/ros_control/使用/","title":"使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MoveIt"><span class="nav-number">1.</span> <span class="nav-text">MoveIt</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gazebo"><span class="nav-number">2.</span> <span class="nav-text">Gazebo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#URDF-%E4%B8%AD%E5%A2%9E%E5%8A%A0-transmission-%E5%85%83%E7%B4%A0"><span class="nav-number">2.1.</span> <span class="nav-text">URDF 中增加  transmission 元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-gazebo-ros-control-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">添加 gazebo_ros_control 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA"><span class="nav-number">2.3.</span> <span class="nav-text">默认行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-gazebo-ros-control-%E4%BB%BF%E7%9C%9F%E6%8F%92%E4%BB%B6"><span class="nav-number">2.4.</span> <span class="nav-text">自定义 gazebo_ros_control 仿真插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PRBot-%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">PRBot 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-ros-controls-%E5%8C%85"><span class="nav-number">2.6.</span> <span class="nav-text">创建 ros_controls 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-yaml-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.7.</span> <span class="nav-text">创建 yaml 配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-launch-%E6%96%87%E4%BB%B6"><span class="nav-number">2.8.</span> <span class="nav-text">创建 launch 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-controllers"><span class="nav-number">2.9.</span> <span class="nav-text">启动 controllers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#transmission-interface"><span class="nav-number">3.</span> <span class="nav-text">transmission_interface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">3.1.</span> <span class="nav-text">示例 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">3.2.</span> <span class="nav-text">示例 2</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-17 07:55:45 / 修改时间：08:06:11" itemprop="dateCreated datePublished" datetime="2024-10-17T07:55:45+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Robot/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Robot/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="MoveIt"><a href="#MoveIt" class="headerlink" title="MoveIt"></a>MoveIt</h1><p>使用 moveit! 控制真实机械臂时，控制器中要有一个 action server 来接收 moveit! 的路径消息，然后控制器再将消息下发(write())到硬件执行；同时还要从机器人获取(read())机械臂各关节状态并上报给 moveit!。</p>
+<p>示例1</p>
+<p>ROS 驱动 6DOF 机械臂。创建两个节点：</p>
+<ul>
+<li><p>joint_controller</p>
+</li>
+<li><ul>
+<li>实现 action server，接收 moveit! 路径消息</li>
+<li>将路径消息转换为电机(关节)控制指令</li>
+<li>获取位姿</li>
+<li>发布位姿</li>
+</ul>
+</li>
+<li><p>joint_serial</p>
+</li>
+<li><ul>
+<li>接收 joint_controller 发布的控制指令，通过串口发送给机械臂</li>
+</ul>
+</li>
+</ul>
+<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1>
+
+<p>使用方法:</p>
+<h2 id="URDF-中增加-transmission-元素"><a href="#URDF-中增加-transmission-元素" class="headerlink" title="URDF 中增加  transmission 元素"></a><strong>URDF 中增加  transmission 元素</strong></h2><p> 元素用于将 actuator 连接到 joints。</p>
+<p>相对于当前的 gazebo_ros_control 实现， 标签中唯一重要的信息是：</p>
+<ul>
+<li><code>&lt;joint name=&quot;&quot;&gt;</code>: name 必须与 URDF 中某个 joint 的名字相对应</li>
+<li><code>&lt;type&gt;</code>: transmission 的类型。当前只实现了 transmission_interface&#x2F;SimpleTransmission</li>
+<li><code>&lt;hardwareInterface&gt;</code>: 在 <actuator> 和 <joint> 标签内，指明 gazebo_ros_control 插件要加载的硬件接口(如：position、velocity 或 effort 接口)。当前只实现了 effort 接口</li>
+</ul>
+<h2 id="添加-gazebo-ros-control-插件"><a href="#添加-gazebo-ros-control-插件" class="headerlink" title="添加 gazebo_ros_control 插件"></a><strong>添加 gazebo_ros_control 插件</strong></h2><p>除了 transmission 标签外，还需要在 URDF 中添加该插件项。该插件负责解析 transmission 标签并加载适当的硬件接口和控制器管理器。默认情况下，gazebo_ros_control 插件非常简单，尽管它还可以通过其他插件体系结构进行扩展，以允许高级用户在 ros_control 和 Gazebo 之间创建自己的自定义机器人硬件接口。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/MYROBOT<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>gazebo_ros_control 包含以下可选元素：</p>
+<ul>
+<li><code>&lt;robotNamespace&gt;</code>: 命名空间</li>
+<li><code>&lt;controlPeriod&gt;</code>: 控制周期</li>
+<li><code>&lt;robotParam&gt;</code>: 参数服务器中 robot_description 的位置，默认为 ‘&#x2F;robot_description’</li>
+<li><code>&lt;robotSimType&gt;</code>: 自定义的机器人 sim 接口的插件名称.默认为 DefaultRobotHWSim</li>
+</ul>
+<h2 id="默认行为"><a href="#默认行为" class="headerlink" title="默认行为"></a><strong>默认行为</strong></h2><p>默认情况下，如果没有  标签，gazebo_ros_control 会尝试从 URDF 中获取与基于 ros_control 的控制器接口所需的所有信息。</p>
+<p>默认提供以下 ros_control 接口：</p>
+<ul>
+<li>hardware_interface::JointStateInterface</li>
+<li>hardware_interface::EffortJointInterface</li>
+<li>hardware_interface::VelocityJointInterface</li>
+</ul>
+<h2 id="自定义-gazebo-ros-control-仿真插件"><a href="#自定义-gazebo-ros-control-仿真插件" class="headerlink" title="自定义 gazebo_ros_control 仿真插件"></a><strong>自定义 gazebo_ros_control 仿真插件</strong></h2><p>gazebo_ros_control 插件还提供了一个基于 pluginlib 的接口，用于在 Gazebo 和 ros_control 之间实现自定义接口。</p>
+<p>自定义插件必须继承 <strong>gazebo_ros_control::RobotHWSim</strong>，该插件实现了模拟的 ros_control <strong>hardware_interface::RobotHW</strong>。RobotHWSim 提供 API 级访问，以在 Gazebo 仿真器中读取和控制关节属性。</p>
+<p>相应的 RobotHWSim 子类在 URDF 中指定，并在加载机器人模型时加载。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/MYROBOT<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotSimType</span>&gt;</span>gazebo_ros_control/DefaultRobotHWSim<span class="tag">&lt;/<span class="name">robotSimType</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="PRBot-示例"><a href="#PRBot-示例" class="headerlink" title="PRBot 示例"></a><strong>PRBot 示例</strong></h2><p>为 Gazebo 将启动的每个关节添加一个  块。注意： 必须同时包含在  和  标签中。查看 rrbot.xacro(<a target="_blank" rel="noopener" href="https://github.com/ros-simulation/gazebo_ros_demos">gazebo_ros_demos</a>) 文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;joint1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran2&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;joint2&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor2&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>rrbot.gazebo 中会读取所有 <code>&lt;transmission&gt;</code>  标签：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/rrbot<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-ros-controls-包"><a href="#创建-ros-controls-包" class="headerlink" title="创建 ros_controls 包"></a><strong>创建 ros_controls 包</strong></h2><p>可参考 <a target="_blank" rel="noopener" href="https://github.com/ros-simulation/gazebo_ros_demos">gazebo_ros_demos</a> 中的 rrbot_control 包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> ~/catkin_ws</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> ~/catkin_ws</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_create_pkg MYROBOT_control controller_manager joint_state_controller robot_state_publisher</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> MYROBOT_control</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> config</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> launch</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-yaml-配置文件"><a href="#创建-yaml-配置文件" class="headerlink" title="创建 yaml 配置文件"></a><strong>创建 yaml 配置文件</strong></h2><p>PID 增益和 controller 设置必须保存在 yaml 文件中，该文件通过 roslaunch 文件加载到参数服务器中。在 MYROBOT_control&#x2F;config 目录中，使用 RRBot 作为示例，创建 MRBot_control&#x2F;config&#x2F;rrbot_control.yaml：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rrbot:</span></span><br><span class="line">  <span class="comment"># Publish all joint states -----------------------------------</span></span><br><span class="line">  <span class="attr">joint_state_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">    <span class="attr">publish_rate:</span> <span class="number">50</span>  </span><br><span class="line"></span><br><span class="line">  <span class="comment"># Position Controllers ---------------------------------------</span></span><br><span class="line">  <span class="attr">joint1_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">joint1</span></span><br><span class="line">    <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br><span class="line">  <span class="attr">joint2_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">joint2</span></span><br><span class="line">    <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-launch-文件"><a href="#创建-launch-文件" class="headerlink" title="创建 launch 文件"></a><strong>创建 launch 文件</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load joint controller configurations from YAML file to parameter server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find rrbot_control)/config/rrbot_control.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- load the controllers --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/rrbot&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint1_position_controller joint2_position_controller joint_state_controller&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- convert joint states to TF transforms for rviz, etc --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/rrbot/joint_states&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>controller_spawner 节点通过运行 python 脚本启动 RRBot 的两个关节位置控制器(joint1_position_controller、joint2_position_controller)，该脚本对 ros_control 控制器管理器进行服务调用。</p>
+<p>service calls 告诉控制器管理器想要哪个控制器。它还加载了第三个控制器，该控制器使用 hardware_interfaces 发布所有关节的关节状态，并在 &#x2F;joint_states 主题上发布。</p>
+<p>最后，启动 <strong>robot_state_publisher</strong> 节点，该节点监听来自 joint_state_controller 的 &#x2F;joint_states 主题消息，然后将其转换并发布到 &#x2F;tf。这样就可以在 Rviz 中查看。</p>
+<h2 id="启动-controllers"><a href="#启动-controllers" class="headerlink" title="启动 controllers"></a><strong>启动 controllers</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch rrbot_gazebo rrbot_world.launch</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch rrbot_control rrbot_control.launch</span></span><br></pre></td></tr></table></figure>
+
+<p>手动调用服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">手动加载 controllers. 默认均已加载,无需手动执行</span></span><br><span class="line">rosservice call /rrbot/controller_manager/load_controller &quot;name: &#x27;joint1_position_controller&#x27;&quot;</span><br><span class="line">rosservice call /rrbot/controller_manager/load_controller &quot;name: &#x27;joint2_position_controller&#x27;&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 controllers. 默认均已启动,无需再执行</span></span><br><span class="line">rosservice call /rrbot/controller_manager/switch_controller &quot;&#123;start_controllers: [&#x27;joint1_position_controller&#x27;,&#x27;joint2_position_controller&#x27;], stop_controllers: [], strictness: 2&#125;&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">关闭 controllers</span></span><br><span class="line">rosservice call /rrbot/controller_manager/switch_controller &quot;&#123;start_controllers: [], stop_controllers: [&#x27;joint1_position_controller&#x27;,&#x27;joint2_position_controller&#x27;], strictness: 2&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>手动发送指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rostopic pub -1 /rrbot/joint1_position_controller/command std_msgs/Float64 &quot;data: 1.5&quot;</span><br><span class="line">rostopic pub -1 /rrbot/joint2_position_controller/command std_msgs/Float64 &quot;data: 1.0&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>也可使用 RQT 发送指令：</p>
+<p><code>rosrun rqt_gui rqt_gui</code></p>
+<p>打开工具窗口后，”plugins” -&gt; “Topics” -&gt; “Message Publisher”，然后选择 &#x2F;rrbot&#x2F;joints1_position_controller&#x2F;command 主题      </p>
+<p>RQT 中使用正弦函数：        </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sin(i/100)</span><br><span class="line"></span><br><span class="line">sin(i/rate*speed)*diff + offset</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>i: RQT 时间变量</li>
+<li>rate: 计算该表达式的频率。这个数字应该与主题发布者的 rate 列中的数字相同，建议设置为 100</li>
+<li>speed: joint 执行速度</li>
+<li>upper_limit 及 lower_limits: 被控制的硬件的关节限制</li>
+<li>diff &#x3D; (upper_limit - lower_limit) &#x2F; 2</li>
+<li>offset &#x3D; upper_limit - diff</li>
+</ul>
+</blockquote>
+<p>PID 调节 <code>               rosrun rqt_reconfigure rqt_reconfigure             </code></p>
+<h1 id="transmission-interface"><a href="#transmission-interface" class="headerlink" title="transmission_interface"></a>transmission_interface</h1><h2 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h2><p>该示例很简单，显示了如何通过 reducer(减速器) 将单个 actuator(执行器) 的位置传播(propagate)到关节空间</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/simple_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/transmission_interface.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> transmission_interface;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Raw data</span></span><br><span class="line">  <span class="type">double</span> a_pos;</span><br><span class="line">  <span class="type">double</span> j_pos;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission</span></span><br><span class="line">  <span class="function">SimpleTransmission <span class="title">trans</span><span class="params">(<span class="number">10.0</span>)</span></span>; <span class="comment">// 10x reducer</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Wrap raw data</span></span><br><span class="line">  ActuatorData a_data;</span><br><span class="line">  a_data.position.<span class="built_in">push_back</span>(&amp;a_pos);</span><br><span class="line"></span><br><span class="line">  JointData j_data;</span><br><span class="line">  j_data.position.<span class="built_in">push_back</span>(&amp;j_pos);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission interface</span></span><br><span class="line">  ActuatorToJointPositionInterface act_to_jnt_pos;</span><br><span class="line">  act_to_jnt_pos.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointPositionHandle</span>(<span class="string">&quot;trans&quot;</span>, &amp;trans, a_data, j_data));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Propagate actuator position to joint space</span></span><br><span class="line">  act_to_jnt_pos.<span class="built_in">propagate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h2><p>该示例描述一个有三个 actuators 和三个关节的机器人(如阿克曼小车)：</p>
+<ul>
+<li>第一个 actuator&#x2F;joint 通过减速机联接</li>
+<li>后两个 actuators&#x2F;joints 通过差速器联接</li>
+</ul>
+<p>该硬件可以读取当前执行器的位置、速度和 effort，并发送位置命令。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/simple_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/differential_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/transmission_interface.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> std::vector;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> transmission_interface;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>()</span><br><span class="line">   : <span class="built_in">sim_trans</span>(<span class="number">-10.0</span>,  <span class="comment">// 10x reducer. Negative sign: actuator and joint spin in opposite directions</span></span><br><span class="line">                 <span class="number">1.0</span>), <span class="comment">// joint position offset</span></span><br><span class="line"></span><br><span class="line">     <span class="built_in">dif_trans</span>(<span class="built_in">vector</span>&lt;<span class="type">double</span>&gt;(<span class="number">2</span>, <span class="number">5.0</span>), <span class="comment">// 5x reducer on each actuator</span></span><br><span class="line">               <span class="built_in">vector</span>&lt;<span class="type">double</span>&gt;(<span class="number">2</span>, <span class="number">1.0</span>)) <span class="comment">// No reducer in joint output</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Wrapping the raw data is the most verbose part of the setup process... //////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap simple transmission raw data - current state</span></span><br><span class="line">    a_state_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">0</span>]);</span><br><span class="line">    a_state_data[<span class="number">0</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">0</span>]);</span><br><span class="line">    a_state_data[<span class="number">0</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    j_state_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">0</span>]);</span><br><span class="line">    j_state_data[<span class="number">0</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">0</span>]);</span><br><span class="line">    j_state_data[<span class="number">0</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap simple transmission raw data - position command</span></span><br><span class="line">    a_cmd_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">0</span>]); <span class="comment">// Velocity and effort vectors are unused</span></span><br><span class="line"></span><br><span class="line">    j_cmd_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">0</span>]); <span class="comment">// Velocity and effort vectors are unused</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap differential transmission raw data - current state</span></span><br><span class="line">    a_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">1</span>]); a_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">2</span>]);</span><br><span class="line">    a_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">1</span>]); a_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">2</span>]);</span><br><span class="line">    a_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">1</span>]);   a_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    j_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">1</span>]); j_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">2</span>]);</span><br><span class="line">    j_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">1</span>]); j_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">2</span>]);</span><br><span class="line">    j_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">1</span>]);   j_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap differential transmission raw data - position command</span></span><br><span class="line">    a_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">1</span>]); a_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    j_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">1</span>]); j_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...once the raw data has been wrapped, the rest is straightforward //////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Register transmissions to each interface</span></span><br><span class="line">    act_to_jnt_state.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointStateHandle</span>(<span class="string">&quot;sim_trans&quot;</span>,</span><br><span class="line">                                                               &amp;sim_trans,</span><br><span class="line">                                                               a_state_data[<span class="number">0</span>],</span><br><span class="line">                                                               j_state_data[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">    act_to_jnt_state.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointStateHandle</span>(<span class="string">&quot;dif_trans&quot;</span>,</span><br><span class="line">                                                              &amp;dif_trans,</span><br><span class="line">                                                              a_state_data[<span class="number">1</span>],</span><br><span class="line">                                                              j_state_data[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">registerHandle</span>(<span class="built_in">JointToActuatorPositionHandle</span>(<span class="string">&quot;sim_trans&quot;</span>,</span><br><span class="line">                                                                &amp;sim_trans,</span><br><span class="line">                                                                a_cmd_data[<span class="number">0</span>],</span><br><span class="line">                                                                j_cmd_data[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">registerHandle</span>(<span class="built_in">JointToActuatorPositionHandle</span>(<span class="string">&quot;dif_trans&quot;</span>,</span><br><span class="line">                                                                &amp;dif_trans,</span><br><span class="line">                                                                a_cmd_data[<span class="number">1</span>],</span><br><span class="line">                                                                j_cmd_data[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Names must be unique within a single transmission interface, but a same name can be used in</span></span><br><span class="line">    <span class="comment">// multiple interfaces, as shown above</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="comment">// Read actuator state from hardware</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Propagate current actuator state to joints</span></span><br><span class="line">    act_to_jnt_state.<span class="built_in">propagate</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">write</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="comment">// Porpagate joint commands to actuators</span></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">propagate</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Send actuator command to hardware</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission interfaces</span></span><br><span class="line">  ActuatorToJointStateInterface    act_to_jnt_state; <span class="comment">// For propagating current actuator state to joint space</span></span><br><span class="line">  JointToActuatorPositionInterface jnt_to_act_pos;   <span class="comment">// For propagating joint position commands to actuator space</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmissions</span></span><br><span class="line">  SimpleTransmission       sim_trans;</span><br><span class="line">  DifferentialTransmission dif_trans;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Actuator and joint space variables: wrappers around raw data</span></span><br><span class="line">  ActuatorData a_state_data[<span class="number">2</span>]; <span class="comment">// Size 2: One per transmission</span></span><br><span class="line">  ActuatorData a_cmd_data[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">  JointData j_state_data[<span class="number">2</span>];</span><br><span class="line">  JointData j_cmd_data[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Actuator and joint space variables - raw data:</span></span><br><span class="line">  <span class="comment">// The first actuator/joint are coupled through a reducer.</span></span><br><span class="line">  <span class="comment">// The last two actuators/joints are coupled through a differential.</span></span><br><span class="line">  <span class="type">double</span> a_curr_pos[<span class="number">3</span>]; <span class="comment">// Size 3: One per actuator</span></span><br><span class="line">  <span class="type">double</span> a_curr_vel[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> a_curr_eff[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> a_cmd_pos[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> j_curr_pos[<span class="number">3</span>]; <span class="comment">// Size 3: One per joint</span></span><br><span class="line">  <span class="type">double</span> j_curr_vel[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> j_curr_eff[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> j_cmd_pos[<span class="number">3</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ROS/" rel="tag"># ROS</a>
+              <a href="/tags/ros-control/" rel="tag"># ros_control</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/17/Robot/ROS/ros_control/hardware_interface/" rel="prev" title="hardware_interface">
+                  <i class="fa fa-angle-left"></i> hardware_interface
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">523k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:50</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

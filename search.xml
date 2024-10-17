@@ -10469,11 +10469,18 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
     <content><![CDATA[<p>controller_manager 提供了一个硬实时兼容的循环来控制机械臂的机制，该循环由 <code>hardware_interface::RobotHW</code>  实例表示。controller_manager 提供了用于加载，卸载，启动和停止控制器的基础结构。</p>
 <p>当加载一个控制器时，controller_manager 会使用控制器名作为所有特定于控制器的参数的根，最重要的是，type 用来标识加载哪个插件。</p>
 <p>controller manager 提供了与 controller 交互的工具。根据是从启动文件、从命令行还是从 ROS 节点运行 controller，controller manager 提供了不同的工具来运行 controller。</p>
-<h1 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持的 <span class="built_in">command</span> 包括：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	load：加载 controllers(构造和初始化)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	unload：卸载 controllers(析构)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	start：启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	stop：停止 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	spawn：加载并启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	<span class="built_in">kill</span>：停止并卸载 controllers</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt; &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 controllers 状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持以下 <span class="built_in">command</span>：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list：按执行顺序列出所有 controllers，并给出每个 controller 的状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list-type：列出 controller 类型，如果 controller 不在该列表中，将无法执行 spawn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries：重新加载所有可用的控制器库插件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries --restore：重新加载所有可用作为插件的控制器库，并将所有控制器恢复到其原始状态</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--stop：不自动启动</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager spawner [--stopped] &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager unspawner &lt;name1&gt; &lt;name2&gt; ... <span class="comment"># 停止但不卸载，这些controllers 关闭时重启</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持的 <span class="built_in">command</span> 包括：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	load：加载 controllers(构造和初始化)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	unload：卸载 controllers(析构)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	start：启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	stop：停止 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	spawn：加载并启动 controllers</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	<span class="built_in">kill</span>：停止并卸载 controllers</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt; &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取 controllers 状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">支持以下 <span class="built_in">command</span>：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list：按执行顺序列出所有 controllers，并给出每个 controller 的状态</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	list-type：列出 controller 类型，如果 controller 不在该列表中，将无法执行 spawn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries：重新加载所有可用的控制器库插件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">	reload-libraries --restore：重新加载所有可用作为插件的控制器库，并将所有控制器恢复到其原始状态</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--stop：不自动启动</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&lt;name&gt;: 指定要加载的 controller 列表，空格分割（也可指定 yaml 文件路径）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager spawner [--stopped] &lt;name1&gt; &lt;name2&gt; ...</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun controller_manager unspawner &lt;name1&gt; &lt;name2&gt; ... <span class="comment"># 停止但不卸载，这些controllers 关闭时重启</span></span></span><br></pre></td></tr></table></figure>
 
-
-
+<blockquote>
+<p><strong>spawner 节点通过调用 <code>controller_manager/load_controller</code> 服务来加载参数中指定的 controllers。</strong> </p>
+</blockquote>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rqt_controller_manager rqt_controller_manager</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- launch 文件中 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;arm_controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/arm&quot;</span> <span class="attr">args</span>=<span class="string">&quot;arm_joint_controller gripper_controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 
 
 
@@ -10509,6 +10516,7 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 
 ]]></content>
       <categories>
+        <category>Robot</category>
         <category>ROS</category>
         <category>ros_control</category>
       </categories>
@@ -10615,6 +10623,7 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 
 ]]></content>
       <categories>
+        <category>Robot</category>
         <category>ROS</category>
         <category>ros_control</category>
       </categories>
@@ -10647,6 +10656,7 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 <p>​       </p>
 ]]></content>
       <categories>
+        <category>Robot</category>
         <category>ROS</category>
         <category>ros_control</category>
       </categories>
@@ -10656,16 +10666,13 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
       </tags>
   </entry>
   <entry>
-    <title>设置新机器人</title>
-    <url>/2024/10/16/Robot/ROS/ros_control/%E8%AE%BE%E7%BD%AE%E6%96%B0%E6%9C%BA%E5%99%A8%E4%BA%BA/</url>
-    <content><![CDATA[<p>即：hardware_interface</p>
-<p><strong>1、hardware interfaces</strong></p>
-<p>ROS control 将 hardware interfaces 与可用的 ROS controllers 之一结合使用，以向硬件发送(即: <strong>write()</strong>)命令，并从硬件接收(即: <strong>read()</strong>)关节状态。</p>
+    <title>hardware_interface</title>
+    <url>/2024/10/17/Robot/ROS/ros_control/hardware_interface/</url>
+    <content><![CDATA[<h1 id="hardware-interfaces"><a href="#hardware-interfaces" class="headerlink" title="hardware interfaces"></a><strong>hardware interfaces</strong></h1><p>ROS control 将 hardware interfaces 与可用的 ROS controllers 之一结合使用，以向硬件发送(即: <strong>write()</strong>)命令，并从硬件接收(即: <strong>read()</strong>)关节状态。</p>
 <p>可用硬件接口包括：</p>
 <ul>
 <li><p><strong>Joint Command Interfaces</strong></p>
-</li>
-<li><ul>
+<ul>
 <li>Effort joint interface</li>
 <li>Velocity joint interface</li>
 <li>Position joint interface</li>
@@ -10676,8 +10683,7 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 <li><p><strong>Actuator state interfaces</strong> （执行器&#x2F;驱动器状态接口）</p>
 </li>
 <li><p><strong>Actuator Command Interfaces</strong></p>
-</li>
-<li><ul>
+<ul>
 <li>Effort Actuator Interface</li>
 <li>Velocity Actuator Interface</li>
 <li>Position Actuator Interface</li>
@@ -10688,7 +10694,7 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 <li><p><strong>IMU sensor interface</strong></p>
 </li>
 </ul>
-<h1 id="设置新的机器人"><a href="#设置新的机器人" class="headerlink" title="设置新的机器人"></a><strong>设置新的机器人</strong></h1>
+<h2 id="设置新的机器人"><a href="#设置新的机器人" class="headerlink" title="设置新的机器人"></a><strong>设置新的机器人</strong></h2>
 
 <h2 id="使用现有接口"><a href="#使用现有接口" class="headerlink" title="使用现有接口"></a><strong>使用现有接口</strong></h2><p>假设机器人有两个关节：A 和 B。两个关节都是位置控制。这种情况下，为机器人定义的 hardware_interface::RobotHW，应提供标准的 <strong>JointPositionInterface</strong> 和 <strong>JointStateInterface</strong>，以便可以重用所有已编写好的、使用 JointPositionInterface 和 JointStateInterface 的 controllers。例如：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_command_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_state_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/robot_hw.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line"> &#123; </span><br><span class="line">   <span class="comment">// connect and register the joint state interface</span></span><br><span class="line">   <span class="comment">// JointstateHandle为关节状态的资源类，其内部存储有：pos，vel，effort的获取接口</span></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_a</span><span class="params">(<span class="string">&quot;A&quot;</span>, &amp;pos[<span class="number">0</span>], &amp;vel[<span class="number">0</span>], &amp;eff[<span class="number">0</span>])</span></span>;</span><br><span class="line">   <span class="comment">// ResourceManager 注册新的资源，如果资源名已存在，则覆盖之前的</span></span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_b</span><span class="params">(<span class="string">&quot;B&quot;</span>, &amp;pos[<span class="number">1</span>], &amp;vel[<span class="number">1</span>], &amp;eff[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_b);</span><br><span class="line">    </span><br><span class="line">   <span class="comment">// 注册硬件接口 </span></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_state_interface);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// connect and register the joint position interface</span></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_a</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;A&quot;</span>), &amp;cmd[<span class="number">0</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_b</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;B&quot;</span>), &amp;cmd[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_b);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_pos_interface);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  hardware_interface::JointStateInterface jnt_state_interface;</span><br><span class="line">  hardware_interface::PositionJointInterface jnt_pos_interface;</span><br><span class="line">  <span class="type">double</span> cmd[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> pos[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> vel[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> eff[<span class="number">2</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -10706,18 +10712,257 @@ Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [P
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW, <span class="keyword">public</span> hardware_interface::HardwareInterface</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// register the joint state and position interfaces</span></span><br><span class="line">    ...</span><br><span class="line">    ... (see the code above)</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// register the MyRobot class itself to make the &#x27;someCoolFunction&#x27; available</span></span><br><span class="line">    <span class="comment">// the MyRobot class inherits from HardwareInterface to make this possible</span></span><br><span class="line">    <span class="built_in">registerInterface</span>(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">someCoolFunction</span><span class="params">()</span></span>;</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>因此，自定义接口无非就是向该机器人类添加任意数量的函数调用，以及注册机器人类本身。这些特定于机器人的功能仅适用于专门为该机器人设计的控制器，但与此同时，该机器人仍可使用标准接口与标准 controllers 一起工作。</p>
-<h1 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a><strong>资源管理</strong></h1><p>controller manager 跟踪每个 controller 正在使用的资源。资源可以是诸如 ‘right_elbow_joint’， ‘base’， ‘left_arm’， ‘腕关节’ 等。<strong>资源在硬件接口中指定</strong>。例如，PositionJointInterface 使用关节名作为资源。用户可自定义 hardware interface，并定义自己的资源。控制器初始化时，从硬件接口请求大量资源；这些请求由控制器管理器记录。因此，控制器管理器确切的知道哪个控制器请求了哪些资源。</p>
+<h2 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a><strong>资源管理</strong></h2><p>controller manager 跟踪每个 controller 正在使用的资源。资源可以是诸如 ‘right_elbow_joint’， ‘base’， ‘left_arm’， ‘腕关节’ 等。<strong>资源在硬件接口中指定</strong>。例如，PositionJointInterface 使用关节名作为资源。用户可自定义 hardware interface，并定义自己的资源。控制器初始化时，从硬件接口请求大量资源；这些请求由控制器管理器记录。因此，控制器管理器确切的知道哪个控制器请求了哪些资源。</p>
 <p>RobotHW 具有用于资源管理的简单默认实现：它只简单的防止使用相同资源的两个控制器同时运行。请注意，<strong>使用相同资源的两个控制器可以同时加载，但不能同时运行</strong>。如果此简单的资源管理方案适合您的机器人，则无需执行任何操作，控制器管理器将自动应用此方案。如果您的机器人需要其他方案，则可以通过实现一个功能轻松创建自己的方案：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// register hardware interfaces interfaces</span></span><br><span class="line">    ...</span><br><span class="line">    ... (see the code above)</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Implement robot-specific resouce management</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">checkForConflict</span><span class="params">(<span class="type">const</span> std::list&lt;ControllerInfo&gt;&amp; info)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">       <span class="comment">// this list of controllers cannot be running at the same time</span></span><br><span class="line">       ... </span><br><span class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// this list of controller can be running at the same time</span></span><br><span class="line">       ...</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>checkForConflict 方法的输入是 controller info objects 列表。这些对象中的每一个都与一个控制器匹配，并包含有关该控制器的所有信息。 此信息包括控制器名称，控制器类型，硬件接口类型以及控制器要求的资源列表。根据所有这些信息，用户可以提出自己的方案来确定是否允许同时运行给定的控制器列表。</p>
-<h1 id="综述"><a href="#综述" class="headerlink" title="综述"></a><strong>综述</strong></h1><p>通常，对于真实机器人，需要做的有：</p>
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a><strong>综述</strong></h2><p>通常，对于真实机器人，需要做的有：</p>
 <ul>
 <li>编写硬件接口(hardware_interface)，读取设备驱动返回的关节状态 </li>
 <li>编写设备驱动，发布关节状态，如编码器脉冲，位置等</li>
 </ul>
+<h1 id="hardware-resource"><a href="#hardware-resource" class="headerlink" title="hardware resource"></a>hardware resource</h1><p><img src="D:\workspace\my-notes\myblog\source_posts\Robot\ROS\ros_control\hardware_interface\image-20241017074356284.png" alt="image-20241017074356284"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 硬件资源封装在 handle 实例内，该类允许通过名称注册和获取它们。</span></span><br><span class="line"><span class="comment"> * 也可以通过 ClaimPolicy 模板参数指定是否获取句柄 claims 对应资源</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">ResourceHandle</span>, <span class="keyword">class</span> <span class="title class_">ClaimPolicy</span> = DontClaimResources&gt;</span><br><span class="line"><span class="keyword">class</span> HardwareResourceManager : <span class="keyword">public</span> HardwareInterface, <span class="keyword">public</span> ResourceManager&lt;ResourceHandle&gt;</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// If unspecified,the resource manager will not claim resources(若未指定，资源管理器将不会声明资源)</span></span><br><span class="line">&#123;</span><br><span class="line">  HardwareResourceManager&lt;JointStateHandle&gt; m;</span><br><span class="line">  <span class="comment">// 填充 m</span></span><br><span class="line">  m.<span class="built_in">getHandle</span>(<span class="string">&quot;handle_name&quot;</span>); <span class="comment">// DOES NOT claim the &quot;handle_name&quot; resource</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Explicitly set ClaimPolicy to DontClaimResources</span></span><br><span class="line">&#123;</span><br><span class="line">  HardwareResourceManager&lt;JointStateHandle, DontClaimResources&gt; m;</span><br><span class="line">  <span class="comment">// Populate m(填充 m)</span></span><br><span class="line">  m.<span class="built_in">getHandle</span>(<span class="string">&quot;handle_name&quot;</span>); <span class="comment">// DOES NOT claim the &quot;handle_name&quot; resource</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Explicitly set ClaimPolicy to ClaimResources</span></span><br><span class="line">&#123;</span><br><span class="line">  HardwareResourceManager&lt;JointHandle, ClaimResources&gt; m;</span><br><span class="line">  <span class="comment">// Populate m</span></span><br><span class="line">  m.<span class="built_in">getHandle</span>(<span class="string">&quot;handle_name&quot;</span>); <span class="comment">// DOES claim the &quot;handle_name&quot; resource</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
+        <category>Robot</category>
+        <category>ROS</category>
+        <category>ros_control</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+        <tag>ros_control</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ros_control</title>
+    <url>/2024/10/17/Robot/ROS/ros_control/ros_control/</url>
+    <content><![CDATA[<p>由 PR2 改写而来的硬件封装库，负责统一管理硬件设备与底层细节，向上提供统一的接口（用户需继承 <code>hardware_interface::RobotHW</code>，实现并调用 <code>read/write</code> 等方法）。包括控制器接口、控制器管理器、传输和硬件接口的包，可以帮助机器人应用快速落地，提高开发效率。</p>
+
+
+<ul>
+<li>Controller Manager：管理不同的 controller</li>
+<li>Controller：可以实现 joints 的控制，请求硬件资源，读取硬件资源接口中的状态，发布控制命令</li>
+<li>Harware Resource：硬件资源</li>
+<li>RobotHW：硬件抽象层，用户需继承该类，实现  方法，来实现机器人的操作</li>
+<li>Real Robot：真实机器人硬件，接收并响应指令，反馈状态等</li>
+</ul>
+<p>使用 ros_control 能够复用 ros_controllers 中的控制算法，并且对 gazebo 支持良好。（gazebo 仿真时，自定义插件需继承自 <code>gazebo_ros_control::RobotHWSim</code>，该类实现了模拟 ros_control 中的 <code>hardware_interface::RobotHW</code>） </p>
+
+
+<blockquote>
+<p>存在问题：部分模块冗余严重，架构过于复杂</p>
+</blockquote>
+<p>提供了一个硬件抽象层，负责机器人硬件资源的管理。controller 则从中请求资源即可。</p>
+
+
+
+
+
+
+
+
+<h1 id="hardware-interface"><a href="#hardware-interface" class="headerlink" title="hardware interface"></a>hardware interface</h1><p>机器人的硬件抽象，相当于机器人的软件表示。是 ros_control 和实体机器人沟通的桥梁。hardware interface 的功能包括向实体机器人发送指令；从机器人驱动读取机器人状态。</p>
+<p>ros control 中包含了一系列可用的硬件接口（通过硬件资源管理器）。ROS control 将硬件接口与上述的 ROS controllers 之一结合使用，以向硬件发送和接受命令。以下是当前支持的硬件接口：</p>
+<ul>
+<li><strong>Joint Command Interfaces</strong><ul>
+<li>Effort joint interface</li>
+<li>Velocity joint interface</li>
+<li>Position joint interface</li>
+</ul>
+</li>
+<li><strong>Joint state interfaces</strong></li>
+<li><strong>Actuator state interfaces</strong> （执行器&#x2F;驱动器状态接口）</li>
+<li><strong>Actuator Command Interfaces</strong><ul>
+<li>Effort Actuator Interface</li>
+<li>Velocity Actuator Interface</li>
+<li>Position Actuator Interface</li>
+</ul>
+</li>
+<li><strong>Force-torque sensor interface</strong> （力 - 扭矩传感器接口）</li>
+<li><strong>IMU sensor interface</strong></li>
+</ul>
+<h1 id="Transmission（传动装置）"><a href="#Transmission（传动装置）" class="headerlink" title="Transmission（传动装置）"></a>Transmission（传动装置）</h1><p>transmissions 是 control pipeline 中的一个元素，转换efforts(力&#x2F;电压等)&#x2F;flow(速度&#x2F;电流等)变量，使产品功率保持不变。</p>
+<p>机械传动是功率不变的变换，例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">P_in    = P_out </span><br><span class="line">F_in x V_in = F_out x V_out   </span><br></pre></td></tr></table></figure>
+
+<p>P、F、V分别代表 power、force(力度)和速度。power 是effort(如:force&#x2F;voltage) 变量和 flow 变量(如:velocity&#x2F;current)的作用结果。</p>
+<p>例如，对于减速比为 n 的简单机械减速器：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">effort map: F_joint = F_actuator * n</span><br><span class="line">flow map: V_joint = V_actuator / n</span><br></pre></td></tr></table></figure>
+
+<p><strong>transmission URDF格式</strong></p>
+<p><a href="http://wiki.ros.org/urdf/XML/Transmission">参考</a></p>
+<p><strong>transmission接口</strong></p>
+<p>Transmission-specific 代码通过一个 transmission 类型共享的通用接口实现双向（actuator &lt;-&gt; joint）effort 和 flow 之间的映射。可用的 transmission 接口：</p>
+<ul>
+<li>Simple Reduction Transmission（简单减速装置）</li>
+<li>Differential Transmission（差分传动）</li>
+<li>Four Bar Linkage Transmission（四杆传动）</li>
+</ul>
+<p>用法：</p>
+<ul>
+<li><code>transmission_interface::ActuatorToJointStateInterface</code>：通过 actuator 变量设置关节状态</li>
+<li><code>hardware_interface::JointStateInterface</code>：将关节状态暴露给控制器</li>
+</ul>
+<p><a href="https://github.com/ros-controls/ros_control/wiki/transmission_interface">示例</a></p>
+<h1 id="关节限制"><a href="#关节限制" class="headerlink" title="关节限制"></a><strong>关节限制</strong></h1><p>joint_limits_interface 包含用于表示关节限制的数据结构、用于从诸如 URDF 和 rosparam 的通用格式填充它们的方法，以及用于对不同类型的关节命令实施限制的方法。</p>
+<p>控制器本身不使用 Joint_limits_interface(它不实现 HardwareInterface)，而是在控制器更新之后在机器人抽象的 write()方法（或等效方法）中操作。Enforcing limits 将覆盖控制器下发的指令，它不会在单独的原始数据缓冲区上操作。</p>
+<p><strong>说明</strong></p>
+<p>①. <strong>Joint limits</strong> Position, velocity, acceleration, jerk and effort.</p>
+<p>②. <strong>Soft joint limits</strong> Soft position limits, k_p, k_v (as described in pr2_controller_manager&#x2F;safety_limits).</p>
+<p>③. Utility method for loading joint limits information from URDF (only position, velocity, effort)</p>
+<p>④. Utility method for loading soft joint limits information from URDF</p>
+<p>⑤. Utility method for loading joint limits from ROS parameter server (all values). Parameter specification is the same used in MoveIt, with the addition that we also parse jerk and effort limits.</p>
+<p><strong>关节限制接口</strong></p>
+<p>①. ros_control 接口用于执行关节限制</p>
+<p>②. 对于 effort-controlled joints, position-controlled joints, 以及velocity-controlled joints,创建了两类接口。一类是饱和（saturation）接口，用于有普通限制而没有软限制的关节；另一类是实现了软限制的接口，与PR2中使用的类似。</p>
+<p><a href="https://github.com/ros-controls/ros_control/wiki/joint_limits_interface">示例</a></p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h1><ul>
+<li><ul>
+<li>Barrett WAM controllers at Johns Hopkins University: <a href="https://github.com/jhu-lcsr/barrett_control">barrett_control on Github</a></li>
+<li>RRBot in Gazebo: <a href="http://gazebosim.org/tutorials/?tut=ros_control">ros_control with Gazebo tutorial</a></li>
+<li>Rethink Baxter hardware as used at the University of Colorado Boulder: <a href="https://github.com/davetcoleman/baxter_cpp/blob/hydro-devel/baxter_control/src/baxter_hardware_interface.cpp">Baxter on Github</a></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Robot</category>
+        <category>ROS</category>
+        <category>ros_control</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+        <tag>ros_control</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用</title>
+    <url>/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="MoveIt"><a href="#MoveIt" class="headerlink" title="MoveIt"></a>MoveIt</h1><p>使用 moveit! 控制真实机械臂时，控制器中要有一个 action server 来接收 moveit! 的路径消息，然后控制器再将消息下发(write())到硬件执行；同时还要从机器人获取(read())机械臂各关节状态并上报给 moveit!。</p>
+<p>示例1</p>
+<p>ROS 驱动 6DOF 机械臂。创建两个节点：</p>
+<ul>
+<li><p>joint_controller</p>
+</li>
+<li><ul>
+<li>实现 action server，接收 moveit! 路径消息</li>
+<li>将路径消息转换为电机(关节)控制指令</li>
+<li>获取位姿</li>
+<li>发布位姿</li>
+</ul>
+</li>
+<li><p>joint_serial</p>
+</li>
+<li><ul>
+<li>接收 joint_controller 发布的控制指令，通过串口发送给机械臂</li>
+</ul>
+</li>
+</ul>
+<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1>
+
+<p>使用方法:</p>
+<h2 id="URDF-中增加-transmission-元素"><a href="#URDF-中增加-transmission-元素" class="headerlink" title="URDF 中增加  transmission 元素"></a><strong>URDF 中增加  transmission 元素</strong></h2><p> 元素用于将 actuator 连接到 joints。</p>
+<p>相对于当前的 gazebo_ros_control 实现， 标签中唯一重要的信息是：</p>
+<ul>
+<li><code>&lt;joint name=&quot;&quot;&gt;</code>: name 必须与 URDF 中某个 joint 的名字相对应</li>
+<li><code>&lt;type&gt;</code>: transmission 的类型。当前只实现了 transmission_interface&#x2F;SimpleTransmission</li>
+<li><code>&lt;hardwareInterface&gt;</code>: 在 <actuator> 和 <joint> 标签内，指明 gazebo_ros_control 插件要加载的硬件接口(如：position、velocity 或 effort 接口)。当前只实现了 effort 接口</li>
+</ul>
+<h2 id="添加-gazebo-ros-control-插件"><a href="#添加-gazebo-ros-control-插件" class="headerlink" title="添加 gazebo_ros_control 插件"></a><strong>添加 gazebo_ros_control 插件</strong></h2><p>除了 transmission 标签外，还需要在 URDF 中添加该插件项。该插件负责解析 transmission 标签并加载适当的硬件接口和控制器管理器。默认情况下，gazebo_ros_control 插件非常简单，尽管它还可以通过其他插件体系结构进行扩展，以允许高级用户在 ros_control 和 Gazebo 之间创建自己的自定义机器人硬件接口。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/MYROBOT<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>gazebo_ros_control 包含以下可选元素：</p>
+<ul>
+<li><code>&lt;robotNamespace&gt;</code>: 命名空间</li>
+<li><code>&lt;controlPeriod&gt;</code>: 控制周期</li>
+<li><code>&lt;robotParam&gt;</code>: 参数服务器中 robot_description 的位置，默认为 ‘&#x2F;robot_description’</li>
+<li><code>&lt;robotSimType&gt;</code>: 自定义的机器人 sim 接口的插件名称.默认为 DefaultRobotHWSim</li>
+</ul>
+<h2 id="默认行为"><a href="#默认行为" class="headerlink" title="默认行为"></a><strong>默认行为</strong></h2><p>默认情况下，如果没有  标签，gazebo_ros_control 会尝试从 URDF 中获取与基于 ros_control 的控制器接口所需的所有信息。</p>
+<p>默认提供以下 ros_control 接口：</p>
+<ul>
+<li>hardware_interface::JointStateInterface</li>
+<li>hardware_interface::EffortJointInterface</li>
+<li>hardware_interface::VelocityJointInterface</li>
+</ul>
+<h2 id="自定义-gazebo-ros-control-仿真插件"><a href="#自定义-gazebo-ros-control-仿真插件" class="headerlink" title="自定义 gazebo_ros_control 仿真插件"></a><strong>自定义 gazebo_ros_control 仿真插件</strong></h2><p>gazebo_ros_control 插件还提供了一个基于 pluginlib 的接口，用于在 Gazebo 和 ros_control 之间实现自定义接口。</p>
+<p>自定义插件必须继承 <strong>gazebo_ros_control::RobotHWSim</strong>，该插件实现了模拟的 ros_control <strong>hardware_interface::RobotHW</strong>。RobotHWSim 提供 API 级访问，以在 Gazebo 仿真器中读取和控制关节属性。</p>
+<p>相应的 RobotHWSim 子类在 URDF 中指定，并在加载机器人模型时加载。例如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/MYROBOT<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotSimType</span>&gt;</span>gazebo_ros_control/DefaultRobotHWSim<span class="tag">&lt;/<span class="name">robotSimType</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="PRBot-示例"><a href="#PRBot-示例" class="headerlink" title="PRBot 示例"></a><strong>PRBot 示例</strong></h2><p>为 Gazebo 将启动的每个关节添加一个  块。注意： 必须同时包含在  和  标签中。查看 rrbot.xacro(<a href="https://github.com/ros-simulation/gazebo_ros_demos">gazebo_ros_demos</a>) 文件：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;joint1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran2&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;joint2&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor2&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>rrbot.gazebo 中会读取所有 <code>&lt;transmission&gt;</code>  标签：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/rrbot<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-ros-controls-包"><a href="#创建-ros-controls-包" class="headerlink" title="创建 ros_controls 包"></a><strong>创建 ros_controls 包</strong></h2><p>可参考 <a href="https://github.com/ros-simulation/gazebo_ros_demos">gazebo_ros_demos</a> 中的 rrbot_control 包。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> ~/catkin_ws</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> ~/catkin_ws</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_create_pkg MYROBOT_control controller_manager joint_state_controller robot_state_publisher</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> MYROBOT_control</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> config</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> launch</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-yaml-配置文件"><a href="#创建-yaml-配置文件" class="headerlink" title="创建 yaml 配置文件"></a><strong>创建 yaml 配置文件</strong></h2><p>PID 增益和 controller 设置必须保存在 yaml 文件中，该文件通过 roslaunch 文件加载到参数服务器中。在 MYROBOT_control&#x2F;config 目录中，使用 RRBot 作为示例，创建 MRBot_control&#x2F;config&#x2F;rrbot_control.yaml：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">rrbot:</span></span><br><span class="line">  <span class="comment"># Publish all joint states -----------------------------------</span></span><br><span class="line">  <span class="attr">joint_state_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">    <span class="attr">publish_rate:</span> <span class="number">50</span>  </span><br><span class="line"></span><br><span class="line">  <span class="comment"># Position Controllers ---------------------------------------</span></span><br><span class="line">  <span class="attr">joint1_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">joint1</span></span><br><span class="line">    <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br><span class="line">  <span class="attr">joint2_position_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">    <span class="attr">joint:</span> <span class="string">joint2</span></span><br><span class="line">    <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建-launch-文件"><a href="#创建-launch-文件" class="headerlink" title="创建 launch 文件"></a><strong>创建 launch 文件</strong></h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Load joint controller configurations from YAML file to parameter server --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find rrbot_control)/config/rrbot_control.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- load the controllers --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;/rrbot&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint1_position_controller joint2_position_controller joint_state_controller&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- convert joint states to TF transforms for rviz, etc --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/rrbot/joint_states&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>controller_spawner 节点通过运行 python 脚本启动 RRBot 的两个关节位置控制器(joint1_position_controller、joint2_position_controller)，该脚本对 ros_control 控制器管理器进行服务调用。</p>
+<p>service calls 告诉控制器管理器想要哪个控制器。它还加载了第三个控制器，该控制器使用 hardware_interfaces 发布所有关节的关节状态，并在 &#x2F;joint_states 主题上发布。</p>
+<p>最后，启动 <strong>robot_state_publisher</strong> 节点，该节点监听来自 joint_state_controller 的 &#x2F;joint_states 主题消息，然后将其转换并发布到 &#x2F;tf。这样就可以在 Rviz 中查看。</p>
+<h2 id="启动-controllers"><a href="#启动-controllers" class="headerlink" title="启动 controllers"></a><strong>启动 controllers</strong></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch rrbot_gazebo rrbot_world.launch</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch rrbot_control rrbot_control.launch</span></span><br></pre></td></tr></table></figure>
+
+<p>手动调用服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">手动加载 controllers. 默认均已加载,无需手动执行</span></span><br><span class="line">rosservice call /rrbot/controller_manager/load_controller &quot;name: &#x27;joint1_position_controller&#x27;&quot;</span><br><span class="line">rosservice call /rrbot/controller_manager/load_controller &quot;name: &#x27;joint2_position_controller&#x27;&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 controllers. 默认均已启动,无需再执行</span></span><br><span class="line">rosservice call /rrbot/controller_manager/switch_controller &quot;&#123;start_controllers: [&#x27;joint1_position_controller&#x27;,&#x27;joint2_position_controller&#x27;], stop_controllers: [], strictness: 2&#125;&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">关闭 controllers</span></span><br><span class="line">rosservice call /rrbot/controller_manager/switch_controller &quot;&#123;start_controllers: [], stop_controllers: [&#x27;joint1_position_controller&#x27;,&#x27;joint2_position_controller&#x27;], strictness: 2&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>手动发送指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rostopic pub -1 /rrbot/joint1_position_controller/command std_msgs/Float64 &quot;data: 1.5&quot;</span><br><span class="line">rostopic pub -1 /rrbot/joint2_position_controller/command std_msgs/Float64 &quot;data: 1.0&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>也可使用 RQT 发送指令：</p>
+<p><code>rosrun rqt_gui rqt_gui</code></p>
+<p>打开工具窗口后，”plugins” -&gt; “Topics” -&gt; “Message Publisher”，然后选择 &#x2F;rrbot&#x2F;joints1_position_controller&#x2F;command 主题      </p>
+<p>RQT 中使用正弦函数：        </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sin(i/100)</span><br><span class="line"></span><br><span class="line">sin(i/rate*speed)*diff + offset</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>i: RQT 时间变量</li>
+<li>rate: 计算该表达式的频率。这个数字应该与主题发布者的 rate 列中的数字相同，建议设置为 100</li>
+<li>speed: joint 执行速度</li>
+<li>upper_limit 及 lower_limits: 被控制的硬件的关节限制</li>
+<li>diff &#x3D; (upper_limit - lower_limit) &#x2F; 2</li>
+<li>offset &#x3D; upper_limit - diff</li>
+</ul>
+</blockquote>
+<p>PID 调节 <code>               rosrun rqt_reconfigure rqt_reconfigure             </code></p>
+<h1 id="transmission-interface"><a href="#transmission-interface" class="headerlink" title="transmission_interface"></a>transmission_interface</h1><h2 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h2><p>该示例很简单，显示了如何通过 reducer(减速器) 将单个 actuator(执行器) 的位置传播(propagate)到关节空间</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/simple_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/transmission_interface.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> transmission_interface;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Raw data</span></span><br><span class="line">  <span class="type">double</span> a_pos;</span><br><span class="line">  <span class="type">double</span> j_pos;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission</span></span><br><span class="line">  <span class="function">SimpleTransmission <span class="title">trans</span><span class="params">(<span class="number">10.0</span>)</span></span>; <span class="comment">// 10x reducer</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Wrap raw data</span></span><br><span class="line">  ActuatorData a_data;</span><br><span class="line">  a_data.position.<span class="built_in">push_back</span>(&amp;a_pos);</span><br><span class="line"></span><br><span class="line">  JointData j_data;</span><br><span class="line">  j_data.position.<span class="built_in">push_back</span>(&amp;j_pos);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission interface</span></span><br><span class="line">  ActuatorToJointPositionInterface act_to_jnt_pos;</span><br><span class="line">  act_to_jnt_pos.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointPositionHandle</span>(<span class="string">&quot;trans&quot;</span>, &amp;trans, a_data, j_data));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Propagate actuator position to joint space</span></span><br><span class="line">  act_to_jnt_pos.<span class="built_in">propagate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h2><p>该示例描述一个有三个 actuators 和三个关节的机器人(如阿克曼小车)：</p>
+<ul>
+<li>第一个 actuator&#x2F;joint 通过减速机联接</li>
+<li>后两个 actuators&#x2F;joints 通过差速器联接</li>
+</ul>
+<p>该硬件可以读取当前执行器的位置、速度和 effort，并发送位置命令。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/simple_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/differential_transmission.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;transmission_interface/transmission_interface.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> std::vector;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> transmission_interface;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>()</span><br><span class="line">   : <span class="built_in">sim_trans</span>(<span class="number">-10.0</span>,  <span class="comment">// 10x reducer. Negative sign: actuator and joint spin in opposite directions</span></span><br><span class="line">                 <span class="number">1.0</span>), <span class="comment">// joint position offset</span></span><br><span class="line"></span><br><span class="line">     <span class="built_in">dif_trans</span>(<span class="built_in">vector</span>&lt;<span class="type">double</span>&gt;(<span class="number">2</span>, <span class="number">5.0</span>), <span class="comment">// 5x reducer on each actuator</span></span><br><span class="line">               <span class="built_in">vector</span>&lt;<span class="type">double</span>&gt;(<span class="number">2</span>, <span class="number">1.0</span>)) <span class="comment">// No reducer in joint output</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Wrapping the raw data is the most verbose part of the setup process... //////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap simple transmission raw data - current state</span></span><br><span class="line">    a_state_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">0</span>]);</span><br><span class="line">    a_state_data[<span class="number">0</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">0</span>]);</span><br><span class="line">    a_state_data[<span class="number">0</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    j_state_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">0</span>]);</span><br><span class="line">    j_state_data[<span class="number">0</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">0</span>]);</span><br><span class="line">    j_state_data[<span class="number">0</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap simple transmission raw data - position command</span></span><br><span class="line">    a_cmd_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">0</span>]); <span class="comment">// Velocity and effort vectors are unused</span></span><br><span class="line"></span><br><span class="line">    j_cmd_data[<span class="number">0</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">0</span>]); <span class="comment">// Velocity and effort vectors are unused</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap differential transmission raw data - current state</span></span><br><span class="line">    a_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">1</span>]); a_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_curr_pos[<span class="number">2</span>]);</span><br><span class="line">    a_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">1</span>]); a_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;a_curr_vel[<span class="number">2</span>]);</span><br><span class="line">    a_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">1</span>]);   a_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;a_curr_eff[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    j_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">1</span>]); j_state_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_curr_pos[<span class="number">2</span>]);</span><br><span class="line">    j_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">1</span>]); j_state_data[<span class="number">1</span>].velocity.<span class="built_in">push_back</span>(&amp;j_curr_vel[<span class="number">2</span>]);</span><br><span class="line">    j_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">1</span>]);   j_state_data[<span class="number">1</span>].effort.<span class="built_in">push_back</span>(&amp;j_curr_eff[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wrap differential transmission raw data - position command</span></span><br><span class="line">    a_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">1</span>]); a_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;a_cmd_pos[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    j_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">1</span>]); j_cmd_data[<span class="number">1</span>].position.<span class="built_in">push_back</span>(&amp;j_cmd_pos[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...once the raw data has been wrapped, the rest is straightforward //////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Register transmissions to each interface</span></span><br><span class="line">    act_to_jnt_state.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointStateHandle</span>(<span class="string">&quot;sim_trans&quot;</span>,</span><br><span class="line">                                                               &amp;sim_trans,</span><br><span class="line">                                                               a_state_data[<span class="number">0</span>],</span><br><span class="line">                                                               j_state_data[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">    act_to_jnt_state.<span class="built_in">registerHandle</span>(<span class="built_in">ActuatorToJointStateHandle</span>(<span class="string">&quot;dif_trans&quot;</span>,</span><br><span class="line">                                                              &amp;dif_trans,</span><br><span class="line">                                                              a_state_data[<span class="number">1</span>],</span><br><span class="line">                                                              j_state_data[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">registerHandle</span>(<span class="built_in">JointToActuatorPositionHandle</span>(<span class="string">&quot;sim_trans&quot;</span>,</span><br><span class="line">                                                                &amp;sim_trans,</span><br><span class="line">                                                                a_cmd_data[<span class="number">0</span>],</span><br><span class="line">                                                                j_cmd_data[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">registerHandle</span>(<span class="built_in">JointToActuatorPositionHandle</span>(<span class="string">&quot;dif_trans&quot;</span>,</span><br><span class="line">                                                                &amp;dif_trans,</span><br><span class="line">                                                                a_cmd_data[<span class="number">1</span>],</span><br><span class="line">                                                                j_cmd_data[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Names must be unique within a single transmission interface, but a same name can be used in</span></span><br><span class="line">    <span class="comment">// multiple interfaces, as shown above</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="comment">// Read actuator state from hardware</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Propagate current actuator state to joints</span></span><br><span class="line">    act_to_jnt_state.<span class="built_in">propagate</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">write</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="comment">// Porpagate joint commands to actuators</span></span><br><span class="line">    jnt_to_act_pos.<span class="built_in">propagate</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Send actuator command to hardware</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmission interfaces</span></span><br><span class="line">  ActuatorToJointStateInterface    act_to_jnt_state; <span class="comment">// For propagating current actuator state to joint space</span></span><br><span class="line">  JointToActuatorPositionInterface jnt_to_act_pos;   <span class="comment">// For propagating joint position commands to actuator space</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transmissions</span></span><br><span class="line">  SimpleTransmission       sim_trans;</span><br><span class="line">  DifferentialTransmission dif_trans;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Actuator and joint space variables: wrappers around raw data</span></span><br><span class="line">  ActuatorData a_state_data[<span class="number">2</span>]; <span class="comment">// Size 2: One per transmission</span></span><br><span class="line">  ActuatorData a_cmd_data[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">  JointData j_state_data[<span class="number">2</span>];</span><br><span class="line">  JointData j_cmd_data[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Actuator and joint space variables - raw data:</span></span><br><span class="line">  <span class="comment">// The first actuator/joint are coupled through a reducer.</span></span><br><span class="line">  <span class="comment">// The last two actuators/joints are coupled through a differential.</span></span><br><span class="line">  <span class="type">double</span> a_curr_pos[<span class="number">3</span>]; <span class="comment">// Size 3: One per actuator</span></span><br><span class="line">  <span class="type">double</span> a_curr_vel[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> a_curr_eff[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> a_cmd_pos[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> j_curr_pos[<span class="number">3</span>]; <span class="comment">// Size 3: One per joint</span></span><br><span class="line">  <span class="type">double</span> j_curr_vel[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> j_curr_eff[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> j_cmd_pos[<span class="number">3</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Robot</category>
         <category>ROS</category>
         <category>ros_control</category>
       </categories>

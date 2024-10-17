@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -172,6 +172,563 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/URDF%E5%8F%8ASRDF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/URDF%E5%8F%8ASRDF/" class="post-title-link" itemprop="url">URDF及SRDF</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:51:42" itemprop="dateCreated datePublished" datetime="2024-09-17T19:51:42+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="URDF"><a href="#URDF" class="headerlink" title="URDF"></a><strong>URDF</strong></h1><p>MoveIt 以 URDF(通用机器人描述格式)开始，这是 ROS 中描述机器人的原生格式。</p>
+<p>介绍确保生成的 URDF 可以与 MoveIt 一起使用的技巧。</p>
+<h2 id="Joint-名中的特殊字符"><a href="#Joint-名中的特殊字符" class="headerlink" title="Joint 名中的特殊字符"></a><strong>Joint 名中的特殊字符</strong></h2><p>Joint 名不能包含以下特殊字符: -，[，]，(，)，</p>
+<h2 id="Safety-Limits"><a href="#Safety-Limits" class="headerlink" title="Safety Limits"></a><strong>Safety Limits</strong></h2><p>除了机器人的关节限制外，一些 urdf 还设置了安全限制。下面是一个为 Panda head pan 关节指定的安全控制器的例子:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">safety_controller</span> <span class="attr">k_position</span>=<span class="string">&quot;100&quot;</span> <span class="attr">k_velocity</span>=<span class="string">&quot;1.5&quot;</span>     <span class="attr">soft_lower_limit</span>=<span class="string">&quot;-2.857&quot;</span> <span class="attr">soft_upper_limit</span>=<span class="string">&quot;2.857&quot;</span>/&gt;</span>  </span><br></pre></td></tr></table></figure>
+
+<p> soft_lower_limit 字段和 soft_upper_limit 字段指定该关节的关节位置限制。MoveIt 将把这些限制与 URDF 中指定的关节的硬限制进行比较，并选择更保守的限制。</p>
+<p>注意：如果将 soft_lower_limit 和 soft_upper_limit 设置为 0.0，可能导致关节无法运动。</p>
+<h2 id="碰撞检查"><a href="#碰撞检查" class="headerlink" title="碰撞检查"></a><strong>碰撞检查</strong></h2><p>MoveIt 使用 URDF 中指定的 mesh 进行碰撞检查。URDF 允许指定两组 mesh 分别用于可视化和碰撞检查。一般来说，<strong>可视化 mesh 可以很详细，但是 collision mesh 应该不那么详细</strong>。Mesh 中三角形的数量会影响机器人连接碰撞检查所需的时间。整个机器人的三角形数量应该在几千的数量级。</p>
+<h1 id="SRDF-概述"><a href="#SRDF-概述" class="headerlink" title="SRDF 概述"></a><strong>SRDF 概述</strong></h1><p>Semantic Robot Description Format，描述机器人的语义信息。</p>
+<p>这种格式的目的是表示 URDF 文件中没有的关于机器人的信息，但它对各种应用程序都很有用。其目的是包含具有语义方面的信息。</p>
+<p><strong>SRDF 补充了 URDF</strong>，并指定了：</p>
+<ul>
+<li>joint groups</li>
+<li>default robot configurations</li>
+<li>additional collision checking information</li>
+<li>additional transforms</li>
+</ul>
+<p>推荐使用 MoveIt! Setup Assistant 生成 SRDF 文件。</p>
+<h2 id="Virtual-Joints"><a href="#Virtual-Joints" class="headerlink" title="Virtual Joints"></a><strong>Virtual Joints</strong></h2><p>URDF 中定义机器人上真实存在的关节信息，SRDF 中则可通过  添加虚拟关节。该功能常用语将机器人的 root joint 与 world 坐标系相关联。</p>
+<h2 id="Passive-Joints"><a href="#Passive-Joints" class="headerlink" title="Passive Joints"></a><strong>Passive Joints</strong></h2><p>即：被动关节。指不受直接控制的关节。例如：差动机器人的从动轮。它们在 SRDF 中单独指定，以确保运动规划或 control pipelines 中的不同组件知道无法直接控制此关节。</p>
+<h2 id="Groups"><a href="#Groups" class="headerlink" title="Groups"></a><strong>Groups</strong></h2><p>MoveIt! 的核心概念，MoveIt! 始终作用于特定 group。MoveIt! 中所有运动都是基于特定的 group 进行规划，每次规划只会控制该规划组包含的关节，而保持其余的关节不变。Group 是关节和 link 的集合。可以通过以下方式定义 group：</p>
+<ul>
+<li><p><strong>Collection of joints</strong>：通过一组 joints 来定义一个 group。每个 joint 的所有 <strong>child link</strong> 都自动包含在组中</p>
+</li>
+<li><p><strong>Collection of links</strong>：通过一组 links 来定义一个 group。所有 link 的 <strong>parent joint</strong> 都会被自动添加到 group 中</p>
+</li>
+<li><p><strong>Serial Chain</strong>：通过串联 link 来定义一个 group，用 base link 和 tip link 来指定 serial chain</p>
+</li>
+<li><ul>
+<li>base link 是该 chain 中的第一个 joint 的 parent link</li>
+<li>tip link 是该 chain 中最后一个 joint 的 child link</li>
+</ul>
+</li>
+<li><p><strong>Collection of Sub-Groups</strong>：一个 group 也可以是多个其它 group 的集合。如：定义左臂规划组 left_arm、右臂规划组 right_arm，并在 arms 组中包含这两个 group，实现同时控制左右臂</p>
+</li>
+</ul>
+<h2 id="End-Effectors"><a href="#End-Effectors" class="headerlink" title="End-Effectors"></a><strong>End-Effectors</strong></h2><p>末端执行器是一种特殊的 group，区分与一般的 group。</p>
+<p><strong>定义末端执行器规划组时，要保证和与之关联的规划组没有共有的 link</strong>。</p>
+<h2 id="Self-Collisions"><a href="#Self-Collisions" class="headerlink" title="Self-Collisions"></a><strong>Self-Collisions</strong></h2><p>默认自碰撞矩阵生成器（Setup Assistant 的一部分）搜索机器人上可以安全地从碰撞检查中禁用的 links 对，从而减少运动规划处理时间。当这些links 对处于以下状态时将被禁用：</p>
+<ul>
+<li><strong>Always</strong> in collision：始终处于碰撞中</li>
+<li><strong>Never</strong> in collision：从不碰撞</li>
+<li>in collision in the robot’s <strong>Default</strong> position</li>
+<li><strong>Adjacent</strong> links：相邻 links</li>
+</ul>
+<p>MoveIt! Setup Assistant 中可以通过 Default Self-Collision Matrix Generator 来检测机器人的自碰撞。</p>
+<p>采样密度指定了多少个随机的机器人位置来检查自碰撞。较高的密度需要更多的计算时间，而较低的密度有更大的可能性禁用不应该禁用的对。默认值是10000 个冲突检查。冲突检查是并行进行的，以减少处理时间。</p>
+<h2 id="Robot-Poses"><a href="#Robot-Poses" class="headerlink" title="Robot Poses"></a><strong>Robot Poses</strong></h2><p>SRDF 中还可以存储机器人的固定位姿，并指定 id，方便程序中调用。例如：SRDF 的一个典型示例是定义机械手的 HOME 位置。</p>
+<h1 id="SRDF-语法"><a href="#SRDF-语法" class="headerlink" title="SRDF 语法"></a><strong>SRDF 语法</strong></h1><p>SRDF 文件中的标签</p>
+<ul>
+<li><p>&lt;**robot**&gt;：</p>
+</li>
+<li><ul>
+<li><p>Purpose：SRDF 文档的 根 标签。所有信息均包含在该标签内</p>
+</li>
+<li><p>Elements：</p>
+</li>
+<li><ul>
+<li><code>&lt;group&gt;</code></li>
+<li><code>&lt;end_effector&gt;</code></li>
+<li><code>&lt;virtual_joint&gt;</code></li>
+<li><code>&lt;group_state&gt;</code></li>
+<li><code>&lt;disable_collisions&gt;</code></li>
+</ul>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li><strong>name</strong>：<strong>robot 名字，需与对应的 URDF 文件中同名</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>&lt;group&gt;</code></strong></p>
+</li>
+<li><ul>
+<li><p>Purpose：一组 joints 和 links 的表示。这可以用于指定规划的自由度，定义手臂，末端执行器等</p>
+</li>
+<li><p>Elements：</p>
+</li>
+<li><ul>
+<li><code>&lt;link&gt;</code></li>
+<li><code>&lt;joint&gt;</code></li>
+<li><code>&lt;chain&gt;</code></li>
+<li><code>&lt;group&gt;</code></li>
+</ul>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>name：group 名字</li>
+</ul>
+</li>
+<li><p>注意：当一个组不包含任何其它 tags，只包含 name 属性时，被假定为具有该名称的组(在前面定义)的引用</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**group_state**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：根据 joint value 为特定组定义命名状态。这对于定义像 “folded arms” 这样的状态很有用</p>
+</li>
+<li><p>Elements：<code>&lt;joint&gt;</code></p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>name：状态名</li>
+<li>group：该状态对应的 group 名</li>
+</ul>
+</li>
+<li><p>注意：为了使组状态有效，组中的所有 joint 都必须将其值指定为 group state 的一部分</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**link**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：指定  中的 link</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>name：必须与 URDF 中的 link 名一致</li>
+</ul>
+</li>
+<li><p>注意：当一个 link 包含在一个组中时，相应的父关节(如果存在)也是如此</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**joint**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：指定  中的 joint</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li><strong>name</strong>：<strong>必须与 URDF 中的 joint 名一致</strong></li>
+<li>value：只出现在  中，浮点值。当一个 joint 包含多个自由度时，其 value 属性是一个由空格分隔的浮点值数组</li>
+</ul>
+</li>
+<li><p>注意：当一个 joint 包含在一个组中时，相应的子 link 也应包含</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**chain**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：表示机器人的 kinematic chain </p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>base_link：该 chain 的 root link</li>
+<li>tip_link：该 chain 的最后一个 link</li>
+</ul>
+</li>
+<li><p>注意：根据 chain 中的 links，隐式的定义了 chain 中的 joints。与 chain 对应的 joints 是 chain 中 links 的父关节</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**end_effector**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：描述末端执行器的信息</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>name：末端执行器的名字</li>
+<li>group：包含组成末端执行器的 links(和 joints)的组名</li>
+<li>parent_link：末端执行器连接到的 link 名</li>
+<li>parent_group：是包含 parent_link 的关节组的名称。例如，如果有一个 arm group、一个 hand group 和一个包含手臂和手部关节的 arm_hand 组，那么手部末端执行器的 parent_group 将是 arm</li>
+</ul>
+</li>
+<li><p>注意：根据 chain 中的 links，隐式的定义了 chain 中的 joints。与 chain 对应的 joints 是 chain 中 links 的父关节</p>
+</li>
+</ul>
+</li>
+<li><p>&lt;**virtual_joint**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：添加非真实存在于机器人上的关节，定义机器人 link 与外部参照系(相对于机器人而言被认为是固定的)之间的虚关节。通常，会利用虚拟关节将机器人的根关节 root joint 和 world 坐标系关联起来</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li><p>name：虚拟关节的名字</p>
+</li>
+<li><p>child_link：连接机器人与环境的 link 的名称</p>
+</li>
+<li><p>parent_frame：虚拟关节的父 link</p>
+</li>
+<li><p>type：虚拟关节的类型。可以是</p>
+</li>
+<li><ul>
+<li><strong>fixed</strong>(0 DOF)</li>
+<li><strong>floating</strong>(all 6 DOF)</li>
+<li><strong>planar</strong>(3 DOF: x,y,yaw)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>注意：当  标签用于通过名称引用现有关节时，也可以使用已定义的虚拟关节的名称</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Define how the robot moves in its environment, </span></span><br><span class="line"><span class="comment">    i.e., connection to robot&#x27;s root link --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">virtual_joint</span> <span class="attr">name</span>=<span class="string">&quot;world_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;planar&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">parent_frame</span>=<span class="string">&quot;some fixed frame&quot;</span> <span class="attr">child_link</span>=<span class="string">&quot;robot&#x27;s root link name&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<ul>
+<li><p>&lt;**disable_collisions**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：默认情况下，假定机器人的任何 link 都可能与机器人中的任何其他 link 发生冲突。此标签禁用指定 link 对之间的冲突检查</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li><p>link1：</p>
+</li>
+<li><p>link2：</p>
+</li>
+<li><p>reason：可选。这两个 link 之间的冲突应该被禁用的原因</p>
+</li>
+<li><ul>
+<li>Adjacent：相邻 link</li>
+<li>Never：永远不会发送碰撞</li>
+<li>Default：在默认位姿会产生碰撞</li>
+<li>Always：总是碰撞</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>&lt;**passive_joint**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：被动关节。默认情况下，假定由 URDF 指定的所有 joints 都处于活动状态，并且它们的状态可用于规划。如果某些关节不是这种情况，则可以使用此标签来指定。即：不受直接控制的关节，例如移动底盘的从动轮</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>name：passive joint 的名字</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>&lt;**link_sphere_approximation**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：此标记指定一组保守地近似 link 的球体。球体在与 URDF 中的碰撞几何体相同的坐标系中指定。该标签是可选的。如果 link 没有出现任何标记，则将使用包含 link 的碰撞几何图形的单个球体。如果标签出现并且仅包含半径为 0 的球体，则在进行基于球体的碰撞检测时将不考虑该链接</p>
+</li>
+<li><p>Elements：sphere</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>link：近似为球体的 link</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>&lt;**sphere**&gt;</p>
+</li>
+<li><ul>
+<li><p>Purpose：定义一个球体</p>
+</li>
+<li><p>Elements：None</p>
+</li>
+<li><p>Attributes：</p>
+</li>
+<li><ul>
+<li>center：3个用空格分隔的浮点值，指定球体中心 x y z</li>
+<li>radius：球体半径，浮点值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/" class="post-title-link" itemprop="url">Time Parameterization</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:48:57" itemprop="dateCreated datePublished" datetime="2024-09-17T19:48:57+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>MoveIt! 目前主要是一个 <strong>kinematic motion planning</strong></p>
+<p> <strong>framework</strong> - 规划关节或末端执行器的位置，而不是速度或加速度。然而，MoveIt! 会<strong>利用后处理来时间参数化运动轨迹的速度和加速度值</strong>。</p>
+<h1 id="Speed-Control"><a href="#Speed-Control" class="headerlink" title="Speed Control"></a><strong>Speed Control</strong></h1><h2 id="From-File"><a href="#From-File" class="headerlink" title="From File"></a><strong>From File</strong></h2><p>默认情况下，MoveIt! 将关节轨迹的速度和加速度设置为机器人的 URDF 或 joint_limits.yaml 中允许的默认值。</p>
+<p>joint_limits.yaml 由 setup assistant 生成，最初是 URDF 中值的副本。如果需要特殊约束，用户可以将这些值修改为小于原始 URDF 值。特定的关节属性可以通过 <em>max_position</em>、<em>min_position</em>、<em>max_velocity</em>、<em>max_acceleration</em> 来改变。关节限制可以通过 <em>has_velocity_limits</em>、<em>has_acceleration_limits</em> 键来打开或关闭。</p>
+<h2 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a><strong>运行时</strong></h2><p>运动轨迹的速度也可以在运行时修改。要在每个运动规划的基础上改变速度，可以设置两个缩放因子，如 MotionPlanRequest.msg 中所述。在 MoveIt MotionPlanning RViz 插件中也可以使用 spinbox 来设置这两个因子</p>
+<ul>
+<li><strong>max_velocity_scaling_factor</strong>：</li>
+<li><strong>max_acceleration_scaling_factor</strong>：</li>
+</ul>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917194940845.png" class="" title="image-20240917194940845">
+
+
+
+<h1 id="Time-Parameterization-Algorithms"><a href="#Time-Parameterization-Algorithms" class="headerlink" title="Time Parameterization Algorithms"></a><strong>Time Parameterization Algorithms</strong></h1><p>MoveIt 支持多种运动学轨迹后处理算法，以添加时间戳和速度&#x2F;加速度值。目前在 MoveIt 中有三个默认可用的选项:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/iterative_time_parameterization.cpp"><strong>Iterative Parabolic Time Parameterization</strong></a>：即 iptp，调用 <strong>AddTimeParameterization</strong></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/iterative_spline_parameterization.cpp"><strong>Iterative Spline Parameterization</strong></a>：即 isp，调用 <strong>AddIterativeSplineParameterization</strong></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_core/trajectory_processing/src/time_optimal_trajectory_generation.cpp"><strong>Time-optimal Trajectory Generation</strong></a>：即 totg，调用 <strong>AddTimeOptimalParameterization</strong>。注意，需 melodic 及以上版本</li>
+</ul>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Time%20Parameterization/image-20240917195006177.png" class="" title="image-20240917195006177">
+
+
+
+<h2 id="Iterative-Parabolic-Time-Parameterization"><a href="#Iterative-Parabolic-Time-Parameterization" class="headerlink" title="Iterative Parabolic Time Parameterization"></a><strong>Iterative Parabolic Time Parameterization</strong></h2><p>IPTP - 迭代抛物线时间参数化算法默认在 motion planning pipeline 中作为 planning request adapter 使用。尽管 MoveIt 使用的迭代抛物线时间参数化算法多年来已经被数百个机器人使用，但它存在已知的 bug。</p>
+<p>使用 <strong>五次样条曲线</strong> 插补。</p>
+<ul>
+<li>moveit 默认使用规划器，可以实现速度和加速度平滑，但无法避免加速度的抖动，详细参考 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/issues/160">Improve time parameterization</a>。</li>
+<li>该规划器<strong>等间距</strong>插补，平滑速度和加速度，适合用在低速精确轨迹控制下。</li>
+</ul>
+<h2 id="Iterative-Spline-Parameterization"><a href="#Iterative-Spline-Parameterization" class="headerlink" title="Iterative Spline Parameterization"></a><strong>Iterative Spline Parameterization</strong></h2><p>迭代样条参数化算法与 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/382">pr382</a> 合并为解决这些问题的。虽然初步的实验很有希望，但在完全替代迭代抛物时间参数化算法之前，正在等待来自社区的更多反馈。</p>
+<p><strong>三次样条曲线</strong>。</p>
+<p>原理参考 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/382">Improved IPTP by fitting a cubic spline</a></p>
+<h2 id="Time-optimal-Trajectory-Generation"><a href="#Time-optimal-Trajectory-Generation" class="headerlink" title="Time-optimal Trajectory Generation"></a><strong>Time-optimal Trajectory Generation</strong></h2><p>在 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/809">pr#809</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/1365">pr#1365</a> 中引入的时间最优轨迹生成算法可以产生非常平滑和连续的速度 profiles 轨迹。该方法是在原始轨迹上拟合路径段，然后从优化后的路径上采样新的路径点。这与严格的时间参数化方法不同，因为生成的路点可能在一定的误差范围内偏离原始轨迹。因此，<strong>在使用此方法时，可能需要额外的碰撞检查</strong>。</p>
+<p>算法原理参考 <a target="_blank" rel="noopener" href="http://www.golems.org/projects/traj.html">Time-Optimal Path Following (July 2012)</a></p>
+<ul>
+<li>该规划器输出轨迹为<strong>等时间间距</strong>（其余为等距）</li>
+<li>该规划器在小间距下规划的速度和加速度较其余两种优化算法更加合理与平滑，<strong>在较大间距下三种规划算法效果差距不大</strong>，良好的规划间距会因机械臂参数的不同而有所不同</li>
+<li><strong>在过小间距下(0.001s)插补，会出现运动规划不恒定</strong>，规划速度不平滑的现象，经测试在0.005s（不同机械臂不一致，同时需要根据控制器输出频率等确定）的规划间距下可以有较为稳定和理想的规划效果。</li>
+</ul>
+<p>切换到 TOTG 方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default_planner_request_adapters/AddTimeParameterization</span><br><span class="line"># 替换为</span><br><span class="line">default_planner_request_adapters/AddTimeOptimalParameterization.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>planning_request_adapter_plugins&#x2F;src&#x2F;add_time_parameterization.cpp</p>
+<p>C++ 解决方案参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk">https://groups.google.com/forum/#!topic/moveit-users/x5FwalM5ruk</a></li>
+<li><a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4">https://groups.google.com/forum/#!topic/moveit-users/MOoFxy2exT4</a></li>
+</ul>
+<p>moveit_commander 解决方案：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.robot= moveit_commander.RobotCommander()</span><br><span class="line"><span class="variable language_">self</span>.arm= <span class="variable language_">self</span>.robot.right_arm</span><br><span class="line">...</span><br><span class="line"><span class="variable language_">self</span>.arm.compute_cartesian_path(waypoints, <span class="number">0.01</span>, <span class="number">0.0</span>, <span class="literal">True</span>)</span><br><span class="line">plan= <span class="variable language_">self</span>.arm.retime_trajectory(<span class="variable language_">self</span>.robot.get_current_state(), plan, <span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2292,332 +2849,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/list/" class="post-title-link" itemprop="url">list</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>786</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span>(LENGTH &lt;<span class="keyword">list</span>&gt; &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(GET &lt;<span class="keyword">list</span>&gt; &lt;element index&gt; [&lt;element index&gt; ...]</span><br><span class="line">     &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(APPEND &lt;<span class="keyword">list</span>&gt; [&lt;element&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(FIND &lt;<span class="keyword">list</span>&gt; &lt;value&gt; &lt;output variable&gt;)</span><br><span class="line"><span class="keyword">list</span>(INSERT &lt;<span class="keyword">list</span>&gt; &lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_ITEM &lt;<span class="keyword">list</span>&gt; &lt;value&gt; [&lt;value&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_AT &lt;<span class="keyword">list</span>&gt; &lt;index&gt; [&lt;index&gt; ...])</span><br><span class="line"><span class="keyword">list</span>(REMOVE_DUPLICATES &lt;<span class="keyword">list</span>&gt;)</span><br><span class="line"><span class="keyword">list</span>(REVERSE &lt;<span class="keyword">list</span>&gt;)</span><br><span class="line"><span class="keyword">list</span>(SORT &lt;<span class="keyword">list</span>&gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-<table>
-<thead>
-<tr>
-<th>LENGTH</th>
-<th>返回list的长度</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>GET</td>
-<td>返回list中index的element到value中</td>
-</tr>
-<tr>
-<td>APPEND</td>
-<td>添加新element到list中</td>
-</tr>
-<tr>
-<td>FIND</td>
-<td>返回list中element的index,未找到返回-1</td>
-</tr>
-<tr>
-<td>INSERT</td>
-<td>将新element插入到list中index的位置</td>
-</tr>
-<tr>
-<td>REMOVE_ITEM</td>
-<td>从list中删除某个element</td>
-</tr>
-<tr>
-<td>REMOVE_AT</td>
-<td>从list中删除指定index的element</td>
-</tr>
-<tr>
-<td>REMOVE_DUPLICATES</td>
-<td>从list中删除重复的element</td>
-</tr>
-<tr>
-<td>REVERSE</td>
-<td>将list的内容反转</td>
-</tr>
-<tr>
-<td>SORT</td>
-<td>将list按字母顺序排序</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/target/" class="post-title-link" itemprop="url">target</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-16 11:18:25" itemprop="dateCreated datePublished" datetime="2024-09-16T11:18:25+08:00">2024-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/%E8%84%9A%E6%9C%AC%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">脚本指令</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="target-include-directories"><a href="#target-include-directories" class="headerlink" title="target_include_directories"></a>target_include_directories</h1><p>指定编译参数给定的 target 时需要包含的目录。该 target 必须经过 <code>add_executable</code> 或 <code>add_library</code> 命令编译，不能是 <code>IMPORTED target</code>。</p>
-<h2 id="与-include-dirctories-区别"><a href="#与-include-dirctories-区别" class="headerlink" title="与 include_dirctories 区别"></a>与 include_dirctories 区别</h2><p><strong><code>include_directories</code></strong> 影响目录范围。该 CMakeLists.txt 中的所有 targets，以及在其调用点之后添加的所有子目录中的目标，均会将 <code>include_directories</code> 指定的目录包含到其路径中</p>
-<p><strong><code>target_include_directories(target x/y)</code></strong> 则具有目标范围，将目录 x&#x2F;y 添加到目标 target 的包含路径。</p>
-<p>如果所有目标使用相关的包含目录，则需要用 <code>include_directories</code>，如果路径特定于某个目标，或想更好地控制路径的可见性，则需要 <code>target_include_directories</code>。</p>
-<h1 id="target-sources"><a href="#target-sources" class="headerlink" title="target_sources"></a>target_sources</h1><p>指定编译给定 target 时用到的源文件。其中 target 必须由 <code>add_executable</code> 或 <code>add_library</code> 之类的命令创建，不能为 <code>ALIASA</code> 目标。</p>
-<h2 id="ADD-CUSTOM-TARGET"><a href="#ADD-CUSTOM-TARGET" class="headerlink" title="ADD_CUSTOM_TARGET"></a>ADD_CUSTOM_TARGET</h2><p>增加一个没有输出的目标，使得它总是被构建</p>
-<h2 id="ADD-CUSTOM-COMMAND"><a href="#ADD-CUSTOM-COMMAND" class="headerlink" title="ADD_CUSTOM_COMMAND"></a>ADD_CUSTOM_COMMAND</h2><p>向生成的构建系统添加自定义构建规则。</p>
-<p><code>ADD_CUSTOM_COMMAND</code> 有两个限制：</p>
-<ul>
-<li>只有在相同的 CMakeLists.txt 中，指定了所有依赖于其输出的目标时才有效</li>
-<li>对于不同的独立目标，使用 <code>ADD_CUSTOM_COMMAND</code>的输出可以重新执行定制命令。这可能会导致冲突，应该避免这种情况的发生</li>
-</ul>
-<p>只有当构建的目标以 <code>ADD_CUSTOM_COMMAND</code> 生成的OUTPUT文件为源代码的情况下，<code>ADD_CUSTOM_COMMAND</code> 中指定的命令才会才会执行。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dcb26b24806b">https://www.jianshu.com/p/dcb26b24806b</a></p>
-<p>该命令主要用于两种场景下。</p>
-<h3 id="生成文件"><a href="#生成文件" class="headerlink" title="生成文件"></a>生成文件</h3><p>添加自定义命令来生成文件。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT output1 [output2 ...]</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [MAIN_DEPENDENCY depend]</span><br><span class="line">                   [DEPENDS [depends...]]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [IMPLICIT_DEPENDS &lt;lang1&gt; depend1</span><br><span class="line">                                    [&lt;lang2&gt; depend2] ...]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [DEPFILE depfile]</span><br><span class="line">                   [VERBATIM] [APPEND] [USES_TERMINAL]</span><br><span class="line">                   [COMMAND_EXPAND_LISTS])</span><br></pre></td></tr></table></figure>
-
-<p>定义了一个命令来生成指定的 OUTPUT 文件。在 CMakeLists.txt 同一目录中创建的目标(该目标指定自定义命令的任何输出作为源文件)将获得一个规则，以便在构建时使用该命令生成该文件。不要在多个可能并行构建的独立目标中列出输出，或者规则的两个实例可能冲突(而是使用add_custom_target()命令来驱动该命令，并使其他目标依赖于该命令)。在 makefile 术语中，这会以以下形式创建一个新目标:</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">OUTPUT: MAIN_DEPENDENCY DEPENDS</span></span><br><span class="line">        COMMAND</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)</span><br><span class="line"><span class="keyword">project</span>(<span class="keyword">test</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(OUTPUT COPY_RES</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_directory <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/config <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/log.txt <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/etc</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_target</span>(CopyTask ALL DEPENDS COPY_RES)</span><br></pre></td></tr></table></figure>
-
-<p><code>add_custom_target</code>：生成一个目标 CopyTask，该目标依赖 COPY_RES。而 COPY_RES 实际上是用来复制文件夹或复制文件，也就是 COMMAND 中定义的操作。</p>
-<p><strong>options</strong>：</p>
-<ul>
-<li><strong>APPEND</strong>：将 COMMAND 和 DEPENDS 选项值附加到指定的第一个输出的自定义命令。之前必须已经调用过具有相同输出的此命令</li>
-<li><strong>BYPRODUCTS</strong>：指定命令预期生成的文件。如果副产品(byproduct)名是相对路径，它将相对于当前源目录相对应的构建树目录进行解释。每个副产品文件都将自动标记为GENERATED源文件属性</li>
-<li><strong>COMMAND</strong>：指定要执行的命令。如果指定了多个 COMMAND，它们将按顺序执行，但不一定组成有状态的 shell 或 batch 脚本。可选的 ARGS 参数是为了向后兼容。</li>
-<li><strong>COMMENT</strong>：在构建时执行命令之前显示给定的消息</li>
-<li><strong>DEPENDS</strong>：指定命令所依赖的文件。每个参数都转换为依赖项。如果未指定 DEPENDS，则只要缺少 OUTPUT，该命令就会运行；如果该命令实际上并未创建 OUTPUT，则该规则将始终运行</li>
-<li><strong>COMMAND_EXPAND_LISTS</strong>：</li>
-<li><strong>IMPLICIT_DEPENDS</strong>：请求扫描输入文件的隐式依赖项。给定的语言指定应使用其相应依赖扫描器的编程语言(programming language).目前仅支持C和CXX语言扫描器。必须为IMPLICIT_DEPENDS列表中的每个文件指定语言。IMPLICIT_DEPENDS选项目前仅支持Makefile生成器，其它生成器将忽略该选项。此选项<strong>不能与DEPFILE选项同时指定</strong>。</li>
-<li><strong>JOB_POOL</strong>：为 Ninja 生成器指定一个 pool。不能与 USES_TERMINAL 一起使用(暗含 console pool)。</li>
-<li><strong>MAIN_DEPENDENCY</strong>：指定命令的主要输入源文件。每个源文件最多可以有一个命令将其指定为其主要依赖项。编译命令(即用于库或可执行文件)算作隐式主要依赖项，它会被自定义命令规范覆盖</li>
-<li><strong>OUTPUT</strong>：指定命令预期生成的输出文件。每个输出文件将自动标记为生成的源文件属性。如果自定义命令的输出实际上没有作为磁盘上的文件创建，则应该使用 SYMBOLIC 源文件属性对其进行标记。如果输出名称是相对路径，则其绝对路径将解析为相对于与当前源目录对应的构建树目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_BINARY_DIR.html#variable:CMAKE_CURRENT_BINARY_DIR"><strong>CMAKE_CURRENT_BINARY_DIR</strong></a>)或当前源目录(<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_CURRENT_SOURCE_DIR.html#variable:CMAKE_CURRENT_SOURCE_DIR"><strong>CMAKE_CURRENT_SOURCE_DIR</strong></a>)。3.20 版本以后，输出参数可使用一组受限的生成器表达式</li>
-<li>USES_TERMINAL：如果可能，该命令将被授予直接访问终端(terminal)的权限</li>
-<li>VERBATIM：命令的所有参数都将为构建工具正确转义(escaped),以便调用的命令接收每个参数不变。建议使用VERBATIM，因为它可以实现正确的行为。当没有给出VERBATIM时，行为是特定于平台的</li>
-<li>WORKING_DIRECTORY：使用给定的当前工作目录执行命令。如果是相对路径，会被解释为相对于当前源目录对应的构建树目录</li>
-<li>DEPFILE：指定一个包含自定义命令依赖项的depfile。它通常由自定义命令本身发出。这个关键字只能在生成器支持的情况下使用</li>
-</ul>
-<p>例一</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加自定义命令来运行 someTool 以生产 out.c 文件，然后将该文件编译为库。当 in.txt 文件发生变化时，会自动重新运行该生成规则。</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT out.c</span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o out.c</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib out.c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.20 版本可以使用生成器表达式来指定每个配置的输出。例如</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  <span class="keyword">COMMAND</span> someTool -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">                   -o <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">                   -c <span class="string">&quot;$&lt;CONFIG&gt;&quot;</span></span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/in.txt</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(myLib <span class="string">&quot;out-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>运行 someTool 指令生成 out-.c 文件，config 是编译选项。</p>
-<p>例二：为多个 targets 生成文件</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果多个独立 targets 需要相同的自定义命令输出，则必须将其附加到它们都依赖的单个自定义 target</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT table.csv</span><br><span class="line">  <span class="keyword">COMMAND</span> makeTable -i <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">                    -o table.csv</span><br><span class="line">  DEPENDS <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/input.dat</span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_custom_target</span>(generate_table_csv DEPENDS table.csv)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT foo.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case foo -o foo.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(foo foo.cxx)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  OUTPUT bar.cxx</span><br><span class="line">  <span class="keyword">COMMAND</span> genFromTable -i table.csv -case bar -o bar.cxx</span><br><span class="line">  DEPENDS table.csv           <span class="comment"># file-level dependency</span></span><br><span class="line">          generate_table_csv  <span class="comment"># target-level dependency</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_library</span>(bar bar.cxx)</span><br></pre></td></tr></table></figure>
-
-<p>foo.cxx 只被 foo 使用，bar.cxx 只被 bar 使用。但两个 target 都需要 table.csv。由于 foo 和 bar 是可以并发构建的独立目标，因此通过将其自定义命令放在单独的目标 generate_table_csv 中来防止它们竞相生成 table.csv。生成 foo.cxx 和 bar.cxx 的自定义指令均指定 target-level 依赖 generate_table_csv。</p>
-<h3 id="Build-Events"><a href="#Build-Events" class="headerlink" title="Build Events"></a>Build Events</h3><p>将自定义命令添加到 target，如库或可执行文件。这对于在构建 target 之前或之后执行操作非常有用。该命令将成为 target 的一部分，并且仅在构建 target 本身时执行。如果 target 已构建，则不会执行该命令。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> &lt;<span class="keyword">target</span>&gt;</span><br><span class="line">                   PRE_BUILD | PRE_LINK | POST_BUILD</span><br><span class="line">                   <span class="keyword">COMMAND</span> command1 [ARGS] [args1...]</span><br><span class="line">                   [<span class="keyword">COMMAND</span> command2 [ARGS] [args2...] ...]</span><br><span class="line">                   [BYPRODUCTS [files...]]</span><br><span class="line">                   [WORKING_DIRECTORY dir]</span><br><span class="line">                   [COMMENT comment]</span><br><span class="line">                   [VERBATIM] [USES_TERMINAL])</span><br></pre></td></tr></table></figure>
-
-<p>这将定义一个新命令，该命令将与构建指定的 <code>&lt;target&gt;</code> 关联。 必须在当前目录中定义；不能指定在其它目录中定义的 target。</p>
-<p>命令何时执行由以下指定的选项决定:</p>
-<ul>
-<li><strong>PRE_BUILD</strong>：在 Visual Studio Generators 上，在 target 中执行任何其它规则之前运行。在其它生成器(generator)上,在 PRE_LINK 命令之前运行</li>
-<li><strong>PRE_LINK</strong>：在编译源代码之后但在链接二进制文件(binary)或运行静态库的库管理员(librarian)或存档器工具(archiver tool)之前运行。这不是为 add_custom_target 命令创建的 target 定义的</li>
-<li><strong>POST_BUILD</strong>：在执行 target 中的所有其它规则后运行</li>
-</ul>
-<p>使用 TARGET 格式时，project 应始终指定上述三个关键字之一。出于向后兼容性(backward compatibility)的原因，如果没有给出这样的关键字，则假定为 POST_BUILD，但 project 应明确提供其中一个关键字以明确他们期望的行为。</p>
-<p>例一</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># POST_BUILD 事件可用于在链接后对二进制文件进行后处理,例如</span></span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myExe POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;&quot;</span></span><br><span class="line">                     -o <span class="string">&quot;$&lt;TARGET_FILE:myExe&gt;.hash&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="comment"># 在链接后，将会运行 someHasher 来生成 .hash 文件</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 3.20 版本</span></span><br><span class="line"><span class="keyword">add_library</span>(myPlugin MODULE myPlugin.c)</span><br><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">  <span class="keyword">TARGET</span> myPlugin POST_BUILD</span><br><span class="line">  <span class="keyword">COMMAND</span> someHasher -i <span class="string">&quot;$&lt;TARGET_FILE:myPlugin&gt;&quot;</span></span><br><span class="line">                     --as-code <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  BYPRODUCTS <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span></span><br><span class="line">  VERBATIM)</span><br><span class="line"><span class="keyword">add_executable</span>(myExe myExe.c <span class="string">&quot;myPlugin-hash-$&lt;CONFIG&gt;.c&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2642,14 +2873,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">507k</span>
+    <span title="站点总字数">523k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:21</span>
+    <span title="站点阅读时长">15:50</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -172,6 +172,468 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/" class="post-title-link" itemprop="url">behavior_tree</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-05 21:28:13" itemprop="dateCreated datePublished" datetime="2024-09-05T21:28:13+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="note://WEB40cf9dd13ecdc0427d94e4994089fcca">nav2 behavior tree</a></p>
+<h1 id="BT-概述"><a href="#BT-概述" class="headerlink" title="BT 概述"></a><strong>BT 概述</strong></h1><p>behaviac tree（BT） 即行为树。是 computer science、robotics、控制系统及视频游戏中使用的按计划执行的数学模型。以模块化的方式描述有限数量任务之间的切换。其优势在于他们创建<strong>由一系列简单任务组成非常复杂的任务的能力</strong>，而不必担心简单任务是如何实现的。 BT与分层状态机(HFSM)存在一些相似之处，其关键区别在于行为的主要构建块是任务而不是状态。易于人类理解。</p>
+<h1 id="BT-与-FSM"><a href="#BT-与-FSM" class="headerlink" title="BT 与 FSM"></a><strong>BT 与 FSM</strong></h1><p>FSM 的每个节点表示一个状态，而 BT 的每个节点表示一个行为。FSM 是事件机制，而 BT 则属于轮询机制。</p>
+<p>BT 相对于 FSM 的主要优势：</p>
+<ul>
+<li>BT 的主要优势在于其模块化，提升可读性与复用性</li>
+<li>BT 本质上是分层的，意味着可以由简单的行为自由组合成复杂的 behavior，包括整个树作为更大的树的子分支。例如：”获取啤酒”可以重用 “抓取对象” 节点</li>
+<li>BT 的图形具有语义含义。因此，BT 更容易理解，而 FSM 中的状态转换在文本和图形表示中都难以理解</li>
+<li>BT 更具表现力</li>
+</ul>
+<h1 id="BT-nodes"><a href="#BT-nodes" class="headerlink" title="BT nodes"></a><strong>BT nodes</strong></h1><p>BT 由多个不同类型节点组成，每个节点的执行都会返回一个结果：</p>
+<ul>
+<li><strong>running</strong>：运行中</li>
+<li><strong>success</strong>：成功</li>
+<li><strong>failure</strong>：失败</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907160521358.png" class="" title="image-20240907160521358">
+
+<table>
+<thead>
+<tr>
+<th>节点类型</th>
+<th>子节点数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ControlNode</td>
+<td>1~N</td>
+<td>通常，根据其兄弟姐妹的结果或&#x2F;和自己的状态标记子进程</td>
+</tr>
+<tr>
+<td>DecoratorNode</td>
+<td>1</td>
+<td>除其他事项外，它可以改变其子的结果或多次勾选它</td>
+</tr>
+<tr>
+<td>ConditionNode</td>
+<td>0</td>
+<td>不应该改变系统。不得返回 RUNNING</td>
+</tr>
+<tr>
+<td>ActionNode</td>
+<td>0</td>
+<td>执行节点</td>
+</tr>
+</tbody></table>
+<p>BT 中，内部节点称为 <strong>control flow nodes</strong>，叶子节点称为 <strong>execution nodes</strong>。存在四类 control flow nodes（sequence、fallback、parallel 及 decorator）和两类 execution nodes（action 及 condition）</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240905212924594.png" class="" title="image-20240905212924594">
+
+<p>来源：<a target="_blank" rel="noopener" href="https://docs.ros.org/en/noetic/api/behaviortree_cpp/html/classBT_1_1TreeNode.html">behaviortree_cpp_v4: BT::TreeNode Class Reference (ros.org)</a></p>
+<h2 id="control-flow-nodes"><a href="#control-flow-nodes" class="headerlink" title="control flow nodes"></a><strong>control flow nodes</strong></h2><ul>
+<li><p><strong>Fallback</strong> - 用于**查找并执行未失败的第一个子节点(若一个节点返回 FAILURE，则继续执行下一个节点)**。当其中一个子节点返回 success 或 running 时，Fallback节点将立即返回状态代码 success 或 running；若所有节点返回 FAILURE，则返回 FAILURE。 即：selector node</p>
+</li>
+<li><p><strong>Sequence</strong> - 从左往右依次执行所有节点，<strong>直到有节点返回 failure 或列表执行完</strong>。只有当所有节点都返回 success 时，才向父节点返回 success</p>
+</li>
+<li><p><strong>Parallel</strong> - 并行节点，包含N个节点，直到任意一个节点返回 fail，或者全部返回 success 为止。(并行节点可自定义退出条件，例如：当全部节点都返回成功时退出；当某个节点成功时退出；全部节点都返回成功&#x2F;失败时退出 等)</p>
+</li>
+<li><p><strong>Decorator</strong> - 装饰节点，与组合节点不同，<strong>装饰节点只能有一个子节点</strong>。装饰节点又可分为：</p>
+</li>
+<li><ul>
+<li><strong>inverter node</strong>：逆变节点，反置&#x2F;否定子节点的结果</li>
+<li><strong>succeeder node</strong>：不管其子节点向其返回的结果是什么，总是返回 success</li>
+<li><strong>repeater node</strong>：在子节点返回结果后继续执行其子节点</li>
+<li><strong>repeat until fail node</strong>：重复直至执行失败</li>
+</ul>
+</li>
+</ul>
+<h2 id="execution-nodes"><a href="#execution-nodes" class="headerlink" title="execution nodes"></a><strong>execution nodes</strong></h2><ul>
+<li><strong>Action</strong> - </li>
+<li><strong>Condition</strong> -</li>
+</ul>
+<p>执行节点是叶子节点。</p>
+<h2 id="其它节点"><a href="#其它节点" class="headerlink" title="其它节点"></a><strong>其它节点</strong></h2><ul>
+<li><strong>iterator node</strong>：与 sequence node 类似，不同的是：忽略 failure</li>
+<li><strong>random sequence node</strong>：</li>
+<li><strong>random selector node</strong>：</li>
+<li><strong>condition node</strong>：执行条件判断，返回判断结果</li>
+<li><strong>composite nodes</strong>：组合节点</li>
+</ul>
+<h1 id="节点描述符"><a href="#节点描述符" class="headerlink" title="节点描述符"></a><strong>节点描述符</strong></h1><p>各节点描述符：  </p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/nodes.png" class="" title="nodes">
+
+<p>Node with memory：允许设计者实现<strong>不重复执行的节点</strong>。节点符号加上 “*****” 即表示 Node with memory。  </p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/node_with_memory.png" class="" title="node_with_memory">
+
+<p>部分 BT 实现中，节点不包含 Running 状态，而是通过阻塞直到 action 直接结束，再返回 success 或 failure。这类 BT 实现是 <strong>no-reactive</strong> 的。no-reactive BT 可以看做是只包含 memory node 的 BT。</p>
+<h1 id="节点图形"><a href="#节点图形" class="headerlink" title="节点图形"></a><strong>节点图形</strong></h1><h2 id="选择器节点"><a href="#选择器节点" class="headerlink" title="选择器节点"></a><strong>选择器节点</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/selector_node.png" class="" title="selector_node">
+
+<h2 id="sequence-node"><a href="#sequence-node" class="headerlink" title="sequence node"></a><strong>sequence node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/sequence_node.png" class="" title="sequence_node">
+
+<h2 id="parallel-node"><a href="#parallel-node" class="headerlink" title="parallel node"></a><strong>parallel node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/parallel_node.png" class="" title="parallel_node">
+
+<h2 id="action-node"><a href="#action-node" class="headerlink" title="action node"></a><strong>action node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/action_node.png" class="" title="action_node">
+
+<p>该图包含一个 selector node、一个 sequence node、一个 condition node(黄色)、两个 action node。</p>
+<p>当 C1 返回 Success 是才会执行 A1; 只有当 C1 或 A1 返回 Failure 时，才会执行 A2。</p>
+<h1 id="BT-设计规则"><a href="#BT-设计规则" class="headerlink" title="BT 设计规则"></a><strong>BT 设计规则</strong></h1><h2 id="使用明确的-Success-Conditions-提升可读性"><a href="#使用明确的-Success-Conditions-提升可读性" class="headerlink" title="使用明确的 Success Conditions 提升可读性"></a><strong>使用明确的 Success Conditions 提升可读性</strong></h2><p>BT 的一个优势是可以用图形来表示树的切换结构。但是，actions 节点何时返回 Success 和 Failure 的详细信息并未显示在图形中。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907173345832.png" class="" title="image-20240907173345832">
+
+<p>该 BT 树中，执行 Unlock Door 时，如果门已经是关着的了，那此时 Unlock Door 操作的返回值取决于内部的具体实现，从 BT 图上是无法看出的。此时可按如下进行修改：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907173345834.png" class="" title="image-20240907173345834">
+
+<p>相比原来的 BT 图，增加了明确的 success conditions。这些条件通过 Fallback 下成对出现的节点表示。此时，若门是锁着的，则 Door Unlocked 直接返回 Success，该 action(Unlock Door) 对应的 Fallback 返回 Success。</p>
+<h2 id="使用-Implicit-Sequence-提升-reactiving"><a href="#使用-Implicit-Sequence-提升-reactiving" class="headerlink" title="使用 Implicit Sequence 提升 reactiving"></a><strong>使用 Implicit Sequence 提升 reactiving</strong></h2><p>假设人通过之后，门关闭了，则此时， BT 会再次 Unlock Door、Open Door，再到 Agent Has Passed 条件判断处返回 Success。此时可按如下进一步优化：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/implicit_sequence.png" class="" title="implicit_sequence">
+
+<p>此例中，提高 reactiving 所需的关键观察是要意识到目标通过门，其它所有 action 都只是为了达成该目标。</p>
+<p>在需要撤销自身的某些 action 时，implicit sequence 的使用尤为重要。创建 implicit sequence 的系统方法是使用反向链接。</p>
+<h2 id="使用-Decision-Tree-结构处理不同场景"><a href="#使用-Decision-Tree-结构处理不同场景" class="headerlink" title="使用 Decision Tree 结构处理不同场景"></a><strong>使用 Decision Tree 结构处理不同场景</strong></h2><h2 id="使用-sequence-提高安全性"><a href="#使用-sequence-提高安全性" class="headerlink" title="使用 sequence 提高安全性"></a><strong>使用 sequence 提高安全性</strong></h2><h2 id="使用反向链接-Backchaining-创建-Deliberative-BT"><a href="#使用反向链接-Backchaining-创建-Deliberative-BT" class="headerlink" title="使用反向链接(Backchaining)创建 Deliberative BT"></a><strong>使用反向链接(Backchaining)创建 Deliberative BT</strong></h2><h2 id="使用-memory-node-创建-un-reactive-BT"><a href="#使用-memory-node-创建-un-reactive-BT" class="headerlink" title="使用 memory node 创建 un-reactive BT"></a><strong>使用 memory node 创建 un-reactive BT</strong></h2>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/" class="post-title-link" itemprop="url">nav2_behavior_tree</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-05 21:28:13" itemprop="dateCreated datePublished" datetime="2024-09-05T21:28:13+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Nav2-Behavior-Tree-概述"><a href="#Nav2-Behavior-Tree-概述" class="headerlink" title="Nav2 Behavior Tree 概述"></a>Nav2 Behavior Tree 概述</h1><p>Nav2 允许用户设置许多不同的插件类型，包括：行为树、核心算法、状态检查器等等。</p>
+<p>例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">main_tree_to_execute</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PipelineSequence</span> <span class="attr">name</span>=<span class="string">&quot;NavigateWithReplanning&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DistanceController</span> <span class="attr">distance</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ComputePathToPose</span> <span class="attr">goal</span>=<span class="string">&quot;&#123;goal&#125;&quot;</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">DistanceController</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">FollowPath</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">PipelineSequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此行为树使用 <code>ComputePathToPose</code>，然后每隔一米 (由 DistanceController 设定) 简单规划一条通往 goal 的新路径。如果在 path blackboard 变量上计算了一个新路径， FollowPath 将采用这个 path ，并使用服务器的默认算法来跟随它。</p>
+<p>该示例包含：</p>
+<ul>
+<li>No recovery methods</li>
+<li>No retries on failure</li>
+<li>No selected planner or controller algorithms</li>
+<li>No nodes to contextually change settings for optimal performance</li>
+<li>No integration with automatic door, elevator, or other APIs</li>
+<li>No user provided custom BT nodes</li>
+<li>No subtrees for other behaviors like docking, following, etc.</li>
+</ul>
+<h1 id="Nav2-特定节点"><a href="#Nav2-特定节点" class="headerlink" title="Nav2 特定节点"></a>Nav2 特定节点</h1><p>有相当多的自定义 Nav2 BT 节点被提供给 Nav2 使用。自定义 Nav2 BT 节点的完整列表可以在 <a target="_blank" rel="noopener" href="https://github.com/ros-planning/navigation2/tree/main/nav2_behavior_tree/plugins">nav2_behavior_tree plugins folder</a> 中找到。也可参考 <a target="_blank" rel="noopener" href="https://navigation.ros.org/configuration/packages/configuring-bt-xml.html">configuration guide</a>。</p>
+<h2 id="Action-Nodes"><a href="#Action-Nodes" class="headerlink" title="Action Nodes"></a>Action Nodes</h2><ul>
+<li><code>ComputePathToPose</code>: ComputePathToPose Action Server Client (Planner Interface)</li>
+<li><code>FollowPath</code>: FollowPath Action Server Client (Controller Interface)</li>
+<li><code>Spin</code>, <code>Wait</code>, <code>Backup</code>: Behaviors Action Server Client</li>
+<li><code>ClearCostmapService</code>: ClearCostmapService Server Clients</li>
+</ul>
+<p>此类节点完成后，如果操作服务器认为操作已正确完成，这些操作节点将返回 SUCCESS ，如果仍在运行，则返回 RUNNING ，否则返回 FAILURE 。请注意，在上面的列表中， <code>ClearCostmapService</code> 操作节点不是操作服务器客户端，而是服务客户端。</p>
+<h2 id="Condition-Nodes"><a href="#Condition-Nodes" class="headerlink" title="Condition Nodes"></a>Condition Nodes</h2><ul>
+<li><code>GoalUpdated</code>: Checks if the goal on the goal topic has been updated</li>
+<li><code>GoalReached</code>: Checks if the goal has been reached</li>
+<li><code>InitialPoseReceived</code>: Checks to see if a pose on the intial_pose topic has been received</li>
+<li><code>isBatteryLow</code>: Checks to see if the battery is low by listening on the battery topic</li>
+</ul>
+<p>上面的条件节点列表可用于探测系统的特定方面。通常，如果条件为真，它们将返回SUCCESS，否则返回FAILURE。默认的 Nav2 BT 中使用的关键条件是 <code>GoalUpdated</code>，它在特定子树中异步检查。这个条件节点允许描述为“如果目标已经更新，那么必须重新计划”的行为。条件节点通常与 <code>ReactiveFallback</code> 节点配对。</p>
+<h2 id="Decorator-Nodes"><a href="#Decorator-Nodes" class="headerlink" title="Decorator Nodes"></a>Decorator Nodes</h2><p>即：装饰节点</p>
+<ul>
+<li><code>Distance Controller</code>: Will tick children nodes every time the robot has traveled a certain distance</li>
+<li><code>Rate Controller</code>: Controls the ticking of its child node at a constant frequency. The tick rate is an exposed port</li>
+<li><code>Goal Updater</code>: Will update the goal of children nodes via ports on the BT</li>
+<li><code>Single Trigger</code>: Will only tick its child node once, and will return FAILURE for all subsequent ticks</li>
+<li><code>Speed Controller</code>: Controls the ticking of its child node at a rate proportional to the robot’s speed</li>
+</ul>
+<h2 id="Control-PipelineSequence"><a href="#Control-PipelineSequence" class="headerlink" title="Control: PipelineSequence"></a>Control: PipelineSequence</h2><p>当一个子节点返回 “RUNNING” 时， <code>PipelineSequence</code> 控制节点会重新标记之前的子节点。该节点类似于 Sequence 节点，具有重新标记 “current” 之前的子节点的附加特性。如果任一子节点返回 FAILURE ，所有子节点都将停止，父节点也将返回 FAILURE。若序列中最后一个子节点 SUCCESS，该节点将停止并返回 SUCCESS 。</p>
+<p>例如：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_pipelineSequence-1726567119152-1.png" class="" title="control_pipelineSequence.png">
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">main_tree_to_execute</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">PipelineSequence</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_A</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_B</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_C</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">PipelineSequence</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初始时，Action_A、Action_B、Action_C 均为 IDLE</li>
+<li>当父类 <code>PipelineSequence</code> 第一次被 ticked 时，假设 Action_A 返回 RUNNING，父节点也将返回 RUNNING。主节点继续 tick 也不会调用 Action_B 和Action_C，直到 Action_A 返回 success，才调用 Action_B</li>
+<li>当 Action_B 返回 running 时，下一个 tick 会继续调用 Action_A，此时无论 Action_A 返回 running 还是 success，都会继续调用 Action_B</li>
+</ul>
+<blockquote>
+<p>若任一子节点执行失败，则终止所有子节点动作，父节点返回 failture</p>
+</blockquote>
+<h2 id="Control-Recovery"><a href="#Control-Recovery" class="headerlink" title="Control: Recovery"></a>Control: Recovery</h2><p>Recovery 控制节点只有两个子节点， <strong>当且仅当第一个子节点返回 SUCCESS 时返回SUCCESS。如果第一个子节点返回FAILURE，第二个子节点将被 ticked</strong>。这个循环将持续到:</p>
+<ul>
+<li>第一个子节点返回 SUCCESS</li>
+<li>第二个子节点返回 FAILTURE</li>
+<li>重试次数超过 number_of_retries 参数指定值</li>
+</ul>
+<p>该节点通常用于将 action 和 recovery action 链接在一起。第一个 action 通常是“主要”行为，第二个 action 是在主要行为失败的情况下执行的操作。通常，第二个子动作的 ticking 会提高第一个动作成功的几率。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root main_tree_to_execute=&quot;MainTree&quot;&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ComputePathToPose</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ClearLocalCostmap</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Control-RoundRobin"><a href="#Control-RoundRobin" class="headerlink" title="Control: RoundRobin"></a>Control: RoundRobin</h2><p>轮循控制节点以轮循的方式 ticks 它的子节点，直到子节点返回 SUCCESS 为止，其父节点也将返回 SUCCESS。如果所有子节点都返回 FAILURE，那么父节点也会返回 FAILURE。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">main_tree_to_execute</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">RoundRobin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_A</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_B</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Action_C</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RoundRobin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初始时，所有节点均为 IDLE</li>
+<li>tick 父节点后，第一个子节点(Action_A)被 ticked。假设在 tick 时子节点返回 RUNNING。此时，不会有其他子节点被 ticked，并且父节点也返回 RUNNING</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_round_robin_RUNNING_IDLE_IDLE-1726567206096-3.png" class="" title="control_round_robin_RUNNING_IDLE_IDLE.png">
+
+<ul>
+<li>假设 Action_A 返回 FAILTURE，则在下一次 tick，Action_B 将被 ticked，此时 Action_C 仍保持 unticked。假设此时，Action_B 返回 running，则父节点也会返回 running</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_round_robin_FAILURE_RUNNING_IDLE-1726567226834-5.png" class="" title="control_round_robin_FAILURE_RUNNING_IDLE.png">
+
+<ul>
+<li>假设 Action_B 返回 SUCCESS，则 RoundRobin 将停止所有子节点，并返回 SUCCESS。父节点保留此状态信息，并在下一个 tick 上 tick Action_C，而不是像步骤2那样从 Action_A 开始</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_round_robin_FAILURE_SUCCESS_IDLE-1726567316831-11.png" class="" title="control_round_robin_FAILURE_SUCCESS_IDLE.png">
+
+<ul>
+<li>在下一个 tick，假设 Action_C 返回 RUNNING，则父节点 RoundRobin 也返回 RUNNING。不会 tick 其它节点</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_round_robin_FAILURE_SUCCESS_RUNNING-1726567328533-13.png" class="" title="control_round_robin_FAILURE_SUCCESS_RUNNING.png">
+
+<ul>
+<li>最后一次 tick，假设 Action_C 返回 FAILTURE，则父节点将循环并 tick Action_A。Action_A 返回 RUNNING，则父节点也返回 RUNNING。此模式将无限期地持续下去，除非所有子节点都返回FAILURE</li>
+</ul>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/control_round_robin_RUNNING_IDLE_FAILURE-1726567335983-15.png" class="" title="control_round_robin_RUNNING_IDLE_FAILURE.png">
+
+<h1 id="Nav2-Behavior-Tree-示例"><a href="#Nav2-Behavior-Tree-示例" class="headerlink" title="Nav2 Behavior Tree 示例"></a>Nav2 Behavior Tree 示例</h1><p>以 <code>nav2_bt_navigator/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml</code> 为例。该行为树以 1hz 的频率周期性地重新规划全局路径，也有恢复动作。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/overall_bt-1726567399622-17.png" class="" title="overall_bt.png">
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">main_tree_to_execute</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;6&quot;</span> <span class="attr">name</span>=<span class="string">&quot;NavigateRecovery&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">PipelineSequence</span> <span class="attr">name</span>=<span class="string">&quot;NavigateWithReplanning&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">RateController</span> <span class="attr">hz</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;1&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ComputePathToPose&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">ComputePathToPose</span> <span class="attr">goal</span>=<span class="string">&quot;&#123;goal&#125;&quot;</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span> <span class="attr">planner_id</span>=<span class="string">&quot;GridBased&quot;</span>/&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;ComputePathToPoseRecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearGlobalCostmap-Context&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;global_costmap/clear_entirely_global_costmap&quot;</span>/&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">RateController</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;1&quot;</span> <span class="attr">name</span>=<span class="string">&quot;FollowPath&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">FollowPath</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span> <span class="attr">controller_id</span>=<span class="string">&quot;FollowPath&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;FollowPathRecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearLocalCostmap-Context&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;local_costmap/clear_entirely_local_costmap&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">PipelineSequence</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;RecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">RoundRobin</span> <span class="attr">name</span>=<span class="string">&quot;RecoveryActions&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;ClearingActions&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearLocalCostmap-Subtree&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;local_costmap/clear_entirely_local_costmap&quot;</span>/&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearGlobalCostmap-Subtree&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;global_costmap/clear_entirely_global_costmap&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.57&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">Wait</span> <span class="attr">wait_duration</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">BackUp</span> <span class="attr">backup_dist</span>=<span class="string">&quot;0.15&quot;</span> <span class="attr">backup_speed</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">RoundRobin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>该行为树包含两个子树， <code>NavigateWithReplanning</code> 子树将被称为 Navigation 子树， <code>RecoveryFallback</code> 子树将被称为 Recovery 子树。</p>
+<p>Navigation 子树主要涉及实际的导航行为:</p>
+<ul>
+<li>计算路径</li>
+<li>路径跟随</li>
+<li>上述每个主要导航行为的 contextual recovery 行为</li>
+</ul>
+<p>Recovery 子树包括系统级故障或不容易在内部处理的项目的行为。</p>
+<p>整个 BT 将花费大部分时间在导航子树中。如果 Navigation 子树中的两个主要行为中的任何一个失败(路径计算或路径跟踪)，将尝试 contextual recovery。</p>
+<p>如果 contextual recovery 仍然不行，Navigation 子树将返回 FAILURE。系统将转到 recovery 子树，尝试清除任何系统级导航失败。</p>
+<h2 id="Navigation-subtree"><a href="#Navigation-subtree" class="headerlink" title="Navigation subtree"></a>Navigation subtree</h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/navigation_subtree-1726568324305-19.png" class="" title="navigation_subtree.png">
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">PipelineSequence</span> <span class="attr">name</span>=<span class="string">&quot;NavigateWithReplanning&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RateController</span> <span class="attr">hz</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;1&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ComputePathToPose&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ComputePathToPose</span> <span class="attr">goal</span>=<span class="string">&quot;&#123;goal&#125;&quot;</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span> <span class="attr">planner_id</span>=<span class="string">&quot;GridBased&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;ComputePathToPoseRecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearGlobalCostmap-Context&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;global_costmap/clear_entirely_global_costmap&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RateController</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RecoveryNode</span> <span class="attr">number_of_retries</span>=<span class="string">&quot;1&quot;</span> <span class="attr">name</span>=<span class="string">&quot;FollowPath&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">FollowPath</span> <span class="attr">path</span>=<span class="string">&quot;&#123;path&#125;&quot;</span> <span class="attr">controller_id</span>=<span class="string">&quot;FollowPath&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;FollowPathRecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearLocalCostmap-Context&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;local_costmap/clear_entirely_local_costmap&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RecoveryNode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">PipelineSequence</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>包含两个主要 actions：</p>
+<ul>
+<li><code>ComputePathToPose</code></li>
+<li><code>FollowPath</code></li>
+</ul>
+<p>父节点 <code>PipelineSequence</code> 允许 <code>ComputePathToPose</code> 被 ticked，若 <code>ComputePathToPose</code> 执行成功，则会 tick <code>FollowPath</code>。 <strong>在 tick <code>FollowPath</code> 子树的同时， <code>ComputePathToPose</code> 子树也将被 ticked。这允许在机器人移动时重新计算路径</strong>。</p>
+<p><code>RateController</code> 节点控制以 1Hz 的速度 tick navigation 子树。</p>
+<p><code>ComputePathToPose</code> 子树：</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/contextual_recoveries-1726568336695-21.png" class="" title="contextual_recoveries.png">
+
+<h2 id="Recovery-subtree"><a href="#Recovery-subtree" class="headerlink" title="Recovery subtree"></a>Recovery subtree</h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/recovery_subtree-1726568371198-23.png" class="" title="recovery_subtree.png">
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ReactiveFallback</span> <span class="attr">name</span>=<span class="string">&quot;RecoveryFallback&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">GoalUpdated</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RoundRobin</span> <span class="attr">name</span>=<span class="string">&quot;RecoveryActions&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;ClearingActions&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearLocalCostmap-Subtree&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;local_costmap/clear_entirely_local_costmap&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ClearEntireCostmap</span> <span class="attr">name</span>=<span class="string">&quot;ClearGlobalCostmap-Subtree&quot;</span> <span class="attr">service_name</span>=<span class="string">&quot;global_costmap/clear_entirely_global_costmap&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.57&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Wait</span> <span class="attr">wait_duration</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">BackUp</span> <span class="attr">backup_dist</span>=<span class="string">&quot;0.15&quot;</span> <span class="attr">backup_speed</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RoundRobin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ReactiveFallback</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最上层的父级 <code>ReactiveFallback</code> 控制系统范围内其余恢复之间的流，并异步检查是否已接收到新目标。如果目标在任何时候被更新，这个子树将停止所有子树并返回SUCCESS。这允许对新目标做出快速反应，并抢占当前执行的恢复。</p>
+<p>如果目标从未更新，行为树将继续到 <code>RoundRobin</code> 节点。BT中默认的四种系统级恢复是:</p>
+<ul>
+<li>A sequence that clears both costmaps (local, and global)</li>
+<li><code>Spin</code> Action</li>
+<li><code>Wait</code> action</li>
+<li><code>BackUp</code> action</li>
+</ul>
+<p>当 <code>RoundRobin</code> 的四个子节点中的任何一个成功时，机器人将尝试在导航子树中重新导航。如果这个导航不成功，round bin的下一个子节点将被选中。</p>
+<p>例如，假设机器人卡住了，Navigation 子树返回 FAILURE:(本例中，假设 goal 从未更新过)</p>
+<ul>
+<li>尝试恢复子树中的 Costmap 清除序列，并返回 SUCCESS。机器人现在再次移动到导航子树</li>
+<li>假设清除两个 costmap 是不够的，并且 Navigation 子树再次返回 FAILURE。机器人现在 tick 了恢复子树</li>
+<li>在恢复子树中，旋转(<code>Spin</code>)动作将被 ticked。如果返回 SUCCESS，那么机器人将返回到主导航子树，但是假设 <code>Spin</code> 动作返回FAILURE。在这种情况下，树将保留在 Recovery 子树中</li>
+<li>假设 Recovery 子树中 <code>Wait</code> 返回 SUCCESS，则机器人将再次返回 Navigation 子树中</li>
+<li>假设 Navigation 子树又一次返回 FAILTURE，(清除 Costmap、尝试 <code>Spin</code> 和 <code>Wait</code> 仍然不足以恢复系统)。机器人将移动到恢复子树并尝试 <code> BackUp</code> 操作。假设机器人尝试执行 <code>BackUp</code> 操作，并且能够成功完成该操作。 <code>BackUp</code> 操作节点返回SUCCESS，因此现在再次转到 Navigation 子树</li>
+<li>在这个假设的场景中，假设 <code>BackUp</code> 操作允许机器人成功地在 Navigation 子树中导航，并且机器人到达了目标。在这种情况下，整个 BT 仍将返回 SUCCESS</li>
+</ul>
+<p>如果 <code>BackUp</code> 操作不足以让机器人摆脱卡住，则上述逻辑将无限期地继续下去，直到超过导航子树和恢复子树的父树中的 <code>number_of_retries</code>，或者恢复子树中的所有系统级恢复返回 FAILURE。</p>
+<h2 id="Navigate-to-pose"><a href="#Navigate-to-pose" class="headerlink" title="Navigate to pose"></a>Navigate to pose</h2><p>该行为树实现了一个导航行为，从一个起点，导航到指定的目标点。</p>
+<h2 id="Navigate-through-poses"><a href="#Navigate-through-poses" class="headerlink" title="Navigate through poses"></a>Navigate through poses</h2><p>该行为树实现了一个导航行为，从一个起点，通过许多中间硬姿态约束，到达自由空间中的最终目标。它既包含在特定子上下文中用于恢复的自定义行为，也包含用于系统级故障的全局恢复子树。它还为用户提供了在返回失败状态之前多次重试任务的机会。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/navigate_through_poses-1726568419725-25.png" class="" title="navigate_through_poses.png">
+
+<h2 id="Navigate-to-pose-and-Pause-near-goal-obstacle"><a href="#Navigate-to-pose-and-Pause-near-goal-obstacle" class="headerlink" title="Navigate to pose and Pause near goal-obstacle"></a>Navigate to pose and Pause near goal-obstacle</h2><p>该行为树是 navigate to pose 的软扩展。除了 navigate to pose 的功能外，该行为树允许机器人通过暂停机器人的导航并等待用户指定的时间来检查障碍物是否已清除，从而有效地处理靠近目标的障碍物(例如叉车，人或其他临时障碍物)。如果在等待时间内障碍物已经移动，机器人将选择较短的路径继续到达目标。如果障碍物在等待时间内没有移动或等待时间结束，则机器人将使用更长的路径到达最终目标位置。最终，对于给定的任务，这种行为树有助于解决周期时间长的问题，这是由于在目标位置附近存在临时障碍物而产生的长路径所导致的。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/patience_and_recovery-1726568430871-27.png" class="" title="patience_and_recovery.png">
+
+<p>从图中，可以看到导航子树中有一个额外的分支，称为 <code>MonitorAndFollowPath</code>。该分支的目的是让用户执行他们的机器人应该显示的任何类型的监视行为。在这种特殊的 BT 中， <code>PathLongerOnApproach</code> BT 节点专门利用 monitor 分支来检查全局规划器是否决定在接近用户指定的目标接近度时为机器人规划一条明显更长的路径。如果没有明显较长的路径，则监视节点进入 FollowPath 恢复节点，然后该节点生成必要的控制命令。</p>
+<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/nav2_patience_near_goal_and_go_around-1726568443235-29.gif" class="" title="nav2_patience_near_goal_and_go_around.gif"><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/nav2_bt/nav2_patience_near_goal_and_clear_obstacle-1726568460021-31.gif" class="" title="nav2_patience_near_goal_and_clear_obstacle.gif">
+
+<h2 id="Navigate-to-pose-路径无效时重新规划"><a href="#Navigate-to-pose-路径无效时重新规划" class="headerlink" title="Navigate to pose(路径无效时重新规划)"></a>Navigate to pose(路径无效时重新规划)</h2><p>从起始点导航到自由空间中的单点目标。它既包含在特定子上下文中使用自定义恢复，也包含针对系统级故障的全局恢复子树。它还为用户提供了在返回失败状态之前多次重试任务的机会。</p>
+<h2 id="Follow-Dynamic-Point"><a href="#Follow-Dynamic-Point" class="headerlink" title="Follow Dynamic Point"></a>Follow Dynamic Point</h2><p>此行为树从一个起点实现导航行为，试图随时间跟随一个动态点。这个“动态点”可以是一个人，另一个机器人，一个虚拟的胡萝卜，任何东西。唯一的要求是想要遵循的姿态被发布到 <code>GoalUpdater</code> BT节点中概述的主题。</p>
+<h2 id="Odometry-Calibration"><a href="#Odometry-Calibration" class="headerlink" title="Odometry Calibration"></a>Odometry Calibration</h2><p>该行为树使用 <code>DriveOnHeading</code> 和 <code>Spin</code> 行为驱动机器人在 CCW 正方形中运行三次。机器人将以 0.2m&#x2F;s 的速度遍行广场的每边 2 米，然后进行 90 度转弯。这是测量里程计精度的原始实验，可以使用和重复调整与里程计相关的参数以提高质量。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">main_tree_to_execute</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">BehaviorTree</span> <span class="attr">ID</span>=<span class="string">&quot;MainTree&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Repeat</span> <span class="attr">num_cycles</span>=<span class="string">&quot;3&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Sequence</span> <span class="attr">name</span>=<span class="string">&quot;Drive in a square&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DriveOnHeading</span> <span class="attr">dist_to_travel</span>=<span class="string">&quot;2.0&quot;</span> <span class="attr">speed</span>=<span class="string">&quot;0.2&quot;</span> <span class="attr">time_allowance</span>=<span class="string">&quot;12&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.570796&quot;</span> <span class="attr">is_recovery</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DriveOnHeading</span> <span class="attr">dist_to_travel</span>=<span class="string">&quot;2.0&quot;</span> <span class="attr">speed</span>=<span class="string">&quot;0.2&quot;</span> <span class="attr">time_allowance</span>=<span class="string">&quot;12&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.570796&quot;</span> <span class="attr">is_recovery</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DriveOnHeading</span> <span class="attr">dist_to_travel</span>=<span class="string">&quot;2.0&quot;</span> <span class="attr">speed</span>=<span class="string">&quot;0.2&quot;</span> <span class="attr">time_allowance</span>=<span class="string">&quot;12&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.570796&quot;</span> <span class="attr">is_recovery</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DriveOnHeading</span> <span class="attr">dist_to_travel</span>=<span class="string">&quot;2.0&quot;</span> <span class="attr">speed</span>=<span class="string">&quot;0.2&quot;</span> <span class="attr">time_allowance</span>=<span class="string">&quot;12&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spin_dist</span>=<span class="string">&quot;1.570796&quot;</span> <span class="attr">is_recovery</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Sequence</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Repeat</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">BehaviorTree</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1971,14 +2433,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">507k</span>
+    <span title="站点总字数">523k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:21</span>
+    <span title="站点阅读时长">15:50</span>
   </span>
 </div>
 <div class="busuanzi-count">
