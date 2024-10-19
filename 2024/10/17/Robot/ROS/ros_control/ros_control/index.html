@@ -19,25 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="由 PR2 改写而来的硬件封装库，负责统一管理硬件设备与底层细节，向上提供统一的接口（用户需继承 hardware_interface::RobotHW，实现并调用 read&#x2F;write 等方法）。包括控制器接口、控制器管理器、传输和硬件接口的包，可以帮助机器人应用快速落地，提高开发效率。    Controller Manager：管理不同的 controller Controller：可以实现">
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ros_control">
 <meta property="og:url" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/index.html">
 <meta property="og:site_name" content="Daemo">
-<meta property="og:description" content="由 PR2 改写而来的硬件封装库，负责统一管理硬件设备与底层细节，向上提供统一的接口（用户需继承 hardware_interface::RobotHW，实现并调用 read&#x2F;write 等方法）。包括控制器接口、控制器管理器、传输和硬件接口的包，可以帮助机器人应用快速落地，提高开发效率。    Controller Manager：管理不同的 controller Controller：可以实现">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074020125.png">
-<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074223274.png">
-<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074249079.png">
-<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074305429.png">
-<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074326664.png">
 <meta property="article:published_time" content="2024-10-16T23:36:57.000Z">
-<meta property="article:modified_time" content="2024-10-19T01:37:12.505Z">
+<meta property="article:modified_time" content="2024-10-19T01:43:23.029Z">
 <meta property="article:author" content="Damon">
 <meta property="article:tag" content="ROS">
 <meta property="article:tag" content="ros_control">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074020125.png">
 
 
 <link rel="canonical" href="http://example.com/2024/10/17/Robot/ROS/ros_control/ros_control/">
@@ -131,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -144,7 +138,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hardware-interface"><span class="nav-number">1.</span> <span class="nav-text">hardware interface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transmission%EF%BC%88%E4%BC%A0%E5%8A%A8%E8%A3%85%E7%BD%AE%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Transmission（传动装置）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E8%8A%82%E9%99%90%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">关节限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">示例</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -231,7 +224,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-19 09:37:12" itemprop="dateModified" datetime="2024-10-19T09:37:12+08:00">2024-10-19</time>
+      <time title="修改时间：2024-10-19 09:43:23" itemprop="dateModified" datetime="2024-10-19T09:43:23+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -282,95 +275,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>由 PR2 改写而来的硬件封装库，负责统一管理硬件设备与底层细节，向上提供统一的接口（用户需继承 <code>hardware_interface::RobotHW</code>，实现并调用 <code>read/write</code> 等方法）。包括控制器接口、控制器管理器、传输和硬件接口的包，可以帮助机器人应用快速落地，提高开发效率。</p>
-<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074020125.png" class="" title="image-20241017074020125">
-
-<ul>
-<li>Controller Manager：管理不同的 controller</li>
-<li>Controller：可以实现 joints 的控制，请求硬件资源，读取硬件资源接口中的状态，发布控制命令</li>
-<li>Harware Resource：硬件资源</li>
-<li>RobotHW：硬件抽象层，用户需继承该类，实现  方法，来实现机器人的操作</li>
-<li>Real Robot：真实机器人硬件，接收并响应指令，反馈状态等</li>
-</ul>
-<p>使用 ros_control 能够复用 ros_controllers 中的控制算法，并且对 gazebo 支持良好。（gazebo 仿真时，自定义插件需继承自 <code>gazebo_ros_control::RobotHWSim</code>，该类实现了模拟 ros_control 中的 <code>hardware_interface::RobotHW</code>） </p>
-<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074223274.png" class="" title="image-20241017074223274">
-
-<blockquote>
-<p>存在问题：部分模块冗余严重，架构过于复杂</p>
-</blockquote>
-<p>提供了一个硬件抽象层，负责机器人硬件资源的管理。controller 则从中请求资源即可。</p>
-<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074249079.png" class="" title="image-20241017074249079">
-
-<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074305429.png" class="" title="image-20241017074305429">
-
-<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074326664.png" class="" title="image-20241017074326664">
-
-
-
-<h1 id="hardware-interface"><a href="#hardware-interface" class="headerlink" title="hardware interface"></a>hardware interface</h1><p>机器人的硬件抽象，相当于机器人的软件表示。是 ros_control 和实体机器人沟通的桥梁。hardware interface 的功能包括向实体机器人发送指令；从机器人驱动读取机器人状态。</p>
-<p>ros control 中包含了一系列可用的硬件接口（通过硬件资源管理器）。ROS control 将硬件接口与上述的 ROS controllers 之一结合使用，以向硬件发送和接受命令。以下是当前支持的硬件接口：</p>
-<ul>
-<li><strong>Joint Command Interfaces</strong><ul>
-<li>Effort joint interface</li>
-<li>Velocity joint interface</li>
-<li>Position joint interface</li>
-</ul>
-</li>
-<li><strong>Joint state interfaces</strong></li>
-<li><strong>Actuator state interfaces</strong> （执行器&#x2F;驱动器状态接口）</li>
-<li><strong>Actuator Command Interfaces</strong><ul>
-<li>Effort Actuator Interface</li>
-<li>Velocity Actuator Interface</li>
-<li>Position Actuator Interface</li>
-</ul>
-</li>
-<li><strong>Force-torque sensor interface</strong> （力 - 扭矩传感器接口）</li>
-<li><strong>IMU sensor interface</strong></li>
-</ul>
-<h1 id="Transmission（传动装置）"><a href="#Transmission（传动装置）" class="headerlink" title="Transmission（传动装置）"></a>Transmission（传动装置）</h1><p>transmissions 是 control pipeline 中的一个元素，转换efforts(力&#x2F;电压等)&#x2F;flow(速度&#x2F;电流等)变量，使产品功率保持不变。</p>
-<p>机械传动是功率不变的变换，例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">P_in    = P_out </span><br><span class="line">F_in x V_in = F_out x V_out   </span><br></pre></td></tr></table></figure>
-
-<p>P、F、V分别代表 power、force(力度)和速度。power 是effort(如:force&#x2F;voltage) 变量和 flow 变量(如:velocity&#x2F;current)的作用结果。</p>
-<p>例如，对于减速比为 n 的简单机械减速器：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">effort map: F_joint = F_actuator * n</span><br><span class="line">flow map: V_joint = V_actuator / n</span><br></pre></td></tr></table></figure>
-
-<p><strong>transmission URDF格式</strong></p>
-<p><a target="_blank" rel="noopener" href="http://wiki.ros.org/urdf/XML/Transmission">参考</a></p>
-<p><strong>transmission接口</strong></p>
-<p>Transmission-specific 代码通过一个 transmission 类型共享的通用接口实现双向（actuator &lt;-&gt; joint）effort 和 flow 之间的映射。可用的 transmission 接口：</p>
-<ul>
-<li>Simple Reduction Transmission（简单减速装置）</li>
-<li>Differential Transmission（差分传动）</li>
-<li>Four Bar Linkage Transmission（四杆传动）</li>
-</ul>
-<p>用法：</p>
-<ul>
-<li><code>transmission_interface::ActuatorToJointStateInterface</code>：通过 actuator 变量设置关节状态</li>
-<li><code>hardware_interface::JointStateInterface</code>：将关节状态暴露给控制器</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://github.com/ros-controls/ros_control/wiki/transmission_interface">示例</a></p>
-<h1 id="关节限制"><a href="#关节限制" class="headerlink" title="关节限制"></a><strong>关节限制</strong></h1><p>joint_limits_interface 包含用于表示关节限制的数据结构、用于从诸如 URDF 和 rosparam 的通用格式填充它们的方法，以及用于对不同类型的关节命令实施限制的方法。</p>
-<p>控制器本身不使用 Joint_limits_interface(它不实现 HardwareInterface)，而是在控制器更新之后在机器人抽象的 write()方法（或等效方法）中操作。Enforcing limits 将覆盖控制器下发的指令，它不会在单独的原始数据缓冲区上操作。</p>
-<p><strong>说明</strong></p>
-<p>①. <strong>Joint limits</strong> Position, velocity, acceleration, jerk and effort.</p>
-<p>②. <strong>Soft joint limits</strong> Soft position limits, k_p, k_v (as described in pr2_controller_manager&#x2F;safety_limits).</p>
-<p>③. Utility method for loading joint limits information from URDF (only position, velocity, effort)</p>
-<p>④. Utility method for loading soft joint limits information from URDF</p>
-<p>⑤. Utility method for loading joint limits from ROS parameter server (all values). Parameter specification is the same used in MoveIt, with the addition that we also parse jerk and effort limits.</p>
-<p><strong>关节限制接口</strong></p>
-<p>①. ros_control 接口用于执行关节限制</p>
-<p>②. 对于 effort-controlled joints, position-controlled joints, 以及velocity-controlled joints,创建了两类接口。一类是饱和（saturation）接口，用于有普通限制而没有软限制的关节；另一类是实现了软限制的接口，与PR2中使用的类似。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ros-controls/ros_control/wiki/joint_limits_interface">示例</a></p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h1><ul>
-<li><ul>
-<li>Barrett WAM controllers at Johns Hopkins University: <a target="_blank" rel="noopener" href="https://github.com/jhu-lcsr/barrett_control">barrett_control on Github</a></li>
-<li>RRBot in Gazebo: <a target="_blank" rel="noopener" href="http://gazebosim.org/tutorials/?tut=ros_control">ros_control with Gazebo tutorial</a></li>
-<li>Rethink Baxter hardware as used at the University of Colorado Boulder: <a target="_blank" rel="noopener" href="https://github.com/davetcoleman/baxter_cpp/blob/hydro-devel/baxter_control/src/baxter_hardware_interface.cpp">Baxter on Github</a></li>
-</ul>
-</li>
-</ul>
-
+    <div class="post-body" itemprop="articleBody"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e954f4dde652b63a0af1dfa255c698c2a76a40294a400e4017fdd4d4a4be011a">61a285bea0bd1a3904d1b9b9e1d94077d9fa9ab6b269962734f2529d3ebd5d8aeab8c5cc49bfe5920ceb46fafe64b699f21c2c2c0198208d1d13bd7b5712c6b4124d0951fdee7dc1e6d36dcf317c22c0898822b1cda742b7849b6b19a7b54c19325b5ea15fdd40453436a17833f0163a8376989f35bb76ab281cfc7344a80353cb842fc7ea6056d77d04cc4b7c7c4d14a956d567b889250625ccb2b2dff33590cacc85fb36ce6eed57c1304baeaec6522d67e17de91869f7f254300d1951ab6fd82f8f9afcda60fac09e950bff80369fe82a48668aff1d9d542d72b3181d8bcb4093aa3ee35437c9332876657193d15c86eccd50c8c37d4ffe6c979a87d34cf8412e72de61f6d6edb99f87bb4615e843141062c7d86d3166ae883e244be65c104fda3a0ffdeb5ab37ff4e6d675c8f789795181a139e165d7f363662c28e11ad18ce57be2426a42386962e449e83d59f0829d42aeb664e99321b9fa970870a577c7937d2a3c9ac29ce94ac7eb0452415990fe2fc8f3711b9986c7e46ae7c48d976d4522be1242a904011939c389b39ad582969792354fed96f61334ebdd9816d33f05f66dcd72a05120847f0f97fc941beac4e6fdfa2da55964bc268665f0932bcd37544d73b660b6e518965a2549a3326b30f392177433afa6ea46109f0474a9a688318d37c5c8f7cf6fd0878e3106fe7f8bc999e07dad19917a239a73e78923e36b5fcbf9bec9da4fde53932b48ea5ad36865868f62d6aaa1fd4934a783b31b66f7a5b47cd215738240790d519fd522b3d63dc24b1e9899ec3eee56e09d6c037197fc88d1e3e58533fb6fa1b6c9b3c933d63b1ebf6d4137086542a8eb04b1555abd4fa77a16b0d675d2bf4a98bb894464dcf0125559fcddaa805a5d468bec9aac5e2a00a483d73a7cd2499cfe2895a147eb64bef88070e84f1c22cad2b552e583698303210f7d971e7d01a0d6f5e24e3f4bb4c1e3fcebc48664d408edaf6c8cc82606806fffc0be77dc743c251461e3e1c49292d4c8b3b94495e7e75004f83d0162bc486da605ebab3c8a629f6cf23d36d7692b5309bb752598774c8a2f43316060433acf8da3cba02d6687e2fa72057f33a91e9abe0e22bb2d56f276d8999f220a12294563124d48af97a7a71432a03ae0d41aa3e7556f77152aa90691d0f7fdcfdbd2a2923e0007316b6d92e1a2c5aa33dad989b02d003a5f116d891930c3f15a3aba9f82acddd3410fb10364644280f9ed4b6d63a48916aef44d9bf30f73c91d648ca12e81ce078de903c82ba68d9d7c7e48646ea57a1f738556278961c9d2689a7a61e960c3d2a46d5da16f6e07cef70d3400f6a231d8873636c0e2d381ed53af62efde1b1c1b328f4bfe40758b11402752d97bbcbefa4c69f591bb5fdc09cf503fa006f79d5269b2265be9d7f1f2f53b5864bbb607703b51694738e8aecb6c2bccdbcd2626c6f533663b3fd90249775167acb4485f87024a74b6875ebc09e65755df6c512a715bd61944fcedef0d9734e15b3aa5362a6b71629b5982608ea163ff9d69b043a6cde9130df2b7ef9955035765438218170cb532aea23daf7bec550312ac1323e87a1fbf09966417810c31aeb5f19c31a50ee05276390bbf51f3135997c593b49397a6a412249978aae2d1bb9bc77e5155819eb7c36e39403730e5fd5ddc39da562c60e85317ea8df280351b31e9b3d47f1a2135f7ae7f336ff33120615fcf17ec0377e79690737935acc287ada2c91c430ec87f3ae6411acb4f9b145e4cb6762ade446bd699b30d2bae8f1d65785dd62cd902778ac92733fda96c0c3b9d7d80f41ce64b0a3d2ab1fb90812bbb653b5198a434f62b4a77282f78352462ef15ca8fbc237c01054709898c188b7cd2bcd6a0caa031afd5a430d3660284d842e6679f14a737dbc2bb277282231bd72ff323e08d1c9f2d77159e54434d3c2ff580a916d67b27bfb686dad0c6f0def3ff209543ba0efc0d5f8734e65fd564c02b0ee69859d853841cd0f70fec8bee6ff9714897740da78bfb8700e201160c9b2f59a6f8ec5dbad8213c33791cef7c4db6988ab05e5542319b58168828cea4aba5c11ebbf5865399e64b0e62e8e86cacd532d7574ba8a310c5323590c656a2abbd5757639fbcd3603f4d9da1678a9bddc7195fee4c50f7f6e8df1402e8d2a07d8e52d3f1d6af3d0cbef3a9d2e65e6c8de009d11622bbfd7e37db75583477bd86cff2212c18a32e93a2d3a61a15a954de6a9f286dff5737ff7889246bf3a79c7cd0480a313a1cb940f755aee82aa59fbc154a5b18a29be82f60b615c7c91f2c17b33facae5ca2f1567118355d195d187fc543569915e4737d9c8c9c661fee396bbc8aa1e29e7f0767df05973ea2e2d269bb5d133f8e52842bb77154f6a771f3699918707e8be90ea06a7e5c22d7a990827f74b23b84595a870961d77a5c3d40ab31942e757120a92923a505d2cd6a6b19e7d650afd74ddc75471dd568b845c60dcd888885c1199bf498f9044cae23139bcfe8f873cbf216879fb713de8aa05d747394de76d61f15c16167d28809f818c7753da45420638d66adbb0af621f3c2931a5fd1704e8cd7b999072f4f185ff4aacd9fe75723f7ad3082f98bb29c0e78bc4e9bf5755007a0f4e13a26b5ab2535f1514d6a1fa4661b2884ea479136e56c0f772c3791bde7b2965996ea74ba431a3b27ce5e0f2301a85bbec2c7611998beaa255e8e02379158ede6d7942fd794c077918f3ac2e22ad792cd3b7366c1292d38ee344d91e7b6045c7c734941aec2aa9fb7ea4fe23a5f363f0a2f6de5830719369ab77a495b2407dcd9e314777efbeb508ae64e0d6db85b650e954f16bda03bd24791494e32748ca13e45070fad0b964439aad827be9acece168a83708b46d0581016cb1b571b1dfb382e39f5a56a7906912c9ffcffcb2115ca9d165d85972ae3afdff80452103831f0e5e5aca711b477365bbaaf505ffd01aa2b73d6b0c882bb07b5e7aa234269560659ae3df0d5f76606194bd1abd44aef398f005ecf43f8398bd388731e94e6012072caa6ab05338e874d051a12fe1ca7999f975a3e41ca15d5242abbfa658af78b7033df785cee166d30a870c33af4c909133a85e657cdcbb42a08ce35ba70f3f4ee57ad0e8e5f27f42a866c02bc3847a50de311cb3561e4b5ebbfbbe12d1fe1239c8e506da9a6c026ca70d1692e5926e3a63e72acc619c095c58f1a29615ad04c3a536ca90ac111d658f21b004a38b07c61609f4b82e6ef49d1142c805b4394ababd0f7ded0d4bf3249244c0010a52956415b083a4e7af1a989f76230f0aa205c8bbf29ac046554417c730042b07c130ed4157f0ac948820d21174aee5aef96762b0fecb615a46dab40465e23a89c4a25fb13d717a8e0ffb964615f11c4bebd32ce35ca163dd4be6e187e94370130ea2be2d9c4b2f9ba4af84750ab424c5da5eefbda99f96f1c1462bcb108d7e6de0ade46462877e8a62173d98379097d276d563d3246a15ded5ccaaccb54c3884b7c4103deda6ccb23c58259c3c17d2c9e19c6f58dc2cea739c78e6aec5e8ef30a7a1a9c20fbe68c6361fcfcf687cfc9641ac0bca1567fcc475c9d1776cf280f64ccc393e95a26526d43d21c9c72d47e74bc1003d624a905a9948044b6014061a22c3cc52c1d640b7b3f6141016b69cd5ae14a3f95300adaa0446be5a7d621c09b68a7d00445f89aad13b0a01edcb4b64ed0906e1a48befd54b08d5be004ff79ee2f597de5d80d94553acc5741b3b827f09babb1c74ceb3d0b0789b81b61327178f66bb1e4953b720be5e76e3fd872810c9d4f672e12b8315d182effdb68792f54632c6c2939bec63852cb5d851ac0ca2ff90411b8e6b15d06b8ec98cc8e434ca11385be6982b5def11b147110c1c7622810bad18bbc5e767755774b50e36a5909baaa04c91db1da0889280c06df52d96539357fc9fe4f504302253bdd0adbbbbc6920ddbb1423eaee39d02fc859f90fdb6ff19e3cda3330d11efa5e91a9285ab6afa2511261c36bf985ad7c4e89cd7de2118fa070c093e28841dfa70e86c0fd37b9fd3a336fe76098fc1f3807c6d451c8ad7bb98ca4581461cb3d6e1bc3dc7319d113616046b43e8f349166bc1093e63f6971911964c0e61818e4f69bf13a78dd9abe1ce9c78a262a8eb610bf1656b10c40c7489d210c6b9ea508732ea5474f8194b5e0c05c829f5ba3883ea39b21c4350061568e4f67b8e6da512fed947a20d85892a15d3bd3a2b344521f8fa0aa0e6e09f89a54b6ecf771cee4cec061f45c178b532c6e26ca42f04f925ceb9b64036ce6a8d6b150c0be7bfedf5326756a798bdf144d92f119d33e0161dc489868e9cc731f2fa1daea7cd723e6c87cd3aff71f3337b9020e33daf21eac97ff1d214e1b9fe2bd1fe07d93512a38c84604093d462ffc383c3aed2e6e6a035d64e875111cffbbcbd68000951f042e54656aca6e3e8a330778ea1d2e58d8b3e06d7173f310d84487e5cc85bddd5dce91f613dcec04fa80b37f3b565ac3ebd4ac4bd1fff2e6970c2cdfba0beec32969245974098ff336ac53fa0f42d1ab193521116c791a05e0c9805d2baf863133d05be2dc9b0f6ab82c4e66f42e3334824d8fc589a598bca8225e3392a999ea0720eab1d0b6d0da00279995aa416493a73ea608ebee061728003a84e4cddbe89431e148932dd252421867a2a4ade08acde97053c16b717f4797a20969774c5bd55e8160d52a5249781547f958c2029555785bbf0eecd14019713ff8ef0467ead800f053630e2ccb55166cc2b2ed5e3f0eb5d1387479a97e61a3316984bf65193557b4e31e52dad3ce69ef4ec2e659f65890ce64c4bc6d3258041d84b3e01481143db9f4141c0cc450f40fcf9954a9cf996328a7ab0ac9a1e623193220988ab5408579fb117d26caea397cfd0382f268622914b06206650e610f259dd7a17e8d70f0659e6d9a849d3e6642b4d70fbb33b0cb08c21e1cfff290fba4a3b09698cb24afb41ae0c486c31cd34df2914f62cd456228a9789185ee9fd468e547e39ead29ab331d2629c28236bf8ffb3f6319fbdc1707ecc03c3feebbb8c3934a3fd0612090a60b5071eae3eaa646b954927f1d075aa2b1e1a79981b89401cd5e28653eebfb769e8808f715d917619f94221bb8c31e40fff646103618a10d7dc99d20f168b95bc4f7ea8c3d452a741e5aa48b745538b702d60eda9e251ff056c0a61684a085c763be7e4cc754dfcae3fd2f93c15d76d684ae6487af2d2c9997005c2d819e43fac7a39162ffc1ac03ab36ab56ba542df7f23e6c5c2ac74266505588af9f472052e4dfcd98414727d82ce541eb9bff456543bfc7fc23551578037225583d82107583219c0ccbabecbac2f762bdeebd44322f8ca6fbf4129c78a0af8d55993718adc021554a8c50d4fc1c4903f4e2726626d851005a70e652be176b8cd3792a3b8854e7660e258b9537fc80da957ff8904c7365784a47fa6c4a5fdf50694fb53722bf36187fe25336d64f6b512e275d092a483b5804c8d7cdbf785055d7c1964b68d68c2346c1252a4eb15e6293057c4653a4e0ebb8ff1b1a45a635c34f219648a2a470c38d49caf65ed9edb48d292b886ea9de1b705c4e7ab072873718db89350f8ba815583b3145723258ec589a3ab757453d816af77c78a6e585143444bd2b0346e097236b8905d979acdd41ceac8e030ac3c5aa53325f2366aa9003a52d9ebb2c7fd759f2dd33bc084fbaf6b2db13b4ad3f52c4d7a10303bd23f000eb643b0242d43b181a06739e71b890195c11aa80ca4afff2475aa138671405a68b3fec3a2edd2a265d77dd6949a41eb098f0d342bf9f6f2011a1b43cda026d28c42634676f36fcf7af7bf089aac707fe512d6245d6f97b3fcac50a27b38e94e7e0b7897ec7581871b3911f17f3492c5598178dbd0d68c7f1f3065a62407936125c6285442115d018ee1c2550f192a60d88ea9a43a4c57aea885a8eb984be9dce2597f36aa1f87fa7869ef9494191b5eaa64d9fd7141e7c762a5ebedaa586a83bae7781b52aa5134a5814adb376c945d192980dea49cb1649568e431c80722536c4a9cc169580683cbc0820b4b0ef925769b1e6d1f44ce0592ccb472dc4c3c5ebd1db7cf2c57267635a2699f7ed64db63b4c243424798724b100988ae6c7127aa94271cf19e3a3e8ab63ea44ac9ee6baafa7d2bb0f37c62dedbc9d641a4dd74488cef5f35c6111d19651e32500e4625fb6649b47cda868fc8384a99aed1651b4cc45b6ff1125f5fe7be3681a13e4395a604d25b45f175f34f3e79ac3f940039f90e6ba8d9d315e7bea9f4154265c8594165d6ef6d3cd068b4cc152f9a5d9d0c8ebdee6eece29d0690d0dc195d3369458c1183dd675d1fa3b90f625712ee434580867ef39c9712775d647a09cc12c42e3e436fddc7440fab56c45baebd3be8af23823dc4463aec3340ba18dc088e4d7dd398f8aaff538e81c8c2e6d2ac3e4866398ae66afe921643f7f00e49bb35979c47c1912fd9f175f087f7e2bd6527e1b8e7284a7715fd4f9d1953792bc1feecb9047731946dad0e27304165a0bfcce0cc6216ef25a30be4ec1dac26889a29f5bf95310d936a84283fdc03fe85b52ea66d8a6cbb568a0f17583ca8e0d81deddb5602bbab331f4281ced390c2bd29b11dd8935f79bd9ba00f1a90414d9eb3a8c624182b6208285c14f1ed5bb816d5e0b6268b3d99b4ec26c9db5215b66c8a583feb7a9e23eba0e700b6f73b953873f29dcb5badfb318c19f41a91e319df9aa02bb7e3eb0aa636fbedd239a53889cdae670c1b11d0dc4ae666414f94f30a527d216e37fe99765b5abfe2b599e86e5b2248a5fab93dbc9485d1d788c8be56b9cfcf093609a123b216b6da07d15694e2bd879d95ae5d9d1fec02915e617c23523453b7e4d218f1cd8e325b943fefd40e6cbdba7ebc00004c29564d1abc62dff0afb73f73ca740a2cf90f88947229dd7f73304eec5d2b8cb4df22158b0f6ae439c33812897562b63c1bcb1f151d3d4a5b9c681ff40c6a11492b42b1b7e9ae01077d74a486998a5867393543b715aaf8bbf453f3c2405c062fc62053024e0ff7501f812f938e3d0ec8ffcafe9f9481e03f18e5b1bf4cb191dcb0c316f829f6c6b1e69a899469aeec06a09a3791cc8a2e21a2e39dbc2b7d71aa759eebf100acac682a2f689a40bd700a04ebd1afea6648d38fe9cf7a215e35984c2c97dceb3a12d2862ef19582193a98dad1cbd1056f6680c9d223094af71d16947556132e3fb86042f91dba90cece93f5a818d4f6b4043528d108980895e80673542c2417c8c87f85b15f5f03c05fff530177d6f13d42d7d3b68f40a0b1339d918e84a9e217c82918049666a7bf823e04f1c3829cb604ca5410c69964a944422519b5e250dfe20fc5a1bc96f837976fdeef2035cf0408a37bd62c84602c5164ee229c612164be62b0c02353b1046e1f7deb80cc679731a31d8bde82ceed829a152c7ce9720a51faa5ede3aa0dc72c26ebfee56da36853856b86bfe8dd8b7ddc54faa22828557060fd79e61dc0bda2626e367c434de943d51a8e7b7f45402b99d75e8b4296aa96d7ce662b9ea42bd5cfefa07eb57d76bd4414ddea729797d5b31b0a96373fb26c386c3b03de1a039e87e890484eaf13b8bed561c2ca3b45d4922ad9edcccea4b3959b7dd3a07277a9074e8d90bf7c07b384f7e48b2a684c1486c472d08c12b09c5cb48293a59779fbaafdbd9568ddbe6e1928b2ff3c335d4e1f3c51da82dda6da5bf1c9450055a2f4348bb56b52b0028254a1554457a75f4fabd71189e52b1f43b59a6c32170635790622430753e568f4865f539c7ec7dc738b3650e4fdbe111a58a40712754db33ec435863db9bfdf00ff1e16f24bdfc928450bd3f5bc7078187eff0afe5402cd64749aaa7003821a897bb52a4979735dd1f7d3d065609a08b7b9c1f4f7d133bf224c61ae0dfb4365ddcacea5d5b9a62b3fb7cc4b444c58b5ca17d39b2d0405e772b032523f3c44e3f710c34aec669bce0fe50c4838b87bec9d1a3fdfdce699fd1ff755ede90d6159176473394732e071adbcffb55b18d649352f48895264b143ff879c9a99c5d9f5016edd9082816c1eb017cbceb007772dfd20c556463b3a1daa2d8e766d42d9082e5b4f57b54b31b6617e6ee62666ce3c9eb95b506179c57e777523627e5bc4b0f5d10d24a8a7f3e82cedc2ef38f929e6b6fd1e4d854d659a51a3d7313e86cf0062441a516f97a33b76618f1bcd54656889a0ba16a96a5d18599fb65f6a8c69e9deb6c6a4d4d47a0dfd3a756900a380854b40c35465b8a74f4e225ca17205b2c2528e396e8454333f8dd120a3431bc3f3fc86d84c68daa5a40ff020aaa873d2dbcee9094450ba0b3a296af71fff40dfaeefafa767136d86b3420b309331fedded2f497e3d112e1a4060631e3be2febe683d2d7e357e13ef2dc2bba3eb64e1f6456ece806b09d5e3adba0beadec18ef4550936ff988fd6595e78815a03e25029df547958a2fbf49b0a93279b18081138f951e77343c89b4ee79e1bc58de7d2ee7f778199844a8f6f5860596f53947857d579f332b0141c7572cc3a057fb2736cb00aa637a8bd91606b099442f914d18c788ede14f00c60ecc522997624a38fbfd063e868296f1fd9a91b3babc0c15ff276426db4424d3d04793063d91732776fef78a8ba78dd4c229dae28239ac7918cea3ff93985eb092340cb4ac0199cc11bf2ed075ae724a56834db3a154641c5319934f3aabc3e911989342c30f24ff482959bb494c0e6ba367cb8f46ca9cf733f75cd588d7c8e51d3d1d7f24313549765e26c84d5581946daf74be294496e50f7cf957d02c89c28b5ef458f65ebdd06787d18427568d146249fe2d3699a62df940234cff3d9719fa8d261a78e72d81d9be56e4a7bd1d49dd3fbfe3027c5e9dae0db7c5ff17fcb8b38f57b6c61fff1ac6bd7dc6285791d15ae52a5c18cd8201718f3f5417e2543916ac67a421e6fe60eb66d5df6ea92bb39f720c6794cac796e5596deb9646224b94e9a080f9566aaf326beb7ab34c95a33f903ccf8f49071344970ad053a9f21fcd0b8829cb9ac8b752e7c41dbc035b3f93dbe2063386a8b55168b8ab93ced5c10660b568af28c99b18a8bec3ea97b5bb3d2b548bdb2ba18a90ead1515aeea1a3d75c99632f717597e12f001b2ebca8f1827f7e979c02f1f59c46e3c84b668074a45e850ea594ca97c7938d2c76c6b2664836bdbaaab5e72c7b6f409b368576b9920637c5db2a889b0924896789d97afb2d0bbdc8522306038e02e708f994b948760f679977ed24338c0838950510018eb5cd9d6dc944ec9b945c83e87b557e9930d582f5baa503a10ff3a2806ba7b319bc620f482e00c0954340655d25451889a13de3e3d5aed477e1317ce119640169d2dbb6b7fb59da53ea6a65981512ef1f300241562202261bcd3a3387b72b7fb826c2623fc1d5953000f60c4ad78d4109ea5573ddd2dd8d597a48a0df7d30b097d4d8cbd3b1c5ac200f8929ac43ad23f80df912b2694606ae1253001cb6e5864e96d7ab1004cc45cc14ba572d3b356a6e0e7a28990edc8fc53298a38872041c2b97844c4a40b0b6b2e36b1ca38804bfb43949c5a71354f49badcf7cd6ad9d00fb3d569583e777524ec6adf6ef7091d314c1bbf635e5d81514a142e2fac582aae96bb9ab2604a8103e9106356cee1588ce0a780e8a8e1928928699cbf112c3bcc8943ea412511568a3e5399cdabf302ce11daf473d7c6e82ea58cdb8fb86bb4206dee77387df50d40d9f4ecc0048d25f5f7181015d238e9d8f5da4e637119045139c013ab056ccbcfc48670c9dfdbadee70c6b7714a919931f3ef62603a9ac137479489b6243b86bbe314b19423541f22e902999f61d964632ea247a4896d002e4a426ee003aae95a85875e38bd756d987faadb5504c1a7458a6e0bdc2cea68ace8a81e78e4269a2cf1ab3591e0cfcea7c4b410142cafbc51d24c0a45c9187b1c8d9d1f6e6cd01e6859d9c3a9ae798350ea188db8b8801b7e32411cc989d4db134465bcb56b2911b8f4d7d92851ec2c2bd91b45da2bf7f2554a53f3aab2ea56ed3ba05d6c0a25efed43f5344a016796eea6ee3eeffe598be5a710f45e1b1b8ba0e223c69678641505caa3f958ced20e73e3f81653a3a044e72f10806d99b17274e6c8431dca0631b2df30d26d5eb16c9676681f375093807c5a578251fdb4d94da0a466f2ac00c395616bae23ce1b577e0aaee517a8de930f25ea2f148bc6f03f789e31b9f6d204281009bc284b7f8853feb5a928781af51d576122c59ae7666251b513936ce32dbf6768ccef89c66778699423722848550f06d63d4b3a0047fd1504fa143ac894455627396a7922583e33522c5a251d864fbabe16e82e189975e705f36ba3ebdc40b2dea8645728731bcf90fbe030ec9614f4b65c17fd792d633b931976baf01cec58ac93ef07fec77cfe04c2e8b06f2964f795b112dc895551262ccf7c542812bf6f4e1268248dd7b0e8e8ee41517de632f95c7345db4012456ddb3952c33410f8c9a8f111ff97f79560c80270760ca1e7995ac6386d2e699524311c5ba69797a9c44b09b82a65913c370f9a57a84fe243c712a158f9face3712d57669d4301ed08a6718d3ef0319917db32ae94192cc1888081cd5befcc33027b88f9ee5103d423ed72a89c814e9ff3d7222951f474978f89821e7d14bd663ccd95c6f9a17f2db3afa257fd3e1a1b7c46bd7457ea4f85c51290e3c363445956da7eb8d4feaae8ffb5d8a27b163c35e7b8d9e3d98b0e37686f6d97d8d254218bd6f535305f8a80ddba26f31437f32843888a937d1f015ed682ff7ce5e58e2475a1b3f4163dc6de1afe61e841c7ed70068a128a7c661690debfad906f8828482139fa1ca0333cd088f91ef14a9b112c636ea763d82268080097f31f77c4bfd2558be1039e9d955413c612ba1b8a69ebc58cbf129a3e5e8593669e5f0e651</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
