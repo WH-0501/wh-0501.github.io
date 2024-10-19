@@ -19,21 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Sequence of multiple segments。 要连接多个轨迹并一次规划轨迹，可以使用序列功能。这减少了规划开销，并允许遵循预先描述的路径而不停留在中间点。 请注意: 如果序列命令规划失败，则该序列命令将不被执行。 请注意: 序列命令允许包含多个组的命令(例如“机械手”，“夹持器”) User interface sequence capability一个专门的 MoveIt 功能将">
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多段序列">
 <meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/index.html">
 <meta property="og:site_name" content="Daemo">
-<meta property="og:description" content="Sequence of multiple segments。 要连接多个轨迹并一次规划轨迹，可以使用序列功能。这减少了规划开销，并允许遵循预先描述的路径而不停留在中间点。 请注意: 如果序列命令规划失败，则该序列命令将不被执行。 请注意: 序列命令允许包含多个组的命令(例如“机械手”，“夹持器”) User interface sequence capability一个专门的 MoveIt 功能将">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/image-20240917200130040.png">
 <meta property="article:published_time" content="2024-09-17T12:01:00.000Z">
-<meta property="article:modified_time" content="2024-09-22T06:42:30.612Z">
+<meta property="article:modified_time" content="2024-10-19T07:57:37.943Z">
 <meta property="article:author" content="Damon">
 <meta property="article:tag" content="机械臂">
 <meta property="article:tag" content="MoveIt">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/image-20240917200130040.png">
 
 
 <link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/">
@@ -127,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -140,7 +138,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#User-interface-sequence-capability"><span class="nav-number">1.</span> <span class="nav-text">User interface sequence capability</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,18 +150,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -227,7 +224,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+      <time title="修改时间：2024-10-19 15:57:37" itemprop="dateModified" datetime="2024-10-19T15:57:37+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -274,15 +271,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>Sequence of multiple segments。</p>
-<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这<strong>减少了规划开销，并允许遵循预先描述的路径而不停留在中间点</strong>。</p>
-<p>请注意: 如果序列命令规划失败，则该序列命令将不被执行。</p>
-<p>请注意: 序列命令允许包含多个组的命令(例如“机械手”，“夹持器”)</p>
-<h1 id="User-interface-sequence-capability"><a href="#User-interface-sequence-capability" class="headerlink" title="User interface sequence capability"></a><strong>User interface sequence capability</strong></h1><p>一个专门的 MoveIt 功能将 <code>moveit_msgs::MotionSequenceRequest</code> 作为输入。该请求包含如上所述的后续目标列表和附加的 <strong>blend_radius</strong> 参数。如果给定的以米为单位的 blend_radius 大于零，则将相应的轨迹与以下目标合并在一起，以使机器人不会停在当前目标处。当 TCP 比给定的 <strong>blend_radius</strong> 更接近目标时，允许它朝下一个目标前进。当离开当前目标周围的球体时，机器人会返回到它在没有混合的情况下所采用的轨迹。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/image-20240917200130040.png" class="" title="image-20240917200130040">
-
-<p>详细实现参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
-
+    <div class="post-body" itemprop="articleBody"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，密码不对，请重试" data-whm="抱歉，该文章无法校验">
+  <script id="hbeData" type="hbeData" data-hmacdigest="70728db77a6acd581eb662b4a35c2d7b5a1a43e722aaa1f653fa91a6358eb3a6">61a285bea0bd1a3904d1b9b9e1d9407789a31a25f928e8557d4c50ab88beb6ac115aa44a077f9c73e630c904d8bf09d97e787edcd096337fa06722a8d95aec7e71a2f76d29e08f7deae377789597098190352752a4d9ea4ed41d2ea5aa846d42a1df2a7697023a2f30a5a18e2b9ae3c1fcd459d338dcb8f2fab21f957d50e5207bb46d88815cee1f666b18764bcf9e1bee0cbac4807edede6bc7b4afaf15d70fc416f2bc783db1c412c1206637d3db2070338420d7208b2a7f3057890191ed778568a520257bc1f670d96d3452e45261c6b6aa6a7a717bc2ffc4a1c697475ce9113ac94b86afdfb25857199f36342c25b10974136aea6f407597c9e168920770a4f69c9d0529d7f95f7be51690149fbda9c32bba5ad31688a875ac87157c1c9671c6ed38bba26103a381024b04ed078cc223391382cc5080a13126003c927014f55cca2219bd0e55e380be07531aa5f2d0702d9e0688cdd8c9b86eb5d53fdcd02ad60aa2d3f711a377328eb2d4d253270e4e5a33799733006b9b765ac86ea8695975fd6b0402b108e32851a9fdb658d5d8e269e08b72dbf03c3fcbeddde880c0823931de126bcb6ef7d6ecfd98bbf6af3edb702810f70a02a876bc71916fe43f65abe3c4a5bff35f712265daf2a092d35894776234fcf7ddc2576cbae04b10abb7ebf066455b600cdcbd0987f7f1eee21c13a10ccf57f5c29e13c32de6f829b8812a276f154ebd454a4ae06f5846b89b7e4c40a7abfafffb15503db9995c282c83a140194fbf20d3f8d720572e810ab33d2665d7595452c67746d9904ffef18bbe145b633c35580af2afc44156bb947c76a998eb66fd21e3af44af10c739f39051bc5df0ca32516108ec3b1dcf88d5167d4fe6de3f32add01eccb593678b625df588a32f12750d05932961fd1d07f9fa6e0e9b5d2236023202cc7327865aaf41769b4fdf64f17eade3f50e5204a3c9c7e3cce6e1339f71e13142de8bcb6aea9593b101073272ba140832279637d5042aca5e08f7691c59c06790a984561da3b4bb1cb14d8c4bae916992fcfa62c1760d8829300e6b18e991006c179585690e0e85dd2ba236aa1c320fa88a9babaa76f8d311e5a9766e352f12c950bd61c0bc7cec1c059ecfe475e25445797080b94ae30f263b7a507679395cdd736e6b18d06de02f5c25ea0da9b23d7616129aa54631240d6c4e42c526c40276f42c43011dd7aae686a90676a6286e3481d91f2608058a349eb23b28bf4f83ee434a79853756cc8db63d589156c60a2c84e89d2af9f6fe4fbc5f079e1c285f05f5174f7591396a80b669601e756f96ad7daddc3d5206c647e8d7055f7713c1e2245f98993b85f0e2fadc51a033e77457482b89f13331695304af729e8b8567a41e03be7d4edc5f58c30643b0a523d57a66722caa5f476901ca09ecc07dde92047560d85122e3c83cc4996f0ee7946709b13c92e7ff62fc52cdccd1cac2825af7fd0defd9c8bc2831549bb748d7adbed9e6380bd102a09c7efb7382ec911b0e348dc79ae904e7127ad9cf7492a66e4b1fedfd3c71a84a5e5ac952aed384d7976afb22b67f7323b0d55bef2bb7730a5351901a238d5ec66c2343f71d9a4e4b166c96451c47253235c5eccffb012b03b3bc89ffa1a8b091c2031007c30489d4bff0d5b881e6190a019d3105956a8dd6bc921563a16066566098a5d7eaa36224dca2e40f150377f75634fb033355e47409f11e2084d3c53996e41037813d0b97938bc3186c3c7caf0f89a5bfb81079533fb10723db48a3b00c31aa90f32a2a5361df74823e3c72374167d08bc71d4e9a812e9e6e1585fc2abe510fcc14f944932a1347ae76b5c042fd4fdaf5acb10088aa9edfacfb24b95e5bed58bed99dd3604add61f9075132df47962f65fb7efb72b3538e164985047d962ad7f9303540f18c39bd5a761414dbcb0004a3923a666059c7f7673d40c66eacdde453a10cb03fc8d27cc57a2931677ae4c51ef6459a0a3dac25c19f81c9f36af38cb24d62290d5c57bfc869f5a9c4f39375df412c1b2111c626dd50240dc98d3e2adc36b255e7013e99097a71d61f2855c83219d4304a6bae7ff65c94314dc2862e2e2370f4eebb1c07362673b9a6c8a95d1b70e4d93fd8763c982c2b1ebef23fb279ba40e1cb1451117273e8d4573f75effeeaa7b1fbfbf45c167d2c4d531b66a463ac0e21a8dfb9e329c4690ed722d470852a1f4da664d6efccfcf994c6e3731dcaf902a22b24f8b78156c4ff5fbacb29fa35cbfecf615bebc31bcec54ae5c773968415074e52adad27dcd53a55</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -338,14 +338,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">570k</span>
+    <span title="站点总字数">605k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:17</span>
+    <span title="站点阅读时长">18:19</span>
   </span>
 </div>
 <div class="busuanzi-count">

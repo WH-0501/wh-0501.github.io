@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,352 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/" class="post-title-link" itemprop="url">Perception</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:40:56" itemprop="dateCreated datePublished" datetime="2024-09-17T19:40:56+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>launch 目录的 <code>sensor_manager.launch.xml</code> 文件会加载该配置参数。需修改 <code>xxx_moveit_sensor_manager.launch.xml</code>，添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find xxx_moveit_config)/config/sensors.yaml&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>还需要配置 Octomap，在 <code>sensor_manager.launch</code> 中添加以下代码行:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;octomap_frame&quot;</span> <span class="attr">type</span>=<span class="string">&quot;string&quot;</span> <span class="attr">value</span>=<span class="string">&quot;odom_combined&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;octomap_resolution&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.05&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;max_range&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;5.0&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Obstacle-Avoidance"><a href="#Obstacle-Avoidance" class="headerlink" title="Obstacle Avoidance"></a><strong>Obstacle Avoidance</strong></h1><p>参考 moveit_tutorials 中的 <code>obstacle_avoidance_demo.launch</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/launch/demo.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Play the rosbag that contains the pointcloud data --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;moveit_tutorials&quot;</span> <span class="attr">type</span>=<span class="string">&quot;bag_publisher_maintain_time&quot;</span> <span class="attr">name</span>=<span class="string">&quot;point_clouds&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- If needed, broadcast static tf for robot root --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf2_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_panda&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0 0 0 0 0 0  world panda_link0&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf2_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_camera&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0.115 0.427 0.570 0 0.2 1.92 camera_rgb_optical_frame world&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="检测并添加目标作为-Collision-目标"><a href="#检测并添加目标作为-Collision-目标" class="headerlink" title="检测并添加目标作为 Collision 目标"></a><strong>检测并添加目标作为 Collision 目标</strong></h2><p>演示从点云中提取圆柱体、计算相关值并将其作为碰撞对象添加到规划场景中的示例。</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/image-20240917194220440.png" class="" title="image-20240917194220440">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials detect_and_add_cylinder_collision_object_demo.launch</span></span><br></pre></td></tr></table></figure>
+
+<p><code>detect_and_add_cylinder_collision_object_demo.launch</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find moveit_tutorials)/doc/perception_pipeline/launch/obstacle_avoidance_demo.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Run the detection and adding cylinder node --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;moveit_tutorials&quot;</span> <span class="attr">type</span>=<span class="string">&quot;cylinder_segment&quot;</span> <span class="attr">name</span>=<span class="string">&quot;point_cloud_preprocessor&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Low%20Level%20Controllers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Low%20Level%20Controllers/" class="post-title-link" itemprop="url">Low Level Controllers</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:37:22" itemprop="dateCreated datePublished" datetime="2024-09-17T19:37:22+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 15:57:44" itemprop="dateModified" datetime="2024-10-19T15:57:44+08:00">2024-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          Here's something encrypted, password is required to continue reading.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Low%20Level%20Controllers/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/" class="post-title-link" itemprop="url">Hand-Eye Calibration</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 19:28:45" itemprop="dateCreated datePublished" datetime="2024-09-17T19:28:45+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 15:57:40" itemprop="dateModified" datetime="2024-10-19T15:57:40+08:00">2024-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          Here's something encrypted, password is required to continue reading.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2194,788 +2540,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/" class="post-title-link" itemprop="url">catkin</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-16 11:04:39" itemprop="dateCreated datePublished" datetime="2024-09-16T11:04:39+08:00">2024-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/" itemprop="url" rel="index"><span itemprop="name">catkin</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="编译指令"><a href="#编译指令" class="headerlink" title="编译指令"></a>编译指令</h1><h2 id="编译为release版本"><a href="#编译为release版本" class="headerlink" title="编译为release版本"></a>编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>CMAKE_BUILD_TYPE</strong> 可以的取值是:</p>
-<ul>
-<li><code>Debug</code> - 调试信息多，没优化</li>
-<li><code>Release</code> - 没有多余的调试信息，发布时使用</li>
-<li><code>RelWithDebInfo</code> - 优化过的带有有调试信息的版本</li>
-<li><code>MinSizeRel</code></li>
-</ul>
-<h2 id="编译指定包"><a href="#编译指定包" class="headerlink" title="编译指定包"></a>编译指定包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg &lt;package_name&gt;  <span class="comment"># 临时生效</span></span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --only-pkg-with-msgs=&lt;message_package_name&gt; <span class="comment"># 只编译 .msg 文件</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>白名单：**<code>-DCATKIN_WHITELIST_PACKAGES</code>**</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;package1;package2&quot;</span></span> </span><br></pre></td></tr></table></figure>
-
-<p>恢复编译所有的包（如不执行该指令，则后续都只会编译上述指定的包）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;&quot;</span></span>   </span><br></pre></td></tr></table></figure>
-
-
-
-<p> 黑名单: <strong><code>-DCATKIN_BLACKLIST_PACKAGES</code></strong></p>
-<h2 id="将指定包编译为release版本"><a href="#将指定包编译为release版本" class="headerlink" title="将指定包编译为release版本"></a>将指定包编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>可使用多个</strong> <strong>–pkg</strong> <strong>参数指定多个包</strong></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install --pkg rbx1_bringup <span class="comment"># 安装指定包</span></span>              </span><br></pre></td></tr></table></figure>
-
-
-
-<p>若未编译，则先编译（Debug），再安装。默认安装在当前目录，若要指定安装目录，可使用-DCMAKE_INSTALL_PREFIX参数，例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg rbx1_bringup</span></span><br></pre></td></tr></table></figure>
-
-<p>​              </p>
-<h2 id="编译为release，并安装在指定目录"><a href="#编译为release，并安装在指定目录" class="headerlink" title="编译为release，并安装在指定目录"></a>编译为release，并安装在指定目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
-
-<h2 id="自动初始化工作空间"><a href="#自动初始化工作空间" class="headerlink" title="自动初始化工作空间"></a>自动初始化工作空间</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON</span></span><br></pre></td></tr></table></figure>
-
-<p>编译rovio包。如果工作空间未初始化，可以自动完成工作空间初始化 。</p>
-<h2 id="catkin-init-workspace"><a href="#catkin-init-workspace" class="headerlink" title="catkin_init_workspace"></a>catkin_init_workspace</h2><p>将当前目录初始化为一个 ROS 工作空间（通常不需要运行该指令，除非想将某个目录指定为 ROS 工作空间）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating symlink &quot;/home/ros/catkin_test/src/CMakeLists.txt&quot; pointing to &quot;/opt/ros/kinetic/share/catkin/cmake/toplevel.cmake&quot;</span><br></pre></td></tr></table></figure>
-
-<p>会在当前目录生成一个 CMakeLists.txt 文件，该文件为 &#x2F;opt&#x2F;ros&#x2F;kinetic&#x2F;share&#x2F;catkin&#x2F;cmake&#x2F;toplevel.cmake 的软链接。</p>
-<h2 id="catkin-make-CMakeLists-txt-常用变量"><a href="#catkin-make-CMakeLists-txt-常用变量" class="headerlink" title="catkin_make CMakeLists.txt 常用变量"></a>catkin_make CMakeLists.txt 常用变量</h2><p>install 相关变量：</p>
-<p><strong>- CATKIN_PACKAGE_BIN_DESTINATION</strong></p>
-<p><strong>- CATKIN_PACKAGE_ETC_DESTINATION</strong></p>
-<p><strong>- CATKIN_PACKAGE_INCLUDE_DESTINATION</strong></p>
-<p><strong>- CATKIN_PACKAGE_LIB_DESTINATION</strong></p>
-<p><strong>- CATKIN_PACKAGE_PYTHON_DESTINATION</strong></p>
-<p><strong>-</strong> <strong>CATKIN_PACKAGE_SHARE_DESTINATION</strong>: 被设置为 ${CATKIN_GLOBAL_SHARE_DESTINATION}&#x2F;${PROJECT_NAME}</p>
-<p><strong>- CATKIN_GLOBAL_BIN_DESTINATION：</strong>通常值用于ROS核心执行程序</p>
-<p><strong>- CATKIN_GLOBAL_ETC_DESTINATION</strong></p>
-<p><strong>- CATKIN_GLOBAL_INCLUDE_DESTINATION</strong></p>
-<p><strong>- CATKIN_GLOBAL_LIB_DESTINATION</strong></p>
-<p><strong>- CATKIN_GLOBAL_LIBEXEC_DESTINATION</strong></p>
-<p><strong>- CATKIN_GLOBAL_PYTHON_DESTINATION</strong></p>
-<p><strong>- CATKIN_GLOBAL_SHARE_DESTINATION</strong></p>
-<h1 id="catkin-make-isolated"><a href="#catkin-make-isolated" class="headerlink" title="catkin_make_isolated"></a>catkin_make_isolated</h1><p>当一个工作空间中包含不同环境的独立的项目时，可以使用该指令进行编译。为纯粹由 catkin 包构成的工作区提供调试，并允许用户构建包含 <strong>catkin</strong> 和 **非catkin **包的工作区。</p>
-<p>非catkin包：编译脚本中不使用 Catkin cmake，而是简单的 CMake 或者其它的工具的程序包。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make_isolated --install-space ./cartographer-packages --install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=xxxx install --pkg=</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="catkin-build"><a href="#catkin-build" class="headerlink" title="catkin build"></a>catkin build</h1><p>主要区别在于 catkin build 获取的 isolated 环境。catkin build 使得整个 build configuration 更加独立，并且对配置文件的修改(添加&#x2F;删除程序包，修改 cmake 变量等)更加健壮。</p>
-<ul>
-<li><strong><code>catkin build</code> 并行编译相互独立的包</strong>，因此速度更快</li>
-<li><code>catkin build</code> 可在 workspace 的任何目录下执行，**<code>catkin_make</code> 只能在顶层目录下执行**</li>
-<li>编译指定包更加方便。<code>catkin build</code> ，或者，在要编译的包目录下执行 <code>catkin build --this</code></li>
-<li><code>catkin build</code> 输出的日志更易读</li>
-<li>使用 <code>catkin build</code>，还可以获得许多其它有用的 <code>catkin</code> 子命令，例如: <ul>
-<li>catkin clean - 清除 build devel 及 install 目录</li>
-<li>catkin list</li>
-<li>catkin locate</li>
-<li>catkin profile</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/15/Robot/ROS/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/15/Robot/ROS/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">命名空间</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-15 21:24:52" itemprop="dateCreated datePublished" datetime="2024-09-15T21:24:52+08:00">2024-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Robot/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a><!--需保留首行 # --></h1><h1 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h1><p>参考：<a target="_blank" rel="noopener" href="http://wiki.ros.org/Names">ros Names</a>  </p>
-<h2 id="Graph-Resource-Names"><a href="#Graph-Resource-Names" class="headerlink" title="Graph Resource Names"></a>Graph Resource Names</h2><p>Graph Resource Names 提供了一个<strong>分层的命名结构</strong>，该结构用于 ROS 计算图中的所有资源，如 nodes、参数、topics 和 services。  </p>
-<p>例如：  </p>
-<ul>
-<li><code>/</code> : 全局命名空间</li>
-<li><code>/foo</code></li>
-<li><code>/stanford/robot/name</code></li>
-<li><code>/wg/node</code></li>
-</ul>
-<p>Graph Resource Names 是 ROS 中一个提供封装(encapsulation)的重要机制。每个资源定义在一个命名空间(namespace)中，而该命名空间有可能为多个资源所共享。通常，资源可在其 namespace 中创建资源，并且可以访问其 namespace 内或其 namespace 上一层的资源。可以建立属于不同 namespace 的资源之间的连接，这通常是通过在上层整合这两个 namespace 的代码来实现。  </p>
-<p>names 是相对解析的，因此资源不需要关注其所属的 namespace。</p>
-<h3 id="可用的-names"><a href="#可用的-names" class="headerlink" title="可用的 names"></a>可用的 names</h3><p>一个可用的名字有以下特征：  </p>
-<ul>
-<li>以字母、’~’、’&#x2F;‘ 开始</li>
-<li>后跟字母、数字、下划线或 ‘&#x2F;‘</li>
-</ul>
-<blockquote>
-<hr>
-<p><strong><em>注意：</em></strong>  </p>
-<ul>
-<li>base names 不能使用 ‘&#x2F;‘ 或 ‘~’</li>
-</ul>
-<hr>
-</blockquote>
-<h3 id="resolving"><a href="#resolving" class="headerlink" title="resolving"></a>resolving</h3><p>ROS 中有四种类型的 Graph Resource Names: <code>base</code>、<code>relative</code>、<code>global</code>、<code>private</code>  </p>
-<ul>
-<li>base</li>
-<li>relative&#x2F;name</li>
-<li>&#x2F;global&#x2F;name</li>
-<li>~private&#x2F;name</li>
-</ul>
-<p>默认情况下，<code>resolution is done relative to the node&#39;s namespace(resolution 是相对于节点的命名空间)</code>。  </p>
-<p>没有指定任何 namespace 限定符的 names 属于 <code>base names</code>。**<code>base names</code> 实际上是 <code>relative names</code> 的一个子类，并且有着相同的 resolution 规则**。Base names 经常用于初始化节点名。    </p>
-<p><strong>以 <code>/</code> 开头的 names 是全局的</strong>。应当尽量避免 <code>Global names</code>，因为其限制了代码的可移植性。   </p>
-<p>**以 <code>~</code> 开头的 names 是 <code>private</code> **。将节点的名字转换为 namespace。例如，<code>/wg</code> 命名空间中的节点 node1 的私有命名空间为 <code>/wg/node1</code>。Private names 用于通过参数服务器传递参数到一个指定节点。    </p>
-<p>示例: <!-- 注意：表格与文字间需换行，否则无效 -->  </p>
-<table>
-<thead>
-<tr>
-<th>Node</th>
-<th>Relative(default)</th>
-<th>Global</th>
-<th>Private</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#x2F;node1</td>
-<td>bar -&gt; &#x2F;bar</td>
-<td>&#x2F;bar -&gt; &#x2F;bar</td>
-<td>~bar -&gt; &#x2F;node1&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;wg&#x2F;node2</td>
-<td>bar -&gt; &#x2F;wg&#x2F;bar</td>
-<td>&#x2F;bar -&gt; &#x2F;bar</td>
-<td>~bar -&gt; &#x2F;wg&#x2F;node2&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;wg&#x2F;node3</td>
-<td>foo&#x2F;bar -&gt; &#x2F;wg&#x2F;foo&#x2F;bar</td>
-<td>&#x2F;foo&#x2F;bar -&gt; &#x2F;foo&#x2F;bar</td>
-<td>~foo&#x2F;bar -&gt; &#x2F;wg&#x2F;node3&#x2F;foo&#x2F;bar</td>
-</tr>
-</tbody></table>
-<h3 id="remapping"><a href="#remapping" class="headerlink" title="remapping"></a>remapping</h3><p>命令行启动节点时，可对 ROS 节点的名字进行重映射。  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rospy_tutorials talker chatter:=/wg/chatter</span></span><br></pre></td></tr></table></figure>
-<p>将 <code>chatter</code> 重映射为 <code>/wg/chatter</code>。  </p>
-<p>重映射匹配规则示例：  </p>
-<table>
-<thead>
-<tr>
-<th>Node Namespace</th>
-<th>Remapping Argument</th>
-<th>Matching Names</th>
-<th>Final Resolved Name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#x2F;</td>
-<td>foo:&#x3D;bar</td>
-<td>foo,&#x2F;foo</td>
-<td>&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;baz</td>
-<td>foo:&#x3D;bar</td>
-<td>foo,&#x2F;baz&#x2F;foo</td>
-<td>&#x2F;baz&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;</td>
-<td>&#x2F;foo:&#x3D;bar</td>
-<td>foo,&#x2F;foo</td>
-<td>&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;baz</td>
-<td>&#x2F;foo:&#x3D;bar</td>
-<td>&#x2F;foo</td>
-<td>&#x2F;baz&#x2F;bar</td>
-</tr>
-<tr>
-<td>&#x2F;baz</td>
-<td>&#x2F;foo:&#x3D;&#x2F;a&#x2F;b&#x2F;c&#x2F;bar</td>
-<td>&#x2F;foo</td>
-<td>&#x2F;a&#x2F;b&#x2F;c&#x2F;bar</td>
-</tr>
-</tbody></table>
-<p>参数重映射：  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 ~param 设置为 1.0</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rospy_tutorials talker _param:=1.0</span> </span><br></pre></td></tr></table></figure>
-<p>其它常用 keys：  </p>
-<ul>
-<li><code>__name</code>:</li>
-<li><code>__log</code>:</li>
-<li><code>__ip</code>:</li>
-<li><code>__host</code>:</li>
-<li><code>__master</code>:</li>
-<li><code>__ns</code>:</li>
-</ul>
-<p>
-
-<h2 id="Package-Resource-Names"><a href="#Package-Resource-Names" class="headerlink" title="Package Resource Names"></a>Package Resource Names</h2><p>该名字用于 ROS 文件系统级别的概念，用于简化指向磁盘文件和数据类型的过程。包资源名字非常简单: 在包名后增加资源名。例如，<code>std_msgs/String</code> 指 <code>std_msgs</code> 包中的 <code>String</code> 消息类型。  </p>
-<p>可以使用包资源名引用的一些ros相关文件包括:  </p>
-<ul>
-<li>Message types（msg）</li>
-<li>Service types（srv）</li>
-<li>Node types</li>
-</ul>
-<p>可用 names：    </p>
-<ul>
-<li>以字母（<code>[a-z|A-Z]</code>）开始</li>
-<li>后跟字母或数字、下划线、斜杠(&#x2F;)</li>
-<li>最多有一个斜杠</li>
-</ul>
-<h2 id="roscpp-API"><a href="#roscpp-API" class="headerlink" title="roscpp API"></a>roscpp API</h2><p>参考：<a target="_blank" rel="noopener" href="http://docs.ros.org/en/noetic/api/roscpp/html/namespaceros_1_1names.html">ros::names Namespace Reference</a></p>
-<h1 id="全局名称"><a href="#全局名称" class="headerlink" title="全局名称"></a>全局名称</h1><p><code>/</code> 表示全局名称。由斜杠分开的一系列命名空间，每个斜杠代表一级命名空间。基本名（base name）称描述资源本身。<br>例如：&#x2F;teleop_turtle，该名称为全局名称，teleop_turtle 为基本名称。  </p>
-<h1 id="相对名称"><a href="#相对名称" class="headerlink" title="相对名称"></a>相对名称</h1><p>缺少全局名称的斜杠 <code>/</code>。  </p>
-<p><strong>相对名称解析</strong>：将当前默认的命名空间的名称加在相对名称的前面，从而将相对名解析为全局名称。  </p>
-<p><strong>设置默认命名空间</strong>：默认的命名空间是单独为每个节点设置的，而不是在系统范围进行。为节点选择一个不同的默认命名空间的最好的也是最常用的方法是在 launch 文件中使用命名空间属性(ns)。ROS 提供如下方式设置默认命名空间：  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过命令行参数 __ns 设置默认命名空间</span></span><br><span class="line">__ns:=default-namespace  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 shell 环境变量设置默认命名空间</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> ROS_NAMESPACE=default-namespace</span> </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<hr>
-<ul>
-<li>只有当没有其他由 <code>__ns</code> 参数指定的默认命名空间时，<code>ROS_NAMESPACE</code> 环境变量才有效</li>
-</ul>
-<hr>
-</blockquote>
-<h1 id="私有名称"><a href="#私有名称" class="headerlink" title="私有名称"></a>私有名称</h1><p>以 <code>~</code> 开始。和相对名称一样，私有名称并不能完全确定他们自身所在的命名空间，而是需要 ROS 客户端库将这个名称解析为一个全局名称。  </p>
-<p>与相对名称的主要差别在于：<strong>私有名称不是用当前默认命名空间，而是使用其节点名称作为命名空间</strong>。</p>
-<h1 id="匿名名称"><a href="#匿名名称" class="headerlink" title="匿名名称"></a>匿名名称</h1><p>一般用于节点名（匿名并不是指没有名字，而是指非用户指定而又没有语义信息的名字）。<strong>匿名名称的目的是使节点的命名更容易准守唯一性的规则</strong>。其思路是，当节点调用 <code>ros::init</code> 方法时可以请求一个自动分配的唯一名称。  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros::<span class="built_in">init</span>(argc, argv, base_name, ros::init_options::AnonymousName);</span><br></pre></td></tr></table></figure>
-<p>注意：需要将 <em><code>ros::init_options::AnonymousName</code></em> 作为第四个参数传递给 ros::init 方法   </p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo&quot;</span>);</span><br><span class="line"></span><br><span class="line">    ros::NodeHandle nh_global; <span class="comment">// global</span></span><br><span class="line">    <span class="function">ros::NodeHandle <span class="title">nh_local</span><span class="params">(<span class="string">&quot;~&quot;</span>)</span></span>; <span class="comment">// private</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结果为 /</span></span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Global nh ns: %s&quot;</span>, nh_global.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="comment">// 结果为 /demo</span></span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Local nh ns: %s&quot;</span>, nh_local.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line">    </span><br><span class="line">    std::string test_param1;</span><br><span class="line">    std::string test_param2;</span><br><span class="line">    nh_local.<span class="built_in">param</span>(<span class="string">&quot;param1&quot;</span>, test_param1, std::<span class="built_in">string</span>(<span class="string">&quot;param1&quot;</span>));</span><br><span class="line">    nh_global.<span class="built_in">param</span>(<span class="string">&quot;param2&quot;</span>, test_param2, std::<span class="built_in">string</span>(<span class="string">&quot;param2&quot;</span>));</span><br><span class="line">    </span><br><span class="line">    ros::Subscriber sub0 = private_nh.<span class="built_in">subscribe</span>(<span class="string">&quot;test_sub1&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line">    ros::Subscriber sub1 = nh.<span class="built_in">subscribe</span>(<span class="string">&quot;test_sub2&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line"></span><br><span class="line">    ros::<span class="built_in">spin</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用 <code>rosrun</code> 指令直接运行节点时，若不使用 <code>_name</code> 则默认节点名为 <code>ros::init</code> 中指定的名字；若使用 <code>launch</code> 文件启动节点，则节点名为 <code>&lt;node&gt;</code> 元素中 <code>name</code> 属性指定的值；若 <code>name</code> 属性值为空，则为匿名名称。  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /test</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demo __name:=<span class="built_in">test</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /ns0/demo</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demp __ns:=ns0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /ns0/test</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demp __ns:=ns0 __name:=<span class="built_in">test</span></span></span><br></pre></td></tr></table></figure>
-<p>
-
-<p>若使用 launch 文件：  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;ns&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- global serial --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/dev/ttyS0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;test&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;parameter_demo&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;ns1&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- local serial --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/dev/ttyS1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>此时，节点名为 <code>/ns/ns1/test</code>  </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param2&quot;</span> /&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;test_pkg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">name</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param2&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 结果为</span></span><br><span class="line"><span class="comment">/param1 - global_param1</span></span><br><span class="line"><span class="comment">/param2 - global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test_node/param1 - local_param1</span></span><br><span class="line"><span class="comment">/test_node/param2 - local_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">nh_local 读取的实际为 /test_node/param1</span></span><br><span class="line"><span class="comment">nh_global 读取的实际为 /test_node/param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">并订阅主题：/test_node/test_sub1 和 /test_sub2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param2&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;test/global_param2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;test_pkg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">name</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param1&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 结果为</span></span><br><span class="line"><span class="comment">/param1 - global_param1</span></span><br><span class="line"><span class="comment">/param2 - global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test/param2 - test/global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test/test_node/param1 - local_param1 # 包含指定的 namespace: test</span></span><br><span class="line"><span class="comment">/test/test_node/param2 - local_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">nh_local 读取的实际为 /test/test_node/param1</span></span><br><span class="line"><span class="comment">nh_global 读取的实际为 /test/param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">并订阅主题：/test/test_node/test_sub1 和 /test/test_sub2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/CMake/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/15/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/CMake/" class="post-title-link" itemprop="url">CMake</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-15 21:24:52" itemprop="dateCreated datePublished" datetime="2024-09-15T21:24:52+08:00">2024-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/CMake/" itemprop="url" rel="index"><span itemprop="name">CMake</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>13k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>23 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>为 cmake 设置快捷方式</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alias cmakedebug=&#x27;cmake $1 -DCMAKE_BUILD_TYPE=DEBUG&#x27;</span><br><span class="line">alias cmakerelease=&#x27;cmake $1 -DCMAKE_BUILD_TYPE=RELEASE&#x27;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>变量使用 <code>$&#123;&#125;</code> 方式取值，但是在 <code>IF</code> 控制语句中是直接使用变量名。</p>
-<p><code>指令 ( 参数 1 参数 2 … )</code> 参数使用括弧括起，参数之间使用空格或分号分开。 以 <code>ADD_EXECUTABLE</code> 指令为例：<code>ADD_EXECUTABLE(hello main.c func.c)</code> 或者 <code>ADD_EXECUTABLE(hello main.c;func.c) </code>。</p>
-<p>指令是大小写无关的，参数和变量是大小写相关的。但，推荐全部使用大写指令。</p>
-<p>cmake 语法灵活，例如： <code>SET(SRC_LIST main.c)</code> 也可写成 <code>SET(SRC_LIST &quot;main.c&quot;) </code>，但是当文件名中有空格时则必须使用双引号；还可以忽略源文件列表中的文件后缀， cmake 会自动在本目录查找。</p>
-<p>当工程中有多个子目录时，每个子目录都需创建 CMakeLists.txt 文件</p>
-<h2 id="内部构建与外部构建"><a href="#内部构建与外部构建" class="headerlink" title="内部构建与外部构建"></a>内部构建与外部构建</h2><p>内部构建即在项目 CMakeLists.txt 同级目录进行配置及编译。外部构建即在项目外进行编译，例如：在项目中创建 <code>&lt;project&gt;/build</code> 目录，然后进入该目录执行 <code>cmake .. &amp;&amp; make</code> 配置及配置。</p>
-<p>外部构建时，<code>&lt;project&gt;_SOURCE_DIRS</code> 仍为项目根目录，而 <code>&lt;project&gt;_BINRAY_DIR</code> 则为 <code>&lt;project&gt;/build</code> </p>
-<h1 id="基础指令"><a href="#基础指令" class="headerlink" title="基础指令"></a>基础指令</h1><h2 id="project"><a href="#project" class="headerlink" title="project"></a>project</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># language 列表可选，默认表示支持所有语言</span></span><br><span class="line"><span class="comment"># VERSION 指定版本号，并同时定义以下变量</span></span><br><span class="line"><span class="comment"># 	- PROJECT_VERSION: 项目完整版本号</span></span><br><span class="line"><span class="comment"># 	- PROJECT_VERSION_MAJOR</span></span><br><span class="line"><span class="comment"># 	- PROJECT_VERSION_MINOR</span></span><br><span class="line"><span class="comment"># 	- PROJECT_VERSION_PATCH: 补丁号</span></span><br><span class="line"><span class="comment"># DESCRIPTION 添加项目描述，并定义 PROJECT_DESCRIPTION 变量</span></span><br><span class="line"><span class="comment"># HOMEPAGE_URL 设置项目主页，并定义 PROJECT_HOMEPAGE_URL 变量</span></span><br><span class="line"><span class="keyword">project</span>(&lt;<span class="keyword">PROJECT</span>-NAME&gt; [&lt;language-name&gt;...])</span><br><span class="line"><span class="keyword">project</span>(&lt;<span class="keyword">PROJECT</span>-NAME&gt;</span><br><span class="line">        [VERSION &lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]]</span><br><span class="line">        [DESCRIPTION &lt;<span class="keyword">project</span>-description-<span class="keyword">string</span>&gt;]</span><br><span class="line">        [HOMEPAGE_URL &lt;url-<span class="keyword">string</span>&gt;]</span><br><span class="line">        [LANGUAGES &lt;language-name&gt;...])</span><br></pre></td></tr></table></figure>
-
-<p>定义项目名称， <strong>必要</strong>，多个 <code>projcet</code> 指令以最后一个为准。当从顶层调用 CMakeLists.txt 时，cmake 还将项目名称存储在变量 <strong><code>CMAKE_PROJECT_NAME</code></strong> 中。</p>
-<p>同时设置以下变量：</p>
-<ul>
-<li><strong><code>PROJECT_SOURCE_DIR</code></strong> 、**<code>&lt;PROJECT-NAME&gt;_SOURCE_DIR</code>** ：项目源目录的绝对路径</li>
-<li><strong><code>PROJECT_BINARY_DIR</code></strong> 、**<code>&lt;PROJECT-NAME&gt;_BINARY_DIR</code>** ：项目可执行文件目录的绝对路径</li>
-<li><strong><code>PROJECT_IS_TOP_LEVEL</code></strong> 、**<code>&lt;PROJECT-NAME&gt;_IS_TOP_LEVEL</code>** ：v3.21 新增变量，表示当前项目是否为 top-level</li>
-</ul>
-<h2 id="MESSAGE"><a href="#MESSAGE" class="headerlink" title="MESSAGE"></a>MESSAGE</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通用消息</span></span><br><span class="line"><span class="comment">## mode: 消息类型，会影响消息的处理方式:</span></span><br><span class="line"><span class="comment">## 	- FATAL_ERROR: CMake 错误，停止</span></span><br><span class="line"><span class="comment">## 	- SEND_ERROR: CMake 错误，继续处理，但跳过生成</span></span><br><span class="line"><span class="comment">##	- WARNING: 警告，继续处理</span></span><br><span class="line"><span class="comment">##	- AUTHOR_WARNING: </span></span><br><span class="line"><span class="comment">## 	- DEPRECATION: 如果变量 CMAKE_ERROR_DEPRECATED 或 CMAKE_WARN_DEPRECATED 分别被启用，则产 生Deprecation 错误或警告，否则没有消息</span></span><br><span class="line"><span class="comment">## 	- 空/NOTICE: 输出日志到 stderr</span></span><br><span class="line"><span class="comment">## 	- STATUS: 感兴趣的主要信息</span></span><br><span class="line"><span class="comment">## 	- VERBOSE: 详细信息消息。提供额外的细节</span></span><br><span class="line"><span class="comment">## 	- DE<span class="doctag">BUG:</span> </span></span><br><span class="line"><span class="comment">## 	- TRACE: 最低级别消息。通常只是临时的，项目发布之前会被删除</span></span><br><span class="line"><span class="keyword">message</span>([&lt;mode&gt;] <span class="string">&quot;message text&quot;</span> ...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reporting checks. v3.17 新增</span></span><br><span class="line"><span class="comment">## checktate:</span></span><br><span class="line"><span class="comment">## 	- CHECK_START: 记录即将执行的检查的简短信息</span></span><br><span class="line"><span class="comment">## 	- CHECK_PASS: 若成功则记录</span></span><br><span class="line"><span class="comment">## 	- CHECK_FAIL: 若失败则记录</span></span><br><span class="line"><span class="keyword">message</span>(&lt;checkState&gt; <span class="string">&quot;message text&quot;</span> ...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure Log。V3.26 新增</span></span><br><span class="line"><span class="keyword">message</span>(CONFIGURE_LOG &lt;text&gt;...)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ADD-COMPILE-OPTIONS"><a href="#ADD-COMPILE-OPTIONS" class="headerlink" title="ADD_COMPILE_OPTIONS"></a>ADD_COMPILE_OPTIONS</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD_COMPILE_OPTIONS</span>(-std=c++<span class="number">11</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ADD-EXECUTABLE"><a href="#ADD-EXECUTABLE" class="headerlink" title="ADD_EXECUTABLE"></a>ADD_EXECUTABLE</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加可执行文件</span></span><br><span class="line"><span class="comment"># name: 可执行文件名，在项目中必须是全局唯一的</span></span><br><span class="line"><span class="comment"># options：</span></span><br><span class="line"><span class="comment"># 	- WIN32: 自动设置 WIN32_EXECUTABLE 属性</span></span><br><span class="line"><span class="comment">#	- MACOSX_BUNDLE: 自动设置 MACOSX_BUNDLE 属性</span></span><br><span class="line"><span class="comment">#	- EXCLUDE_FROM_ALL: 设置 EXCLUDE_FROM_ALL 属性</span></span><br><span class="line"><span class="comment"># sources: 源文件列表</span></span><br><span class="line"><span class="keyword">add_executable</span>(&lt;name&gt; &lt;options&gt;... &lt;sources&gt;...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Imported Executables</span></span><br><span class="line"><span class="comment"># options:</span></span><br><span class="line"><span class="comment"># 	- GLOBAL: 使目标名称全局可见 </span></span><br><span class="line"><span class="keyword">add_executable</span>(&lt;name&gt; IMPORTED [GLOBAL])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alias Executables</span></span><br><span class="line"><span class="keyword">add_executable</span>(&lt;name&gt; ALIAS &lt;<span class="keyword">target</span>&gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ADD-LIBRARY"><a href="#ADD-LIBRARY" class="headerlink" title="ADD_LIBRARY"></a>ADD_LIBRARY</h2><p>生成动态&#x2F;静态库。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Normal Libraries</span></span><br><span class="line"><span class="comment"># name: 库名，在项目中全局唯一。实际库名是基于编译平台的约定(例如lib&lt;name&gt;.a 或 &lt;name&gt;.lib)</span></span><br><span class="line"><span class="comment"># type: 库的类型，若不指定，则根据 BUILD_SHARED_LIBS 变量选择</span></span><br><span class="line"><span class="comment"># 	- STATIC: 静态库</span></span><br><span class="line"><span class="comment">#	- SHARED: 动态库</span></span><br><span class="line"><span class="comment">#	- MODULE: 插件，可能不会被其他目标链接，但可以在运行时使用 dlopen 等动态加载。若不支持 dyld，等同于 SHARED</span></span><br><span class="line"><span class="comment"># EXCLUDE_FROM_ALL: </span></span><br><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; [&lt;type&gt;] [EXCLUDE_FROM_ALL] &lt;sources&gt;...)</span><br></pre></td></tr></table></figure>
-
-<p>对于 <code>SHARED</code> 和 <code>MODULE</code>，会自动将 <code>POSITION_INDEPENDENT_CODE</code> 设置为 <code>ON</code>。</p>
-<p>若一个库不暴露任何 symbols，则不能被定义为 <code>SHARED</code> 库。</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Object Libraries</span></span><br><span class="line"><span class="comment"># 添加对象库以编译源文件，而无需将其对象文件归档或链接到库中.</span></span><br><span class="line"><span class="comment"># 其它通过 add_library/add_executable 构建的目标可依赖该对象</span></span><br><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; OBJECT &lt;sources&gt;...)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="keyword">add_library</span>(... $&lt;TARGET_OBJECTS:objlib&gt; ...)</span><br><span class="line"><span class="keyword">add_executable</span>(... $&lt;TARGET_OBJECTS:objlib&gt; ...)</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># interface Libraries</span></span><br><span class="line"><span class="comment"># 添加 Interface Library 目标。可以指定依赖项的使用需求，但不编译源代码，也不会在磁盘上生成库</span></span><br><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; INTERFACE)</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Imported Libraries</span></span><br><span class="line"><span class="comment"># type 支持 STATIC/SHARED/MODULE/UNKNOWN</span></span><br><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; &lt;type&gt; IMPORTED [GLOBAL])</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Alias Libraries</span></span><br><span class="line"><span class="keyword">add_library</span>(&lt;name&gt; ALIAS &lt;<span class="keyword">target</span>&gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ADD-SUBDIRECTORY"><a href="#ADD-SUBDIRECTORY" class="headerlink" title="ADD_SUBDIRECTORY"></a>ADD_SUBDIRECTORY</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># binary_dir 指定放置输出文件的目录</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(source_dir [binary_dir] [EXCLUDE_FROM_ALL] [SYSTEM])</span><br></pre></td></tr></table></figure>
-
-<p>该指令用于向当前工程添加存放源文件的子目录，并可以指定中间二进制和目标二进制存 放的位置。 </p>
-<p>EXCLUDE_FROM_ALL 参数的含义是将这个目录从编译过程中排除，比如，工程 的 example ，可能就需要工程构建完成后，再进入 example 目录单独进行构建</p>
-<p>V3.25 新增 SYSTEM 参数，子目录的 SYSTEM directory 属性将被设置为true。该属性用于初始化在该子目录中创建的每个非导入目标的SYSTEM属性。</p>
-<h2 id="AUX-SOURCE-DIRECTORY"><a href="#AUX-SOURCE-DIRECTORY" class="headerlink" title="AUX_SOURCE_DIRECTORY"></a>AUX_SOURCE_DIRECTORY</h2><p>查找指定目录下的所有源文件，并将结果写入 variable 中</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">AUX_SOURCE_DIRECTORY</span>(&lt;dir&gt; &lt;variable&gt;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="INCLUDE-DIRECTORIES"><a href="#INCLUDE-DIRECTORIES" class="headerlink" title="INCLUDE_DIRECTORIES"></a>INCLUDE_DIRECTORIES</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(<span class="keyword">include</span> <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span> ) </span><br><span class="line"><span class="keyword">if</span>(ENABLE_EGO) </span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;thd_lib_path&#125;</span>/boost/<span class="keyword">include</span>) </span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#message($&#123;INCLUDE_DIRECTORIES&#125;) 不可使用</span></span><br><span class="line"><span class="keyword">get_property</span>(dirs DIRECTORY <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span> PROPERTY <span class="keyword">INCLUDE_DIRECTORIES</span>) </span><br><span class="line"><span class="keyword">foreach</span>(dir <span class="variable">$&#123;dirs&#125;</span>) </span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;dir=&#x27;$&#123;dir&#125;&#x27;&quot;</span>) </span><br><span class="line"><span class="keyword">endforeach</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="INSTALL"><a href="#INSTALL" class="headerlink" title="INSTALL"></a>INSTALL</h2><h3 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装目标文件，通常是ADD_EXECUTABLE/ADD_LIBRARY定义的目标</span></span><br><span class="line"><span class="keyword">install</span>(TARGETS &lt;<span class="keyword">target</span>&gt;... [<span class="keyword">EXPORT</span> &lt;<span class="keyword">export</span>-name&gt;]</span><br><span class="line">        [RUNTIME_DEPENDENCIES &lt;arg&gt;...|RUNTIME_DEPENDENCY_SET &lt;<span class="keyword">set</span>-name&gt;]</span><br><span class="line">        [&lt;artifact-<span class="keyword">option</span>&gt;...]</span><br><span class="line">        [&lt;artifact-kind&gt; &lt;artifact-<span class="keyword">option</span>&gt;...]...</span><br><span class="line">        [INCLUDES DESTINATION [&lt;dir&gt; ...]]</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
-
-<p>目标文件类型有：</p>
-<ul>
-<li>ARCHIVE：特指静态库</li>
-<li>LIBRARY：特指动态库</li>
-<li>RUNTIME：特指可执行目标二进制</li>
-<li>PUBLIC_HEADER：与目标文件相关联的 <code>PUBLIC_HEADER</code> 文件。由 <code>PUBLIC_HEADER</code> 属性指定</li>
-<li>PRIVATE_HEADER：</li>
-<li>FILE_SET(type HEADERS)：</li>
-</ul>
-<p>DESTINATION 定义了安装的路径，如果路径以 &#x2F; 开头，那么指的是绝对路径，这时候 <code>CMAKE_INSTALL_PREFIX</code> 就无效了。如果希望使用 <code>CMAKE_INSTALL_PREFIX</code> 来定义安装路径，就要写成相对路径，即不要以 &#x2F; 开头，那么安装后的路径就是 <code>$&#123;CMAKE_INSTALL_PREFIX&#125;/</code> </p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set_target_properties</span>(mylib PROPERTIES PUBLIC_HEADER mylib.h)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 myrun 安装到 CMAKE_INSTALL_PREFIX/bin 目录</span></span><br><span class="line"><span class="comment"># 将 mylib 安装到 CMAKE_INSTALL_PREFIX/lib 目录</span></span><br><span class="line"><span class="comment"># 将 mystaticlib 安装到 CMAKE_INSTALL_PREFIX/libstatic 目录</span></span><br><span class="line"><span class="keyword">INSTALL</span>(TARGETS myrun mylib mystaticlib </span><br><span class="line">    RUNTIME DESTINATION bin </span><br><span class="line">    LIBRARY DESTINATION lib </span><br><span class="line">    ARCHIVE DESTINATION libstatic</span><br><span class="line">    PUBLIC_HEADER DESTINATION <span class="variable">$&#123;CMAKE_INSTALL_INCLUDEDIR&#125;</span>/myproj)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="FILES-与-programs"><a href="#FILES-与-programs" class="headerlink" title="FILES 与 programs"></a>FILES 与 programs</h3><p>两者指令使用方法相同，不同的是安装后的权限。</p>
-<p>FILES 默认权限为：<code>OWNER_WRITE</code>, <code>OWNER_READ</code>, <code>GROUP_READ</code>, 和 WORLD_READ ，即 644 </p>
-<p>programs 权限为：<code>WNER_EXECUTE</code>, <code>GROUP_EXECUTE</code>, 和 <code>WORLD_EXECUTE</code>，即 755 </p>
-<h3 id="DIRECTORY"><a href="#DIRECTORY" class="headerlink" title="DIRECTORY"></a>DIRECTORY</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">install</span>(DIRECTORY dirs...</span><br><span class="line">        TYPE &lt;type&gt; | DESTINATION &lt;dir&gt;</span><br><span class="line">        [FILE_PERMISSIONS &lt;permission&gt;...]</span><br><span class="line">        [DIRECTORY_PERMISSIONS &lt;permission&gt;...]</span><br><span class="line">        [USE_SOURCE_PERMISSIONS] [OPTIONAL] [MESSAGE_NEVER]</span><br><span class="line">        [CONFIGURATIONS &lt;config&gt;...]</span><br><span class="line">        [COMPONENT &lt;component&gt;] [EXCLUDE_FROM_ALL]</span><br><span class="line">        [FILES_MATCHING]</span><br><span class="line">        [[PATTERN &lt;pattern&gt; | REGEX &lt;regex&gt;]</span><br><span class="line">         [EXCLUDE] [PERMISSIONS &lt;permission&gt;...]] [...])</span><br></pre></td></tr></table></figure>
-
-<p>目录安装。注意: abc 表示将被安装到目标路径下的 abc ,而 abc&#x2F; 表示将 abc 中的内容安装到目标路径，不包括该目录本身 。</p>
-<p>参数 <code>PATTERN</code> 用于使用正则表达式进行过滤， <code>PERMISSIONS</code> 用于指定 <code>PATTERN</code> 过滤后的文件 权限。</p>
-<p>不论是 <code>SUBDIRS</code> 还是 <code>ADD_SUBDIRECTORY</code> 指令 ( 不论是否指定编译输出目录 ) ，都可 以通过 SET 指令重新定义 <code>EXECUTABLE_OUTPUT_PATH</code> 和 <code>LIBRARY_OUTPUT_PATH</code> 变量 来指定最终的目标二进制的位置 ( 指最终生成的 hello 或者最终的共享库，不包含编译生成 的中间文件 )</p>
-<h2 id="SET-SOURCE-FILES-PROPERTIES"><a href="#SET-SOURCE-FILES-PROPERTIES" class="headerlink" title="SET_SOURCE_FILES_PROPERTIES"></a><strong>SET_SOURCE_FILES_PROPERTIES</strong></h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET_SOURCE_FILES_PROPERTIES</span>(<span class="variable">$&#123;DIR_SRS&#125;</span> PROPERTIES LANGUAGE CXX)</span><br></pre></td></tr></table></figure>
-
-<p>将源文件列表 DIR_SRS 中的所有源文件的属性设置为CXX,则编译器会将该列表中的所有源文件都当做 C++ 文件,使用 g++ 进行编译.</p>
-<p>例如,当在C++工程内部包含 .c 格式的源文件, 并且该文件中为某些参数设置了默认参数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">record_dev_id <span class="title">get_default_input_dev</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* capdev = <span class="literal">NULL</span>)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>则编译时，若不设置 CXX 属性，会存在如下错误</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: expected &#x27;;&#x27;, &#x27;,&#x27; or &#x27;)&#x27; before &#x27;=&#x27; token</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h1 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h1><ul>
-<li><p><strong><code>&lt;project&gt;_BINARY_DIR</code></strong> 工程根目录</p>
-</li>
-<li><p><strong><code>PROJECT_NAME</code></strong> 返回通过PROJECT指令定义的项目名称 </p>
-</li>
-<li><p><strong><code>CMAKE_BINARY_DIR</code></strong> 、**<code>PROJECT_BINARY_DIR</code>** 运行cmake命令的目录,通常是 <code>$&#123;PROJECT_SOURCE_DIR&#125;/build</code></p>
-</li>
-<li><p><strong><code>PROJECT_SOURCE_DIR</code></strong> 工程的根目录</p>
-</li>
-<li><p><strong><code>CMAKE_SOURCE_DIR</code></strong></p>
-</li>
-<li><p><strong><code>&lt;project&gt;_SOURCE_DIR</code></strong></p>
-</li>
-<li><p><strong><code>CMAKE_INCLUDE_PATH</code></strong> 环境变量,非cmake变量 </p>
-</li>
-<li><p><strong><code>CMAKE_LIBRARY_PATH</code></strong> 环境变量</p>
-</li>
-<li><p><strong><code>CMAKE_CURRENT_SOURCE_DIR</code></strong> 当前处理的CMakeLists.txt所在的路径</p>
-</li>
-<li><p><strong><code>CMAKE_CURRENT_BINARY_DIR</code></strong> target编译目录。使用 **<code>ADD_SURDIRECTORY(src bin)</code><strong>可以更改此变量的值。</strong><code>SET(EXECUTABLE_OUTPUT_PATH &lt;新路径&gt;)</code>**并不会对此变量有影响,只是改变了最终目标文件的存储路径 </p>
-</li>
-<li><p><strong><code>CMAKE_CURRENT_LIST_FILE</code></strong> 输出调用这个变量的CMakeLists.txt的完整路径 </p>
-</li>
-<li><p><strong><code>CMAKE_CURRENT_LIST_LINE</code></strong> 输出这个变量所在的行 </p>
-</li>
-<li><p><strong><code>CMAKE_MODULE_PATH</code></strong> 定义自己的cmake模块所在的路径。**<code>SET(CMAKE_MODULE_PATH $&#123;PROJECT_SOURCE_DIR&#125;/cmake)</code>**,然后可以用 <em><code>INCLUDE</code></em> 命令来调用自己的模块 </p>
-</li>
-<li><p><strong><code>EXECUTABLE_OUTPUT_PATH</code></strong> 重新定义目标二进制可执行文件的存放位置 </p>
-</li>
-<li><p><strong><code>LIBRARY_OUTPUT_PATH</code></strong> 重新定义目标链接库文件的存放位置 </p>
-</li>
-<li><p><strong><code>CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS</code></strong> 用来控制 <code>IF ELSE</code> 语句的书写方式</p>
-</li>
-</ul>
-<p><strong>系统信息</strong></p>
-<ul>
-<li><p><strong><code>CMAKE_MAJOR_VERSION</code></strong> cmake主版本号,如2.8.6中的2 </p>
-</li>
-<li><p><strong><code>CMAKE_MINOR_VERSION</code></strong> cmake次版本号,如2.8.6中的8 </p>
-</li>
-<li><p><strong><code>CMAKE_PATCH_VERSION</code></strong> cmake补丁等级,如2.8.6中的6 </p>
-</li>
-<li><p><strong><code>CMAKE_SYSTEM</code></strong> 系统名称,例如Linux-2.6.22 </p>
-</li>
-<li><p><strong><code>CAMKE_SYSTEM_NAME</code></strong> 不包含版本的系统名,如Linux </p>
-</li>
-<li><p><strong><code>CMAKE_SYSTEM_VERSION</code></strong> 系统版本,如2.6.22 </p>
-</li>
-<li><p><strong><code>CMAKE_SYSTEM_PROCESSOR</code></strong> 处理器名称,如i686</p>
-</li>
-</ul>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;i686.*|i386.*|x86.*|amd64.*|AMD64.*&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;^(arm.*|ARM.*))&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_PROCESSOR <span class="keyword">MATCHES</span> <span class="string">&quot;^(aarch64.*|AARCH64.*))&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong><code>UNIX</code></strong> 在所有的类UNIX平台为TRUE,包括OS X和cygwin </p>
-</li>
-<li><p><strong><code>WIN32</code></strong> 在所有的win32平台为TRUE,包括cygwin</p>
-</li>
-</ul>
-<p><strong>开关选项</strong></p>
-<ul>
-<li><p><strong><code>BUILD_SHARED_LIBS</code></strong> 控制默认的库编译方式。如果未进行设置，使用 <code>ADD_LIBRARY</code> 时又没有指定库类型,默认编译生成的库都是静态库</p>
-</li>
-<li><p><strong><code>CMAKE_C_FLAGS</code></strong> 设置C编译选项 </p>
-</li>
-<li><p><strong><code>CMAKE_CXX_FLAGS</code></strong> 设置C++编译选项</p>
-</li>
-<li><p><strong><code>CMAKE_C_COMPILER_INIT</code></strong></p>
-</li>
-<li><p>**<code>CMAKE_BUILD_TYPE</code>**：Debug、Release、RelWithDebInfo、MinSizeRel。对应使用如下宏来生成 Makefile: </p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMAKE_C_FLAGS_[DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL]</span><br><span class="line">CMAKE_CXX_FLAGS_[DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><code>CMAKE_SIZEOF_VOID_P</code></strong>: void* 的大小，可用于判断当前系统是 32bits 还是 64bits</p>
-</li>
-</ul>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_SIZEOF_VOID_P <span class="keyword">EQUAL</span> <span class="number">8</span>)    </span><br><span class="line">	<span class="comment"># 64bits </span></span><br><span class="line"><span class="keyword">else</span>()    </span><br><span class="line">	<span class="comment"># 32bits </span></span><br><span class="line"><span class="keyword">endif</span>()           </span><br></pre></td></tr></table></figure>
-
-<p><strong>cmake自定义变量</strong></p>
-<p>主要有隐式定义和显式定义两种.</p>
-<p>隐式定义：就是 PROJECT 指令,会隐式的定义_BINARY_DIR 和_SOURCE_DIR 两个变量。</p>
-<p>显式定义：使用 SET 指令,就可以构建一个自定义变量了。</p>
-<h1 id="Macro"><a href="#Macro" class="headerlink" title="Macro"></a>Macro</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## utils.cmake, 定义 macro 宏，用于获取 Git 的 hash 及 分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># get git hash</span></span><br><span class="line"><span class="keyword">macro</span>(get_git_hash _git_hash)   <span class="comment"># 宏的开始</span></span><br><span class="line">    <span class="keyword">find_package</span>(Git QUIET)     <span class="comment"># 查找Git，QUIET静默方式不报错</span></span><br><span class="line">    <span class="keyword">if</span>(GIT_FOUND)</span><br><span class="line">      <span class="keyword">execute_process</span>(          <span class="comment"># 执行一个子进程</span></span><br><span class="line">        <span class="keyword">COMMAND</span> <span class="variable">$&#123;GIT_EXECUTABLE&#125;</span> log -<span class="number">1</span> --pretty=format:%h <span class="comment"># 命令</span></span><br><span class="line">        OUTPUT_VARIABLE <span class="variable">$&#123;_git_hash&#125;</span>        <span class="comment"># 输出字符串存入变量</span></span><br><span class="line">        OUTPUT_STRIP_TRAILING_WHITESPACE    <span class="comment"># 删除字符串尾的换行符</span></span><br><span class="line">        ERROR_QUIET                         <span class="comment"># 对执行错误静默</span></span><br><span class="line">        WORKING_DIRECTORY                   <span class="comment"># 执行路径</span></span><br><span class="line">          <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span></span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endmacro</span>()                      <span class="comment"># 宏的结束</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># get git branch</span></span><br><span class="line"><span class="keyword">macro</span>(get_git_branch _git_branch)   <span class="comment"># 宏的开始</span></span><br><span class="line">    <span class="keyword">find_package</span>(Git QUIET)     <span class="comment"># 查找Git，QUIET静默方式不报错</span></span><br><span class="line">    <span class="keyword">if</span>(GIT_FOUND)</span><br><span class="line">      <span class="keyword">execute_process</span>(          <span class="comment"># 执行一个子进程</span></span><br><span class="line">        <span class="keyword">COMMAND</span> <span class="variable">$&#123;GIT_EXECUTABLE&#125;</span> symbolic-ref --short -q HEAD</span><br><span class="line">        OUTPUT_VARIABLE <span class="variable">$&#123;_git_branch&#125;</span>        <span class="comment"># 输出字符串存入变量</span></span><br><span class="line">        OUTPUT_STRIP_TRAILING_WHITESPACE    <span class="comment"># 删除字符串尾的换行符</span></span><br><span class="line">        ERROR_QUIET                         <span class="comment"># 对执行错误静默</span></span><br><span class="line">        WORKING_DIRECTORY                   <span class="comment"># 执行路径</span></span><br><span class="line">          <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span></span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endmacro</span>()                      <span class="comment"># 宏的结束</span></span><br></pre></td></tr></table></figure>
-
-<p>使用</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(cmake/utils.cmake)</span><br><span class="line"><span class="comment">#  添加自定义cmake文件目录.</span></span><br><span class="line"><span class="comment"># list(APPEND CMAKE_MODULE_PATH $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/cmake)</span></span><br><span class="line"><span class="comment"># include(utils) # 使用 utils.cmake. 可替代上面 include</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">string</span>(TIMESTAMP BUILD_TIMESTAMP <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line"><span class="keyword">message</span>(<span class="string">&quot;Build timestamp is $&#123;BUILD_TIMESTAMP&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(VERSION_MAJOR <span class="number">0</span>)</span><br><span class="line"><span class="keyword">set</span>(VERSION_MINOR <span class="number">0</span>)</span><br><span class="line"><span class="keyword">set</span>(VERSION_PATCH <span class="number">1</span>)</span><br><span class="line"><span class="keyword">message</span>(<span class="string">&quot;Version is $&#123;VERSION_MAJOR&#125; $&#123;VERSION_MINOR&#125; $&#123;VERSION_PATCH&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(GIT_HASH <span class="string">&quot;&quot;</span>)</span><br><span class="line">get_git_hash(GIT_HASH)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(GIT_BRANCH <span class="string">&quot;&quot;</span>)</span><br><span class="line">get_git_branch(GIT_BRANCH)</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Get version info from git and pass it into compiled code</span></span><br><span class="line"><span class="keyword">execute_process</span>(<span class="keyword">COMMAND</span> git rev-parse --abbrev-ref HEAD</span><br><span class="line">    WORKING_DIRECTORY <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span></span><br><span class="line">    OUTPUT_VARIABLE GIT_BRANCH)</span><br><span class="line"><span class="keyword">string</span>(STRIP <span class="string">&quot;$&#123;GIT_BRANCH&#125;&quot;</span> GIT_BRANCH)</span><br><span class="line"></span><br><span class="line"><span class="keyword">execute_process</span>(<span class="keyword">COMMAND</span> git describe --tags --abbrev=<span class="number">0</span></span><br><span class="line">    WORKING_DIRECTORY <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span></span><br><span class="line">    OUTPUT_VARIABLE GIT_VERSION)</span><br><span class="line"><span class="keyword">string</span>(STRIP <span class="string">&quot;$&#123;GIT_VERSION&#125;&quot;</span> GIT_VERSION)</span><br><span class="line"></span><br><span class="line"><span class="keyword">execute_process</span>(<span class="keyword">COMMAND</span> date <span class="string">&quot;+%Y-%m-%d-%H:%M&quot;</span></span><br><span class="line">    OUTPUT_VARIABLE BUILD_TIME)</span><br><span class="line"><span class="keyword">string</span>(STRIP <span class="variable">$&#123;BUILD_TIME&#125;</span> BUILD_TIME)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="例一"><a href="#例一" class="headerlink" title="例一"></a>例一</h1><p>创建 cmake 目录 ( 测试用，可任意指定目录名 ) <code>mkdir -p /home/ros/Documents/test/tutorial</code></p>
-<p>创建 Tutorial.c 文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Tutorial.c*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">( <span class="type">int</span> argc , <span class="type">char</span> * argv [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span> ( <span class="string">&quot;Hello world!\n&quot;</span> );</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>创建 CMakeLists.txt</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span> ( VERSION <span class="number">2.8</span>.<span class="number">3</span> ) <span class="comment"># 指定 CMake 版本</span></span><br><span class="line"><span class="keyword">project</span> ( Tutorial )</span><br><span class="line"> </span><br><span class="line"><span class="keyword">message</span> ( STATUS <span class="string">&quot;This is BINARY dir &quot;</span> <span class="variable">$&#123;Tutorial_BINARY_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">message</span> ( STATUS <span class="string">&quot;This is SOURCE dir &quot;</span> <span class="variable">$&#123;Tutorial_SOURCE_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">add_executable</span> ( Tutorial tutorial.c )</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">内部构建。Tutorial_BINARY_DIR 与 Tutorial_SOURCE_DIR 相同，均为 /home/ros/Documents/test/tutorial</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /home/ros/Documents/test/tutorial</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake .</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make <span class="comment"># make VERBOSE=1 或 VERBOSE=1 make 可显示详细编译信息</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">外部构建</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /home/ros/Documents/test/tutorial</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake ..</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make <span class="comment"># make VERBOSE=1 或 VERBOSE=1 make 可显示详细编译信息</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>.<span class="number">3</span>)</span><br><span class="line"><span class="keyword">project</span>(<span class="keyword">test</span>)</span><br><span class="line"><span class="keyword">add_compile_options</span>(-std=c++<span class="number">11</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">set</span>(CMAKE_INSTALL_PREFIX <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/<span class="keyword">install</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#option(arm &quot;toggle for arm environment.&quot; OFF) </span></span><br><span class="line"><span class="keyword">set</span>(PLATFORM <span class="string">&quot;x86&quot;</span>)</span><br><span class="line"><span class="keyword">set</span>(arm <span class="keyword">OFF</span>)</span><br><span class="line"><span class="keyword">if</span>(arm)</span><br><span class="line"> <span class="keyword">set</span>(PLATFORM <span class="string">&quot;arm&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>(arm)</span><br><span class="line"> <span class="keyword">set</span>(PLATFORM <span class="string">&quot;x86&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>(arm)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">set</span>(BUILD_TYPE <span class="string">&quot;debug&quot;</span>)</span><br><span class="line"><span class="keyword">set</span>(<span class="keyword">test</span> <span class="keyword">ON</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">test</span>)</span><br><span class="line"> <span class="keyword">set</span>(BUILD_TYPE <span class="string">&quot;debug&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>(<span class="keyword">test</span>)</span><br><span class="line"> <span class="keyword">set</span>(IFLYTEK_TYPE <span class="string">&quot;release&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">set</span>(lib_path <span class="string">&quot;$&#123;PROJECT_SOURCE_DIR&#125;/lib/$&#123;BUILD_TYPE&#125;/$&#123;PLATFORM&#125;&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#add_definitions( -DTEST_LIBRARY_PATH=$&#123;lib_path&#125; )</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="keyword">include</span> <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span></span><br><span class="line">  <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span></span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;lib_path&#125;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">aux_source_directory</span>(./src DIR_SRCS) <span class="keyword">aux_source_directory</span>(./jsoncpp DIR_SRCS)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">set_source_files_properties</span>(<span class="variable">$&#123;DIR_SRCS&#125;</span> PROPERTIES LANGUAGE CXX)</span><br><span class="line"> </span><br><span class="line"><span class="comment">## Declare a cpp executable</span></span><br><span class="line"><span class="keyword">add_executable</span>(<span class="keyword">test</span> <span class="variable">$&#123;DIR_SRCS&#125;</span>)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="keyword">test</span> dl asound pthread ev)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">install</span>(TARGETS audio_capturer RUNTIME DESTINATION . )</span><br><span class="line"> </span><br><span class="line"><span class="keyword">install</span>(DIRECTORY res config udev modules system <span class="keyword">include</span> DESTINATION  . )</span><br><span class="line"> </span><br><span class="line"><span class="comment"># install 无法使用 * 等符号,可使用 file 来实现</span></span><br><span class="line"><span class="keyword">file</span>(GLOB libs <span class="string">&quot;$&#123;lib_path&#125;/*&quot;</span>)</span><br><span class="line"><span class="keyword">install</span>(FILES <span class="variable">$&#123;libs&#125;</span> DESTINATION  lib )</span><br><span class="line"></span><br><span class="line"><span class="keyword">file</span>(GLOB script_files <span class="string">&quot;scripts/*.sh&quot;</span>)</span><br><span class="line"><span class="keyword">install</span>(PROGRAMS <span class="variable">$&#123;script_file&#125;</span></span><br><span class="line">    DESTINATION .)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>使用方式</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cmake -Darm=1/0/ON/OFF/YES/NO/TRUE/FALSE/Y/N -Dtest=1/0/ON/OFF/YES/NO/TRUE/FALSE/Y/N</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -3000,14 +2564,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">570k</span>
+    <span title="站点总字数">605k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:17</span>
+    <span title="站点阅读时长">18:19</span>
   </span>
 </div>
 <div class="busuanzi-count">

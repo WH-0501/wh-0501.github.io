@@ -19,23 +19,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="ROS noetic 版本添加。 安装使用MoveIt Calibration 包提供了进行手眼相机校准的插件和图形界面。可以对刚性安装在机器人底座架上的相机(eye_to_hand)和安装在末端执行器上的相机(eye_in_hand)进行校准。 1234567$ git clone git@github.com:ros-planning&#x2F;moveit_calibration.git$ rosde">
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hand-Eye Calibration">
 <meta property="og:url" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/index.html">
 <meta property="og:site_name" content="Daemo">
-<meta property="og:description" content="ROS noetic 版本添加。 安装使用MoveIt Calibration 包提供了进行手眼相机校准的插件和图形界面。可以对刚性安装在机器人底座架上的相机(eye_to_hand)和安装在末端执行器上的相机(eye_in_hand)进行校准。 1234567$ git clone git@github.com:ros-planning&#x2F;moveit_calibration.git$ rosde">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193008953.png">
-<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193046936.png">
-<meta property="og:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193114714.png">
 <meta property="article:published_time" content="2024-09-17T11:28:45.000Z">
-<meta property="article:modified_time" content="2024-09-22T06:42:30.612Z">
+<meta property="article:modified_time" content="2024-10-19T07:57:40.854Z">
 <meta property="article:author" content="Damon">
 <meta property="article:tag" content="机械臂">
 <meta property="article:tag" content="MoveIt">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193008953.png">
 
 
 <link rel="canonical" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/">
@@ -129,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -142,7 +138,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">安装使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">几何背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">采集数据</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,18 +150,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -229,7 +224,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+      <time title="修改时间：2024-10-19 15:57:40" itemprop="dateModified" datetime="2024-10-19T15:57:40+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,40 +271,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>ROS noetic 版本添加。</p>
-<h1 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a><strong>安装使用</strong></h1><p><a target="_blank" rel="noopener" href="http://www.github.com/ros-planning/moveit_calibration">MoveIt Calibration</a> 包提供了进行手眼相机校准的插件和图形界面。可以对刚性安装在机器人底座架上的相机(eye_to_hand)和安装在末端执行器上的相机(eye_in_hand)进行校准。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> git@github.com:ros-planning/moveit_calibration.git</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosdep install -y --from-paths . --ignore-src --rosdistro melodic</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">source</span> devel/setup.sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch</span></span><br></pre></td></tr></table></figure>
-
-<p>RViz -&gt; 菜单栏 Panels -&gt; Add New Panel -&gt; moveit_calibration_gui -&gt; HandEyeCalibration.</p>
-<p>然后创建一个视觉校准目标。该目标具有独特的模式，在图像数据中很容易识别，并且通过提供目标尺寸的测量，可以估计出目标在摄像机坐标系中的姿态。在进行手眼标定时，不需要知道目标的精确位置——只要目标静止在机器人的 base frame 内，手眼标定就可以从 5 个或更多位姿序列中估计出来。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193008953.png" class="" title="image-20240917193008953">
-
-<p>在 Target 标签中，输入 Target Params 创建目标。然后使用 “Save target” 按钮保存目标图像，并打印出图像。可以随意使用目标参数进行实验，以了解它们如何影响目标，但一定要记住打印的目标所使用的参数——需要输入相同的参数才能识别目标。</p>
-<p>目标必须是平的，才能被摄像机可靠地定位。把它放在平坦的表面上就足够了，也可以安装在木板上。<strong>测量标记的宽度(其中一个黑色方块的外部尺寸)<strong>，以及</strong>标记之间的间隔距离</strong>。在 Target Params 部分的相应框中输入这些值，单位为米。同时，在 Image topic 和 CameraInfo主题 下拉菜单中选择合适的主题。</p>
-<h1 id="几何背景"><a href="#几何背景" class="headerlink" title="几何背景"></a><strong>几何背景</strong></h1><p>HandEyeCalibration 插件的 Context 标签中，包含进行校准所需的几何信息。</p>
-   <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193046936.png" class="" title="image-20240917193046936">
-
-<ul>
-<li><p>Sensor configuration：</p>
-</li>
-<li><ul>
-<li>Eye-in-hand</li>
-<li>Eye-on-hand</li>
-</ul>
-</li>
-<li><p>Sensor frame：camera optical frame(相机光学坐标系)</p>
-</li>
-<li><p>Object frame：标定目标的坐标系</p>
-</li>
-<li><p>End-effector frame：末端执行器坐标系</p>
-</li>
-<li><p>Robot base frame：机械臂基座坐标系</p>
-</li>
-</ul>
-<p>FOV 部分在 RViz 中控制相机的视场渲染。要查看 FOV，添加 MarkerArray 显示，并将其设置为 &#x2F;rviz_visual_tools 主题</p>
-<h1 id="采集数据"><a href="#采集数据" class="headerlink" title="采集数据"></a><strong>采集数据</strong></h1><p>需要采集几个 samples 以确保良好的校准。机器人运动学提供了机器人底座上的末端执行器的姿态,并根据上面所述,估计了摄像机坐标系中的标定目标。如果目标在机器人 base 坐标系的姿态是准确的,只有对摄像机目标变换的单一观察才能在末端执行器框架中恢复相机的姿势。直接的 camera-to-end-effector 转换相当于复合相机到目标到基线-到末端的执行器变换。然而,一个更好的选择是将这些信息与几个姿势结合起来,以消除在这个等式的基础框架中设定的目标,正如Kostas Daniilidis所描述的那样。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193114714.png" class="" title="image-20240917193114714">
-
+    <div class="post-body" itemprop="articleBody"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，密码不对，请重试" data-whm="抱歉，该文章无法校验">
+  <script id="hbeData" type="hbeData" data-hmacdigest="dd4d4b0ce7c250ba9105a423b6e1d041606ad1b3804e339c408d5e14b579689a">61a285bea0bd1a3904d1b9b9e1d940772bbc5e66aaf9a0414d1a0527f726d68f29e58cd3e9ab6bab82233e97238e98eaad37a05154621e1e3053080df908958d06373ca7e7d40717fe4fd1952b04930e5cecd8838059a9302e8c06dc9b9ce8eb00c1428b2314ce9772599e730b42e62d9112d1bb75f922caed10d3e41179ea32232a0d1823298b87326999ccea2a65c8837f793dae96f214655a554646e506f055408f9d484d424c67497bca25720e867a34786c8d85e19c8d9df88b1f363e559ce46fdabd6c09be2dd3f4ae7858ebe5ecaba43b3596a82ebdf1aed66730f72f741f854a868b93c1229b93cb0bab4cf2e15175ca86a8895cf58e7e7b35ad61694b24bb2b3531c813c57a14097c17b68a9ee25194f911f654d06ca5e7bde30744d4f143e6db3b7c7c479489c77d7d7b5465c46d2d75a482494a5c14c3099140efef0fee293c1d14fe209759f1ce8eedb16894b95642330d699d90a9a60b3b8fadc9aa1b0b88c6fe939d8197603cce99d1bcc6aca6c5c1343471b12d321de30323db514dfb83a27190f2c713e451454cc9519d3938b2d184a30d94612d8df2a882dfffc8bd1c590b682d269b554cdf7b682ba5dc7b5ec07a33762bf9667fdc52eda2475115c2fdc5e569d72d3cb60a3fca65982e820c0ea16c66c04e8df2a47e32ee0bb228ef275ca5b59659e63e1bc9a310d77aed2f28b6f93b3a08ae54e8a1c721ecffc0e2d1bc5ad41058896ac0738afdac9a0c769b86112f3e4555b30bdc942f3191df029bdf342f4de8ad135e7109e97c4f154173549164ada519cfb9443981a83f9b96c44f626fdc37aa5aa9e87eb82796bcd349ec8d2698651e28191b0a6d95f50995a7eb74ddcfcde7907be39254c7bbf52e85bff8a2ce2af64ba47f825acccfdb288d0b6bd5ed6e424aac524f2ecd532067f080c02ec2398d518f4050e5a0f76bb71e5d9abaf1e4d32405a522992e8a29cd490b114d4f8340b9343b501c762f93eabd7ff52561ce8503c36af3394f12dfe563dd45b5aed445ab06685aba65155b9600f30c36e031ef9bbe104343c9d4397cdeb5ca4bba77cebc899fcd4f5f8561a0d1a60f6ea02418903d1f18142a5edaf06e7b176522a03370060d41b3a981453a9a2902fe60537bfcc14e19e79010520abb285c3e873af5de96ee96012a88488404068bf5d5c052f227509887c74a9fe2d51a32a4b20b809ab7270ed7100eb1afeaf5004763ac759f6389814529448f6974e477bb3f05838472b03af981c1bdc5966f7765660dc7e4591942fa1fde846cb7ab3c65ceb386c168f09f63368587b7f41900399339fcd2066f9ad5f23570fc50d188a82fe83ea53e1d089b37da3ee99f4ef8412a915a350f4bf0a2c23587162fb9dee3c129c3385c31040414c1af52cdf3f9f66b970dc110d90d903e8ff27e2a28c09a5b1e599e87705cd8d3bc7eed341dfb9da7c50ddf2020093e9c096363f5d089dd4f3d0c6b984d86b6b2e84bee286577ad4b2c216f4f84e085c9c8c77d7cca4657ec889a5a228f130caf2335a4562e6ece958b43e00e2c995e75819038d122cfdeb0533a31a80399a3e9ad90bbc4913b9e56e10c0ac29edacf5be1e6fd187bf6a3eaa83c1c35fcf28b170fa8a0749a63c51b80cb46d917e9c9510acfc1581ebd0056182a09349e6c8551122fd959377e3e833dbfea9b656a2a9bf3eca825fe2279412daa2af8953efde857489540e3eb6a7b1f29810a378120c1bcf5b5a1f863dbaecdc5b25ec6f800eb6e3742abb8f030e7ae3f6dc930afc5433aa85f2ad35fce55f4ddb0fa9d222e9eecc19f163ff78f5de75ade62f860ee1f8c1fc5e570191ed07f8bbfc8969d14d1efb1ea5404c3bb5712f6a8d8ab11dd59f9aa05ac91b0895b529909e6b7227266d818760ebbe40de392922b182c77f033cf1667157a97603e155e3a5bb43174b8c6e94ca9800f1a16bf5fdcafc27e7a7002af0d4f5439d229c8d44ae89a8e7de5b98435b31c0de28725aee292875b8e0d98b0b75723e1299ab4b6f6c1fd03b7a8d72d12e832bcb0bb227e69b3bd65653e8be66e278c26fe0aea3f842eb423ddb2cee7f59ce124a84f21dee5047634c78abc2003b455e6057ea2e6fa7aa56c58f45ac54c9071d2b32397e11c4457169ab5f98d09a6138f1b264761ed9e34b6355ba0cbca494056e3b7453bf9e53ac75b0f1fdcec3ec51761da5b84fb2d3855f60e49182f5e46e525ed7a419505ff87cbabe8318f87aab5c253b52d2cab67bc3e4ba8f06b5080aa386a281cae7f7a7bb055151010f329dbc1f56e8ca9499ca77feef9f6a5e0d11b4d5b73e9696406cfe17d800b98374ee472c28c9e546ea707d11c8709c8b4eac0aa4bb0c43461003cb5ca5b8e27645185561257d6593d5faa4d125f1b763ebe02a8429cff0c989eba2c4a13a5b8c73ac077f714ac4f023fd1b2972adbc2136948cccb65fe70f8014e25d8cbca8c0f65791ef07766dac2e711cc971bd5fb32953d195591d454cb04300477d0aca6a49488ddf9bee23787e1e6f62a9047e0bb518d20a0ba63841199a8bdbca9362daa6148f0907551351c35d4c16dcc153950ab57d7dbe571287829658affc5a2a9afc8fbb7686dc5d589f333944e6526be383c2e46e2ebf50e54f14cf5ad96a7b4eb49508051a56b4a9758561995c6ccccdb6b0c81890f264b8272b370c7fafab9fb34a674e6604259ff43adbfdffb4f9c8655bab4a4f82a1a5858a3e1ea42fa47354d849aeb01a69bf71c9c9cfbcaa6076cb76507504dd28de949cc7273b56d52e17fa4d63c62718677da99e1a57f0de69d5bcd26667f54742f73c1fd5f3da5d2d47db1e84d91c9c4accab3596d10f5e900aa08f3a38e08f6797993f423ca8d0d5e601fb9e16c1659d1443f14edca1631cc52cd367b5c66bf6e032b501095cbff6e7dcd6bc03d54be1fedcd6a8719cb3c3dae5cf9188252aee7e031f539f18dd9c91766bbf34d3c391382d40ec7df160c54893a663e15769ddc1320ad075ba79f80a7b738c5c2eb3525d93bb008aa4561fd6a94dcd7a3fe5dbf3a5ef38c6d8d37468c3b82685d9d6e1e0cad8388174807c6cf5f35fe1c8925f933415be2d43a897330f3bcbbffea3714120d9ff36bc2f281829c5dbfffd8d1186bf3273bdc769a99f7344bf31aaa61311bdf2cb7ee1a5865d96ed8abb9a36cf96c76b7e77782a1e0b572c6a24ab350858cdcfa9deecb2d97044bad812a6b8a441c509802f3ff1d407a5acf12dc55f8a218c89d13e268bb2828131c76b9b66ce412e0e455fc09f06fe7865bac1a8d5e80f137bc2cd0c1ff6e469eeb368b90406bbc1019aa0bbea078aee80b3f8cfb67be5126d120026c926619679aff76118e5398ea717dfe6b245470be2ef97c2084e7d6884c94d09108ab52fd2b7963230452bc2a291361aabff7e6c58e802f148d6c6a65c01f8697f3fdf1cd55f92d548bdd1994e10927ed328199eeb884566d666fd4a3eea753b2b287349a3c5b9e99794f4ee93514bbdc86666f686753150a6df3bf746df0441a111f43da0d18eb00dd72d88b3e01c35e6685b675c9215481b933e7bf6cdd856e84bf0fc349faed39bfe0bd39cf88fe851788cde25d06034206745aad2349a30a518b092b77ee24293caeda98f65ddbcfdc8eab7d56b53ebf888cacf53f78e1299875197a3cc17ca3ff8b6e20e4d63f9dea7fb257daba43f63970cb67e6d04c55035b047395b83ddf2ff4fad7a888ca1c64971ffa1228ab9e8a0a1441021eeec24a67e6ad8226a15bffe2ef6a652f675c7b76fe02a9ec79aa7b62cadf48d8d1363839030d6a5de44831318528d4792763b7aa1abc170389b597c40c45dc0e3438e290ec4e5e8d498363fe714765a39ec495d2c9e8d7081a6c64adceadc56389e5dd058339a7a36eb5bfd24dee2fac44261f8c2646ad19a3bbc5b8824edf4e7a1a164ec479e08962f753c7e61eae2bd65b7baa3d253450d807ede21cdf8eda1afa143c9246f2fe085488ce6336b75a0b0498f054e8e01cafec6757ac527c9d50133cd89d6fb728f6945eab11c6d6a8b7d02cf75754537e8f72e3619fc24d86d0885a9060e07eeb7b4866871628dafd23fdaab91857fc82f90df9034347564d254cb8fa6ffe7f4f3bee799f8d12ba88aadb1dbc9bdc36bc295230221e144586f16ec5937a187638349b96042d96386938f043686333f4ca13da1ef230969d262b0d04e17f8985d012f359167d8fc10c0946e50062cbbff4112ac27af5d8e73c10371322fff6f9ef69f1852d3e5b30b8b016fdb16eee484ff7d108ce2c9aea8d48af5df20af2918807bb1df3ea74ce664af2b65b37f9c1473e5f982be4b9ba2affc69e83c7a88fd16de2002221988ec967ec76d8c644e3a7a9d7f7c9a5435cadb88aa2133b8e3cf83a6a07541774998687daf6a6671cca49592f71139748757d74f4496da7ee6a093dfb44b8d6a5fc4b114f4af0b077d0ad6d2abd8981d49b01bce5ec451799e60dca7d9e4ea3cce5631dfb04d1c4de2f8d335e1f0fcbce4b95246f3ec214416adf2dd471142137db72cc3e96f3eef40ab1c83558044e0b82a3c96aef83ba7bbe3eadc73618e20687a9a07a4519741ab04dd1f09563c0c91c353bdafbc1e06518df455c1961ee0abaebd0197403a730053ec2ac5e0050ad183d8cd1336723f6b04b0213bbe170d86edbffd6fe444431df87df9e3abd8e2d12f4a092db8b7e6a129380c0168c4a0cf5fb27e5789538bf7b0a65752ffeac595705e4a6551e9cd1a41ef78cfd98a964351088a578a2e3beb084f712191b5cdd050d241e592cd5f6c5bf73564fede048d4e3366af361acee83420849471b0b89f750f2e9412cdcb91f21f8afffe8ad4b432af32513e38c7c2dfe6c2f2e896d5e4bf47c659188d2752481a181b63f8291cb28dcb8bca32a7d57d972e4b0e500cafabc08070ab19a8df7136a29522e958399d281efe460a4578bbb8b23f55b058b86e8d5677e4a02f52730f25206d3f355f90b5f2a07214dfaebc1d3f262ac031699e4910d825262a04db154444dde80b1d02b7f25cbef29e72094d7ea7b771eaa5f677dd7a77fed7ee8d46b90c1c2e2f54dd795501772f8fae71f9d1b5654b944e62725288f9891e11eaafe1c19d679a93404ba3fa6ed777fd2cf490187091280ea189f841be6c287aa7ae6cd549e507aedbbe71a826cd828f5e310af94f68c8e3e8cade5ec96df7f3769f987dcb000e2fbb1077338969730389a250ae6a8a9eb318d97562b72173fecc3fd1b50b803bb6ee040c7566d2fbb342f105d0b49b79f64aaf74fbe9b2b025818205fa7be023f8faa996bc44003f1e02f55a1417eb5df0f712920d629b55089f1751c992c94287163f89696b950f370ffd1734b23f664119f5efcdd6a1c61e920a9a2b0171a6254983fd8e9995cd7ef9e2874d7e9f18ead4e0a1b7f246fd9cbe5818c3400807ed3ff7ebfb9711cf4a3c2aa54b7511f81a7b7575f5cd174be399b01fcf9b1d41587cb3f0b9daaf9806e16b8de0a443caaf4321dab6b152bc618f1bb2d50f71407e9066b70c723f07cac7f43ad149185f7bc3b341e9aac8167a7a79f6d430800892c7ac121e9b06f11bd5952aa2eb81d8f239f89d8976c8fbf6c4d8326ddb3a77e7dead6684eb9a183ea3bfda4d1132e86788af2e128c687339636630b1a1d80016440bd589ed22731746b24d8a561e45bd70a47c48aa1673e000b65c5094ade624cacc881b51acbd729667be55ca99b5f1e16dce08e45d7238b3cc33763b06a4718db17b767a25dcef2df42d62023ff1f712b9a97ae6e2cd82fe766a24aea16537aa8b7f343808f3ab48ba80249f5473eb540da6587ef7c17ff6d3b41275db5165318c16e492a8ad05bb0b1767101f6db26c922420cb27276c72dd02bf3051f4be891707e5cc5dbf240e5d51825fe347e31425730c4d050d5a611cba2ea95bd2e8723699afe1fc3932aebf92291dec7e90b007bbdae3593942694f4247ba3a460eb2a92929356dd87ee069b1c3fc4f9633d2817a46601cb756ef6efbd9285fa5dd67d86041558bc8904d084dd3ee4be7996f2da38e588b34a05238d8ad23abd07b42330531ae56561493ffbf991a42d18a9aa8eadcf26c2bcf54ca94ed5cfb8ed3537399ffe81f7ed2d84794c9d9214599c2f13cbba4842a20d756c173e850a83bb4aed6456aad7d91fd248fc0690dedcc462c3c91bfadbb02924c9a29ffdab583c4fdd62fd844e419a91424f917ab481e498dc30798f9861a3666cee29eb5d305e9d73824eecab5a842b4cf6823cc495f43e6b19e37d3d1a6d704d7bc31069173810307fb3f6023b96dd8222f276037b7db915eb6038908b2e53adde5814e7fcfac38ce12afbba09ddd07cd7257c0e78a8687dd8f9f1164a53300d9c472e7ffc616022cafadba9d1deff768c080db2b32e215a9a9e809b8f1ecfab447dfa01eb163340afa7826d8abf39c1566ccf10c9e478c39f1631097e472a0d3c92bb74ad473091d292f5204016058f73fe9cade4cbf6b5eeeb687fac7335fa2184cd8d273f4db61a19027434452d9ab92ffeb8b54b38d3225ef967e06190600a838d1a6753f98f452557000d5792fd0ab3267495aa6c574ec3ddc9aa8983cc379f0426426f8611f8491fc1bd24df5b26c53329a1db223debcfc90c54588aa2dda47c471f61be2d1df36e6c5cef2ee311c9ce9d01937f6e32763ab6962ecca38c1b3c73ea04d1b43f4d8affce8a2e2d13eaffed697292f032b91ae68c8967842cf941766a9b0fb03a5922c07bcfdfce2484afbb083e8f010f4ebf52fc54df01eaf433381c59595aaeab4f202e8535904e2111ff9df2e06e4ee3df9e44cd62d40060d64281ed2808b051f7307c825411a6713865fa884f79daab8d3d0b54c5410bc37569331bbaeb972b1ac3b76dff61744370b4cddf7a62fab9788aa0b608f76d3ad5fafef1caa80236728a99188d4fa8f7b5193955979cba4a6f0db16688d0485a9637c3d3f7cbfec53e26db8093b891e5d66e3ecc71ffbd8677c43bb060109d11819195659b2a09fed0e482b8c4153763dbb911</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -365,14 +338,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">570k</span>
+    <span title="站点总字数">605k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:17</span>
+    <span title="站点阅读时长">18:19</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,411 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/%E7%94%BB%E5%9C%86%E5%BC%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/%E7%94%BB%E5%9C%86%E5%BC%A7/" class="post-title-link" itemprop="url">画圆弧</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:21:59" itemprop="dateCreated datePublished" datetime="2024-09-17T20:21:59+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index"><span itemprop="name">双臂控制</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>将圆弧轨迹微分为一段段的小直线段，作为 waypoint，再调用 compute_cartesian_path</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">geometry_msgs::Pose target_pose;</span><br><span class="line">target_pose.orientation.x = <span class="number">0.14858</span>;</span><br><span class="line">target_pose.orientation.y = <span class="number">0.73236</span>;</span><br><span class="line">target_pose.orientation.z = -<span class="number">0.03444</span>;</span><br><span class="line">target_pose.orientation.w = <span class="number">0.66362</span>;</span><br><span class="line"></span><br><span class="line">target_pose.position.x = -<span class="number">0.050308</span>;</span><br><span class="line">target_pose.position.y = -<span class="number">0.039851</span>;</span><br><span class="line">target_pose.position.z = <span class="number">0.78264</span>;</span><br><span class="line"></span><br><span class="line">arm.setPoseTarget(target_pose);</span><br><span class="line">arm.move();//首先运动到圆心的位置</span><br><span class="line"></span><br><span class="line">std::vector&lt;geometry_msgs::Pose&gt; waypoints;</span><br><span class="line">waypoints.push_back(target_pose); // 将初始位姿加入路点列表</span><br><span class="line"></span><br><span class="line">double centerA = target_pose.position.x;</span><br><span class="line">double centerB = target_pose.position.z;</span><br><span class="line">double radius = <span class="number">0.13</span>;</span><br><span class="line"><span class="keyword">for</span>(double th=<span class="number">0.0</span>; th&lt;<span class="number">6.28</span>; th=th+<span class="number">0.01</span>) // 圆心角间隔 <span class="number">0.01</span></span><br><span class="line">&#123;</span><br><span class="line">    target_pose.position.y = centerA + radius * cos(th);</span><br><span class="line">    target_pose.position.z = centerB + radius * sin(th);</span><br><span class="line">    waypoints.push_back(target_pose);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">moveit_msgs::RobotTrajectory trajectory;</span><br><span class="line">double fraction = <span class="number">0.0</span>;</span><br><span class="line"><span class="built_in">int</span> maxtries = <span class="number">100</span>;   //最大尝试规划次数</span><br><span class="line"><span class="built_in">int</span> attempts = <span class="number">0</span>;     //已经尝试规划次数</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(fraction &lt; <span class="number">1.0</span> &amp;&amp; attempts &lt; maxtries) &#123;</span><br><span class="line">    fraction = arm.computeCartesianPath(waypoints, <span class="number">0.01</span>, <span class="number">0.0</span>, trajectory);</span><br><span class="line">    attempts++;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(attempts % <span class="number">10</span> == <span class="number">0</span>)</span><br><span class="line">        ROS_INFO(<span class="string">&quot;Still trying after %d attempts...&quot;</span>, attempts);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(fraction == <span class="number">1</span>) &#123;</span><br><span class="line">    moveit::planning_interface::MoveGroupInterface::Plan plan;</span><br><span class="line">    plan.trajectory_ = trajectory;</span><br><span class="line">    </span><br><span class="line">    // 可根据需要对要执行的轨迹进行其它处理,如: 轨迹插值等</span><br><span class="line">    </span><br><span class="line">    arm.execute(plan);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huangjunsheng123/article/details/114760366">https://blog.csdn.net/huangjunsheng123/article/details/114760366</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Mobile%20Manipulation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Mobile%20Manipulation/" class="post-title-link" itemprop="url">Mobile Manipulation</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:19:50" itemprop="dateCreated datePublished" datetime="2024-09-17T20:19:50+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/" itemprop="url" rel="index"><span itemprop="name">示例</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考：<a target="_blank" rel="noopener" href="https://jderobot.github.io/RoboticsAcademy/exercises/IndustrialRobots/mobile_manipulation">Robotics-Academy Mobile Manipulation</a></p>
+<p>两种运行方式：</p>
+<ul>
+<li>ROSNode Templates</li>
+<li>Web Templates</li>
+</ul>
+<p>使用移动机械手(AGV+机械臂+夹持器)在一个传送带上拾取物体，并将其放置在其他三个传送带(<strong>conveyors</strong>)上。</p>
+<p>本例使用 Neobotix：MMO-500。包含 MPO-500 移动底盘 + UR10 机械臂。</p>
+<p>1、介绍</p>
+<p>1）安装</p>
+<p>windows 用户应选择 WSL2 backend Docker 安装，因为它的性能优于Hyper-V。</p>
+<p>下载 Academy Docker Image</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker pull jderobot/robotics-academy:2.4.2</span></span><br></pre></td></tr></table></figure>
+
+<p>为了获得最佳性能，Docker 应该使用多个 CPU 内核。</p>
+<p>2）使能 GPU 加速</p>
+<p>安装 <a target="_blank" rel="noopener" href="https://virtualgl.org/">VirtualGL</a>，然后执行以下指令运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --<span class="built_in">rm</span> -it --device /dev/dri -p 8000:8000 -p 2303:2303 -p 1905:1905 -p 8765:8765 -p 6080:6080 -p 1108:1108 jderobot/robotics-academy:2.4.2 ./start.sh</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>3）测试</p>
+<p>后台启动新的 docker 容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --<span class="built_in">rm</span> -it -p 8000:8000 -p 2303:2303 -p 1905:1905 -p 8765:8765 -p 6080:6080 -p 1108:1108 jderobot/robotics-academy:2.4.2 ./start.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>本机浏览器进入 127.0.0.1：8000，连接。</p>
+<p>2、ROSNode Templates</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-melodic-eband-local-planner</span><br><span class="line">sudo apt-get install ros-melodic-amcl</span><br><span class="line">sudo apt-get install ros-melodic-openslam-gmapping</span><br><span class="line">sudo apt-get install ros-melodic-navigation</span><br><span class="line"></span><br><span class="line">mkdir -p catkin_ws/src</span><br><span class="line">cd catkin_ws/src</span><br><span class="line">git clone https://github.com/JdeRobot/IndustrialRobotics.git -b melodic_devel</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">rosdep update</span><br><span class="line">rosdep check --from-paths . --ignore-src --rosdistro melodic</span><br><span class="line">rosdep install --from-paths . --ignore-src --rosdistro melodic -y</span><br><span class="line"></span><br><span class="line">catkin build</span><br><span class="line"></span><br><span class="line">echo &#x27;source &#x27;$PWD&#x27;/devel/setup.bash&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">echo &#x27;export GAZEBO_MODEL_PATH=$&#123;GAZEBO_MODEL_PATH&#125;:&#x27;$PWD&#x27;/src/IndustrialRobotics/assets/models&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3、使用</p>
+<p>进入 exercises 目录中的 mobile_manipulation 包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch mobile_manipulation.launch</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 mobile manupulator teleoprator</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch mobile_manipulation_gui.launch</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python MyAlgorithm.py</span></span><br></pre></td></tr></table></figure>
+
+<p>该练习必须编辑 MyAlgorithm.py文件并在 <code>myalgorithm()</code> 函数中插入控制逻辑。在编写主要逻辑之前，应该实现 <code>move_to()</code> 函数来导航移动机器人并将其移动到给定的目标。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/Multiple%20robto%20arms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/Multiple%20robto%20arms/" class="post-title-link" itemprop="url">Multiple robto arms</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:14:48" itemprop="dateCreated datePublished" datetime="2024-09-17T20:14:48+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index"><span itemprop="name">双臂控制</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用 MoveIt 运动规划设置多臂环境的步骤如下:</p>
+<ul>
+<li>构建多臂 xacro&#x2F;URDF 模型</li>
+<li>使用 MoveIt Setup Assistant 生成 moveit config 包</li>
+<li>编写多臂的 ros controllers 配置及 launch 文件</li>
+<li>集成仿真环境</li>
+<li>规划机械臂运动</li>
+</ul>
+<h1 id="构建-xacro-URDF"><a href="#构建-xacro-URDF" class="headerlink" title="构建 xacro&#x2F;URDF"></a>构建 xacro&#x2F;URDF</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">robot name is: panda_multiple_arms</span><br><span class="line">---------- Successfully Parsed XML ---------------</span><br><span class="line">root Link: world has 1 child(ren)</span><br><span class="line">    child(1):  base</span><br><span class="line">        child(1):  left_arm_link0</span><br><span class="line">            child(1):  left_arm_link1</span><br><span class="line">                child(1):  left_arm_link2</span><br><span class="line">                    child(1):  left_arm_link3</span><br><span class="line">                        child(1):  left_arm_link4</span><br><span class="line">                            child(1):  left_arm_link5</span><br><span class="line">                                child(1):  left_arm_link6</span><br><span class="line">                                    child(1):  left_arm_link7</span><br><span class="line">                                        child(1):  left_arm_link8</span><br><span class="line">                                            child(1):  left_arm_hand</span><br><span class="line">                                                child(1):  left_arm_leftfinger</span><br><span class="line">                                                child(2):  left_arm_rightfinger</span><br><span class="line">                                                child(3):  left_arm_hand_sc</span><br><span class="line">                                                child(4):  left_arm_hand_tcp</span><br><span class="line">                                        child(2):  left_arm_link7_sc</span><br><span class="line">                                    child(2):  left_arm_link6_sc</span><br><span class="line">                                child(2):  left_arm_link5_sc</span><br><span class="line">                            child(2):  left_arm_link4_sc</span><br><span class="line">                        child(2):  left_arm_link3_sc</span><br><span class="line">                    child(2):  left_arm_link2_sc</span><br><span class="line">                child(2):  left_arm_link1_sc</span><br><span class="line">            child(2):  left_arm_link0_sc</span><br><span class="line">        child(2):  right_arm_link0</span><br><span class="line">            child(1):  right_arm_link1</span><br><span class="line">                child(1):  right_arm_link2</span><br><span class="line">                    child(1):  right_arm_link3</span><br><span class="line">                        child(1):  right_arm_link4</span><br><span class="line">                            child(1):  right_arm_link5</span><br><span class="line">                                child(1):  right_arm_link6</span><br><span class="line">                                    child(1):  right_arm_link7</span><br><span class="line">                                        child(1):  right_arm_link8</span><br><span class="line">                                            child(1):  right_arm_hand</span><br><span class="line">                                                child(1):  right_arm_leftfinger</span><br><span class="line">                                                child(2):  right_arm_rightfinger</span><br><span class="line">                                                child(3):  right_arm_hand_sc</span><br><span class="line">                                                child(4):  right_arm_hand_tcp</span><br><span class="line">                                        child(2):  right_arm_link7_sc</span><br><span class="line">                                    child(2):  right_arm_link6_sc</span><br><span class="line">                                child(2):  right_arm_link5_sc</span><br><span class="line">                            child(2):  right_arm_link4_sc</span><br><span class="line">                        child(2):  right_arm_link3_sc</span><br><span class="line">                    child(2):  right_arm_link2_sc</span><br><span class="line">                child(2):  right_arm_link1_sc</span><br><span class="line">            child(2):  right_arm_link0_sc</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="MoveIt-config-包"><a href="#MoveIt-config-包" class="headerlink" title="MoveIt config 包"></a>MoveIt config 包</h1><img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/Multiple%20robto%20arms/image-20240917201538357.png" class="" title="image-20240917201538357">
+
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%8F%8C%E8%87%82%E6%8E%A7%E5%88%B6/Multiple%20robto%20arms/image-20240917201550345.png" class="" title="image-20240917201550345">
+
+
+
+<h1 id="配置-controllers-及-launch"><a href="#配置-controllers-及-launch" class="headerlink" title="配置 controllers 及 launch"></a>配置 controllers 及 launch</h1><p>需要两种类型的 controllers：</p>
+<ul>
+<li>joint state controller：发布所有关节状态</li>
+<li>joint trajectory controller：执行关节空间轨迹</li>
+</ul>
+<p>此例中，controllers 包括：joint_state_controller、right_arm_trajectory_controller 和 left_arm_trajectory_controller（未考虑夹持器）。</p>
+<p>创建 joint_state_controller.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">joint_state_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">    <span class="attr">publish_rate:</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+
+<p>创建 trajectory_controller.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">right_arm_trajectory_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&quot;position_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint1</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint2</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint3</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint4</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint5</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint6</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_joint7</span></span><br><span class="line">    <span class="attr">constraints:</span></span><br><span class="line">        <span class="attr">goal_time:</span> <span class="number">0.6</span></span><br><span class="line">        <span class="attr">stopped_velocity_tolerance:</span> <span class="number">0.05</span></span><br><span class="line">        <span class="attr">right_arm_joint1:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint2:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint3:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint4:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint5:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint6:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">right_arm_joint7:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">    <span class="attr">stop_trajectory_duration:</span> <span class="number">0.5</span></span><br><span class="line">    <span class="attr">state_publish_rate:</span>  <span class="number">25</span></span><br><span class="line">    <span class="attr">action_monitor_rate:</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="attr">left_arm_trajectory_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&quot;position_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint1</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint2</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint3</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint4</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint5</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint6</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_joint7</span></span><br><span class="line">    <span class="attr">constraints:</span></span><br><span class="line">        <span class="attr">goal_time:</span> <span class="number">0.6</span></span><br><span class="line">        <span class="attr">stopped_velocity_tolerance:</span> <span class="number">0.05</span></span><br><span class="line">        <span class="attr">left_arm_joint1:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint2:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint3:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint4:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint5:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint6:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">        <span class="attr">left_arm_joint7:</span> &#123;<span class="attr">trajectory:</span> <span class="number">0.1</span>, <span class="attr">goal:</span> <span class="number">0.1</span>&#125;</span><br><span class="line">    <span class="attr">stop_trajectory_duration:</span> <span class="number">0.5</span></span><br><span class="line">    <span class="attr">state_publish_rate:</span>  <span class="number">25</span></span><br><span class="line">    <span class="attr">action_monitor_rate:</span> <span class="number">10</span></span><br><span class="line">    </span><br><span class="line">  <span class="comment">#notice that the grippers joint2 mimics joint1</span></span><br><span class="line">  <span class="comment">#this is why it is not listed under the hand controllers</span></span><br><span class="line">  <span class="attr">right_hand_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">right_arm_finger_joint1</span></span><br><span class="line">    <span class="attr">gains:</span></span><br><span class="line">        <span class="attr">right_arm_finger_joint1:</span>  &#123;<span class="attr">p:</span> <span class="number">50.0</span>, <span class="attr">d:</span> <span class="number">1.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">i_clamp:</span> <span class="number">1.0</span>&#125;</span><br><span class="line"></span><br><span class="line">  <span class="attr">left_hand_controller:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">&quot;effort_controllers/JointTrajectoryController&quot;</span></span><br><span class="line">    <span class="attr">joints:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">left_arm_finger_joint1</span></span><br><span class="line">    <span class="attr">gains:</span></span><br><span class="line">        <span class="attr">left_arm_finger_joint1:</span>  &#123;<span class="attr">p:</span> <span class="number">50.0</span>, <span class="attr">d:</span> <span class="number">1.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">i_clamp:</span> <span class="number">1.0</span>&#125;    </span><br></pre></td></tr></table></figure>
+
+<p>创建 control_utils.launch</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Robot state publisher --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;publish_frequency&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;50.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;tf_prefix&quot;</span> <span class="attr">type</span>=<span class="string">&quot;string&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Joint state controller --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms)/config/joint_state_controller.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">args</span>=<span class="string">&quot;joint_state_controller&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Joint trajectory controller --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms)/config/trajectory_controller.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;arms_trajectory_controller_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;controller_manager&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">type</span>=<span class="string">&quot;spawner&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">args</span>=<span class="string">&quot;right_arm_trajectory_controller left_arm_trajectory_controller </span></span></span><br><span class="line"><span class="string"><span class="tag">            right_hand_controller left_hand_controller&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>joint state controller 在 &#x2F;joint_states 主题发布关节状态信息。robot state publisher 使用该主题数据来计算正运动学并发布机器人 link 的姿态&#x2F;变换。joint trajectory controller 能够在一组关节上执行关节空间轨迹。</p>
+<h1 id="集成-gazebo-仿真"><a href="#集成-gazebo-仿真" class="headerlink" title="集成 gazebo 仿真"></a>集成 gazebo 仿真</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install ros-noetic-ros-control ros-noetic-ros-controllers \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-joint-state-controller ros-noetic-effort-controllers \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-position-controllers ros-noetic-velocity-controllers \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-moveit-ros-control-interface \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-moveit-simple-controller-manager \</span></span><br><span class="line"><span class="language-bash">    ros-noetic-moveit-fake-controller-manager ros-noetic-moveit-planners</span></span><br></pre></td></tr></table></figure>
+
+<p>启动 gazebo 并加载模型</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Launch empty Gazebo world --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find gazebo_ros)/launch/empty_world.launch&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;use_sim_time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Find my robot Description--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(find xacro)/xacro  &#x27;$(find panda_multiple_arms)/robot_description/panda_multiple_arms.xacro&#x27;&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Spawn The robot over the robot_description param--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;urdf_spawner&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;gazebo_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawn_model&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;false&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-urdf -param robot_description -model panda_multiple_arms&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>启动 moveit</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Run the main MoveIt executable with trajectory execution --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms_moveit_config)/launch/move_group.launch&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;allow_trajectory_execution&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> <span class="attr">value</span>=<span class="string">&quot;ros_control&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;fake_execution_type&quot;</span> <span class="attr">value</span>=<span class="string">&quot;interpolate&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;info&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;debug&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;pipeline&quot;</span> <span class="attr">value</span>=<span class="string">&quot;ompl&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;load_robot_description&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Start the simulated robot in an empty Gazebo world --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms)/launch/panda_multiple_arms_empty_world.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Start the controllers and robot state publisher--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms)/launch/control_utils.launch&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Start moveit_rviz with the motion planning plugin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_multiple_arms_moveit_config)/launch/moveit_rviz.launch&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;rviz_config&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(find panda_multiple_arms_moveit_config)/launch/moveit.rviz&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -613,7 +1018,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+      <time title="修改时间：2024-10-19 15:57:46" itemprop="dateModified" datetime="2024-10-19T15:57:46+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -654,11 +1059,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>MoveIt 的网格过滤器功能从点云中移除机器人的几何形状。如果机器人的手臂在深度传感器的视图中，则与手臂相关的点将从点云中减去。</p>
-<p>这是通过将原始点云、机器人的变换(\tf)和机器人的 URDF 作为输入来实现的。然后，过滤器发布一个修改后的点云，该点云不包含与当前机器人状态重叠的点。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials mesh_filter.launch</span></span><br></pre></td></tr></table></figure>
-
-
+          Here's something encrypted, password is required to continue reading.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/mesh%20filter/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -720,7 +1129,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+      <time title="修改时间：2024-10-19 15:57:37" itemprop="dateModified" datetime="2024-10-19T15:57:37+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -761,15 +1170,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Sequence of multiple segments。</p>
-<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这<strong>减少了规划开销，并允许遵循预先描述的路径而不停留在中间点</strong>。</p>
-<p>请注意: 如果序列命令规划失败，则该序列命令将不被执行。</p>
-<p>请注意: 序列命令允许包含多个组的命令(例如“机械手”，“夹持器”)</p>
-<h1 id="User-interface-sequence-capability"><a href="#User-interface-sequence-capability" class="headerlink" title="User interface sequence capability"></a><strong>User interface sequence capability</strong></h1><p>一个专门的 MoveIt 功能将 <code>moveit_msgs::MotionSequenceRequest</code> 作为输入。该请求包含如上所述的后续目标列表和附加的 <strong>blend_radius</strong> 参数。如果给定的以米为单位的 blend_radius 大于零，则将相应的轨迹与以下目标合并在一起，以使机器人不会停在当前目标处。当 TCP 比给定的 <strong>blend_radius</strong> 更接近目标时，允许它朝下一个目标前进。当离开当前目标周围的球体时，机器人会返回到它在没有混合的情况下所采用的轨迹。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/image-20240917200130040.png" class="" title="image-20240917200130040">
-
-<p>详细实现参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/melodic-devel/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
-
+          Here's something encrypted, password is required to continue reading.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E5%A4%9A%E6%AE%B5%E5%BA%8F%E5%88%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1344,430 +1753,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/" class="post-title-link" itemprop="url">Perception</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 19:40:56" itemprop="dateCreated datePublished" datetime="2024-09-17T19:40:56+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>launch 目录的 <code>sensor_manager.launch.xml</code> 文件会加载该配置参数。需修改 <code>xxx_moveit_sensor_manager.launch.xml</code>，添加：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find xxx_moveit_config)/config/sensors.yaml&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>还需要配置 Octomap，在 <code>sensor_manager.launch</code> 中添加以下代码行:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;octomap_frame&quot;</span> <span class="attr">type</span>=<span class="string">&quot;string&quot;</span> <span class="attr">value</span>=<span class="string">&quot;odom_combined&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;octomap_resolution&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.05&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;max_range&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;5.0&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Obstacle-Avoidance"><a href="#Obstacle-Avoidance" class="headerlink" title="Obstacle Avoidance"></a><strong>Obstacle Avoidance</strong></h1><p>参考 moveit_tutorials 中的 <code>obstacle_avoidance_demo.launch</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/launch/demo.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Play the rosbag that contains the pointcloud data --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;moveit_tutorials&quot;</span> <span class="attr">type</span>=<span class="string">&quot;bag_publisher_maintain_time&quot;</span> <span class="attr">name</span>=<span class="string">&quot;point_clouds&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- If needed, broadcast static tf for robot root --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf2_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_panda&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0 0 0 0 0 0  world panda_link0&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf2_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;to_camera&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0.115 0.427 0.570 0 0.2 1.92 camera_rgb_optical_frame world&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="检测并添加目标作为-Collision-目标"><a href="#检测并添加目标作为-Collision-目标" class="headerlink" title="检测并添加目标作为 Collision 目标"></a><strong>检测并添加目标作为 Collision 目标</strong></h2><p>演示从点云中提取圆柱体、计算相关值并将其作为碰撞对象添加到规划场景中的示例。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Perception/image-20240917194220440.png" class="" title="image-20240917194220440">
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_tutorials detect_and_add_cylinder_collision_object_demo.launch</span></span><br></pre></td></tr></table></figure>
-
-<p><code>detect_and_add_cylinder_collision_object_demo.launch</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find moveit_tutorials)/doc/perception_pipeline/launch/obstacle_avoidance_demo.launch&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Run the detection and adding cylinder node --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;moveit_tutorials&quot;</span> <span class="attr">type</span>=<span class="string">&quot;cylinder_segment&quot;</span> <span class="attr">name</span>=<span class="string">&quot;point_cloud_preprocessor&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Low%20Level%20Controllers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Low%20Level%20Controllers/" class="post-title-link" itemprop="url">Low Level Controllers</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 19:37:22" itemprop="dateCreated datePublished" datetime="2024-09-17T19:37:22+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​            <a href="#2334-1678883206395">1、YAML 配置</a>        </p>
-<p>​            <a href="#2080-1678883124905">2、FollowJointTrajectory 控制器接口</a>        </p>
-<p>​            <a href="#2471-1678883447459">3、GripperCommand 控制器接口</a>        </p>
-<p>​            <a href="#9890-1678883508924">4、轨迹允许执行时间参数</a>        </p>
-<p>​            <a href="#7253-1678883125014">5、创建 launch</a>        </p>
-<p>​            <a href="#4245-1678883125074">6、Debugging</a>        </p>
-<p>​            <a href="#4611-1678883125160">7、映射 &#x2F;joint_states 主题</a>        </p>
-<p>​            <a href="#7621-1678928401128">8、轨迹执行管理器选项</a>        </p>
-<p>通过机器人上的 controllers 来配置 MoveIt。假设机器人为手臂提供了 <strong>FollowJointTrajectory</strong> action service，(可选地)为夹手提供了GripperCommand 服务。如果机器人不提供这个功能，推荐使用 ROS control 框架，可以很容易地在硬件通信层添加这个功能。</p>
-<h1 id="YAML-配置"><a href="#YAML-配置" class="headerlink" title="YAML 配置"></a><strong>YAML 配置</strong></h1><p>首先在 robot_moveit_config&#x2F;config 中创建 controllers.yaml，指定机器人的 controller 配置。例如：为 panda_arm 配置一个 FollowJointTrajectory action controller，并为 hand 配置 GripperCommand</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">controller_list:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">panda_arm_controller</span></span><br><span class="line">   <span class="attr">action_ns:</span> <span class="string">follow_joint_trajectory</span></span><br><span class="line">   <span class="attr">type:</span> <span class="string">FollowJointTrajectory</span></span><br><span class="line">   <span class="attr">default:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">joints:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint2</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint3</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint4</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint5</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint6</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_joint7</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hand_controller</span></span><br><span class="line">   <span class="attr">action_ns:</span> <span class="string">gripper_action</span></span><br><span class="line">   <span class="attr">type:</span> <span class="string">GripperCommand</span></span><br><span class="line">   <span class="attr">default:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">parallel:</span> <span class="literal">true</span></span><br><span class="line">   <span class="attr">joints:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_finger_joint1</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">panda_finger_joint2</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="FollowJointTrajectory-控制器接口"><a href="#FollowJointTrajectory-控制器接口" class="headerlink" title="FollowJointTrajectory 控制器接口"></a><strong>FollowJointTrajectory 控制器接口</strong></h1><p>包含以下参数：</p>
-<ul>
-<li>name：该 controller 的名字</li>
-<li>action_ns：该 action 的命名空间</li>
-<li>type：该 action 的类型</li>
-<li>default：默认控制器是 MoveIt 选择用于与特定关节集通信的主控制器</li>
-<li>joints：该接口控制的关节</li>
-</ul>
-<h1 id="GripperCommand-控制器接口"><a href="#GripperCommand-控制器接口" class="headerlink" title="GripperCommand 控制器接口"></a><strong>GripperCommand 控制器接口</strong></h1><p>包含以下参数：</p>
-<ul>
-<li>name：该 controller 的名字</li>
-<li>action_ns：该 action 的命名空间</li>
-<li>type：该 action 的类型</li>
-<li>default：默认控制器是 MoveIt 选择用于与特定关节集通信的主控制器</li>
-<li>joints：该接口控制的关节</li>
-<li>parallel：当设置这个值时，关节的大小应该是 2，命令将是两个关节的和</li>
-</ul>
-<h1 id="轨迹允许执行时间参数"><a href="#轨迹允许执行时间参数" class="headerlink" title="轨迹允许执行时间参数"></a><strong>轨迹允许执行时间参数</strong></h1><p>可选。对于每个控制器，可以选择设置 <strong>allowed_execution_duration_scaling</strong> 和 <strong>allowed_goal_duration_margin</strong> 参数。是全局参数 trajectory_execution&#x2F;allowed_execution_duration_scaling 和 trajectory_execution&#x2F;allowed_goal_duration_margin 的特定于控制器的重写。与全局值相反，特定于控制器的值不能在运行时动态重新配置。这些参数用于计算允许的轨迹执行持续时间，通过缩放预期执行持续时间并随后添加余量。如果超过这个持续时间，轨迹将被取消。控制器相关参数的设置方法如下</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">controller_list:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">arm_controller</span></span><br><span class="line">   <span class="attr">action_ns:</span> <span class="string">follow_joint_trajectory</span></span><br><span class="line">   <span class="attr">type:</span> <span class="string">FollowJointTrajectory</span></span><br><span class="line">   <span class="attr">allowed_execution_duration_scaling:</span> <span class="number">1.2</span></span><br><span class="line">   <span class="attr">allowed_goal_duration_margin:</span> <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="创建-launch"><a href="#创建-launch" class="headerlink" title="创建 launch"></a><strong>创建 launch</strong></h1><p>创建 controller launch 文件(例如：robot_moveit_controller_manager.launch.xml)</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Set the param that trajectory_execution_manager needs to find the controller plugin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> <span class="attr">default</span>=<span class="string">&quot;moveit_simple_controller_manager/MoveItSimpleControllerManager&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;moveit_controller_manager&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg moveit_controller_manager)&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- load controller_list --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_moveit_config)/config/controllers.yaml&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a><strong>Debugging</strong></h1><p>FollowJointTrajectory 和 GripperCommand 接口的命名空间为 &#x2F;name&#x2F;action_ns。上面例子中：</p>
-<ul>
-<li>&#x2F;panda_arm_controller&#x2F;follow_joint_trajectory&#x2F;goal</li>
-<li>&#x2F;panda_arm_controller&#x2F;follow_joint_trajectory&#x2F;feedback</li>
-<li>&#x2F;panda_arm_controller&#x2F;follow_joint_trajectory&#x2F;result</li>
-<li>&#x2F;hand_controller&#x2F;gripper_action&#x2F;goal</li>
-<li>&#x2F;hand_controller&#x2F;gripper_action&#x2F;feedback</li>
-<li>&#x2F;hand_controller&#x2F;gripper_action&#x2F;result</li>
-</ul>
-<h1 id="映射-joint-states-主题"><a href="#映射-joint-states-主题" class="headerlink" title="映射 &#x2F;joint_states 主题"></a><strong>映射 &#x2F;joint_states 主题</strong></h1><p>当运行一个 move group 节点时，可能需要将 &#x2F;joint_states 主题重新映射到 &#x2F;robot&#x2F;joint_states，否则 MoveIt 将没有来自关节的反馈。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;moveit_ros_move_group&quot;</span> <span class="attr">type</span>=<span class="string">&quot;move_group&quot;</span> <span class="attr">name</span>=<span class="string">&quot;any_name&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;joint_states&quot;</span> <span class="attr">to</span>=<span class="string">&quot;robot/joint_states&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="轨迹执行管理器选项"><a href="#轨迹执行管理器选项" class="headerlink" title="轨迹执行管理器选项"></a><strong>轨迹执行管理器选项</strong></h1><p>在 trajectory_execution.launch.xml 中有几个选项可对 execution pipeline 的行为和安全检查进行调整。包含以下参数:</p>
-<ul>
-<li><strong>execution_duration_monitoring</strong>：为 false 时，轨迹耗费时间超过期望值时不会抛出异常</li>
-<li><strong>allowed_goal_duration_margin</strong>：允许的超过预期时间的余量</li>
-<li><strong>allowed_start_tolerance</strong>：检查轨迹起始点与机器人当前位姿是否匹配的关节角度公差。如果设置为0，将跳过等待机器人执行后停止</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/" class="post-title-link" itemprop="url">Hand-Eye Calibration</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 19:28:45" itemprop="dateCreated datePublished" datetime="2024-09-17T19:28:45+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ROS noetic 版本添加。</p>
-<h1 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a><strong>安装使用</strong></h1><p><a target="_blank" rel="noopener" href="http://www.github.com/ros-planning/moveit_calibration">MoveIt Calibration</a> 包提供了进行手眼相机校准的插件和图形界面。可以对刚性安装在机器人底座架上的相机(eye_to_hand)和安装在末端执行器上的相机(eye_in_hand)进行校准。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> git@github.com:ros-planning/moveit_calibration.git</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosdep install -y --from-paths . --ignore-src --rosdistro melodic</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin build</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">source</span> devel/setup.sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch</span></span><br></pre></td></tr></table></figure>
-
-<p>RViz -&gt; 菜单栏 Panels -&gt; Add New Panel -&gt; moveit_calibration_gui -&gt; HandEyeCalibration.</p>
-<p>然后创建一个视觉校准目标。该目标具有独特的模式，在图像数据中很容易识别，并且通过提供目标尺寸的测量，可以估计出目标在摄像机坐标系中的姿态。在进行手眼标定时，不需要知道目标的精确位置——只要目标静止在机器人的 base frame 内，手眼标定就可以从 5 个或更多位姿序列中估计出来。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193008953.png" class="" title="image-20240917193008953">
-
-<p>在 Target 标签中，输入 Target Params 创建目标。然后使用 “Save target” 按钮保存目标图像，并打印出图像。可以随意使用目标参数进行实验，以了解它们如何影响目标，但一定要记住打印的目标所使用的参数——需要输入相同的参数才能识别目标。</p>
-<p>目标必须是平的，才能被摄像机可靠地定位。把它放在平坦的表面上就足够了，也可以安装在木板上。<strong>测量标记的宽度(其中一个黑色方块的外部尺寸)<strong>，以及</strong>标记之间的间隔距离</strong>。在 Target Params 部分的相应框中输入这些值，单位为米。同时，在 Image topic 和 CameraInfo主题 下拉菜单中选择合适的主题。</p>
-<h1 id="几何背景"><a href="#几何背景" class="headerlink" title="几何背景"></a><strong>几何背景</strong></h1><p>HandEyeCalibration 插件的 Context 标签中，包含进行校准所需的几何信息。</p>
-   <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193046936.png" class="" title="image-20240917193046936">
-
-<ul>
-<li><p>Sensor configuration：</p>
-</li>
-<li><ul>
-<li>Eye-in-hand</li>
-<li>Eye-on-hand</li>
-</ul>
-</li>
-<li><p>Sensor frame：camera optical frame(相机光学坐标系)</p>
-</li>
-<li><p>Object frame：标定目标的坐标系</p>
-</li>
-<li><p>End-effector frame：末端执行器坐标系</p>
-</li>
-<li><p>Robot base frame：机械臂基座坐标系</p>
-</li>
-</ul>
-<p>FOV 部分在 RViz 中控制相机的视场渲染。要查看 FOV，添加 MarkerArray 显示，并将其设置为 &#x2F;rviz_visual_tools 主题</p>
-<h1 id="采集数据"><a href="#采集数据" class="headerlink" title="采集数据"></a><strong>采集数据</strong></h1><p>需要采集几个 samples 以确保良好的校准。机器人运动学提供了机器人底座上的末端执行器的姿态,并根据上面所述,估计了摄像机坐标系中的标定目标。如果目标在机器人 base 坐标系的姿态是准确的,只有对摄像机目标变换的单一观察才能在末端执行器框架中恢复相机的姿势。直接的 camera-to-end-effector 转换相当于复合相机到目标到基线-到末端的执行器变换。然而,一个更好的选择是将这些信息与几个姿势结合起来,以消除在这个等式的基础框架中设定的目标,正如Kostas Daniilidis所描述的那样。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/Hand-Eye%20Calibration/image-20240917193114714.png" class="" title="image-20240917193114714">
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1792,14 +1777,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">570k</span>
+    <span title="站点总字数">605k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:17</span>
+    <span title="站点阅读时长">18:19</span>
   </span>
 </div>
 <div class="busuanzi-count">

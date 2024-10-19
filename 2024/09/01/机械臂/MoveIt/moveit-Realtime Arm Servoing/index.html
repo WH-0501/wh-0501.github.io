@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="向启用 ros 的机器人发送实时伺服命令。伺服节点的一些不错的功能是奇异处理和碰撞检查，以防止操作员破坏机器人。 123456789101112git clone -b 1.2.7 https:&#x2F;&#x2F;github.com&#x2F;ros-industrial&#x2F;universal_robotrosdep install -y --from-paths . --ignore-src --rosdistro $R">
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Servoing">
 <meta property="og:url" content="http://example.com/2024/09/01/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/moveit-Realtime%20Arm%20Servoing/index.html">
 <meta property="og:site_name" content="Daemo">
-<meta property="og:description" content="向启用 ros 的机器人发送实时伺服命令。伺服节点的一些不错的功能是奇异处理和碰撞检查，以防止操作员破坏机器人。 123456789101112git clone -b 1.2.7 https:&#x2F;&#x2F;github.com&#x2F;ros-industrial&#x2F;universal_robotrosdep install -y --from-paths . --ignore-src --rosdistro $R">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-01T12:26:39.000Z">
-<meta property="article:modified_time" content="2024-09-22T06:42:30.485Z">
+<meta property="article:modified_time" content="2024-10-19T07:58:12.414Z">
 <meta property="article:author" content="Damon">
 <meta property="article:tag" content="机械臂">
 <meta property="article:tag" content="MoveIt">
@@ -150,18 +150,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -224,7 +224,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+      <time title="修改时间：2024-10-19 15:58:12" itemprop="dateModified" datetime="2024-10-19T15:58:12+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -271,14 +271,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>向启用 ros 的机器人发送实时伺服命令。伺服节点的一些不错的功能是奇异处理和碰撞检查，以防止操作员破坏机器人。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git clone -b 1.2.7 https://github.com/ros-industrial/universal_robot</span><br><span class="line"></span><br><span class="line">rosdep install -y --from-paths . --ignore-src --rosdistro $ROS_DISTRO</span><br><span class="line"></span><br><span class="line">cd ~/ws_moveit/</span><br><span class="line">catkin build</span><br><span class="line">source devel/setup.bash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">roslaunch ur_gazebo ur5.launch</span><br><span class="line">roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch sim:=true</span><br><span class="line">roslaunch ur5_moveit_config moveit_rviz.launch config:=true</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rosservice call /controller_manager/switch_controller &quot;start_controllers: [&#x27;joint_group_position_controller&#x27;]</span><br><span class="line">stop_controllers: [&#x27;arm_controller&#x27;]</span><br><span class="line">strictness: 0</span><br><span class="line">start_asap: false</span><br><span class="line">timeout: 0.0&quot;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch moveit_servo spacenav_cpp.launch</span><br></pre></td></tr></table></figure>
-
-
+    <div class="post-body" itemprop="articleBody"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，密码不对，请重试" data-whm="抱歉，该文章无法校验">
+  <script id="hbeData" type="hbeData" data-hmacdigest="8f3722564da0932959dc7aca3790fe5bb8c312d45b8f6891d4d30021541670f1">61a285bea0bd1a3904d1b9b9e1d940771274f00cb38bb27d3708ed932c2448e3b0b5f72866772a20c0ae6dddd79b308f7dd297d04e0903ed1846485242b70b7a2eb5ee1c3dbc623e3909cf77381eff070f15e7070b276e460f63c558fda55184ccc18997bd1c1bcac2e2b02d0d61307e191adbc1fef535dd84e287f583cad6cbfeb9469c6769b02f1caf0949a4be8f06a80db9abeb5bfc4b21e8d7390d6fdd1ce4c53dc652f3003580137ce223750c40b64acc39801a3c6ccf0f2a2b5fbe9637218fb62b03aa285afbea6ac52922d3ee63b5b77d46e1c160eeb0aaaa5f36f86ba7a232ad56402eb658c704700a8f1fa21dc342f3a750086aa1bb77077ab35913efd9eb8525b7549eb4a5c2757fdbebb45632406e45dfd776d8e14d46e7cbbbbf143009548e6383cb7598948e879fce2148334ecde3e7b1d52c112ce26efaf1945d95cec4254d8582fcb1ab31c164077e045985971b44a022c7e5c87da640a7da7306baace835a9aee052555df6cfae665acb03b7b13e59fdabfdea4ac53a2cd97d0f2bbf1c57825516bafdadf49fb43214a3a4b95f9d34ee184a1886bf3593c3c4a9b7d1da132a191eb2e976c3d578db560e1e798f8954cb3f626008966db1b2fd5d1517acf7f758f1d81b4e70c6bff1e6115edc72de6aabf04720be710eadd1d4ddd74dda357b2284ce8c0eafaafde2fd80922f6f1517a0b8a29029e9d852fd5f2e8a5c4b342846590ee89413bcc8548e4c240c226b17307373808755b7ff856f9ffe12180fea36115b8548e5b4db332076bc41ce4b623c16d12da93c363479c2a9296275a6eec6599e140002ef0dbb8138d3a86a6510e8949542cbc8040785a5008113673e89e002bf3aa08ab25ddd1db44b69fe1cd7b30fa0221ffb8c9d3158b27786a13e5fd0ee5cad044a91c3060d0a8ed6db9ad20c53abe90e65588b5b3147f57f2df2b2c8807b87d74c7d7764fd111d9c1cf7fccbc3e7d27067eb8ca78fd6e47b5f7589ea33934b6dda6af79f8ccbf082793f768ad6328c7e9548137556bd533d6b84859873de2288eb42192c34de577184cd5e617acb50c9180eae225de9c9929f054ff9ac2e6252d3b0016dd762fb8a999e77b9edb2a624511ef9b99f54fa09c5f2afe0f3ae589afee2f7a4662cff848673a93b6ca98f530226971bcb4805f4c47d780172dfa869f0c02052fc816250550821af6090745d4104d1a57e5a12c723f01e425c0722a8b0cfa96c93d1af3be9d36fc23173d8e2a48d7efca4b1a1103bd15b06b240bd3379320c6ce24ea8162bf3be3651f1d30fc028f94341433519041c600dde311fac5bb15b320a2b0d75b6621eddde26146e82ac8d7d4439c07900aeff972ace353323fefcb3d2aaa3fa7c669ff1290eba7177d5b6caef1641b48a2f91e4d03dfc1c5155ed0d1fc56b867959aac7e1b778e0af464598434e76e7247d017b88a19cf13979e1d936150b27dfbec91d6dd8caaedba0c621513b9f446e94e800497178e23898d49257c7c3f5ffe6b03fecec3789a4385497218dc9595faa01a65aa18137c97090f1d8d74fff7f302ac3bf83cf906eab610bf47c9799eadcc14826371d6af8fc9f99ca8267e887cbf2dc36f1e41ab05ba3a61222f54d6ee5fd6b011af3c7cf0d56d77db555313e520153ab71991d8c9c047e100a575c2082284ea0a766ec84ba142f5170f7637e002507b6926c98e8a2b984201fb951e8b82c5dc1629fd4f769e6ddca81cf8222e8a71970e3dc6af182dbd2f2763b5189aae0c0ea24bfc05103fae71864f99e58056cb97ff834884037fd4ee404b705dd08fe9018a5eab537b69d051c6de02a4dabcfafaf6a0d7a0854fd30e8ef3069896d341e9a1b0213f58d221c1ce79dc655f5ffb42fb4ab7fba428d649fb088be1cde3ec9c9a0ca9b27194c99896887e67cc2e47a2e7764c7d8f0d9fa369a44e24abde2cf72d87e00d418571a270742e2f19515f69b7d2f82ce8c4d75e74f4b8efcbb3d62c2664d33ae2e83b3d3b9624eff65200f29c2fdbd71285a7671d87f88d6eda6647b5d13b51ebbc98757369d136b6ac1c25a9a785befc81e1742a3b7568a5ef875be34e52a22be064283218790301462e03e6f9c8fa7043c5bf1d452f227f44af5834a2343da59fdaa8b73ef510de27c135584c6b209129b6be6aae3eed1a572f0975265dbdbe90cbd3026f13b1a140a688bff6dfac1269ffcff28ecaf6f99b94282dea2506c608732948ecb0de8ded4c7beb0a6da576129c06efa52f8c94ffb5a6a4fa5634d84f8ea5d41b71c836f40dc1824c853593c815d8a2f4cc35a5a202235b442926943e888e3de4071ff73393e05c39112b1e5faa0cfa06571e55d29e3cea2adddfd9c67945baec07ce1b700ecb49a62573d001faaa3b15a0d0652a64623bf6222c64ec3dfc2d80240070fd9a28f47e37567f6cb1ec02b713e1eddeed5f82a4c2243defe6585c897848de2d66dc32eb2849cb26adbeb1ac5895125f04a780b558b86f07807251ac1682304cec7e03e1643422de56d1a0cddec1315326df7484202e54ab7bd2a80a19bc7c8f8797d67b8822ed04b7b2ca9245abd70914a7a9a82e9377afd609a59b4fbaa0336557a91868accd3ce884e91c0e37ebca9c80e9a5f14a40454fd368d95c87812d72971a1de76f9b5d0a170d24f2210b09ba4ccc2ffc0563bea33d5c7cc0738f20903930f772e923b0c85031547866d5da422e768f4c2333565c1152a84410c9f86e329bda41871dbdbe14076866bf879439973850076cf953c15bef28cf7108e5cffe8f862ee0a2451699e799ddddd8f63f2fef574a7f0d432cb1bccf3511d852c98260dc814c651c73fad178399221284b1d0546edfc265ff3777891aa74851619374b115847d8167a95328005f62f05803e4a022d501865b95b96ee6800d6a306183533446a79feb6e8dd56e2ac017f7e89cfe6a075bbf872b7e8fa3d8a312e009f211e855e3bf422dff23d50bb2ca494718a178ceea7c9814c37ce49e7854034783418360c45c477b75f2f78bb5e13e655178b4f055c9064837d952ac6d44574f0e14622ca0f43a2a209c716842f1e497f47302c73e80525020743d2e02ba37385763d23fb25f2bbac8f3677d53bde89ba57cbfcb1d48cd53277e628d7c32e6e46e19cabda7e88bbd9ded5e7a3de5bee29b69cac16cded506b41ff85aae7b42dede0ffaaa692919ff72b8c23e25a640012514e1ec91c538ef6e0a3f8b5f94aaddd33cadc25af469d194b240bbc2259327958de111e41bca6d</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -334,14 +338,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">570k</span>
+    <span title="站点总字数">605k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:17</span>
+    <span title="站点阅读时长">18:19</span>
   </span>
 </div>
 <div class="busuanzi-count">
