@@ -26,12 +26,14 @@
 <meta property="og:site_name" content="Daemo">
 <meta property="og:description" content="MoveIt使用 moveit! 控制真实机械臂时，控制器中要有一个 action server 来接收 moveit! 的路径消息，然后控制器再将消息下发(write())到硬件执行；同时还要从机器人获取(read())机械臂各关节状态并上报给 moveit!。 示例1 ROS 驱动 6DOF 机械臂。创建两个节点：  joint_controller   实现 action server，接收">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/image-20241017075618087.png">
 <meta property="article:published_time" content="2024-10-16T23:55:45.000Z">
-<meta property="article:modified_time" content="2024-10-17T00:06:11.506Z">
+<meta property="article:modified_time" content="2024-10-19T01:36:54.968Z">
 <meta property="article:author" content="Damon">
 <meta property="article:tag" content="ROS">
 <meta property="article:tag" content="ros_control">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/image-20241017075618087.png">
 
 
 <link rel="canonical" href="http://example.com/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/">
@@ -217,9 +219,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-17 07:55:45 / 修改时间：08:06:11" itemprop="dateCreated datePublished" datetime="2024-10-17T07:55:45+08:00">2024-10-17</time>
+      <time title="创建时间：2024-10-17 07:55:45" itemprop="dateCreated datePublished" datetime="2024-10-17T07:55:45+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 09:36:54" itemprop="dateModified" datetime="2024-10-19T09:36:54+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -290,7 +298,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1>
+<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1><img src="/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/image-20241017075618087.png" class="" title="image-20241017075618087">
 
 <p>使用方法:</p>
 <h2 id="URDF-中增加-transmission-元素"><a href="#URDF-中增加-transmission-元素" class="headerlink" title="URDF 中增加  transmission 元素"></a><strong>URDF 中增加  transmission 元素</strong></h2><p> 元素用于将 actuator 连接到 joints。</p>

@@ -209,9 +209,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-17 07:55:45 / 修改时间：08:06:11" itemprop="dateCreated datePublished" datetime="2024-10-17T07:55:45+08:00">2024-10-17</time>
+      <time title="创建时间：2024-10-17 07:55:45" itemprop="dateCreated datePublished" datetime="2024-10-17T07:55:45+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 09:36:54" itemprop="dateModified" datetime="2024-10-19T09:36:54+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,7 +282,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1>
+<h1 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h1><img src="/2024/10/17/Robot/ROS/ros_control/%E4%BD%BF%E7%94%A8/image-20241017075618087.png" class="" title="image-20241017075618087">
 
 <p>使用方法:</p>
 <h2 id="URDF-中增加-transmission-元素"><a href="#URDF-中增加-transmission-元素" class="headerlink" title="URDF 中增加  transmission 元素"></a><strong>URDF 中增加  transmission 元素</strong></h2><p> 元素用于将 actuator 连接到 joints。</p>
@@ -426,9 +432,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-17 07:54:09 / 修改时间：08:09:46" itemprop="dateCreated datePublished" datetime="2024-10-17T07:54:09+08:00">2024-10-17</time>
+      <time title="创建时间：2024-10-17 07:54:09" itemprop="dateCreated datePublished" datetime="2024-10-17T07:54:09+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 09:37:05" itemprop="dateModified" datetime="2024-10-19T09:37:05+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -499,7 +511,7 @@
 <li><p><strong>IMU sensor interface</strong></p>
 </li>
 </ul>
-<h2 id="设置新的机器人"><a href="#设置新的机器人" class="headerlink" title="设置新的机器人"></a><strong>设置新的机器人</strong></h2>
+<h2 id="设置新的机器人"><a href="#设置新的机器人" class="headerlink" title="设置新的机器人"></a><strong>设置新的机器人</strong></h2><img src="/2024/10/17/Robot/ROS/ros_control/hardware_interface/image-20241016080542208.png" class="" title="image-20241016080542208">
 
 <h2 id="使用现有接口"><a href="#使用现有接口" class="headerlink" title="使用现有接口"></a><strong>使用现有接口</strong></h2><p>假设机器人有两个关节：A 和 B。两个关节都是位置控制。这种情况下，为机器人定义的 hardware_interface::RobotHW，应提供标准的 <strong>JointPositionInterface</strong> 和 <strong>JointStateInterface</strong>，以便可以重用所有已编写好的、使用 JointPositionInterface 和 JointStateInterface 的 controllers。例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_command_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/joint_state_interface.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;hardware_interface/robot_hw.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRobot</span> : <span class="keyword">public</span> hardware_interface::RobotHW</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyRobot</span>() </span><br><span class="line"> &#123; </span><br><span class="line">   <span class="comment">// connect and register the joint state interface</span></span><br><span class="line">   <span class="comment">// JointstateHandle为关节状态的资源类，其内部存储有：pos，vel，effort的获取接口</span></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_a</span><span class="params">(<span class="string">&quot;A&quot;</span>, &amp;pos[<span class="number">0</span>], &amp;vel[<span class="number">0</span>], &amp;eff[<span class="number">0</span>])</span></span>;</span><br><span class="line">   <span class="comment">// ResourceManager 注册新的资源，如果资源名已存在，则覆盖之前的</span></span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointStateHandle <span class="title">state_handle_b</span><span class="params">(<span class="string">&quot;B&quot;</span>, &amp;pos[<span class="number">1</span>], &amp;vel[<span class="number">1</span>], &amp;eff[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_state_interface.<span class="built_in">registerHandle</span>(state_handle_b);</span><br><span class="line">    </span><br><span class="line">   <span class="comment">// 注册硬件接口 </span></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_state_interface);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// connect and register the joint position interface</span></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_a</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;A&quot;</span>), &amp;cmd[<span class="number">0</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_a);</span><br><span class="line"></span><br><span class="line">   <span class="function">hardware_interface::JointHandle <span class="title">pos_handle_b</span><span class="params">(jnt_state_interface.getHandle(<span class="string">&quot;B&quot;</span>), &amp;cmd[<span class="number">1</span>])</span></span>;</span><br><span class="line">   jnt_pos_interface.<span class="built_in">registerHandle</span>(pos_handle_b);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">registerInterface</span>(&amp;jnt_pos_interface);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  hardware_interface::JointStateInterface jnt_state_interface;</span><br><span class="line">  hardware_interface::PositionJointInterface jnt_pos_interface;</span><br><span class="line">  <span class="type">double</span> cmd[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> pos[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> vel[<span class="number">2</span>];</span><br><span class="line">  <span class="type">double</span> eff[<span class="number">2</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -587,9 +599,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-10-17 07:36:57 / 修改时间：07:54:13" itemprop="dateCreated datePublished" datetime="2024-10-17T07:36:57+08:00">2024-10-17</time>
+      <time title="创建时间：2024-10-17 07:36:57" itemprop="dateCreated datePublished" datetime="2024-10-17T07:36:57+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-10-19 09:37:12" itemprop="dateModified" datetime="2024-10-19T09:37:12+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -635,7 +653,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>由 PR2 改写而来的硬件封装库，负责统一管理硬件设备与底层细节，向上提供统一的接口（用户需继承 <code>hardware_interface::RobotHW</code>，实现并调用 <code>read/write</code> 等方法）。包括控制器接口、控制器管理器、传输和硬件接口的包，可以帮助机器人应用快速落地，提高开发效率。</p>
-
+<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074020125.png" class="" title="image-20241017074020125">
 
 <ul>
 <li>Controller Manager：管理不同的 controller</li>
@@ -645,17 +663,17 @@
 <li>Real Robot：真实机器人硬件，接收并响应指令，反馈状态等</li>
 </ul>
 <p>使用 ros_control 能够复用 ros_controllers 中的控制算法，并且对 gazebo 支持良好。（gazebo 仿真时，自定义插件需继承自 <code>gazebo_ros_control::RobotHWSim</code>，该类实现了模拟 ros_control 中的 <code>hardware_interface::RobotHW</code>） </p>
-
+<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074223274.png" class="" title="image-20241017074223274">
 
 <blockquote>
 <p>存在问题：部分模块冗余严重，架构过于复杂</p>
 </blockquote>
 <p>提供了一个硬件抽象层，负责机器人硬件资源的管理。controller 则从中请求资源即可。</p>
+<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074249079.png" class="" title="image-20241017074249079">
 
+<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074305429.png" class="" title="image-20241017074305429">
 
-
-
-
+<img src="/2024/10/17/Robot/ROS/ros_control/ros_control/image-20241017074326664.png" class="" title="image-20241017074326664">
 
 
 
@@ -784,7 +802,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-17 07:35:40" itemprop="dateModified" datetime="2024-10-17T07:35:40+08:00">2024-10-17</time>
+      <time title="修改时间：2024-10-19 09:37:08" itemprop="dateModified" datetime="2024-10-19T09:37:08+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -984,7 +1002,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-17 07:35:32" itemprop="dateModified" datetime="2024-10-17T07:35:32+08:00">2024-10-17</time>
+      <time title="修改时间：2024-10-19 09:36:49" itemprop="dateModified" datetime="2024-10-19T09:36:49+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1110,7 +1128,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-17 07:47:59" itemprop="dateModified" datetime="2024-10-17T07:47:59+08:00">2024-10-17</time>
+      <time title="修改时间：2024-10-19 09:37:02" itemprop="dateModified" datetime="2024-10-19T09:37:02+08:00">2024-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1466,7 +1484,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <img src="/2024/09/28/%E6%9C%BA%E6%A2%B0%E8%87%82/ROS-I/ROS-Industrial/ros_industrial_architecture.png" class="" title="ROS-Industrial Architecture">
 
 
 

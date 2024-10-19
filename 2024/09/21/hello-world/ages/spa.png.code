@@ -1,6 +1,0 @@
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=\arg \min_{\Xi^m, \Xi^s} \frac{1}{2} \sum_{i,j} \rho(E^2(\xi^m_i, \xi^s_j; \Sigma_{i,j}, \xi_{i,j}))" style="border:none;">
-
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^m = \left\{ \xi^m_i\right\}_{i=1,\cdots,m}" style="border:none;">
-
-"\Xi^s = \left\{ \xi^s_j\right\}_{j=1,\cdots,n}"
-"\xi^m_i"

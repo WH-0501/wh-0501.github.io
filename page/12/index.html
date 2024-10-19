@@ -421,6 +421,130 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" class="post-title-link" itemprop="url">io_thread</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ IO 线程类 <code>io_thread_t</code>。包含 I&#x2F;O 线程的通用部分。特定于轮询机制(Polling-mechanism-specific)的特性在单独的“轮询对象”中实现。</p>
+<p>每个 ZeroMQ IO 线程都有与之绑定的 <code>Poller</code>，<code>Poller</code> 采用经典的 Reactor 模式实现。</p>
+<h1 id="io-thread-t"><a href="#io-thread-t" class="headerlink" title="io_thread_t"></a>io_thread_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">io_thread_t</span> ZMQ_FINAL : <span class="keyword">public</span> <span class="type">object_t</span>, <span class="keyword">public</span> i_poll_events</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">io_thread_t</span> (zmq::<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_);</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">io_thread_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">start</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停止线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取与该 I/O 线程关联的 mailbox</span></span><br><span class="line">    <span class="function"><span class="type">mailbox_t</span> *<span class="title">get_mailbox</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i_poll_events implementation.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">in_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">out_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">timer_event</span> <span class="params">(<span class="type">int</span> id_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由 io_objects 用于检索关联的 poller 对象</span></span><br><span class="line">    <span class="function"><span class="type">poller_t</span> *<span class="title">get_poller</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Command handlers.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">process_stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 I/O 线程负载</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get_load</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// I/O 线程通过该 mailbox 访问 incoming commands</span></span><br><span class="line">    <span class="type">mailbox_t</span> _mailbox;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle associated with mailbox&#x27; file descriptor.</span></span><br><span class="line">    <span class="type">poller_t</span>::<span class="type">handle_t</span> _mailbox_handle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I/O 多路复用由 poller 对象执行</span></span><br><span class="line">    <span class="type">poller_t</span> *_poller;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">io_thread_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>poller.hpp</code> 中根据宏定义，选择相应的 I&#x2F;O 模型：</p>
+<ul>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_KQUEUE</code>：使用 <code>kqueue</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_EPOLL</code>：使用 <code>epoll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_DEVPOLL</code>：使用 <code>devpoll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_POLLSET</code>：使用 <code>pollset</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_SELECT</code>：使用 <code>select</code></li>
+<li><code>ZMQ_HAVE_GNU</code> 且 <code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code><br>若同时定义多个宏，则会报错。</li>
+</ul>
+<p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。</p>
+<h2 id="io-thread-t-构造"><a href="#io-thread-t-构造" class="headerlink" title="io_thread_t 构造"></a>io_thread_t 构造</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">zmq::<span class="type">io_thread_t</span>::<span class="built_in">io_thread_t</span> (<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_) :</span><br><span class="line">    <span class="built_in">object_t</span> (ctx_, tid_),</span><br><span class="line">    _mailbox_handle (<span class="built_in">static_cast</span>&lt;<span class="type">poller_t</span>::<span class="type">handle_t</span>&gt; (<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">    _poller = <span class="built_in">new</span> (std::nothrow) <span class="built_in">poller_t</span> (*ctx_);</span><br><span class="line">    <span class="built_in">alloc_assert</span> (_poller);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_mailbox.<span class="built_in">get_fd</span> () != retired_fd) &#123;</span><br><span class="line">        _mailbox_handle = _poller-&gt;<span class="built_in">add_fd</span> (_mailbox.<span class="built_in">get_fd</span> (), <span class="keyword">this</span>);</span><br><span class="line">        _poller-&gt;<span class="built_in">set_pollin</span> (_mailbox_handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建 <code>poller_t</code> 类对象 <code>_poller</code></li>
+<li>配置 mailbox</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -537,130 +661,6 @@
 <li><code>end_chunk/end_pos</code>：在最后一个 chunk 未满时，end_chunk 和 back_chunk 相同，back_pos 的下一个就是 end_pos。最后一个 chunk 已满时，end_chunk 指向新分配的 chunk，end_pos 为 0。即：end_chunk 和 end_pos 是辅助 back_chunk&#x2F;back_pos 的</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * ALIGN 是在 posix_memalign 可用的情况下使用的内存对齐大小。默认值是 64，</span></span><br><span class="line"><span class="comment"> * 这种对齐将防止两个队列块占用同一 CPU 缓存线(Cache line)，在缓存线 &lt;= 64字节的架构</span></span><br><span class="line"><span class="comment"> * (例如，除了POWER之外的大多数内容)。它是在构建时检测到的，以尝试考虑 POWER 和 s390x 等其他平台。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N, <span class="type">size_t</span> ALIGN = ZMQ_CACHELINE_SIZE&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//  Create the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> <span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        _begin_chunk = <span class="built_in">allocate_chunk</span> ();</span><br><span class="line">        <span class="built_in">alloc_assert</span> (_begin_chunk);</span><br><span class="line">        _begin_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// back_chunk总是指向队列中最后一个元素所在的 chunk，初始为空</span></span><br><span class="line">        _back_chunk = <span class="literal">NULL</span>;</span><br><span class="line">        _back_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// end_chunk 总是指向链表的最后一个 chunk</span></span><br><span class="line">        _end_chunk = _begin_chunk;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Destroy the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> ~<span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (_begin_chunk == _end_chunk) &#123;</span><br><span class="line">                <span class="built_in">free</span> (_begin_chunk);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            <span class="built_in">free</span> (o);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">free</span> (sc);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  返回队列首元素.注意：若队列为空，行为未定义</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">front</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _begin_chunk-&gt;values[_begin_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">back</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _back_chunk-&gt;values[_back_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">push</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _back_chunk = _end_chunk;</span><br><span class="line">        _back_pos = _end_pos;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (++_end_pos != N) <span class="comment">// 当前 chunk 未满</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (sc) &#123; <span class="comment">// 若有 spare_chunk，则继续复用</span></span><br><span class="line">            _end_chunk-&gt;next = sc;</span><br><span class="line">            sc-&gt;prev = _end_chunk;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 若没有 spare_chunk，则重新分配 chunk</span></span><br><span class="line">            _end_chunk-&gt;next = <span class="built_in">allocate_chunk</span> (); <span class="comment">// 分配一个 chunk</span></span><br><span class="line">            <span class="built_in">alloc_assert</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next-&gt;prev = _end_chunk;</span><br><span class="line">        &#125;</span><br><span class="line">        _end_chunk = _end_chunk-&gt;next;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除队列末尾元素。即：回滚最后一次推送到队列的元素。注意：调用者负责销毁 unpushed 的对象。</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">unpush</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//  First, move &#x27;back&#x27; one position backwards.</span></span><br><span class="line">        <span class="keyword">if</span> (_back_pos)</span><br><span class="line">            --_back_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123; </span><br><span class="line">            _back_pos = N - <span class="number">1</span>;</span><br><span class="line">            _back_chunk = _back_chunk-&gt;prev;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Now, move &#x27;end&#x27; position backwards. Note that obsolete end chunk</span></span><br><span class="line">        <span class="comment">//  is not used as a spare chunk. The analysis shows that doing so</span></span><br><span class="line">        <span class="comment">//  would require free and atomic operation per chunk deallocated</span></span><br><span class="line">        <span class="comment">//  instead of a simple free.</span></span><br><span class="line">        <span class="keyword">if</span> (_end_pos)</span><br><span class="line">            --_end_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _end_pos = N - <span class="number">1</span>;</span><br><span class="line">            _end_chunk = _end_chunk-&gt;prev;</span><br><span class="line">            <span class="built_in">free</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Removes an element from the front end of the queue.</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">pop</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (++_begin_pos == N) &#123; <span class="comment">// 删除满一个 chunk 才回收 chunk</span></span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            _begin_chunk-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">            _begin_pos = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//  &#x27;o&#x27; has been more recently used than _spare_chunk,</span></span><br><span class="line">            <span class="comment">//  so for cache reasons we&#x27;ll get rid of the spare and</span></span><br><span class="line">            <span class="comment">//  use &#x27;o&#x27; as the spare.</span></span><br><span class="line">            <span class="comment">// 根据局部性原理，总是保存最新的空闲块儿释放先前的空闲块</span></span><br><span class="line">            <span class="type">chunk_t</span> *cs = _spare_chunk.<span class="built_in">xchg</span> (o); </span><br><span class="line">            <span class="built_in">free</span> (cs);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// Individual memory chunk to hold N elements. 链表节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">chunk_t</span></span><br><span class="line">    &#123;</span><br><span class="line">        T values[N];</span><br><span class="line">        <span class="type">chunk_t</span> *prev;</span><br><span class="line">        <span class="type">chunk_t</span> *next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">chunk_t</span> *<span class="title">allocate_chunk</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 分配的内存空间大小：sizeof(T) * N + 8 (32bit系统，+ 16：64bit系统) </span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line">        <span class="type">void</span> *pv;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">posix_memalign</span> (&amp;pv, ALIGN, <span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">chunk_t</span> *) pv;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">chunk_t</span> *&gt; (<span class="built_in">malloc</span> (<span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)));</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果队列为空，返回位置可能指向无效内存，而开始和结束位置总是有效的。</span></span><br><span class="line"><span class="comment">     * 开始位置由队列读取器(front/pop)独占访问，而back和结束位置由队列写入器(back/push)独占访问。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">chunk_t</span> *_begin_chunk;</span><br><span class="line">    <span class="type">int</span> _begin_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_back_chunk;</span><br><span class="line">    <span class="type">int</span> _back_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_end_chunk;</span><br><span class="line">    <span class="type">int</span> _end_pos;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生产和消费速度可能接近。此时，保留最近释放的块使得不必调用 malloc/free。 </span></span><br><span class="line">    <span class="type">atomic_ptr_t</span>&lt;<span class="type">chunk_t</span>&gt; _spare_chunk;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">yqueue_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" class="post-title-link" itemprop="url">io_thread</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ IO 线程类 <code>io_thread_t</code>。包含 I&#x2F;O 线程的通用部分。特定于轮询机制(Polling-mechanism-specific)的特性在单独的“轮询对象”中实现。</p>
-<p>每个 ZeroMQ IO 线程都有与之绑定的 <code>Poller</code>，<code>Poller</code> 采用经典的 Reactor 模式实现。</p>
-<h1 id="io-thread-t"><a href="#io-thread-t" class="headerlink" title="io_thread_t"></a>io_thread_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">io_thread_t</span> ZMQ_FINAL : <span class="keyword">public</span> <span class="type">object_t</span>, <span class="keyword">public</span> i_poll_events</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">io_thread_t</span> (zmq::<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_);</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">io_thread_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">start</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停止线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取与该 I/O 线程关联的 mailbox</span></span><br><span class="line">    <span class="function"><span class="type">mailbox_t</span> *<span class="title">get_mailbox</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i_poll_events implementation.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">in_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">out_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">timer_event</span> <span class="params">(<span class="type">int</span> id_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由 io_objects 用于检索关联的 poller 对象</span></span><br><span class="line">    <span class="function"><span class="type">poller_t</span> *<span class="title">get_poller</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Command handlers.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">process_stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 I/O 线程负载</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get_load</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// I/O 线程通过该 mailbox 访问 incoming commands</span></span><br><span class="line">    <span class="type">mailbox_t</span> _mailbox;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle associated with mailbox&#x27; file descriptor.</span></span><br><span class="line">    <span class="type">poller_t</span>::<span class="type">handle_t</span> _mailbox_handle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I/O 多路复用由 poller 对象执行</span></span><br><span class="line">    <span class="type">poller_t</span> *_poller;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">io_thread_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>poller.hpp</code> 中根据宏定义，选择相应的 I&#x2F;O 模型：</p>
-<ul>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_KQUEUE</code>：使用 <code>kqueue</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_EPOLL</code>：使用 <code>epoll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_DEVPOLL</code>：使用 <code>devpoll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_POLLSET</code>：使用 <code>pollset</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code></li>
-<li><code>ZMQ_IOTHREAD_POLLER_USE_SELECT</code>：使用 <code>select</code></li>
-<li><code>ZMQ_HAVE_GNU</code> 且 <code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code><br>若同时定义多个宏，则会报错。</li>
-</ul>
-<p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。</p>
-<h2 id="io-thread-t-构造"><a href="#io-thread-t-构造" class="headerlink" title="io_thread_t 构造"></a>io_thread_t 构造</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">zmq::<span class="type">io_thread_t</span>::<span class="built_in">io_thread_t</span> (<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_) :</span><br><span class="line">    <span class="built_in">object_t</span> (ctx_, tid_),</span><br><span class="line">    _mailbox_handle (<span class="built_in">static_cast</span>&lt;<span class="type">poller_t</span>::<span class="type">handle_t</span>&gt; (<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">    _poller = <span class="built_in">new</span> (std::nothrow) <span class="built_in">poller_t</span> (*ctx_);</span><br><span class="line">    <span class="built_in">alloc_assert</span> (_poller);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_mailbox.<span class="built_in">get_fd</span> () != retired_fd) &#123;</span><br><span class="line">        _mailbox_handle = _poller-&gt;<span class="built_in">add_fd</span> (_mailbox.<span class="built_in">get_fd</span> (), <span class="keyword">this</span>);</span><br><span class="line">        _poller-&gt;<span class="built_in">set_pollin</span> (_mailbox_handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>创建 <code>poller_t</code> 类对象 <code>_poller</code></li>
-<li>配置 mailbox</li>
-</ul>
 
       
     </div>
