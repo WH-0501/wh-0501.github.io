@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,807 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/" class="post-title-link" itemprop="url">trajOpt</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:18:33" itemprop="dateCreated datePublished" datetime="2024-09-17T21:18:33+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>508</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://ros-planning.github.io/moveit_tutorials/doc/trajopt_planner/trajopt_planner_tutorial.html">TrajOpt planner</a> 仍然是 MoveIt 2019 年夏季实习项目的 alpha 功能，需要进一步加强。</p>
+<p>TrajOpt 是一种用于运动规划问题的序列凸优化算法，其中非凸、非仿射等式和非等式约束被放松、近似线性化和凸化以创建目标函数。这项工作是基于[<a target="_blank" rel="noopener" href="https://ros-planning.github.io/moveit_tutorials/doc/trajopt_planner/trajopt_planner_tutorial.html#schulman2013">schulman2013</a>] 和<a target="_blank" rel="noopener" href="https://github.com/ros-industrial-consortium/trajopt_ros">原始实现</a>完成的。顺序凸规划，简单地说就是使用一个凸模型并重复地最小化它。考虑以下非凸问题:</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211853088.png" class="" title="image-20240917211853088">
+
+<p>其中 f(x) 是最小长度路径</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211910096.png" class="" title="image-20240917211910096">
+
+<p>基本思想是通过维护一个解的估计和一个凸信任域来迭代，在这个凸信任域上信任解。这两个关键点是:</p>
+<ul>
+<li>f(x) 和 g(x) 在信赖域上的凸逼近。然后将近似值转换为惩罚函数</li>
+<li>h(x) 在可信区域上的仿射逼近。然后通过考虑 h(x) 的绝对值，将近似 h(x) 转换为罚函数</li>
+</ul>
+<p>TrajOpt 算法流程：</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211931527.png" class="" title="image-20240917211931527">
+
+<p>将关节空间或笛卡尔空间中的避障、关节限制、目标姿态等约束条件转化为惩罚函数，得到最终目标函数。最内环是用序列二次规划作为信赖域方法。它在盒子信赖域内计算二阶泰勒近似。</p>
+<p>TrajOpt 的一个重要部分是如何制定避障约束。在离散情况下，约束基本是有符号距离(机器人与自身或与障碍物之间的链接)与安全值之间的差值，在连续情况下，有符号距离是两个路径点与障碍物之间的凸包。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/STOMP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/STOMP/" class="post-title-link" itemprop="url">STOMP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:16:38" itemprop="dateCreated datePublished" datetime="2024-09-17T21:16:38+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>Stochastic Trajectory Optimization for Motion Planning</strong>，是一种<strong>概率优化</strong>框架(Kalakrishnan et al. 2011)。STOMP 在合理的时间内产生平滑且性能良好的无碰撞路径。该方法依赖于生成噪声轨迹来探索初始（可能不可行）轨迹周围的空间，然后将其组合以产生成本更低的更新轨迹。在每次迭代中优化基于障碍和平滑成本组合的成本函数。使用的特定优化算法不需要梯度信息，因此可能无法获得 derivatives 的一般成本（例如，对应于约束和电机扭矩的成本）可以包含在成本函数中。 STOMP 的一些优势包括：它可以包含额外的目标函数，例如扭矩限制、能量和工具约束。STOMP  可以处理不需要可微分的成本函数。它使用距离场和球面近似来快速计算距离查询和碰撞成本。</p>
+<p>使用要求</p>
+<ul>
+<li>必须安装最新版本的 MoveIt。在 ROS Melodic 上，需要从源代码构建 MoveIt。需要从源代码构建，因为 STOMP 还不是正式发布的一部分。因此，它不包含在二进制包中</li>
+<li>要将 STOMP 与机器人一起使用，必须已经为机器人准备了一个MoveIt 配置包。例如，Panda 机器人，为 panda_moveit_config 包。这通常是使用 MoveIt setup assisant 构建的</li>
+<li>还必须从源代码中构建 ros-industrial&#x2F;industrial_moveit 包。这需要从源代码构建，因为 industrial_moveit 还没有作为 debian 发布。只需要从 industrial_moveit 构建 stomp_core 包，因为使用 moveIt 的 STOMP 功能不需要其他包</li>
+</ul>
+<p><strong>1、使用 STMOP</strong></p>
+<p>注意：如果正在使用此 panda_moveit_config，则可以跳过这些步骤，直接执行步骤 ③</p>
+<p>① 下载 stomp_planning_pipeline.launch.xml 到 MoveIt config 包的 launch 目录。最新版的 MoveIt Setup Assistant 会默认生成该文件。该文件内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Stomp Plugin for MoveIt --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;planning_plugin&quot;</span> <span class="attr">value</span>=<span class="string">&quot;stomp_moveit/StompPlannerManager&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- The request adapters (plugins) ORDER MATTERS --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;planning_adapters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/AddTimeParameterization</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixWorkspaceBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateCollision</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStatePathConstraints&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;start_state_max_bounds_error&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;planning_plugin&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg planning_plugin)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;request_adapters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg planning_adapters)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;start_state_max_bounds_error&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg start_state_max_bounds_error)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/config/stomp_planning.yaml&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>② 下载 stomp_planning.yaml 文件到 MoveIt config 包的 config 目录。该文件包含 STOMP 所需的参数。这些参数特定于 SRDF 文件中定义的每个“planning group”。因此，如果有三个规划组，那么配置文件将为每个规划组定义一组特定的参数</p>
+<p>③ 修改 move_group.launch 文件，将 pipeline 参数改为 stomp：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- move_group settings --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;allow_trajectory_execution&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;fake_execution&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;max_safe_path_cost&quot;</span> <span class="attr">default</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;jiggle_fraction&quot;</span> <span class="attr">default</span>=<span class="string">&quot;0.05&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;publish_monitored_planning_scene&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Planning Functionality --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">ns</span>=<span class="string">&quot;move_group&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find myworkcell_moveit_config)/launch/planning_pipeline.launch.xml&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;pipeline&quot;</span> <span class="attr">value</span>=<span class="string">&quot;stomp&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行 demo：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch</span>     </span><br></pre></td></tr></table></figure>
+
+<p>​         </p>
+<p>运行带障碍物场景 demo：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo_stomp.launch rosrun moveit_tutorials collision_scene_example.py cluttered</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_tutorials collision_scene_example.py sparse</span>              </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、调整 STOMP 参数</strong></p>
+<p>STOMP 有一些与之相关的参数。这些可以针对正在使用的特定环境&#x2F;机器人进行修改，这些参数通常在 stomp_planning.yaml 文件中。在工作的机器人的配置文件夹中。如果机器人不存在此文件，可以创建它并设置所需的参数值。例如：</p>
+<p><strong>1）Optimization 参数</strong></p>
+<ul>
+<li>num_timesteps：</li>
+<li>num_iterations：</li>
+<li>num_iterations_after_valid：</li>
+<li>num_rollouts：</li>
+<li>max_rollouts：</li>
+<li>initialization method：</li>
+<li>control_cost_weight：</li>
+</ul>
+<p><strong>2）Noise Generator 参数</strong></p>
+<ul>
+<li>class：可设置为：NormalDistributionSampling(默认值) 或 <a target="_blank" rel="noopener" href="https://github.com/ros-industrial/industrial_moveit/blob/kinetic-devel/stomp_plugins/example_pages.dox">GoalGuidedMultivariateGaussian</a></li>
+<li>stddev：关节噪声程度。该阵列中的每个值都是施加到该阵列中该位置的关节上的噪声的振幅。例如，数组中最左边的值将用于设置机器人第一个关节的噪声(在本例中为 panda_joint1)。该数组的维数应等于规划组名称中的关节数。较大的“stddev”值对应于较大的关节运动</li>
+</ul>
+<p><strong>3）Cost Function 参数</strong></p>
+<ul>
+<li>class：</li>
+<li>collision_penalty：</li>
+<li>cost_weight：</li>
+<li>kernel_window_percentage：</li>
+<li>longest_valid_joint_move：</li>
+</ul>
+<p><strong>4）Update Filter 参数</strong></p>
+<ul>
+<li>class：</li>
+<li>poly_order：</li>
+</ul>
+<p><strong>3、STOMP 测试单元</strong></p>
+<p>为了运行单元测试，必须从 ros-industrial&#x2F;industrial_moveit 中获得 stomp_core 包。如果这些测试成功运行，这意味着系统上成功构建并运行了 STOMP。运行 STOMP 单元测试:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make run_tests_stomp_moveit stomp_moveit_utest</span>   </span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/SBPL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/SBPL/" class="post-title-link" itemprop="url">SBPL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:16:13" itemprop="dateCreated datePublished" datetime="2024-09-17T21:16:13+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>基于搜索的规划库</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/" class="post-title-link" itemprop="url">Pilz Industrial</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:14:43" itemprop="dateCreated datePublished" datetime="2024-09-17T21:14:43+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>pilz_industrial_motion_planner 提供了一个轨迹生成器，以使用MoveIt PlanerManager 插件的接口，规划标准的机器人运动，如 PTP, LIN, CIRC。</p>
+<p><strong>1、User Interface MoveGroup</strong></p>
+<p>这个包实现了 MoveIt 的 planning_interface::PlannerManager 接口。通过加载相应的 planning pipeline(pilz_industrial_motion_planner_planning_pipeline.launch.xml)，轨迹生成功能可以通过用户界面访问(c++、python或rviz) move_group 提供的节点,例如 &#x2F;plan_kinematics_path 服务和 move_group action。参考 Move Group c++ Interface。</p>
+<p><strong>2、Joint limits</strong></p>
+<p>对于所有命令，planner 使用来自参数服务器的最大速度和加速度。使用 MoveIt setup assistant，文件 joint_limits.yaml 会使用适当的默认值自动生成并在启动期间加载。</p>
+<p>参数服务器上的限制会覆盖来自 URDF 机器人描述的限制。请注意，虽然在 URDF 和参数服务器中都可以设置位置限制和速度限制，但<strong>只能通过参数服务器设置加速度限制</strong>。作为对常用 has_acceleration 和 max_acceleration 参数的扩展，添加了设置 has_deceleration 和 max_deceleration(&lt;0.0) 的功能。</p>
+<p>限制合并的<strong>前提是来自参数服务器的限制必须更严格或至少等于 URDF 中设置的参数</strong>。</p>
+<p>目前，计算的轨迹将通过使用所有限制的最严格组合作为所有关节的共同限制来遵守限制。</p>
+<p><strong>3、Cartesian limits</strong></p>
+<p>对于笛卡尔轨迹生成(LIN&#x2F;CIRC)，该 planner 需要三维笛卡尔空间中最大速度的信息。即平移&#x2F;旋转速度&#x2F;加速&#x2F;减速需要在参数服务器上进行如下设置:</p>
+<p>​                cartesian_limits:  max_trans_vel: 1  max_trans_acc: 2.25  max_trans_dec: -5  max_rot_vel: 1.57              </p>
+<p>对于平动梯形和旋转梯形，planner 假定相同的加速度比。因此，旋转加速度计算为 max_trans_acc &#x2F; max_trans_vel * max_rot_vel(相应的减速)。</p>
+<p><strong>4、Planning Interface</strong></p>
+<p>这个包使用 moveit_msgs::MotionPlanRequest 和 moveit_msgs::MotionPlanResponse 作为运动规划的输入和输出。</p>
+<p><strong>5、PTP motion command</strong></p>
+<p>该规划器生成具有梯形关节速度分布的完全同步的点对点轨迹。假设所有关节具有相同的最大关节速度&#x2F;加速度&#x2F;减速极限。如果没有，则采用最严格的限制。以达到目标时间最长的轴为导向轴(<strong>lead axis</strong>)。其他轴都是减速的，以便它们与导向轴共享相同的加速&#x2F;匀速&#x2F;减速阶段</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211529434.png" class="" title="image-20240917211529434">
+
+<p>1）输入参数</p>
+<p>moveit_msgs::MotionPlanRequest</p>
+<ul>
+<li><p>planner_id：PTP</p>
+</li>
+<li><p>group_name：规划组名称</p>
+</li>
+<li><p>max_velocity_scaling_factor：</p>
+</li>
+<li><p>max_acceleration_scaling_factor：</p>
+</li>
+<li><p>start_state&#x2F;joint_state&#x2F;(name,position and velocity)：</p>
+</li>
+<li><p>goal_constraints：</p>
+</li>
+<li><p>关节空间目标点</p>
+</li>
+<li><ul>
+<li>goal_constraints&#x2F;joint_constraints&#x2F;joint_name: goal joint name</li>
+<li>goal_constraints&#x2F;joint_constraints&#x2F;position: goal joint position</li>
+</ul>
+</li>
+<li><p>笛卡尔空间目标点</p>
+</li>
+<li><ul>
+<li>goal_constraints&#x2F;position_constraints&#x2F;header&#x2F;frame_id: 该数据关联的坐标系</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;link_name: target link name</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;constraint_region: bounding volume of the target point</li>
+<li>goal_constraints&#x2F;position_constraints&#x2F;target_point_offset: offset (in the link frame) for the target point on the target link (optional)</li>
+</ul>
+</li>
+</ul>
+<p><strong>6、LIN motion command</strong></p>
+<p>该 planner 生成目标和开始位姿之间的线性笛卡尔轨迹。规划器使用笛卡尔限制在笛卡尔空间中生成梯形速度剖面。平移运动是起始位置向量与目标位置向量之间的线性插值。旋转运动是四元数 slerp 之间的开始和目标方向。</p>
+<p>平动和旋转运动在时间上是同步的。这个计划器只接受零速度的开始状态。规划结果是一个关节轨迹。如果运动计划因违反关节空间限制而失败，用户需要调整笛卡尔速度&#x2F;加速度比例因子。</p>
+<p><strong>7、CIRC motion command</strong></p>
+<p><strong>8、示例</strong></p>
+<p>​                sudo apt install ros-melodic-prbt-moveit-config roslaunch prbt_moveit_config demo.launch              </p>
+<p><strong>9、使用 Planner</strong></p>
+<p>pilz_industrial_motion_planner::CommandPlanner 是作为 MoveIt motion planning pipeline 提供的，因此，可以与使用 MoveIt 的所有其他 manipulators 一起使用。加载插件需要在 move_group 节点启动之前，将 &#x2F;move_group&#x2F;planning_plugin 参数设置为 pilz_industrial_motion_planner::CommandPlanner。</p>
+<p>要使用 command planner，必须定义 cartesian limits。该限制应该在名称空间 _planning 下。其中 是指 URDF 加载的参数。例如，如果 URDF 被加载到 &#x2F;robot_description 中，cartesian limits 必须定义在 &#x2F;robot_description_planning。</p>
+<p>参考：prbt_moveit_config 包</p>
+<p><strong>1）Sequence of multiple segments</strong></p>
+<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这减少了规划开销，并允许遵循预先描述的路径，而无需在中间点停下来。</p>
+<p>请注意:如果某个序列中的命令规划失败，则该顺序中的命令将全部不执行。</p>
+<p>请注意:序列命令<strong>允许包含多个组的命令</strong>(例如“机械手”，“抓手”)</p>
+<p><strong>2）User interface sequence capability</strong></p>
+<p>接受 moveit_msgs::<strong>MotionSequenceRequest</strong> 作为输入。该请求包含上面描述的后续目标列表和一个额外的 blend_radius 参数。如果给定的blend_radius(meter)大于零，则对应的轨迹与下面的目标合并在一起，使机器人不停留在当前目标。</p>
+<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211548571.png" class="" title="image-20240917211548571">
+
+<p>参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/master/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
+<p>MotionSequenceRequest 的限制</p>
+<ul>
+<li>只有第一个魔表有 start state。后续轨迹以前一个目标点为起点</li>
+<li>两个随后的 blend_radius 球体不能重叠。Blend_radius(i) + Blend_radius(i+1) 必须小于目标之间的距离</li>
+</ul>
+<p>用户可以通过 action server <strong>&#x2F;sequence_move_group</strong> 执行moveit_msgs::MotionSequenceRequest</p>
+<p>在单个点上，MoveGroupSequenceAction 与标准 MoveGroup 能力不同:如果机器人已经在目标位置，路径仍然被执行。底层的 PlannerManager 可以检查单个 moveit_msgs::MotionPlanRequest 的约束是否已经满足，但 MoveGroupSequenceAction 功能没有实现这样的检查，以允许在圆形或类似的路径上移动。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://github.com/PilzDE/pilz_industrial_motion/blob/melodic-devel/pilz_robot_programming/examples/demo_program.py">pilz_robot_programming</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/" class="post-title-link" itemprop="url">OMPL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 21:11:37" itemprop="dateCreated datePublished" datetime="2024-09-17T21:11:37+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>26 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Open Motion Planning Library 是一个强大的集合，包含了最先进的基于采样的运动规划算法，是 MoveIt 中的默认规划器。</p>
+<h1 id="OMPL-设置"><a href="#OMPL-设置" class="headerlink" title="OMPL 设置"></a><strong>OMPL 设置</strong></h1><p>对应 ompl_planning.yaml 文件。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line">planner_configs:</span><br><span class="line">  SBLkConfigDefault:</span><br><span class="line">    type: geometric::SBL</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ESTkConfigDefault:</span><br><span class="line">    type: geometric::EST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0 setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LBKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::LBKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  BKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::BKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  KPIECEkConfigDefault:</span><br><span class="line">    type: geometric::KPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9 (0.0,1.]</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  RRTkConfigDefault:</span><br><span class="line">    type: geometric::RRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">  RRTConnectkConfigDefault:</span><br><span class="line">    type: geometric::RRTConnect</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  RRTstarkConfigDefault:</span><br><span class="line">    type: geometric::RRTstar</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1</span><br><span class="line">  TRRTkConfigDefault:</span><br><span class="line">    type: geometric::TRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    max_states_failed: 10  # when to start increasing temp. default: 10</span><br><span class="line">    temp_change_factor: 2.0  # how much to increase or decrease temp. default: 2.0</span><br><span class="line">    min_temperature: 10e-10  # lower limit of temp change. default: 10e-10</span><br><span class="line">    init_temperature: 10e-6  # initial temperature. default: 10e-6</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountierNodeRatio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    k_constant: 0.0  # value used to normalize expresssion. default: 0.0 set in setup()</span><br><span class="line">  PRMkConfigDefault:</span><br><span class="line">    type: geometric::PRM</span><br><span class="line">    max_nearest_neighbors: 10  # use k nearest neighbors. default: 10</span><br><span class="line">  PRMstarkConfigDefault:</span><br><span class="line">    type: geometric::PRMstar</span><br><span class="line">  FMTkConfigDefault:</span><br><span class="line">    type: geometric::FMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.1  # multiplier used for the nearest neighbors search radius. default: 1.1</span><br><span class="line">    nearest_k: 1  # use Knearest strategy. default: 1</span><br><span class="line">    cache_cc: 1  # use collision checking cache. default: 1</span><br><span class="line">    heuristics: 0  # activate cost to go heuristics. default: 0</span><br><span class="line">    extended_fmt: 1  # activate the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  BFMTkConfigDefault:</span><br><span class="line">    type: geometric::BFMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.0  # multiplier used for the nearest neighbors search radius. default: 1.0</span><br><span class="line">    nearest_k: 1  # use the Knearest strategy. default: 1</span><br><span class="line">    balanced: 0  # exploration strategy: balanced true expands one tree every iteration. False will select the tree with lowest maximum cost to go. default: 1</span><br><span class="line">    optimality: 1  # termination strategy: optimality true finishes when the best possible path is found. Otherwise, the algorithm will finish when the first feasible path is found. default: 1</span><br><span class="line">    heuristics: 1  # activates cost to go heuristics. default: 1</span><br><span class="line">    cache_cc: 1  # use the collision checking cache. default: 1</span><br><span class="line">    extended_fmt: 1  # Activates the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  PDSTkConfigDefault:</span><br><span class="line">    type: geometric::PDST</span><br><span class="line">  STRIDEkConfigDefault:</span><br><span class="line">    type: geometric::STRIDE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    use_projected_distance: 0  # whether nearest neighbors are computed based on distances in a projection of the state rather distances in the state space itself. default: 0</span><br><span class="line">    degree: 16  # desired degree of a node in the Geometric Near-neightbor Access Tree (GNAT). default: 16</span><br><span class="line">    max_degree: 18  # max degree of a node in the GNAT. default: 12</span><br><span class="line">    min_degree: 12  # min degree of a node in the GNAT. default: 12</span><br><span class="line">    max_pts_per_leaf: 6  # max points per leaf in the GNAT. default: 6</span><br><span class="line">    estimated_dimension: 0.0  # estimated dimension of the free space. default: 0.0</span><br><span class="line">    min_valid_path_fraction: 0.2  # Accept partially valid moves above fraction. default: 0.2</span><br><span class="line">  BiTRRTkConfigDefault:</span><br><span class="line">    type: geometric::BiTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1</span><br><span class="line">    init_temperature: 100  # initial temperature. default: 100</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf</span><br><span class="line">  LBTRRTkConfigDefault:</span><br><span class="line">    type: geometric::LBTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    epsilon: 0.4  # optimality approximation factor. default: 0.4</span><br><span class="line">  BiESTkConfigDefault:</span><br><span class="line">    type: geometric::BiEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ProjESTkConfigDefault:</span><br><span class="line">    type: geometric::ProjEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LazyPRMkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRM</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  LazyPRMstarkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRMstar</span><br><span class="line">  SPARSkConfigDefault:</span><br><span class="line">    type: geometric::SPARS</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 1000  # maximum consecutive failure limit. default: 1000</span><br><span class="line">  SPARStwokConfigDefault:</span><br><span class="line">    type: geometric::SPARStwo</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 5000  # maximum consecutive failure limit. default: 5000</span><br><span class="line">  TrajOptDefault:</span><br><span class="line">    type: geometric::TrajOpt</span><br><span class="line"></span><br><span class="line">panda_arm:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">panda_arm_hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Longest-Valid-Segment-Fraction"><a href="#Longest-Valid-Segment-Fraction" class="headerlink" title="Longest Valid Segment Fraction"></a><strong>Longest Valid Segment Fraction</strong></h2><p>最长有效分段分数。<strong>longest_valid_segment_fraction</strong> 参数定义用于碰撞检测的机器人运动离散化程度，极大地影响了基于 ompl 的解决方案的性能和可靠性。本文中，motion 可以被认为是图中两个节点之间的边，其中节点是沿轨迹的路点。OMPL 中的默认运动碰撞检查器只是将边缘离散为许多子状态以进行碰撞检查。<strong>目前在 OMPL&#x2F;MoveIt 中没有可用的连续碰撞检查</strong>。</p>
+<p>具体来说，<strong>longest_valid_segment_fraction</strong> 是机器人状态空间的一部分，假设机器人当前未处于碰撞中，假设机器人可以在保持无碰撞的情况下移动。例如，如果 <em>longest_valid_segment_fraction &#x3D; 0.01</em>，假设两个节点之间的边小于状态空间的 1&#x2F;100，那么不需要明确地检查沿这条边的任何子状态，只需要检查它连接的两个节点。</p>
+<p>除了 ompl_planning.yaml 中的 longest_valid_segment_fraction 参数之外，还有 <strong>maximum_waypoint_distance</strong>，可在 dynamic reconfigure 文件中找到。maximum_waypoint_distance 为碰撞检查定义了相同的机器人运动离散化，但它是在绝对 level 上实现的，而不是使用状态空间的 fractions。例如，如果 maximum_waypoint_distance &#x3D; 0.1，那么如果一条状态空间距离小于 0.1 的边，那么不会显式地检查沿该边的任何子状态，而只需要检测两点。</p>
+<p>如果同时设置了 longest_valid_segment_fraction 和 maximum_waypoint_distance，则选择产生最保守离散化的变量（在给定边缘上生成最多碰撞检查状态的变量）。</p>
+<p>将 longest_valid_segment_fraction（或 maximum_waypoint_distance）设置得太低，碰撞检查&#x2F;运动规划会很慢。设置得太高，会错过小&#x2F;窄物体。此外，高碰撞检查分辨率会导致路径平滑器输出难以理解的运动，因为它们能够“捕捉”无效路径，然后尝试通过对其进行采样来修复它们，但并不完美。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/337">此处记录了此参数对两个 MoveIt 教程示例的影响的快速分析</a>。</p>
+<h2 id="Projection-Evaluator"><a href="#Projection-Evaluator" class="headerlink" title="Projection Evaluator"></a><strong>Projection Evaluator</strong></h2><p><strong>projection_evaluator</strong> 参数可以包含一个关节或 links 列表，以近似地覆盖配置空间。Planner 使用此设置，如:</p>
+<ul>
+<li>KPIECE</li>
+<li>BKPIECE</li>
+<li>LBKPIECE</li>
+<li>PDST</li>
+</ul>
+<h2 id="Enforce-Planning-in-Joint-Space"><a href="#Enforce-Planning-in-Joint-Space" class="headerlink" title="Enforce Planning in Joint Space"></a><strong>Enforce Planning in Joint Space</strong></h2><p>根据 planning problem 的不同，MoveIt 在<strong>关节空间</strong>和<strong>笛卡尔空间</strong>之间进行选择，以表征规划问题。设置 group 参数 <strong>enforce_joint_model_state_space</strong> 将强制所有规划使用 joint space。</p>
+<p><strong>默认情况下，带有方向路径约束的规划请求是在笛卡尔空间中采样的，因此调用 IK 作为生成采样器</strong>。</p>
+<p>通过强制执行 joint space，规划过程将使用拒绝抽样来找到有效的请求。</p>
+<h1 id="Smoothing-Paths"><a href="#Smoothing-Paths" class="headerlink" title="Smoothing Paths"></a><strong>Smoothing Paths</strong></h1><p>OMPL 中的许多 planners(包括默认的 planner)更倾向于寻找解决方案路径的速度而不是路径质量。在后处理阶段对可行路径进行平滑和缩短，以获得更接近最优路径。然而，由于 OMPL 中的算法是概率性的，因此不能保证每次都能找到全局最优解或相同的解。其他库，如基于搜索的规划库(Search Based Planning Library, SBPL)提供了确定性结果，即给定相同的环境、起点和目标，将始终得到相同的路径。SBPL 是基于 A* 的，因此将根据所选的搜索分辨率获得最佳结果。然而，SBPL 也有缺点，例如难以以适当的分辨率定义状态空间格(例如，如何定义关节角度或末端执行器姿态的良好离散化)和调整特殊的启发式。</p>
+<p>在 OMPL 中有几个 planners 可以提供理论上的最优性保证，但通常只是渐近的:它们收敛到最优解，但收敛速度可能很慢。这些规划器使用的优化目标通常是路径长度的最小化，但也可以使用其他优化目标。</p>
+<h2 id="OMPL-Optimization-Objectives"><a href="#OMPL-Optimization-Objectives" class="headerlink" title="OMPL Optimization Objectives"></a><strong>OMPL Optimization Objectives</strong></h2><p>OMPL 规划库中的几个 planners 能够针对指定的优化目标进行优化。目前可用于 MoveIt 的渐近最优 planner 是：</p>
+<ul>
+<li><p>RRT*</p>
+</li>
+<li><p>PRM*</p>
+</li>
+<li><p>LazyPRM*</p>
+</li>
+<li><p>BFMT</p>
+</li>
+<li><p>FMT</p>
+</li>
+<li><p>Lower Bound Tree RRT(LBTRRT)</p>
+</li>
+<li><p>SPARS</p>
+</li>
+<li><p>SPARS2</p>
+</li>
+<li><p>Transition-based RRT(T-RRT)</p>
+</li>
+</ul>
+<p>OMPL 还提供了一种称为 <strong>AnytimePathShortening</strong> 的 meta-optimization 算法，该算法重复并行运行多个规划器，并与路径捷径和路径杂交(这两种技术用于局部优化解决方案路径)交织在一起。虽然没有被证明是最优的，但在实践中通常是获得渐近最优解路径的有效策略。</p>
+<p>以及 OMPL 中的其他优化规划器，但尚未在 MoveIt 中公开：</p>
+<ul>
+<li>RRT#</li>
+<li>RRTX</li>
+<li>Informed RRT*</li>
+<li>Batch Informed Trees(BIT*)</li>
+<li>Sparse Stable RRT</li>
+<li>FMT*</li>
+<li>CForest</li>
+</ul>
+<p>以下优化目标是可用的:</p>
+<ul>
+<li>PathLengthOptimizationObjective (Default，路径长度)</li>
+<li>MechanicalWorkOptimizationObjective</li>
+<li>MaximizeMinClearanceObjective (最大化最小间隙)</li>
+<li>StateCostIntegralObjective (状态代价积分)</li>
+<li>MinimaxObjective</li>
+</ul>
+<p>这些优化目标的配置可以通过 ompl_planning.yaml 中的 <strong>optimization_objective</strong> 完成。该参数的值被设置为所选优化目标的名称。例如，要配置 RRTstar 以使用 maximizemclearanceobjective, ompl_planning.yaml 中的 planner entry:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">optimization_objective:</span> <span class="string">MaximizeMinClearanceObjective</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>有关 OMPL 最优规划者的更多信息，请参阅: <a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/optimalPlanning.html">OMPL-最优规划文档</a>。</p>
+<h2 id="OMPL-优化器停止条件"><a href="#OMPL-优化器停止条件" class="headerlink" title="OMPL 优化器停止条件"></a><strong>OMPL 优化器停止条件</strong></h2><p>当超过给定的时间限制时，OMPL 中的规划器会终止求解。但是，可以通过 <strong>termination_condition</strong> 参数(ompl_planning.yaml)为每个规划程序配置指定额外的规划程序终止条件。可能的值为：</p>
+<ul>
+<li>**Iteration [num]**：迭代 num 次后终止</li>
+<li>**CostConvergence [solutionsWindow，epsilon]**：在代价（由优化目标指定）收敛之后终止。参数 solutionsWindow 指定的最小解决方案数，用于确认 planner 是否收敛。参数 ε 是要考虑收敛的阈值。应该是接近 0 的正数。如果在找到新的更好的解决方案后累积移动平均值没有以 ε 的相对分数变化，则已经达到收敛。OMPL 版本 ≥ 1.5.0</li>
+<li><strong>ExactSolution</strong>：找到确切的解决方案或发生超时后立即终止。这修改了 anytime&#x2F;optimizing 规划器的逻辑，在发现第一个可行解决方案时终止</li>
+</ul>
+<p>在所有情况下，planner 将在满足用户指定的终止条件或达到 timeout 指定的时间限制时终止，两者中以先发生者为准。</p>
+<p>例如，要指定 RRTstar 应该在收敛时终止，可以使用以下设置:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">termination_condition:</span> <span class="string">CostConvergence[10,.1]</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，没有指定优化目标(optimization_objective)，因此将使用默认的 <strong>PathLengthOptimizationObjective</strong>。</p>
+<h2 id="Post-Processing-Smoothing"><a href="#Post-Processing-Smoothing" class="headerlink" title="Post-Processing Smoothing"></a><strong>Post-Processing Smoothing</strong></h2><p>请注意，平滑对于减少间接路由的程度是有限度的。还要注意，这里只讨论基于几何（运动学）的平滑。速度&#x2F;加速度&#x2F;急动平滑在其他地方处理，参考：Time Parameterization。</p>
+<p><strong>可以通过增加 planning time 来调整 MoveIt 在平滑上花费的时间</strong>。在找到初始规划之后但在 <strong>allowed_planning_time</strong> 用完之前的任何剩余时间都将用于平滑。MoveIt 还进行路径混合(path hybridization)，将 N 个不同规划运行的最佳部分拼接在一起。因此，<strong>num_planning_attempts</strong> 也会影响质量。</p>
+<p>虽然目前未在 MoveIt 的顶层公开，但可以通过在 model_based_planning_context.cpp 中将简化持续时间(simplification duration)设置为 0（无限制）来实现更多平滑。这将启用 OMPL 的 simpleMax() 函数。</p>
+<p>除了内部 OMPL 平滑器之外，最近还努力使用 STOMP&#x2F;CHOMP 进行后处理。请参考：<a target="_blank" rel="noopener" href="https://moveit.ros.org/moveit!/ros/2018/10/25/gsoc-motion-planning-support.html">gsoc-motion-planning-support</a>。</p>
+<h1 id="Persistent-Roadmaps"><a href="#Persistent-Roadmaps" class="headerlink" title="Persistent Roadmaps"></a><strong>Persistent Roadmaps</strong></h1><p>默认情况下，对于每个运动规划请求，规划算法均从头开始。但是，对于构建环境路线图的某些规划器，如果规划场景或多或少是静态的，则可以从先前的运动计划请求中重用路线图。请考虑以下计划配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">PersistentLazyPRMstar:</span> <span class="comment"># use this with a representative environment to create a roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">PersistentLazyPRM:</span> <span class="comment"># use this to load a previously created roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRMstar:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRM:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>第一个规划程序配置 <strong>PersistentLazyPRMstar</strong>，将使用 LazyPRM* 来随着每个运动计划请求，在采样的机器人配置之间不断发展渐近最优路径的路线图。销毁规划器实例后，它将把路线图保存到磁盘中。 <strong>PersistentLazyPRM</strong> 配置与之类似，不同之处在于它将从磁盘加载路线图，但销毁后不会将其保存。<strong>SemiPersistent</strong> 规划器配置不会加载&#x2F;保存路线图，但是会随着每个运动规划请求的进行而不断扩展路线图（而不是在规划之前清除路线图的默认行为）。**支持持续性规划功能的四个计划器是：PRM，PRM*，LazyPRM 和 LazyPRM***。它们之间的关键区别在于，当在路线图中搜索有效路径时，惰性变体将根据需要，重新验证节点和边的有效性。非惰性变体将不会检查路线图对于当前环境是否仍然有效。换句话说，对于静态环境，请使用非惰性变体；对于变化很小的环境，请使用惰性变体；如果环境可能发生重大变化，请使用非持久性计划器。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1137,784 +1938,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/planning%20scene/" class="post-title-link" itemprop="url">planning scene</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:45:07" itemprop="dateCreated datePublished" datetime="2024-09-17T20:45:07+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/PlanningScene/" itemprop="url" rel="index"><span itemprop="name">PlanningScene</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>1、Planning scene</strong></p>
-<p>Planning scene 用来表示机器人所处的环境，同时存储了机器人本身的状态。</p>
-<p>PlanningScene 类提供了用于碰撞(collision)检查和约束(constraint)检查的主接口。</p>
-<p>可使用 RobotModel 或 URDF 和 SRDF 来配置 PlanningScene。但这并不是实例化 <a target="_blank" rel="noopener" href="http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/planning_scene/planning_scene_tutorial.html">PlanningScene</a> 的推荐方式。推荐使用 <strong>PlanningSceneMonitor</strong> 来创建和维护当前 planning scene，它使用机器人关节和其它传感器的数据。</p>
-<p>本例中，使用 PlanningScene，但该方法仅用于演示。</p>
-<p>​                robot_model_loader::RobotModelLoader robot_model_loader(“robot_description”); robot_model::RobotModelPtr kinematic_model &#x3D; robot_model_loader.getModel(); planning_scene::PlanningScene planning_scene(kinematic_model);              </p>
-<p>利用参数服务器上的 robot_description 参数来定义一个 planning_scene。</p>
-<p><strong>2、Collision Checking</strong></p>
-<p><strong>1）self-collision checking</strong></p>
-<p>要做的第一件事是检查机器人在当前状态下是否处于自碰撞状态，即机器人当前的配置是否会导致机器人的各个部件相互碰撞。为此，将构造一个 <strong>CollisionRequest</strong> 对象和一个 <strong>CollisionResult</strong> 对象，并将它们传递给碰撞检查函数。注意，结果中包含了机器人是否处于自碰撞状态的结果。自碰撞检查使用一个 unpadded 的机器人，即直接使用 URDF 中提供的碰撞网格，没有额外的填充。</p>
-<p>​                collision_detection::CollisionRequest collision_request; collision_detection::CollisionResult collision_result; planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 1: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
-<p><strong>2）改变状态</strong></p>
-<p>改变机器人的当前状态。Planning scene 在内部维护当前状态。可以得到它的一个引用，然后改变它，然后重新检查碰撞。需要特别注意的是，在发出新的碰撞检查请求之前，需要清除 collision_result。</p>
-<p>​                robot_state::RobotState&amp; current_state &#x3D; planning_scene.getCurrentStateNonConst(); current_state.setToRandomPositions(); collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 2: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
-<p>从何获得当前状态？</p>
-<p><strong>3）Checking for a group</strong></p>
-<p>现在，对 hand 进行碰撞检查，即：将检查 hand 与机器人身体的其他部位是否有碰撞。可以通过将组名 “hand” 添加到碰撞请求中来特别地进行请求。</p>
-<p>​                collision_request.group_name &#x3D; “hand”; current_state.setToRandomPositions(); collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 3: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
-<p><strong>4）Getting Contact Information</strong></p>
-<p>首先，手动设置机械臂到一个位置，假设在该位置确知会发生自碰撞。请注意，以 Panda 为例，这种状态现在实际上超出了 Panda 的 joint 限制，也可以直接检查。</p>
-<p>​                std::vector<double> joint_values &#x3D; { 0.0, 0.0, 0.0, -2.9, 0.0, 1.4, 0.0 }; const robot_model::JointModelGroup* joint_model_group &#x3D; current_state.getJointModelGroup(“panda_arm”); current_state.setJointGroupPositions(joint_model_group, joint_values); ROS_INFO_STREAM(“Test 4: Current state is “                &lt;&lt; (current_state.satisfiesBounds(joint_model_group) ? “valid” : “not valid”));              </p>
-<p>现在，可以得到可能发生在给定位置的任何碰撞的联系信息。可以通过在碰撞请求中填充适当的字段并指定要返回的最大联系数量来请求联系信息。</p>
-<p>​                collision_request.contacts &#x3D; true; collision_request.max_contacts &#x3D; 1000; … collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result); ROS_INFO_STREAM(“Test 5: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”); collision_detection::CollisionResult::ContactMap::const_iterator it; for (it &#x3D; collision_result.contacts.begin(); it !&#x3D; collision_result.contacts.end(); ++it) {  ROS_INFO(“Contact between: %s and %s”, it-&gt;first.first.c_str(), it-&gt;first.second.c_str()); }              </p>
-<p><strong>5）Modifying the Allowed Collision Matrix</strong></p>
-<p>AllowedCollisionMatrix(ACM) 提供了一种机制来告诉 collision world 忽略某些对象之间的碰撞：包括 robot 的部件和 world 中的对象。可以告诉 collision 检查器忽略上面报告的 links 之间的所有碰撞，也就是说，即使这些 links 实际上是在碰撞中，collision 检查器也会忽略这些碰撞，返回 not in collision。</p>
-<p>还请注意，在本例中还介绍了如何复制允许的 collision matrix 和当前状态，并将它们传递给 collision checking 函数。</p>
-<p>​                collision_detection::AllowedCollisionMatrix acm &#x3D; planning_scene.getAllowedCollisionMatrix(); robot_state::RobotState copied_state &#x3D; planning_scene.getCurrentState(); collision_detection::CollisionResult::ContactMap::const_iterator it2; for (it2 &#x3D; collision_result.contacts.begin(); it2 !&#x3D; collision_result.contacts.end(); ++it2) {  acm.setEntry(it2-&gt;first.first, it2-&gt;first.second, true); } collision_result.clear(); planning_scene.checkSelfCollision(collision_request, collision_result, copied_state, acm); ROS_INFO_STREAM(“Test 6: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
-<p><strong>6）Full Collision Checking</strong></p>
-<p>当检查自冲突时，可以使用checkCollision函数，它将检查自冲突和与环境的冲突[当前是空的]。这是一组冲突检查功能，将最常用的planner。注意，与环境的碰撞检查将使用padded版本的robot。填充物有助于使robot远离环境中的障碍物。</p>
-<p>虽然已经检查了自碰撞，但可以使用 checkCollision 函数来代替，它将检查自碰撞和与环境的碰撞(目前为空)。这是一组在规划程序中最常使用冲突检查函数。请注意，<strong>与环境的碰撞检查将使用 padded 版的机器人</strong>。填充有助于使机器人远离环境中的障碍物</p>
-<p>​                collision_result.clear(); planning_scene.checkCollision(collision_request, collision_result, copied_state, acm); ROS_INFO_STREAM(“Test 7: Current state is “ &lt;&lt; (collision_result.collision ? “in” : “not in”) &lt;&lt; “ self collision”);              </p>
-<p><strong>3、Constraint Checking</strong></p>
-<p>PlanningScene 类还包括易于使用的检查约束的函数调用。约束可以是两种类型:</p>
-<ul>
-<li>从 KinematicConstraint 集中选择的约束:即JointConstraint, PositionConstraint, OrientationConstraint和VisibilityConstraint</li>
-<li>通过回调指定的用户定义约束</li>
-</ul>
-<p>先看一个带有简单的 KinematicConstraint 的例子。</p>
-<p><strong>1）Checking Kinematic Constraints</strong></p>
-<p>首先在 Panda robot 的 panda_arm 组的末端执行器上定义一个简单的位置和方向约束。注意使用方便的函数来填充约束(这些函数可以在 utils.h 文件中找到，该文件来自 moveit_core 中的 kinematic_constraints 目录)。</p>
-<p>​                std::string end_effector_name &#x3D; joint_model_group-&gt;getLinkModelNames().back(); geometry_msgs::PoseStamped desired_pose; desired_pose.pose.orientation.w &#x3D; 1.0; desired_pose.pose.position.x &#x3D; 0.3; desired_pose.pose.position.y &#x3D; -0.185; desired_pose.pose.position.z &#x3D; 0.5; desired_pose.header.frame_id &#x3D; “panda_link0”; moveit_msgs::Constraints goal_constraint &#x3D;    kinematic_constraints::constructGoalConstraints(end_effector_name, desired_pose);              </p>
-<p>然后可以使用 PlanningScene 类中的 <strong>isStateConstrained</strong> 函数检查这个约束的状态</p>
-<p>​                copied_state.setToRandomPositions(); copied_state.update(); bool constrained &#x3D; planning_scene.isStateConstrained(copied_state, goal_constraint); ROS_INFO_STREAM(“Test 8: Random state is “ &lt;&lt; (constrained ? “constrained” : “not constrained”));              </p>
-<p>有一种更有效的检查约束的方法(当需要反复检查相同的约束时，例如在 planner 中)。首先构造一个 KinematicConstraintSet 来对 ROS Constraints 消息进行预处理，并对其进行快速处理。</p>
-<p>​                kinematic_constraints::KinematicConstraintSet kinematic_constraint_set(kinematic_model); kinematic_constraint_set.add(goal_constraint, planning_scene.getTransforms()); bool constrained_2 &#x3D; planning_scene.isStateConstrained(copied_state, kinematic_constraint_set); ROS_INFO_STREAM(“Test 9: Random state is “ &lt;&lt; (constrained_2 ? “constrained” : “not constrained”));              </p>
-<p>使用 KinematicConstraintSet 类有一个直接的方法来做到这一点</p>
-<p>​                kinematic_constraints::ConstraintEvaluationResult constraint_eval_result &#x3D;    kinematic_constraint_set.decide(copied_state); ROS_INFO_STREAM(“Test 10: Random state is “ &lt;&lt; (constraint_eval_result.satisfied ? “constrained” : “not constrained”));              </p>
-<p><strong>3）User-defined constraints</strong></p>
-<p>用户定义的约束也可以指定到 PlanningScene 类。这是通过使用 setStateFeasibilityPredicate 函数指定一个回调来完成的。</p>
-<p>下面是一个简单的用户定义回调示例，检查 Panda 机器人的 “panda_joint1” 是正还是负:</p>
-<p>​                bool stateFeasibilityTestExample(const robot_state::RobotState&amp; kinematic_state, bool verbose) {  const double* joint_values &#x3D; kinematic_state.getJointPositions(“panda_joint1”);  return (joint_values[0] &gt; 0.0); }              </p>
-<p>然后，无论何时调用 <strong>isStateFeasible</strong>，这个用户定义的回调都会被调用</p>
-<p>​                planning_scene.setStateFeasibilityPredicate(stateFeasibilityTestExample); bool state_feasible &#x3D; planning_scene.isStateFeasible(copied_state); ROS_INFO_STREAM(“Test 11: Random state is “ &lt;&lt; (state_feasible ? “feasible” : “not feasible”));              </p>
-<p>无论何时调用 isStateValid，都会执行三个检查：</p>
-<ul>
-<li>冲突检查</li>
-<li>约束检查</li>
-<li>使用用户定义的回调进行可行性检查</li>
-</ul>
-<p>​                bool state_valid &#x3D; planning_scene.isStateValid(copied_state, kinematic_constraint_set, “panda_arm”); ROS_INFO_STREAM(“Test 12: Random state is “ &lt;&lt; (state_valid ? “valid” : “not valid”));              </p>
-<p>请注意，所有的 planners 均可通过 MoveIt 和 OMPL 使用用户定义的回调执行碰撞检查、约束检查和可行性检查。</p>
-<p><strong>4、运行</strong></p>
-<p>​                roslaunch moveit_tutorials planning_scene_tutorial.launch              </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/MoveitSimpleControllerManager/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/MoveitSimpleControllerManager/" class="post-title-link" itemprop="url">MoveitSimpleControllerManager</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:42:15" itemprop="dateCreated datePublished" datetime="2024-09-17T20:42:15+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>113</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>读取 controller_list 参数，若参数不存在，则异常退出。注意：每个 controller 需包含 name、joints(关节列表，数组类型)、action_ns 及 type 参数，否则跳过。</p>
-<p>遍历 controller_list</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/trajectory_execution_manager/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/trajectory_execution_manager/" class="post-title-link" itemprop="url">trajectory_execution_manager</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:41:18" itemprop="dateCreated datePublished" datetime="2024-09-17T20:41:18+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>8.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>16 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>订阅 trajectory_execution_event 主题消息</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">event_topic_subscriber_ =</span><br><span class="line">      root_node_handle_.<span class="built_in">subscribe</span>(EXECUTION_EVENT_TOPIC, <span class="number">100</span>, </span><br><span class="line">                  &amp;TrajectoryExecutionManager::receiveEvent, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="D:\workspace\my-notes\blog\source_posts\机械臂\MoveIt\源码分析\trajectory_execution_manager\image-20240917203858720.png" alt="image-20240917203858720"></p>
-<p>receiveEvent 函数处理接收到的事件</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TrajectoryExecutionManager::receiveEvent</span><span class="params">(<span class="type">const</span> std_msgs::StringConstPtr&amp; event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">ROS_INFO_STREAM_NAMED</span>(name_, <span class="string">&quot;Received event &#x27;&quot;</span> &lt;&lt; event-&gt;data &lt;&lt; <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">  <span class="built_in">processEvent</span>(event-&gt;data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TrajectoryExecutionManager::processEvent</span><span class="params">(<span class="type">const</span> std::string&amp; event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (event == <span class="string">&quot;stop&quot;</span>)</span><br><span class="line">    <span class="built_in">stopExecution</span>(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">ROS_WARN_STREAM_NAMED</span>(name_, <span class="string">&quot;Unknown event type: &#x27;&quot;</span> &lt;&lt; event &lt;&lt; <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>若接收到 stop 事件，则调佣 stopExecution(true) 停止执行轨迹。</p>
-<p>stopExecution 函数中</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TrajectoryExecutionManager::stopExecution</span><span class="params">(<span class="type">bool</span> auto_clear)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  stop_continuous_execution_ = <span class="literal">true</span>;</span><br><span class="line">  continuous_execution_condition_.<span class="built_in">notify_all</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!execution_complete_)</span><br><span class="line">  &#123;</span><br><span class="line">    execution_state_mutex_.<span class="built_in">lock</span>();</span><br><span class="line">    <span class="keyword">if</span> (!execution_complete_)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// we call cancel for all active handles; we know these are not being modified as we loop through them because of</span></span><br><span class="line">      <span class="comment">// the lock</span></span><br><span class="line">      <span class="comment">// we mark execution_complete_ as true ahead of time. Using this flag, executePart() will know that an external</span></span><br><span class="line">      <span class="comment">// trigger to stop has been received</span></span><br><span class="line">      execution_complete_ = <span class="literal">true</span>;</span><br><span class="line">      <span class="built_in">stopExecutionInternal</span>();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// we set the status here; executePart() will not set status when execution_complete_ is true ahead of time</span></span><br><span class="line">      last_execution_status_ = moveit_controller_manager::ExecutionStatus::PREEMPTED;</span><br><span class="line">      execution_state_mutex_.<span class="built_in">unlock</span>();</span><br><span class="line">      <span class="built_in">ROS_INFO_NAMED</span>(name_, <span class="string">&quot;Stopped trajectory execution.&quot;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// wait for the execution thread to finish</span></span><br><span class="line">      boost::<span class="function">mutex::scoped_lock <span class="title">lock</span><span class="params">(execution_thread_mutex_)</span></span>;</span><br><span class="line">      <span class="keyword">if</span> (execution_thread_)</span><br><span class="line">      &#123;</span><br><span class="line">        execution_thread_-&gt;<span class="built_in">join</span>();</span><br><span class="line">        execution_thread_.<span class="built_in">reset</span>();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (auto_clear)</span><br><span class="line">        <span class="built_in">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      execution_state_mutex_.<span class="built_in">unlock</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (execution_thread_)  <span class="comment">// just in case we have some thread waiting to be joined from some point in the past, we</span></span><br><span class="line">                               <span class="comment">// join it now</span></span><br><span class="line">  &#123;</span><br><span class="line">    boost::mutex::scoped_lock <span class="built_in">lock</span>(execution_thread_mutex_);</span><br><span class="line">    <span class="keyword">if</span> (execution_thread_)</span><br><span class="line">    &#123;</span><br><span class="line">      execution_thread_-&gt;<span class="built_in">join</span>();</span><br><span class="line">      execution_thread_.<span class="built_in">reset</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><code>continuousExecutionThread</code> 函数</p>
-<p>负责执行任务的线程。当 stop_continuous_execution_ 为 false，即：未停止任务时，循环判断 continuous_execution_queue_ 是否为空，同时线程是否仍在执行，即：run_continuous_execution_thread_ 为 true，则阻塞等待条件变量 continuous_execution_condition_</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!stop_continuous_execution_)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">boost::unique_lock&lt;boost::mutex&gt; <span class="title">ulock</span><span class="params">(continuous_execution_mutex_)</span></span>;</span><br><span class="line">  <span class="keyword">while</span> (continuous_execution_queue_.<span class="built_in">empty</span>() <span class="comment">// 任务队列为空,则表示任务执行完</span></span><br><span class="line">          &amp;&amp; run_continuous_execution_thread_ <span class="comment">// 线程仍在执行</span></span><br><span class="line">          &amp;&amp; !stop_continuous_execution_) <span class="comment">// 接收到 stop 事件</span></span><br><span class="line">    <span class="comment">// 阻塞等待条件变量      </span></span><br><span class="line">    continuous_execution_condition_.<span class="built_in">wait</span>(ulock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>若接收到 stop 事件，或条件变量 continuous_execution_condition_ 触发，同时线程退出(即 run_continuous_execution_thread_ 为 false) 则清空轨迹队列</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (stop_continuous_execution_ || !run_continuous_execution_thread_)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">const</span> moveit_controller_manager::MoveItControllerHandlePtr&amp; used_handle : used_handles)</span><br><span class="line">    <span class="comment">// 上一次执行状态，即: last_execution_status_. </span></span><br><span class="line">    <span class="comment">// 若有任务正在执行,则先取消当前执行</span></span><br><span class="line">    <span class="keyword">if</span> (used_handle-&gt;<span class="built_in">getLastExecutionStatus</span>() == moveit_controller_manager::ExecutionStatus::RUNNING)</span><br><span class="line">      used_handle-&gt;<span class="built_in">cancelExecution</span>();</span><br><span class="line">  used_handles.<span class="built_in">clear</span>();</span><br><span class="line">  <span class="comment">// 清空 continous_execution_queue_ 队列</span></span><br><span class="line">  <span class="keyword">while</span> (!continuous_execution_queue_.<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    TrajectoryExecutionContext* context = continuous_execution_queue_.<span class="built_in">front</span>();</span><br><span class="line">    continuous_execution_queue_.<span class="built_in">pop_front</span>();</span><br><span class="line">    <span class="keyword">delete</span> context;</span><br><span class="line">  &#125;</span><br><span class="line">  stop_continuous_execution_ = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>若未接收到 stop 事件，线程正常运行，且 continuous_execution_queue_ 队列不为空，则开始执行轨迹</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (!continuous_execution_queue_.<span class="built_in">empty</span>())</span><br><span class="line">&#123;</span><br><span class="line">  TrajectoryExecutionContext* context = <span class="literal">nullptr</span>;</span><br><span class="line">  &#123;</span><br><span class="line">    boost::<span class="function">mutex::scoped_lock <span class="title">slock</span><span class="params">(continuous_execution_mutex_)</span></span>;</span><br><span class="line">    <span class="comment">// 若队列为空则直接退出</span></span><br><span class="line">    <span class="keyword">if</span> (continuous_execution_queue_.<span class="built_in">empty</span>())</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    context = continuous_execution_queue_.<span class="built_in">front</span>();</span><br><span class="line">    continuous_execution_queue_.<span class="built_in">pop_front</span>();</span><br><span class="line">    <span class="comment">// 若队列执行完，触发 continuous_execution_condition_ 条件变量</span></span><br><span class="line">    <span class="keyword">if</span> (continuous_execution_queue_.<span class="built_in">empty</span>())</span><br><span class="line">      continuous_execution_condition_.<span class="built_in">notify_all</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// remove handles we no longer need</span></span><br><span class="line">  std::set&lt;moveit_controller_manager::MoveItControllerHandlePtr&gt;::iterator uit = used_handles.<span class="built_in">begin</span>();</span><br><span class="line">  <span class="keyword">while</span> (uit != used_handles.<span class="built_in">end</span>())</span><br><span class="line">    <span class="comment">// 删除已结束的 handles</span></span><br><span class="line">    <span class="keyword">if</span> ((*uit)-&gt;<span class="built_in">getLastExecutionStatus</span>() != moveit_controller_manager::ExecutionStatus::RUNNING)</span><br><span class="line">    &#123;</span><br><span class="line">      std::set&lt;moveit_controller_manager::MoveItControllerHandlePtr&gt;::iterator to_erase = uit;</span><br><span class="line">      ++uit;</span><br><span class="line">      used_handles.<span class="built_in">erase</span>(to_erase);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      ++uit;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// now send stuff to controllers</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// first make sure desired controllers are active.</span></span><br><span class="line">  <span class="comment">// 首先确保对应的 controller 运行正常</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">areControllersActive</span>(context-&gt;controllers_))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// get the controller handles needed to execute the new trajectory</span></span><br><span class="line">    <span class="function">std::vector&lt;moveit_controller_manager::MoveItControllerHandlePtr&gt; <span class="title">handles</span><span class="params">(context-&gt;controllers_.size())</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; context-&gt;controllers_.<span class="built_in">size</span>(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">      moveit_controller_manager::MoveItControllerHandlePtr h;</span><br><span class="line">      <span class="keyword">try</span></span><br><span class="line">      &#123;</span><br><span class="line">        h = controller_manager_-&gt;<span class="built_in">getControllerHandle</span>(context-&gt;controllers_[i]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">catch</span> (std::exception&amp; ex)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;%s caught when retrieving controller handle&quot;</span>, ex.<span class="built_in">what</span>());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (!h)</span><br><span class="line">      &#123;</span><br><span class="line">        last_execution_status_ = moveit_controller_manager::ExecutionStatus::ABORTED;</span><br><span class="line">        <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;No controller handle for controller &#x27;%s&#x27;. Aborting.&quot;</span>,</span><br><span class="line">                        context-&gt;controllers_[i].<span class="built_in">c_str</span>());</span><br><span class="line">        handles.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      handles[i] = h;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 过程中接收到 stop 事件或线程停止运行,则中断执行</span></span><br><span class="line">    <span class="keyword">if</span> (stop_continuous_execution_ || !run_continuous_execution_thread_)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">delete</span> context;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// push all trajectories to all controllers simultaneously</span></span><br><span class="line">    <span class="keyword">if</span> (!handles.<span class="built_in">empty</span>())</span><br><span class="line">      <span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; context-&gt;trajectory_parts_.<span class="built_in">size</span>(); ++i)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="type">bool</span> ok = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">          ok = handles[i]-&gt;<span class="built_in">sendTrajectory</span>(context-&gt;trajectory_parts_[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">catch</span> (std::exception&amp; ex)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Caught %s when sending trajectory to controller&quot;</span>, ex.<span class="built_in">what</span>());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!ok)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">for</span> (std::<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; i; ++j)</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">              handles[j]-&gt;<span class="built_in">cancelExecution</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">catch</span> (std::exception&amp; ex)</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Caught %s when canceling execution&quot;</span>, ex.<span class="built_in">what</span>());</span><br><span class="line">            &#125;</span><br><span class="line">          <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Failed to send trajectory part %zu of %zu to controller %s&quot;</span>, i + <span class="number">1</span>,</span><br><span class="line">                          context-&gt;trajectory_parts_.<span class="built_in">size</span>(), handles[i]-&gt;<span class="built_in">getName</span>().<span class="built_in">c_str</span>());</span><br><span class="line">          <span class="keyword">if</span> (i &gt; <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Cancelling previously sent trajectory parts&quot;</span>);</span><br><span class="line">          last_execution_status_ = moveit_controller_manager::ExecutionStatus::ABORTED;</span><br><span class="line">          handles.<span class="built_in">clear</span>();</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">delete</span> context;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// remember which handles we used</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> moveit_controller_manager::MoveItControllerHandlePtr&amp; handle : handles)</span><br><span class="line">      used_handles.<span class="built_in">insert</span>(handle);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_ERROR_NAMED</span>(name_, <span class="string">&quot;Not all needed controllers are active. Cannot push and execute. You can try &quot;</span></span><br><span class="line">                           <span class="string">&quot;calling ensureActiveControllers() before pushAndExecute()&quot;</span>);</span><br><span class="line">    last_execution_status_ = moveit_controller_manager::ExecutionStatus::ABORTED;</span><br><span class="line">    <span class="keyword">delete</span> context;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>executeThread 接口</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TrajectoryExecutionManager::executeThread</span><span class="params">(<span class="type">const</span> ExecutionCompleteCallback&amp; callback,</span></span></span><br><span class="line"><span class="params"><span class="function">                                               <span class="type">const</span> PathSegmentCompleteCallback&amp; part_callback, <span class="type">bool</span> auto_clear)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// if we already got a stop request before we even started anything, we abort</span></span><br><span class="line">  <span class="keyword">if</span> (execution_complete_)</span><br><span class="line">  &#123;</span><br><span class="line">    last_execution_status_ = moveit_controller_manager::ExecutionStatus::ABORTED;</span><br><span class="line">    <span class="keyword">if</span> (callback)</span><br><span class="line">      <span class="built_in">callback</span>(last_execution_status_);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ROS_DEBUG_NAMED</span>(name_, <span class="string">&quot;Starting trajectory execution ...&quot;</span>);</span><br><span class="line">  <span class="comment">// assume everything will be OK</span></span><br><span class="line">  last_execution_status_ = moveit_controller_manager::ExecutionStatus::SUCCEEDED;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// execute each trajectory, one after the other (executePart() is blocking) or until one fails.</span></span><br><span class="line">  <span class="comment">// on failure, the status is set by executePart(). Otherwise, it will remain as set above (success)</span></span><br><span class="line">  std::<span class="type">size_t</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (; i &lt; trajectories_.<span class="built_in">size</span>(); ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 最终调用 MoveItControllerHandlePtr 中的 sendTrajectory </span></span><br><span class="line">    <span class="comment">//     -&gt; FollowJointTrajectoryControllerHandle::sendTrajectory 通过</span></span><br><span class="line">    <span class="comment">//     follow_joint_trajectory actionlib 发布 goal</span></span><br><span class="line">    <span class="type">bool</span> epart = <span class="built_in">executePart</span>(i);</span><br><span class="line">    <span class="keyword">if</span> (epart &amp;&amp; part_callback)</span><br><span class="line">      <span class="built_in">part_callback</span>(i);</span><br><span class="line">    <span class="keyword">if</span> (!epart || execution_complete_)</span><br><span class="line">    &#123;</span><br><span class="line">      ++i;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// only report that execution finished successfully when the robot actually stopped moving</span></span><br><span class="line">  <span class="keyword">if</span> (last_execution_status_ == moveit_controller_manager::ExecutionStatus::SUCCEEDED)</span><br><span class="line">    <span class="built_in">waitForRobotToStop</span>(*trajectories_[i - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ROS_INFO_NAMED</span>(name_, <span class="string">&quot;Completed trajectory execution with status %s ...&quot;</span>, last_execution_status_.<span class="built_in">asString</span>().<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">  <span class="comment">// notify whoever is waiting for the event of trajectory completion</span></span><br><span class="line">  execution_state_mutex_.<span class="built_in">lock</span>();</span><br><span class="line">  execution_complete_ = <span class="literal">true</span>;</span><br><span class="line">  execution_state_mutex_.<span class="built_in">unlock</span>();</span><br><span class="line">  execution_complete_condition_.<span class="built_in">notify_all</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// clear the paths just executed, if needed</span></span><br><span class="line">  <span class="keyword">if</span> (auto_clear)</span><br><span class="line">    <span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// call user-specified callback</span></span><br><span class="line">  <span class="keyword">if</span> (callback)</span><br><span class="line">    <span class="built_in">callback</span>(last_execution_status_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">源码分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:35:17" itemprop="dateCreated datePublished" datetime="2024-09-17T20:35:17+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">源码分析</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="MoveIt-软件结构"><a href="#MoveIt-软件结构" class="headerlink" title="MoveIt! 软件结构"></a>MoveIt! 软件结构</h1><p>主要包括：</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit">moveit</a>：</p>
-</li>
-<li><ul>
-<li><strong>moveit_core</strong>：核心功能，包括了 MoveIt 中用于运动学，规划场景，约束，运动规划，碰撞检查和插件界面的核心组件</li>
-<li><strong>moveit_ros_planning</strong>：规划组件，执行管理器，插件加载器</li>
-<li><strong>moveit_ros_move_group</strong>：move_group 主节点，用于通过 ROS 消息使用 MoveIt</li>
-<li><strong>moveit_ros_planning_interface</strong>：与 move_group 通信的 Python 及 ROS 消息接口</li>
-<li><strong>moveit_ros_perception</strong>：Octomap 和其它感知插件</li>
-<li><strong>moveit_ros_manipulation</strong>：高级 pick and place pipeline</li>
-<li><strong>moveit_ros_robot_interaction</strong>：Interactive marker tools for Rviz</li>
-<li><strong>moveit_ros_visualization</strong>：Rviz tools</li>
-<li><strong>moveit_ros_warehouse</strong>：用于存储场景和配置数据的数据库插件</li>
-<li><strong>moveit_ros_benchmarks</strong>：使用 PlannerArena 进行压测</li>
-<li><strong>moveit_ros</strong>：Metapackage</li>
-<li><strong>moveit_planners</strong>：Metapackage</li>
-<li><strong>moveit_planners_ompl</strong>：OMPL 插件</li>
-<li><strong>moveit_commander</strong>：终端控制接口</li>
-<li><strong>moveit_setup_assistant</strong>：</li>
-<li><strong>moveit_plugins</strong>：controller managers 插件</li>
-<li><strong>chomp_motion_planner</strong>：高效运动规划的梯度优化技术</li>
-<li><strong>chomp_interface</strong>：用于在 MoveIt! 中使用 CHOMP 的adapter</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_msgs">moveit_msgs</a>：</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_task_constructor">moveit_task_constructor</a>：一种分层、多阶段操作规划方法</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_grasps">moveit_grasps</a>：A geometric-based grasp generation library for manipulation</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_visual_tools">moveit_visual_tools</a>：RViz 插件</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_resources">moveit_resources</a>：大型文件资产，如测试机器人</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_calibration">moveit_calibration</a>：手眼标定程序</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_advanced">moveit_advanced</a>：实验性先进功能</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_ci">moveit_ci</a>：script to run with Travis for continuous integration</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-visualization/rqt_moveit/">rqt_moveit</a>：</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/srdfdom">srdfdom</a>：</p>
-</li>
-</ul>
-<p>由 ros-planning MoveIt 团队维护的依赖项:</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/warehouse_ros">warehouse_ros</a>：Abstract interface for persisting ROS message data</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/random_numbers">random_numbers</a>：package for generating random numbers</li>
-</ul>
-<p>其它代码仓库：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_tutorials">moveit_tutorials</a> - step by step examples for learning MoveIt</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_example_apps">moveit_example_apps</a> - sandbox of example high level application code</li>
-</ul>
-<p><img src="D:\workspace\my-notes\blog\source_posts\机械臂\MoveIt\源码分析\源码分析\image-20240917203345782.png" alt="image-20240917203345782"></p>
-<p>提供四个 API：</p>
-<ul>
-<li><p>Move Group Interface：包括</p>
-</li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/en/noetic/api/moveit_ros_planning/html/classmoveit__cpp_1_1MoveItCpp.html">MoveItCpp class</a>：主要的，新的，更快的 C++ 接口。推荐使用这个接口给需要更多实时控制的高级用户或工业应用程序</li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1MoveGroupInterface.html">MoveGroupInterface class</a>：move_group_node 的 main  c++ 接口。MoveGroupInterface 是旧版本中 MoveGroup 类的继承者，现在已弃用</li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_planning_interface/html/classmoveit_1_1planning__interface_1_1PlanningSceneInterface.html">PlanningSceneInterface class</a>：</li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_commander/html/index.html">MoveIt commander</a>：</li>
-</ul>
-</li>
-<li><p>MoveIt ROS：适用于高级开发人员</p>
-</li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_planning/html">Planning</a>：planning 组件，特别是规划场景、运动学和监视器</li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_move_group/html">Move Group</a>：<em>move_group_node</em></li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_perception/html">Perception</a>：感知组件</li>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_ros_robot_interaction/html">Robot Interaction</a>：交互组件</li>
-</ul>
-</li>
-<li><p>MoveIt Core：适用于高级开发人员</p>
-</li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_core/html">Core</a>：MoveIt 的核心组件为运动学，规划场景，约束，运动规划，碰撞检查和插件接口</li>
-</ul>
-</li>
-<li><p>MoveIt OMPL Interface：适用于高级开发人员</p>
-</li>
-<li><ul>
-<li><a target="_blank" rel="noopener" href="http://docs.ros.org/noetic/api/moveit_planners_ompl/html">OMPL Interface</a>：允许MoveIt与OMPL对话的类集</li>
-</ul>
-</li>
-</ul>
-<h1 id="发送轨迹"><a href="#发送轨迹" class="headerlink" title="发送轨迹"></a>发送轨迹</h1><p><code>FollowJointTrajectoryControllerHandle::sendTrajectory</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">FollowJointTrajectoryControllerHandle::sendTrajectory</span><span class="params">(<span class="type">const</span> moveit_msgs::RobotTrajectory&amp; trajectory)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;new trajectory to &quot;</span> &lt;&lt; name_);</span><br><span class="line">  <span class="comment">// </span></span><br><span class="line">  <span class="keyword">if</span> (!controller_action_client_)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!trajectory.multi_dof_joint_trajectory.points.<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">ROS_WARN_NAMED</span>(LOGNAME, <span class="string">&quot;%s cannot execute multi-dof trajectories.&quot;</span>, name_.<span class="built_in">c_str</span>());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (done_)</span><br><span class="line">    <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;sending trajectory to &quot;</span> &lt;&lt; name_);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;sending continuation for the currently executed trajectory to &quot;</span> &lt;&lt; name_);</span><br><span class="line"></span><br><span class="line">  control_msgs::FollowJointTrajectoryGoal goal = goal_template_;</span><br><span class="line">  goal.trajectory = trajectory.joint_trajectory;</span><br><span class="line">  <span class="comment">// 通过 follow_joint_trajectory actionlib 发送 goal</span></span><br><span class="line">  controller_action_client_-&gt;<span class="built_in">sendGoal</span>(</span><br><span class="line">      goal, boost::<span class="built_in">bind</span>(&amp;FollowJointTrajectoryControllerHandle::controllerDoneCallback, <span class="keyword">this</span>, _1, _2),</span><br><span class="line">      boost::<span class="built_in">bind</span>(&amp;FollowJointTrajectoryControllerHandle::controllerActiveCallback, <span class="keyword">this</span>),</span><br><span class="line">      boost::<span class="built_in">bind</span>(&amp;FollowJointTrajectoryControllerHandle::controllerFeedbackCallback, <span class="keyword">this</span>, _1));</span><br><span class="line">  done_ = <span class="literal">false</span>;</span><br><span class="line">  last_exec_ = moveit_controller_manager::ExecutionStatus::RUNNING;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>机械臂驱动程序(如：kinova_driver 包中的 joint_trajectory_action_server.cpp)中实现 follow_joint_trajectory action server。此处还注册了轨迹执行完成回调函数及轨迹执行过程 feedback 回调函数。</p>
-<p>轨迹执行完成(成功&#x2F;失败)回调函数 controllerDoneCallback：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FollowJointTrajectoryControllerHandle::controllerDoneCallback</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> actionlib::SimpleClientGoalState&amp; state, <span class="type">const</span> control_msgs::FollowJointTrajectoryResultConstPtr&amp; result)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// Output custom error message for FollowJointTrajectoryResult if necessary</span></span><br><span class="line">  <span class="keyword">if</span> (!result)</span><br><span class="line">    <span class="built_in">ROS_WARN_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;Controller &quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot; done, no result returned&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (result-&gt;error_code == control_msgs::FollowJointTrajectoryResult::SUCCESSFUL)</span><br><span class="line">    <span class="built_in">ROS_INFO_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;Controller &quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot; successfully finished&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">ROS_WARN_STREAM_NAMED</span>(LOGNAME, <span class="string">&quot;Controller &quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot; failed with error &quot;</span></span><br><span class="line">                                                 &lt;&lt; <span class="built_in">errorCodeToMessage</span>(result-&gt;error_code) &lt;&lt; <span class="string">&quot;: &quot;</span></span><br><span class="line">                                                 &lt;&lt; result-&gt;error_string);</span><br><span class="line">  <span class="comment">// 结束轨迹执行                                               </span></span><br><span class="line">  <span class="built_in">finishControllerExecution</span>(state);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><code>finishControllerExecution</code> 接口中设置 <code>last_exec_</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">finishControllerExecution</span><span class="params">(<span class="type">const</span> actionlib::SimpleClientGoalState&amp; state)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">ROS_DEBUG_STREAM_NAMED</span>(<span class="string">&quot;ActionBasedController&quot;</span>, <span class="string">&quot;Controller &quot;</span> &lt;&lt; name_ &lt;&lt; <span class="string">&quot; is done with state &quot;</span> &lt;&lt; state.<span class="built_in">toString</span>()</span><br><span class="line">                                                                  &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; state.<span class="built_in">getText</span>());</span><br><span class="line">    <span class="keyword">if</span> (state == actionlib::SimpleClientGoalState::SUCCEEDED)</span><br><span class="line">      last_exec_ = moveit_controller_manager::ExecutionStatus::SUCCEEDED;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (state == actionlib::SimpleClientGoalState::ABORTED)</span><br><span class="line">      last_exec_ = moveit_controller_manager::ExecutionStatus::ABORTED;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (state == actionlib::SimpleClientGoalState::PREEMPTED)</span><br><span class="line">      last_exec_ = moveit_controller_manager::ExecutionStatus::PREEMPTED;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      last_exec_ = moveit_controller_manager::ExecutionStatus::FAILED;</span><br><span class="line">    done_ = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>并通过 <code>getLastExecutionStatus</code> 方法为上层调用(如：trajectory_execution_manager.cpp 中的 <code>continuousExecutionThread</code> 接口)返回轨迹执行状态。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Grasps/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Grasps/" class="post-title-link" itemprop="url">Grasps</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:26:29" itemprop="dateCreated datePublished" datetime="2024-09-17T20:26:29+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/" itemprop="url" rel="index"><span itemprop="name">示例</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>941</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit_grasps.git">MoveIt Grasps </a>是一个 grasp generator。可以用作 MoveIt pick and place 的替代品。MoveIt Grasps 提供了基于可达性和笛卡尔式的接近、提升和撤退运动的抓取过滤功能。</p>
-<p>抓取生成算法<strong>基于简单的长方体形状</strong>，不考虑摩擦锥或其他抓取动态。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> -b <span class="variable">$ROS_DISTRO</span>-devel https://github.com/ros-planning/moveit_grasps.git</span>   </span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 demos 前，需启动 rviz.launch.默认使用两指夹持器,也可切换为 suction 夹持器</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_grasps rviz.launch roslaunch moveit_grasps rviz.launch gripper:=suction</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：panda_moveit_config 的发布版本可能会滞后。如果 demo 运行有问题，可下载 panda_moveit_config 源码。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">完整demo.需修改 launch 文件中的 ee_group_name 为 panda_hand</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_grasps grasp_pipeline_demo.launch</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可视化 gripper 参数</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch moveit_grasps grasp_poses_visualizer_demo.launch</span> </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<p>Visualize Grasp Generation</p>
-<p>该工具演示了在抓取生成过程中如何打分的几个概念。它基于所选择的抓取使用以下方法:</p>
-<ul>
-<li>Ideal TCP Grasp Pose：</li>
-<li>Pose-Based Grasp Score Weighting：</li>
-<li>Depth-Based Grasp Score Weighting：</li>
-<li>Width-Based Grasp Score Weighting：</li>
-<li>Overhange Grasp Score Weighting：</li>
-</ul>
-<p>Grasp Filter</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"> roslaunch moveit_grasps grasp_filter_demo.launch</span> </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<ul>
-<li>RED：由ik过滤的抓取</li>
-<li>PINK：碰撞过滤抓取</li>
-<li>MAGENTA：cutting 平面过滤的抓取</li>
-<li>YELLOW：方向过滤的抓取</li>
-<li>BLUE：IK 过滤的预抓取</li>
-<li>CYAN：碰撞过滤的预抓取</li>
-<li>GGEEN：可用</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1937,14 +1962,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">523k</span>
+    <span title="站点总字数">570k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:50</span>
+    <span title="站点阅读时长">17:17</span>
   </span>
 </div>
 <div class="busuanzi-count">
