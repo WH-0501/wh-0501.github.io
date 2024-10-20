@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,182 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E4%BD%BF%E7%94%A8%E8%BF%91%E4%BC%BC%E7%BA%A6%E6%9D%9F%E6%B5%81%E5%BD%A2%E8%BF%9B%E8%A1%8C%E8%A7%84%E5%88%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E4%BD%BF%E7%94%A8%E8%BF%91%E4%BC%BC%E7%BA%A6%E6%9D%9F%E6%B5%81%E5%BD%A2%E8%BF%9B%E8%A1%8C%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">使用近似约束流形进行规划</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 20:59:12" itemprop="dateCreated datePublished" datetime="2024-09-17T20:59:12+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Planning with Approximated Constraint Manifolds。即：使用近似约束流形进行规划。</p>
+<p>OMPL 支持自定义约束，以支持遵循期望行为的规划轨迹。约束可以在关节空间和笛卡尔空间中定义，后者基于方向或位置。在规划轨迹时，每个关节状态都需要遵循所有设置的约束，默认情况下通过拒绝采样(rejection sampling)来执行。然而，这可能会导致规划时间过长，特别是当约束非常严格并且拒绝率相应较高时。</p>
+<p>Sucan 等人提出了一种方法，<strong>预先计算约束流形(constraint manifold)的近似值</strong>并在其中执行轨迹规划。OMPL 插件包含针对给定约束集执行此操作并将其保存在数据库中的功能。在以后的实例中，可以加载数据库以使用任何 OMPL 规划器进行受限规划，从而大大减少规划时间。</p>
+<p>有关如何规划路径约束的更多信息，请查看<a target="_blank" rel="noopener" href="http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/move_group_interface/move_group_interface_tutorial.html#planning-with-path-constraints">此处</a>。</p>
+<h1 id="创建-constraints-database"><a href="#创建-constraints-database" class="headerlink" title="创建 constraints database"></a><strong>创建 constraints database</strong></h1><p>在 demo_construct_state_database.cpp 中可以找到一个关于如何从一个约束构造一个近似数据库的示例。</p>
+<p>主要功能在 ConstraintsLibrary 类中。</p>
+<p>通过调用 <strong>addConstraintsApproximation(</strong>) 方法添加 Constraints，可多次调用添加多个约束。该函数参数：</p>
+<ul>
+<li>constraints message(moveit_msgs::Constraints)</li>
+<li>robot description</li>
+<li>planning scene(planning_scene::PlanningScenePtr)</li>
+<li>constraints options</li>
+</ul>
+<h2 id="定义-constraints"><a href="#定义-constraints" class="headerlink" title="定义 constraints"></a><strong>定义 constraints</strong></h2><p>generate_state_database 从 ROS 参数服务器中的  &#x2F;constraints上读取约束。</p>
+<p>可以在 rosparam 中定义这些，以便将它们一起加载到一个文件中。例如：X_moveit_config&#x2F;config&#x2F;constraints.yaml:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">path_constraint:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">some_constraints</span></span><br><span class="line">  <span class="attr">constraints:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">orientation</span></span><br><span class="line">    <span class="attr">frame_id:</span> <span class="string">world</span></span><br><span class="line">    <span class="comment"># etc, as described below</span></span><br></pre></td></tr></table></figure>
+
+<p>​            </p>
+<h3 id="JointConstraint"><a href="#JointConstraint" class="headerlink" title="JointConstraint"></a><strong>JointConstraint</strong></h3><p>限制关节位置。有三种方法可以简洁地指定这个参数</p>
+<ul>
+<li>position + a single tolerance</li>
+<li>position + lower an upper tolerance</li>
+<li>upper and lower bound</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">joint</span></span><br><span class="line">  <span class="attr">joint_name:</span> <span class="string">first_joint</span></span><br><span class="line">  <span class="attr">position:</span> <span class="number">0.1</span></span><br><span class="line">  <span class="attr">tolerance:</span> <span class="number">0.2</span></span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">joint</span></span><br><span class="line">  <span class="attr">joint_name:</span> <span class="string">second_joint</span></span><br><span class="line">  <span class="attr">position:</span> <span class="number">0.1</span></span><br><span class="line">  <span class="attr">tolerances:</span> [<span class="number">0.1</span>, <span class="number">0.2</span>]</span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">joint</span></span><br><span class="line">  <span class="attr">joint_name:</span> <span class="string">third_joint</span></span><br><span class="line">  <span class="attr">bounds:</span> [<span class="number">-0.5</span>, <span class="number">1.0</span>]</span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>​         </p>
+<h3 id="PoseConstraints"><a href="#PoseConstraints" class="headerlink" title="PoseConstraints"></a><strong>PoseConstraints</strong></h3><p>约束 link 的允许位置。</p>
+<p>target_offset 是一个 link 的相对位置。例如，末端执行器的尖端相对于它的安装点或其他原点定义。通过沿着每个轴指定上界和下界，这个区域(仅在这个紧凑定义中为方框)是紧凑定义的。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">position</span></span><br><span class="line">  <span class="attr">frame_id:</span> <span class="string">base_link</span></span><br><span class="line">  <span class="attr">link_name:</span> <span class="string">gripper_link</span></span><br><span class="line">  <span class="attr">target_offset:</span> [<span class="number">0.01</span>, <span class="number">0.01</span>, <span class="number">0.01</span>]</span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">    <span class="attr">x:</span> [<span class="number">0</span>, <span class="number">1.0</span>] <span class="comment"># [start, end]</span></span><br><span class="line">    <span class="attr">y:</span> [<span class="number">0</span>, <span class="number">1.0</span>] <span class="comment"># [start, end]</span></span><br><span class="line">    <span class="attr">z:</span> [<span class="number">0</span>, <span class="number">1.0</span>] <span class="comment"># [start, end]</span></span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<h3 id="OrientationConstraints"><a href="#OrientationConstraints" class="headerlink" title="OrientationConstraints"></a><strong>OrientationConstraints</strong></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">orientation</span></span><br><span class="line">  <span class="attr">frame_id:</span> <span class="string">base_link</span></span><br><span class="line">  <span class="attr">link_name:</span> <span class="string">gripper_link</span></span><br><span class="line">  <span class="attr">orientation:</span> [<span class="number">-3.1415269</span>, <span class="number">-1.57079632</span>, <span class="number">0</span>] <span class="comment">#RPY</span></span><br><span class="line">  <span class="attr">tolerances:</span> [<span class="number">6.28318531</span>, <span class="number">0.2</span>, <span class="number">6.28318531</span>]</span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<h3 id="VisibilityConstraints"><a href="#VisibilityConstraints" class="headerlink" title="VisibilityConstraints"></a><strong>VisibilityConstraints</strong></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">visibility</span></span><br><span class="line">  <span class="attr">target_radius:</span> <span class="number">0.5</span></span><br><span class="line">  <span class="attr">target_pose:</span></span><br><span class="line">    <span class="attr">frame_id:</span> <span class="string">&#x27;base_link&#x27;</span></span><br><span class="line">    <span class="attr">position:</span> [<span class="number">1.2</span>, <span class="number">3.4</span>, <span class="number">5.6</span>]</span><br><span class="line">    <span class="attr">orientation:</span> [<span class="number">-3.1415269</span>, <span class="number">-1.57079632</span>, <span class="number">0</span>] <span class="comment">#RPY</span></span><br><span class="line">  <span class="attr">cone_sides:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">sensor_pose:</span></span><br><span class="line">    <span class="attr">frame_id:</span> <span class="string">&#x27;gripper_cam_link&#x27;</span></span><br><span class="line">    <span class="attr">position:</span> [<span class="number">1.2</span>, <span class="number">3.4</span>, <span class="number">5.6</span>]</span><br><span class="line">    <span class="attr">orientation:</span> [<span class="number">-3.1415269</span>, <span class="number">-1.57079632</span>, <span class="number">0</span>] <span class="comment">#RPY</span></span><br><span class="line">  <span class="attr">max_view_angle:</span> <span class="number">1.1</span></span><br><span class="line">  <span class="attr">max_range_angle:</span> <span class="number">0.55</span></span><br><span class="line">  <span class="attr">weight:</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="运行-database-generator"><a href="#运行-database-generator" class="headerlink" title="运行 database generator"></a><strong>运行 database generator</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需先启动 demo.launch</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch ompl_interface generate_state_database.launch \</span></span><br><span class="line"><span class="language-bash">    constraints_file:=$(rospack find X_moveit_config)/config/constraints.yaml \</span></span><br><span class="line"><span class="language-bash">    planning_group:=arm</span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<h2 id="Internals"><a href="#Internals" class="headerlink" title="Internals"></a><strong>Internals</strong></h2><p>约束是通过调用 <strong>addConstraintApproximation()</strong> 来添加的，后续可以调用它来在近似中包含多个约束。该函数需要四个参数:</p>
+<ul>
+<li>constraints message</li>
+<li>robot description(std::string)</li>
+<li>planning scene(planning_scene::PlanningScenePtr)</li>
+<li>construction options</li>
+</ul>
+<h2 id="Constraints-message"><a href="#Constraints-message" class="headerlink" title="Constraints message"></a><strong>Constraints message</strong></h2><p>约束消息对象可以像往常一样以任何类型和所需的容差(tolerances)初始化。关键的一点是，消息的名称应该是描述性的，并且对约束是唯一的。稍后在规划使用近似数据库时，将使用该名称来引用相应的约束。</p>
+<h2 id="Constraints-options"><a href="#Constraints-options" class="headerlink" title="Constraints options"></a><strong>Constraints options</strong></h2><p>ompl_interface::constraintationconstructionoptions 对象指定了近似流形(approximation manifold)的各种特征，例如：实例大小、密度、空间参数化类型等。以下是每个选项的概述:</p>
+<ul>
+<li>unsigned int <strong>samples</strong> - 近似图的大小</li>
+<li>unsigned int <strong>edges_per_sample</strong> - 近似图的度</li>
+<li>double <strong>max_edge_length</strong> - 边缘插入的距离阈值</li>
+<li>bool <strong>explicit_motions</strong> - 定义边界是否应遵循约束</li>
+<li>double <strong>explicit_points_resolution</strong> - 边缘插值分辨率的约束检查</li>
+<li>unsigned int <strong>max_explicit_points</strong> - edge 要检查的最大点数</li>
+</ul>
+<h3 id="Graph-size"><a href="#Graph-size" class="headerlink" title="Graph size"></a><strong>Graph size</strong></h3><p>显然，稳定的规划结果需要详细的近似，因此 samples 越高，性能越可靠。然而，较高的值会导致数据库的构建时间线性增加。找到一个合适的流形大小是一个高度依赖于约束有多严格的问题。对于大多数约束，使用范围在 1000 到 10000 之间的值就足够了。</p>
+<h3 id="Edges"><a href="#Edges" class="headerlink" title="Edges"></a><strong>Edges</strong></h3><p>向流形(manifold)添加边是可选的，可以通过将 edges_per_sample 设置为 0 来禁用。在大多数情况下，轨迹规划在没有边的情况下也可以正常工作，因为采样过程只需要状态来运行。<strong>max_edge_length</strong> 定义允许添加边的两个状态的最大距离。通过将 explicit_motions 设置为 true，还可以强制边缘匹配约束，使它们表示相邻状态之间的有效路径。这在具有许多难以到达的区域非常稀疏的近似值中是尤其有利的，因为绝对距离不是可达性的度量。通过测试状态对之间的线性插值点来检查边是否匹配约束。这些插值点的数量设置为 <strong>explicit_points_resolution 乘以边缘长度</strong>，<strong>并受max_explicit_points 限制</strong>。</p>
+<p>添加边会极大地增加数据库的构建时间，而增加显式运动检查甚至会对此产生额外的影响。在测试边缘时，请记住应调整 edges_per_sample 和 max_edge_length 值，以便始终有足够接近的状态可以连接。这需要根据密度和适应状态之间的实际距离来分析近似空间的大小。</p>
+<h2 id="Database-Construction"><a href="#Database-Construction" class="headerlink" title="Database Construction"></a><strong>Database Construction</strong></h2><p>在将约束添加到 ConstraintsLibrary 对象之后，数据库可以通过调用 saveApproximationConstraints() 来构建，它只接受数据库应该保存的相对目录。</p>
+<h1 id="数据库加载和使用"><a href="#数据库加载和使用" class="headerlink" title="数据库加载和使用"></a><strong>数据库加载和使用</strong></h1><p>约束数据库必须在启动 move group 节点时通过设置 ros 参数来加载:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;move_group/constraint_approximations_path&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&lt;path_to_database&gt;&quot;</span>/&gt;</span>   </span><br></pre></td></tr></table></figure>
+
+<p>​           </p>
+<p>要验证是否找到了数据库，请检查是否在日志中显示了命名的约束。</p>
+<p>为了进行规划，只需像往常一样初始化约束消息，并将消息名称设置为用于构建数据库的确切名称。另外，需要再次指定相同的值和公差，因为默认情况下规划器只是在状态上采样，但在路径规划插值期间没有必要遵循约束。没有初始化约束的正确命名的约束消息将使用数据库，但因此可能导致无效的轨迹。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1685,114 +1861,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Deep%20Grasps/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/Deep%20Grasps/" class="post-title-link" itemprop="url">Deep Grasps</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 20:23:27" itemprop="dateCreated datePublished" datetime="2024-09-17T20:23:27+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/%E7%A4%BA%E4%BE%8B/" itemprop="url" rel="index"><span itemprop="name">示例</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>63</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>演示在 MoveIt Task Constructor 中使用 <a target="_blank" rel="noopener" href="https://github.com/atenpas/gpd">GPD(Grasp Pose Detection)</a> 和 <a target="_blank" rel="noopener" href="https://berkeleyautomation.github.io/dex-net/">Dex-Net</a> 进行抓取。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1817,14 +1885,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">605k</span>
+    <span title="站点总字数">607k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">18:19</span>
+    <span title="站点阅读时长">18:24</span>
   </span>
 </div>
 <div class="busuanzi-count">
