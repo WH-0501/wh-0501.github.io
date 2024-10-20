@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-count">140</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,130 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/io_thread/" class="post-title-link" itemprop="url">io_thread</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ IO 线程类 <code>io_thread_t</code>。包含 I&#x2F;O 线程的通用部分。特定于轮询机制(Polling-mechanism-specific)的特性在单独的“轮询对象”中实现。</p>
+<p>每个 ZeroMQ IO 线程都有与之绑定的 <code>Poller</code>，<code>Poller</code> 采用经典的 Reactor 模式实现。</p>
+<h1 id="io-thread-t"><a href="#io-thread-t" class="headerlink" title="io_thread_t"></a>io_thread_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">io_thread_t</span> ZMQ_FINAL : <span class="keyword">public</span> <span class="type">object_t</span>, <span class="keyword">public</span> i_poll_events</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">io_thread_t</span> (zmq::<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_);</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">io_thread_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">start</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停止线程</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取与该 I/O 线程关联的 mailbox</span></span><br><span class="line">    <span class="function"><span class="type">mailbox_t</span> *<span class="title">get_mailbox</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// i_poll_events implementation.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">in_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">out_event</span> <span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">timer_event</span> <span class="params">(<span class="type">int</span> id_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由 io_objects 用于检索关联的 poller 对象</span></span><br><span class="line">    <span class="function"><span class="type">poller_t</span> *<span class="title">get_poller</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Command handlers.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">process_stop</span> <span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 I/O 线程负载</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get_load</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// I/O 线程通过该 mailbox 访问 incoming commands</span></span><br><span class="line">    <span class="type">mailbox_t</span> _mailbox;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle associated with mailbox&#x27; file descriptor.</span></span><br><span class="line">    <span class="type">poller_t</span>::<span class="type">handle_t</span> _mailbox_handle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I/O 多路复用由 poller 对象执行</span></span><br><span class="line">    <span class="type">poller_t</span> *_poller;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">io_thread_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>poller.hpp</code> 中根据宏定义，选择相应的 I&#x2F;O 模型：</p>
+<ul>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_KQUEUE</code>：使用 <code>kqueue</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_EPOLL</code>：使用 <code>epoll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_DEVPOLL</code>：使用 <code>devpoll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_POLLSET</code>：使用 <code>pollset</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code></li>
+<li><code>ZMQ_IOTHREAD_POLLER_USE_SELECT</code>：使用 <code>select</code></li>
+<li><code>ZMQ_HAVE_GNU</code> 且 <code>ZMQ_IOTHREAD_POLLER_USE_POLL</code>：使用 <code>poll</code><br>若同时定义多个宏，则会报错。</li>
+</ul>
+<p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。</p>
+<h2 id="io-thread-t-构造"><a href="#io-thread-t-构造" class="headerlink" title="io_thread_t 构造"></a>io_thread_t 构造</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">zmq::<span class="type">io_thread_t</span>::<span class="built_in">io_thread_t</span> (<span class="type">ctx_t</span> *ctx_, <span class="type">uint32_t</span> tid_) :</span><br><span class="line">    <span class="built_in">object_t</span> (ctx_, tid_),</span><br><span class="line">    _mailbox_handle (<span class="built_in">static_cast</span>&lt;<span class="type">poller_t</span>::<span class="type">handle_t</span>&gt; (<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">    _poller = <span class="built_in">new</span> (std::nothrow) <span class="built_in">poller_t</span> (*ctx_);</span><br><span class="line">    <span class="built_in">alloc_assert</span> (_poller);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (_mailbox.<span class="built_in">get_fd</span> () != retired_fd) &#123;</span><br><span class="line">        _mailbox_handle = _poller-&gt;<span class="built_in">add_fd</span> (_mailbox.<span class="built_in">get_fd</span> (), <span class="keyword">this</span>);</span><br><span class="line">        _poller-&gt;<span class="built_in">set_pollin</span> (_mailbox_handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建 <code>poller_t</code> 类对象 <code>_poller</code></li>
+<li>配置 mailbox</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1928,214 +2052,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/" class="post-title-link" itemprop="url">behavior_tree</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-05 21:28:13" itemprop="dateCreated datePublished" datetime="2024-09-05T21:28:13+08:00">2024-09-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="note://WEB40cf9dd13ecdc0427d94e4994089fcca">nav2 behavior tree</a></p>
-<h1 id="BT-概述"><a href="#BT-概述" class="headerlink" title="BT 概述"></a><strong>BT 概述</strong></h1><p>behaviac tree（BT） 即行为树。是 computer science、robotics、控制系统及视频游戏中使用的按计划执行的数学模型。以模块化的方式描述有限数量任务之间的切换。其优势在于他们创建<strong>由一系列简单任务组成非常复杂的任务的能力</strong>，而不必担心简单任务是如何实现的。 BT与分层状态机(HFSM)存在一些相似之处，其关键区别在于行为的主要构建块是任务而不是状态。易于人类理解。</p>
-<h1 id="BT-与-FSM"><a href="#BT-与-FSM" class="headerlink" title="BT 与 FSM"></a><strong>BT 与 FSM</strong></h1><p>FSM 的每个节点表示一个状态，而 BT 的每个节点表示一个行为。FSM 是事件机制，而 BT 则属于轮询机制。</p>
-<p>BT 相对于 FSM 的主要优势：</p>
-<ul>
-<li>BT 的主要优势在于其模块化，提升可读性与复用性</li>
-<li>BT 本质上是分层的，意味着可以由简单的行为自由组合成复杂的 behavior，包括整个树作为更大的树的子分支。例如：”获取啤酒”可以重用 “抓取对象” 节点</li>
-<li>BT 的图形具有语义含义。因此，BT 更容易理解，而 FSM 中的状态转换在文本和图形表示中都难以理解</li>
-<li>BT 更具表现力</li>
-</ul>
-<h1 id="BT-nodes"><a href="#BT-nodes" class="headerlink" title="BT nodes"></a><strong>BT nodes</strong></h1><p>BT 由多个不同类型节点组成，每个节点的执行都会返回一个结果：</p>
-<ul>
-<li><strong>running</strong>：运行中</li>
-<li><strong>success</strong>：成功</li>
-<li><strong>failure</strong>：失败</li>
-</ul>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907160521358.png" class="" title="image-20240907160521358">
-
-<table>
-<thead>
-<tr>
-<th>节点类型</th>
-<th>子节点数量</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ControlNode</td>
-<td>1~N</td>
-<td>通常，根据其兄弟姐妹的结果或&#x2F;和自己的状态标记子进程</td>
-</tr>
-<tr>
-<td>DecoratorNode</td>
-<td>1</td>
-<td>除其他事项外，它可以改变其子的结果或多次勾选它</td>
-</tr>
-<tr>
-<td>ConditionNode</td>
-<td>0</td>
-<td>不应该改变系统。不得返回 RUNNING</td>
-</tr>
-<tr>
-<td>ActionNode</td>
-<td>0</td>
-<td>执行节点</td>
-</tr>
-</tbody></table>
-<p>BT 中，内部节点称为 <strong>control flow nodes</strong>，叶子节点称为 <strong>execution nodes</strong>。存在四类 control flow nodes（sequence、fallback、parallel 及 decorator）和两类 execution nodes（action 及 condition）</p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240905212924594.png" class="" title="image-20240905212924594">
-
-<p>来源：<a target="_blank" rel="noopener" href="https://docs.ros.org/en/noetic/api/behaviortree_cpp/html/classBT_1_1TreeNode.html">behaviortree_cpp_v4: BT::TreeNode Class Reference (ros.org)</a></p>
-<h2 id="control-flow-nodes"><a href="#control-flow-nodes" class="headerlink" title="control flow nodes"></a><strong>control flow nodes</strong></h2><ul>
-<li><p><strong>Fallback</strong> - 用于**查找并执行未失败的第一个子节点(若一个节点返回 FAILURE，则继续执行下一个节点)**。当其中一个子节点返回 success 或 running 时，Fallback节点将立即返回状态代码 success 或 running；若所有节点返回 FAILURE，则返回 FAILURE。 即：selector node</p>
-</li>
-<li><p><strong>Sequence</strong> - 从左往右依次执行所有节点，<strong>直到有节点返回 failure 或列表执行完</strong>。只有当所有节点都返回 success 时，才向父节点返回 success</p>
-</li>
-<li><p><strong>Parallel</strong> - 并行节点，包含N个节点，直到任意一个节点返回 fail，或者全部返回 success 为止。(并行节点可自定义退出条件，例如：当全部节点都返回成功时退出；当某个节点成功时退出；全部节点都返回成功&#x2F;失败时退出 等)</p>
-</li>
-<li><p><strong>Decorator</strong> - 装饰节点，与组合节点不同，<strong>装饰节点只能有一个子节点</strong>。装饰节点又可分为：</p>
-</li>
-<li><ul>
-<li><strong>inverter node</strong>：逆变节点，反置&#x2F;否定子节点的结果</li>
-<li><strong>succeeder node</strong>：不管其子节点向其返回的结果是什么，总是返回 success</li>
-<li><strong>repeater node</strong>：在子节点返回结果后继续执行其子节点</li>
-<li><strong>repeat until fail node</strong>：重复直至执行失败</li>
-</ul>
-</li>
-</ul>
-<h2 id="execution-nodes"><a href="#execution-nodes" class="headerlink" title="execution nodes"></a><strong>execution nodes</strong></h2><ul>
-<li><strong>Action</strong> - </li>
-<li><strong>Condition</strong> -</li>
-</ul>
-<p>执行节点是叶子节点。</p>
-<h2 id="其它节点"><a href="#其它节点" class="headerlink" title="其它节点"></a><strong>其它节点</strong></h2><ul>
-<li><strong>iterator node</strong>：与 sequence node 类似，不同的是：忽略 failure</li>
-<li><strong>random sequence node</strong>：</li>
-<li><strong>random selector node</strong>：</li>
-<li><strong>condition node</strong>：执行条件判断，返回判断结果</li>
-<li><strong>composite nodes</strong>：组合节点</li>
-</ul>
-<h1 id="节点描述符"><a href="#节点描述符" class="headerlink" title="节点描述符"></a><strong>节点描述符</strong></h1><p>各节点描述符：  </p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/nodes.png" class="" title="nodes">
-
-<p>Node with memory：允许设计者实现<strong>不重复执行的节点</strong>。节点符号加上 “*****” 即表示 Node with memory。  </p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/node_with_memory.png" class="" title="node_with_memory">
-
-<p>部分 BT 实现中，节点不包含 Running 状态，而是通过阻塞直到 action 直接结束，再返回 success 或 failure。这类 BT 实现是 <strong>no-reactive</strong> 的。no-reactive BT 可以看做是只包含 memory node 的 BT。</p>
-<h1 id="节点图形"><a href="#节点图形" class="headerlink" title="节点图形"></a><strong>节点图形</strong></h1><h2 id="选择器节点"><a href="#选择器节点" class="headerlink" title="选择器节点"></a><strong>选择器节点</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/selector_node.png" class="" title="selector_node">
-
-<h2 id="sequence-node"><a href="#sequence-node" class="headerlink" title="sequence node"></a><strong>sequence node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/sequence_node.png" class="" title="sequence_node">
-
-<h2 id="parallel-node"><a href="#parallel-node" class="headerlink" title="parallel node"></a><strong>parallel node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/parallel_node.png" class="" title="parallel_node">
-
-<h2 id="action-node"><a href="#action-node" class="headerlink" title="action node"></a><strong>action node</strong></h2><img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/action_node.png" class="" title="action_node">
-
-<p>该图包含一个 selector node、一个 sequence node、一个 condition node(黄色)、两个 action node。</p>
-<p>当 C1 返回 Success 是才会执行 A1; 只有当 C1 或 A1 返回 Failure 时，才会执行 A2。</p>
-<h1 id="BT-设计规则"><a href="#BT-设计规则" class="headerlink" title="BT 设计规则"></a><strong>BT 设计规则</strong></h1><h2 id="使用明确的-Success-Conditions-提升可读性"><a href="#使用明确的-Success-Conditions-提升可读性" class="headerlink" title="使用明确的 Success Conditions 提升可读性"></a><strong>使用明确的 Success Conditions 提升可读性</strong></h2><p>BT 的一个优势是可以用图形来表示树的切换结构。但是，actions 节点何时返回 Success 和 Failure 的详细信息并未显示在图形中。</p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907173345832.png" class="" title="image-20240907173345832">
-
-<p>该 BT 树中，执行 Unlock Door 时，如果门已经是关着的了，那此时 Unlock Door 操作的返回值取决于内部的具体实现，从 BT 图上是无法看出的。此时可按如下进行修改：</p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/image-20240907173345834.png" class="" title="image-20240907173345834">
-
-<p>相比原来的 BT 图，增加了明确的 success conditions。这些条件通过 Fallback 下成对出现的节点表示。此时，若门是锁着的，则 Door Unlocked 直接返回 Success，该 action(Unlock Door) 对应的 Fallback 返回 Success。</p>
-<h2 id="使用-Implicit-Sequence-提升-reactiving"><a href="#使用-Implicit-Sequence-提升-reactiving" class="headerlink" title="使用 Implicit Sequence 提升 reactiving"></a><strong>使用 Implicit Sequence 提升 reactiving</strong></h2><p>假设人通过之后，门关闭了，则此时， BT 会再次 Unlock Door、Open Door，再到 Agent Has Passed 条件判断处返回 Success。此时可按如下进一步优化：</p>
-<img src="/2024/09/05/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/behavior_tree/implicit_sequence.png" class="" title="implicit_sequence">
-
-<p>此例中，提高 reactiving 所需的关键观察是要意识到目标通过门，其它所有 action 都只是为了达成该目标。</p>
-<p>在需要撤销自身的某些 action 时，implicit sequence 的使用尤为重要。创建 implicit sequence 的系统方法是使用反向链接。</p>
-<h2 id="使用-Decision-Tree-结构处理不同场景"><a href="#使用-Decision-Tree-结构处理不同场景" class="headerlink" title="使用 Decision Tree 结构处理不同场景"></a><strong>使用 Decision Tree 结构处理不同场景</strong></h2><h2 id="使用-sequence-提高安全性"><a href="#使用-sequence-提高安全性" class="headerlink" title="使用 sequence 提高安全性"></a><strong>使用 sequence 提高安全性</strong></h2><h2 id="使用反向链接-Backchaining-创建-Deliberative-BT"><a href="#使用反向链接-Backchaining-创建-Deliberative-BT" class="headerlink" title="使用反向链接(Backchaining)创建 Deliberative BT"></a><strong>使用反向链接(Backchaining)创建 Deliberative BT</strong></h2><h2 id="使用-memory-node-创建-un-reactive-BT"><a href="#使用-memory-node-创建-un-reactive-BT" class="headerlink" title="使用 memory node 创建 un-reactive BT"></a><strong>使用 memory node 创建 un-reactive BT</strong></h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2160,14 +2076,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">607k</span>
+    <span title="站点总字数">609k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">18:24</span>
+    <span title="站点阅读时长">18:27</span>
   </span>
 </div>
 <div class="busuanzi-count">

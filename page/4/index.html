@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-count">140</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,106 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/%E8%B0%83%E8%AF%95%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/%E8%B0%83%E8%AF%95%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">调试说明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1、不闭合"><a href="#1、不闭合" class="headerlink" title="1、不闭合"></a>1、不闭合</h2><p>若闭合点很难完全闭合，可尝试调整costraint_builder.min_score评分值。SPARSE_POSE_GRAPH.constraint_builder.min_score<br>该值越小越容易闭合,即要求精度变低。  </p>
+<h2 id="2、IMU"><a href="#2、IMU" class="headerlink" title="2、IMU"></a>2、IMU</h2><p>建议IMU的角速度和线加速度都要发布。并根据IMU数据的准确性调整IMU的估计位姿的方差（方差越大则越不信任该数据）。也可调整IMU的相关权重：（trajectory_builder_2d.lua文件中）<br>orientation_model_variance  角速度权重<br>position_model_variance<br>velocity_model_variance  线加速度权重<br>（因此，<strong>IMU主题数据中的方差信息填不填写没影响</strong>）</p>
+<h2 id="3、odom数据方差"><a href="#3、odom数据方差" class="headerlink" title="3、odom数据方差"></a>3、odom数据方差</h2><p><strong>cartographer中odom的方差并不是从&#x2F;odom主题中读取，而是从配置文件的constant_odometry_translational_variance和constant_odometry_rotational_variance参数获取，因此&#x2F;odom中的方差信息填不填写不影响</strong>:(astra_camera_2d.lua文件中)  </p>
+<p>（走廊长度变长或变短时需要增加里程计的权重；平行环境变成交叉的，多半是数据角度问题，此时应该提高IMU的权重，减少配置文件中其方差值）  </p>
+<h2 id="4、num-laser-fans参数"><a href="#4、num-laser-fans参数" class="headerlink" title="4、num_laser_fans参数"></a>4、num_laser_fans参数</h2><p>影响全局匹配和局部匹配的权衡。越小说明传感器累计误差比较大，要更注重全局匹配。  </p>
+<h2 id="5、地图提前闭合问题"><a href="#5、地图提前闭合问题" class="headerlink" title="5、地图提前闭合问题"></a>5、地图提前闭合问题</h2><p>建图时离应该闭合的时候还有距离就闭合了。是因为环境相似，此时可继续再往前走，由于它提前闭环，前面肯定会出现不能闭环的情况，这时候就会自己发现闭环错误，从而修正了。<br>三种解决方法：<br>①、继续往前走，走到下一个特征明显的地方，等待重新闭环<br>②、增大里程计权重(前提是里程计准确)，修改odom中的方差值（协方差值若全写0，则表示odom完全没误差）<br>③、减小cartographer里面的配置文件astra_camera_2d.lua里面的huber_scale(该参数为激光匹配的权重(即闭环权重))<br>注意：减少闭环权重会使得闭环变慢。  </p>
+<p>里程计还要融合其它数据之后得出的数据(如：IMU等)才是真正跟激光对比的数据。若将里程计的方差都写0，则表示里程计完全没误差，建图时理论上就会忽略里程计之外的其他数据。（但是单个数据的方差为零，不能使得融合出来的数据方差为零）  </p>
+<h2 id="6、SPARSE-PISE-GRAPH-optimize-every-n-scans"><a href="#6、SPARSE-PISE-GRAPH-optimize-every-n-scans" class="headerlink" title="6、SPARSE_PISE_GRAPH.optimize_every_n_scans"></a>6、SPARSE_PISE_GRAPH.optimize_every_n_scans</h2><p>指定每多少帧闭环一次，增大该值会减少闭环次数。减少闭环压力，不用过于频繁的匹配，传感器的误差不会瞬间增大的很快。<br>（30改为75）  </p>
+<h2 id="7、real-time-correlative-scan-matcher中的rotation-delta-cost-weight"><a href="#7、real-time-correlative-scan-matcher中的rotation-delta-cost-weight" class="headerlink" title="7、real_time_correlative_scan_matcher中的rotation_delta_cost_weight"></a>7、real_time_correlative_scan_matcher中的rotation_delta_cost_weight</h2><p>（1e-1改为2e-1）<br>提高局部闭环的时候对odom的角度置信度，局部闭环的时候odom还是挺准的，也是为了解决当时工厂的错误闭环，但要说到减少闭环压力的话，主要还是30改为75，不用过于频繁的匹配，传感器的误差不会瞬间增大得很快  </p>
+<h2 id="8、ceres-scan-matching-初值"><a href="#8、ceres-scan-matching-初值" class="headerlink" title="8、ceres scan matching 初值"></a>8、ceres scan matching 初值</h2><p>好的初始 pose 对 ceres scan matching 求解有很大的影响。 因此，可用 IMU 来提供 pose 初值的旋转量。 在没有 IMU 时，可通过提高 scan match 频率或匹配精度来进行优化。  </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1392,98 +1492,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/" class="post-title-link" itemprop="url">Real-Time Correlative Scan Matching</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>108</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>介绍了三种几率概率网格的 2D scan matching 算法：Brute Force、Computing 2D Slices、Multi-Level Resolution。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mafuqiang/p/10885616.html">cartographer 3D scan matching 理解</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1508,14 +1516,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">607k</span>
+    <span title="站点总字数">609k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">18:24</span>
+    <span title="站点阅读时长">18:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
