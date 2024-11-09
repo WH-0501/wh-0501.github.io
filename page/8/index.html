@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">159</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/TF/tf/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,7 +199,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/TF/tf/" class="post-title-link" itemprop="url">tf</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/Real-Time%20Correlative%20Scan%20Matching/" class="post-title-link" itemprop="url">Real-Time Correlative Scan Matching</a>
         </h2>
 
         <div class="post-meta-container">
@@ -227,7 +227,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>134</span>
+      <span>108</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="tf-vs-tf2"><a href="#tf-vs-tf2" class="headerlink" title="tf vs tf2"></a>tf vs tf2</h2><p>tf2是tf的新实现，具有更好的抽象和依赖隔离。 有关概述，请参阅Wiki页面：tf2新版本的设计记录在tf2 &#x2F; Design页面上。  </p>
-<p>tf2仍然是实验性的，在geometry_experimental堆栈中，仍然建议使用tf包，直到 tf2 正式发布。</p>
+          <p>介绍了三种几率概率网格的 2D scan matching 算法：Brute Force、Computing 2D Slices、Multi-Level Resolution。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mafuqiang/p/10885616.html">cartographer 3D scan matching 理解</a></p>
 
       
     </div>
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/ROS/%E5%8F%82%E6%95%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20Pose%20extrapolator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -291,7 +291,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/ROS/%E5%8F%82%E6%95%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">参数服务器</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20Pose%20extrapolator/" class="post-title-link" itemprop="url">cartographer - Pose extrapolator</a>
         </h2>
 
         <div class="post-meta-container">
@@ -319,14 +319,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.5k</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -337,31 +337,372 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="Parameter-Server"><a href="#Parameter-Server" class="headerlink" title="Parameter Server"></a>Parameter Server</h2><p><strong>参数服务器是一个可通过网络 APIs 进行访问的共享的、多元的目录</strong>。节点运行时使用该服务器来存储和取回参数。因为没有将该服务器设置为高性能，因此最好用于静态、非二进制文件，例如配置参数。这意味着参数是全局可见的，因此使用工具可以轻易的检查系统的配置状态和修改配置。  </p>
-<p>参数服务器使用 XML RPC 实现，运行在 ROS master 中。因此，其 APIs 可通过普通的 XML RPC 库进行访问。  </p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>参数命名遵循通用的 <a href="./%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4.md">ROS 命名规则</a>。意味着 ROS 参数有一个与之匹配的名称空间的。例如:  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/camera/left/name: leftcamera</span><br><span class="line">/camera/left/exposure: 1</span><br><span class="line">/camera/right/name: rightcamera</span><br><span class="line">/camera/right/exposure: 1.1</span><br><span class="line">```  </span><br><span class="line">`/camera/left/name` 参数值为 leftcamera。也可以获取 /camera/left 参数的值，其值为该dictionary：  </span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">  name: leftcamera</span>  </span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">  exposure: 1</span>   </span><br><span class="line"></span><br><span class="line">&lt;p&gt;</span><br><span class="line"></span><br><span class="line">获取 /camera 的值，其值为一个表示参数树的 dictionary：  </span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">left: &#123; name: leftcamera, exposure: 1 &#125;</span>  </span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">right: &#123; name: rightcamera, exposure: 1.1 &#125;</span>  </span><br><span class="line">&lt;p&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 参数类型</span></span>  </span><br><span class="line">参数服务器使用XML RPC数据类型最为参数值，包括:  </span><br><span class="line">- 32-bit integers</span><br><span class="line">- booleans</span><br><span class="line">- strings</span><br><span class="line">- doubles</span><br><span class="line">- iso8601 dates</span><br><span class="line">- lists</span><br><span class="line">- base64-encoded binary data  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 私有参数</span></span>  </span><br><span class="line">ROS 命名规则中满足 `~name` 命名方式的名字即为私有名字。这些私有名字主要用于指定给某个单一节点的参数。`~` 前缀假设节点名为一个半私有的命名空间---仍然可以从其他部分进行访问，但通常被保护起来以避免意外的名字冲突。</span><br><span class="line">可以在命令行使用重映射参数，并改变 `~` 为一个下划线 `_` 来指定节点参数。例如:  </span><br></pre></td></tr></table></figure>
-<p>$ rosrun rospy_tutorials talker _param:&#x3D;1.0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## roscpp API</span><br><span class="line">roscpp 中提供了两套 param API：  </span><br><span class="line">- `ros::param` namespace 中的 API</span><br><span class="line">- `ros::NodeHandle` 中的 API  </span><br><span class="line"></span><br><span class="line">### ros::param API  </span><br><span class="line">示例：  </span><br><span class="line">```c++</span><br><span class="line">...</span><br><span class="line">ros::init(argc, argv, &quot;demo&quot;);</span><br><span class="line">ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">// 获取及设置参数</span><br><span class="line">bool status = ros::param::get(&quot;param1&quot;, param1);</span><br><span class="line">ros::param::set(&quot;param2&quot;, 4);</span><br><span class="line">// ros::param::getCached(); // 缓存的参数</span><br><span class="line"></span><br><span class="line">// 检查参数</span><br><span class="line">if (ros::param::has(&quot;param3&quot;)) &#123;</span><br><span class="line">  // param3 exists</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 删除参数</span><br><span class="line">bool status = ros::param::del(&quot;param4&quot;);</span><br><span class="line"></span><br><span class="line">// 获取所有参数名</span><br><span class="line">std::vector&lt;std::string&gt; param_names;</span><br><span class="line">ros::param::search(param_names);</span><br><span class="line"></span><br><span class="line">// 访问私有参数</span><br><span class="line">ros::param::get(&quot;~private_param_name&quot;, param5);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+          <p>PoseExtrapolator 类：将 pose 保持一定时间以估计线速度和角速度。使用速度来推断运动。 如果有IMU&#x2F;Odometry，则使用IMU和&#x2F;或odometry数据来改进该推断(extrapolation)。  </p>
+<p>(旧版本cartographer使用UKF来进行数据融合来估计位姿)  </p>
+<p>如果没有 imu，则在第一帧 scan 数据处理时初始化 extrapolator，若有 imu，则在每帧 imu 数据处理时都调用 InitializeExtrapolator，但因为该接口中对 extrapolator_ 进行判断，因此不会每次都重新初始化 extrapolator。 若使用 scan + odometery 建图，也只在第一帧 scan 处理时初始化 extrapolator，在处理 odom 数据时，只是将该数据添加到 extrapolator 中。  </p>
+<p><strong>timed_pose_queue_</strong>: 缓存经过匹配校准后的位姿点。该队列不会一直缓存，会删除间隔超过 pose_queue_duration_ 的点<br><strong>cached_extrapolated_pose_</strong>: 缓存根据 odom&#x2F;imu&#x2F;历史位姿点(timed_pose_queue_) 推断出的位姿。该队列不会清除   </p>
+<p>odometry_imu_tracker_、extrapolation_imu_tracker_: 都指向 imu_tracker_    </p>
+<p>ImuTracker:使用来自IMU的角速度和线加速度来跟踪方向。 因为平均线性加速度（假设慢速运动）是重力的直接测量，所以滚动&#x2F;俯仰虽然会导致yaw角偏离，但不会出现漂移。  </p>
+<p><strong>AddPose：</strong><br>AddPose 只在累积 <code>num_accumulated_range_data</code> 帧 scan 数据，进行匹配得到校准后的位姿后才会执行。将校准后的位姿存入 <code>timed_pose_queue_</code> 缓存中：   </p>
+<ul>
+<li>若 <code>imu_tracker_</code> 为空, 则创建并初始化 </li>
+<li>将匹配校准或的位姿点存入 timed_pose_queue_ 缓存中</li>
+<li>删除 timed_pose_queue_ 中距当前时间超过 <code>kExtrapolationEstimationTimeSec</code>(0.001s) 的点(前提是当前缓存中点数&gt;2,确保删除后还有至少两个点)  </li>
+<li>根据 timed_pose_queue_ 中的 pose 点及点之间的时间间隔计算线速度和角速度  </li>
+<li>更新 imu_tracker_ - AdvanceImuTracker  </li>
+<li>TrimImuData() - 删除 imu_data_ 中的无用数据(过期数据)</li>
+<li>TrimOdometryData() - 删除 odometry_data_ 中的无用数据</li>
+<li>构建 odometry_imu_tracker_ 及 extrapolation_imu_tracker_ 指针(每次执行 AddPose 都会重新 make_unique 构建)</li>
+</ul>
+<p><strong>ExtrapolatePose：推算位姿</strong>  </p>
+<ul>
+<li>调用 <code>ExtrapolateTranslation</code> 方法计算偏移量  <ul>
+<li>若有里程计数据，则根据从里程计数据得到的线速度 <code>linear_velocity_from_odometry_</code> 及时间间隔 来计算偏移量  </li>
+<li>若没有里程计数据，则根据从缓存的两点计算得到的线速度 <code>linear_velocity_from_poses_</code> 及时间间隔 来计算偏移量</li>
+</ul>
+</li>
+</ul>
+<p>计算得到的偏移量 + 上一点的位置信息，得到预估的点的坐标信息    </p>
+<ul>
+<li>调用 <code>ExtrapolateRotation</code> 方法计算旋转量(即:偏转角度)  <ul>
+<li>调用 <code>AdvanceImuTracker</code>  </li>
+<li>根据 imu_tracker 获取上次的方向 <code>imu_tracker_-&gt;orientation()</code> </li>
+<li>计算偏转角 <code>last_orientation.inverse() * imu_tracker-&gt;orientation()</code></li>
+</ul>
+</li>
+</ul>
+<p>根据计算得到的偏转角及上一次时机器人的方位，得到预估的点的方位信息    </p>
+<ul>
+<li>将预估的位姿点存入 <code>cached_extrapolated_pose_</code> 中</li>
+</ul>
+<p><strong>AdvanceImuTracker：</strong>  </p>
+<ul>
+<li>若IMU为空，或IMU时间戳异常，若有 odom 数据，则使用从 odom 得到的角速度 <code>angular_velocity_from_odometry_</code> 来更新位姿，若没有 odom ，则根据缓存的历史位姿点计算得到的角速度 <code>angular_velocity_from_poses_</code> 来更新方向。<br><strong>注意：<code>angular_velocity_from_odometry_</code>并不是直接取 odom 主题中的角速度，而是根据 <code>odometry_data_</code> 队列中首尾元素之间的变换矩阵中的 <code>rotation/dt</code> 得到</strong>       </li>
+<li>有可用的IMU数据, 则根据 IMU 数据中的 <code>linear_acceleration</code> 及 <code>angular_velocity</code> 来更新方向   <ul>
+<li><code>AddImuLinearAccelerationObservation</code>: 线加速度用于更新 gravity_vector_, 然后使用 gravity_vector_ 来更新姿态</li>
+<li></li>
+<li><code>AddImuAngularVelocityObservation</code></li>
+</ul>
+</li>
+</ul>
 
-<h3 id="ros-NodeHandle"><a href="#ros-NodeHandle" class="headerlink" title="ros::NodeHandle"></a>ros::NodeHandle</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo&quot;</span>);</span><br><span class="line">ros::NodeHandle nh;</span><br><span class="line"><span class="function">ros::NodeHandle <span class="title">priv_nh</span><span class="params">(<span class="string">&quot;~&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取参数</span></span><br><span class="line"><span class="type">bool</span> status = nh.<span class="built_in">getParam</span>(<span class="string">&quot;param1&quot;</span>, param1);</span><br><span class="line">nh.<span class="built_in">param</span>&lt;std:string&gt;(<span class="string">&quot;param2&quot;</span>, param2, <span class="string">&quot;test&quot;</span>); <span class="comment">// 允许指定默认值</span></span><br><span class="line"><span class="comment">// nh.getParamCached(); // 缓存的参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置参数</span></span><br><span class="line">nh.<span class="built_in">setParam</span>(<span class="string">&quot;param3&quot;</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查参数  </span></span><br><span class="line"><span class="keyword">if</span> (nh.<span class="built_in">hasParam</span>(<span class="string">&quot;param4&quot;</span>)) &#123;</span><br><span class="line">  <span class="comment">// param exist</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 搜索参数. 假设参数服务器有 /a/b 参数，</span></span><br><span class="line"><span class="comment"> * 若 NodeHandle 在 /a/c 空间，则搜索 b 将会得到 /a/b；</span></span><br><span class="line"><span class="comment"> * 若增加 /a/c/b 参数，再搜索 b 将会得到 /a/c/b</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="keyword">if</span> (nh.<span class="built_in">searchParam</span>(<span class="string">&quot;b&quot;</span>, param_name)) &#123;</span><br><span class="line">  <span class="comment">// found param</span></span><br><span class="line">  nh.<span class="built_in">getParam</span>(param_name, param6);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除参数</span></span><br><span class="line"><span class="keyword">if</span> (nh.<span class="built_in">deleteParam</span>(<span class="string">&quot;param3&quot;</span>)) &#123;</span><br><span class="line">  <span class="comment">// param deleted</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取所有参数名</span></span><br><span class="line">std::vector&lt;std::string&gt; param_names;</span><br><span class="line">nh.<span class="built_in">getParamNames</span>(param_names);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问私有参数</span></span><br><span class="line">priv_nh.<span class="built_in">getParam</span>(<span class="string">&quot;private_param_name&quot;</span>, param7); <span class="comment">// 注意：函数中不能使用 ~</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<h3 id="launch-中加载参数"><a href="#launch-中加载参数" class="headerlink" title="launch 中加载参数"></a>launch 中加载参数</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span>&gt;</span></span><br><span class="line">    param2: 2</span><br><span class="line">    param3: 3</span><br><span class="line">  <span class="tag">&lt;/<span class="name">rosparam</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo&quot;</span>);</span><br><span class="line">  <span class="type">int</span> g_serial_number = <span class="number">-1</span>;</span><br><span class="line">  <span class="type">int</span> l_serial_number = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">  ros::NodeHandle nh_global;</span><br><span class="line">  <span class="function">ros::NodeHandle <span class="title">nh_local</span><span class="params">(<span class="string">&quot;~&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Global nh ns: %s&quot;</span>, nh_global.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Local nh ns: %s&quot;</span>, nh_local.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">  <span class="comment">// global namespace</span></span><br><span class="line">  nh_global.<span class="built_in">getParam</span>(<span class="string">&quot;serial&quot;</span>, g_serial_number);    </span><br><span class="line">  nh_global.<span class="built_in">getParam</span>(<span class="string">&quot;demo/serial&quot;</span>, l_serial_number);</span><br><span class="line">  <span class="comment">// 注意：NodeHandle 类方法不支持 ~</span></span><br><span class="line">  <span class="comment">// nh_global.getParam(&quot;~serial&quot;, g_serial_number); // 报错</span></span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;#1 Global param: %d, Local param: %d&quot;</span>, g_serial_number, l_serial_number);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// local namespace</span></span><br><span class="line">  nh_local.<span class="built_in">getParam</span>(<span class="string">&quot;serial&quot;</span>, l_serial_number); </span><br><span class="line">  nh_local.<span class="built_in">getParam</span>(<span class="string">&quot;/serial&quot;</span>, g_serial_number); </span><br><span class="line">  <span class="built_in">ROS_INFO</span>(<span class="string">&quot;#2 Global param: %d, Local param: %d&quot;</span>, g_serial_number, l_serial_number);</span><br><span class="line"></span><br><span class="line">  ros::<span class="built_in">spin</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">Launch 文件内容为：</span><br><span class="line">```xml</span><br><span class="line">&lt;launch&gt;</span><br><span class="line">  &lt;!-- global serial --&gt;</span><br><span class="line">  &lt;param name=<span class="string">&quot;serial&quot;</span> value=<span class="string">&quot;5&quot;</span> /&gt;</span><br><span class="line">  &lt;!--&lt;node name=<span class="string">&quot;demo&quot;</span> pkg=<span class="string">&quot;param_test&quot;</span> type=<span class="string">&quot;param_test_node&quot;</span> output=<span class="string">&quot;screen&quot;</span>&gt;--&gt;</span><br><span class="line">  &lt;node name=<span class="string">&quot;demo&quot;</span> pkg=<span class="string">&quot;param_test&quot;</span> type=<span class="string">&quot;param_test_node&quot;</span> output=<span class="string">&quot;screen&quot;</span> ns=<span class="string">&quot;ns1&quot;</span>&gt;</span><br><span class="line">    &lt;!-- local serial --&gt;</span><br><span class="line">    &lt;param name=<span class="string">&quot;serial&quot;</span> value=<span class="string">&quot;10&quot;</span> /&gt;</span><br><span class="line">  &lt;/node&gt;</span><br><span class="line">&lt;/launch&gt;</span><br><span class="line">```  </span><br><span class="line">- 若不设置 `ns=<span class="string">&quot;ns1&quot;</span>` 属性，`nh_global` 及 `nh_local` 均能正常读取局部和全局参数</span><br><span class="line">- 若设置 `ns=<span class="string">&quot;ns1&quot;</span>` 属性，则 `nh_global` 无法读取全局参数（需将其修改为 `&lt;arg name=<span class="string">&quot;ns1/serial&quot;</span> value=<span class="string">&quot;5&quot;</span>&gt;`），但能读取局部参数，`nh_local` 能正常读取局部和全局参数</span><br><span class="line">- 若将 `name` 属性修改为其它值，则 `nh_global` 将无法读取局部参数  </span><br><span class="line">- 添加命名空间除了使用 `ns` 属性，还可使用 `&lt;group&gt;`, 例如：  </span><br><span class="line">```xml</span><br><span class="line">&lt;launch&gt;</span><br><span class="line">  &lt;group ns=<span class="string">&quot;ns1&quot;</span>&gt;</span><br><span class="line">    &lt;!-- global serial --&gt;</span><br><span class="line">    &lt;param name=<span class="string">&quot;serial&quot;</span> value=<span class="string">&quot;5&quot;</span> /&gt;</span><br><span class="line">    &lt;node name=<span class="string">&quot;demo&quot;</span> pkg=<span class="string">&quot;parameter_demo&quot;</span> type=<span class="string">&quot;test_node&quot;</span> output=<span class="string">&quot;screen&quot;</span>&gt;</span><br><span class="line">      &lt;!-- local serial --&gt;</span><br><span class="line">      &lt;param name=<span class="string">&quot;serial&quot;</span> value=<span class="string">&quot;10&quot;</span> /&gt;</span><br><span class="line">    &lt;/node&gt;</span><br><span class="line">  &lt;/group&gt;</span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
-<p>此时均能正常读取参数。对应参数为：  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/ns1/demo/serial</span><br><span class="line">/ns1/serial</span><br></pre></td></tr></table></figure>
-
-<p> 
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;ns1&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- global serial --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;serial&quot;</span> <span class="attr">value</span>=<span class="string">&quot;5&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;param_test&quot;</span> <span class="attr">type</span>=<span class="string">&quot;param_test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;ns2&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- local serial --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;serial&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line">```  </span><br><span class="line">对应参数为：  </span><br></pre></td></tr></table></figure>
-<p>&#x2F;ns1&#x2F;ns2&#x2F;demo&#x2F;serial<br>&#x2F;ns1&#x2F;serial</p>
-<pre><code>&gt; ---
-&gt; - 注意：此时，`nh_global` 命名空间为 `/ns1/ns2` 其读取参数分别为 `/ns1/ns2/serial` 及 `/ns1/ns2/demo/serial`，因此能读取到局部参数（注意 `name` 属性值需保持一致），但无法读取全局参数；而 `nh_local` 命名命名空间为 `/ns1/ns2/demo`，同样只能读取局部参数，无法读取全局参数。需将全局参数修改为 `&lt;arg name=&quot;ns2/serial&quot; value=&quot;5&quot;&gt;`
-&gt; ---  
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
 
 
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">cartographer - 全局优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>trajectory 状态：ACTIVE, FINISHED, FROZEN, DELETED。  </p>
+<p>FastCorrelativeScanMatcher2D (Real-Time Correlative Scan Matching) 构建 node 和 submap 之间的约束。<br>FastCorrelativeScanMatcher3D (BBS算法)。  </p>
+<h2 id="Closing-Loops"><a href="#Closing-Loops" class="headerlink" title="Closing Loops"></a>Closing Loops</h2><p>通过 Sparse Pose Adjustment(SPA) 算法优化所有 scan 和 submap 的位姿，来实现全局优化。  </p>
+<p>LocalTrajectorBuilder 中，构建了一个个 submap，也记录了每帧 scan 插入到 submap 中的 pose。 由于传感器测量值存在误差，虽然在局部范围内(即 submap 中)误差影响不大，但由于建图是一个增量式的过程，第 n 个 pose 的预估值依赖于前面 n-1 个 pose 的估计值，因而，会导致误差的累积。因此需要 loop closure 来消除这种误差累积。  </p>
+<p>一旦局部 scan-to-submap 成功，就将该 scan 的 pose 作为节点添加到优化问题中。   </p>
+<h3 id="optimization-problem"><a href="#optimization-problem" class="headerlink" title="optimization problem"></a>optimization problem</h3><p>与 scan matching 一样，回环优化也被公式化为<strong>非线性最小二乘问题</strong>(nonlinear least squares problem)，每隔几秒钟，就会使用 Ceres 来计算结果：<br><img src="/../images/spa.png" alt="SPA"></p>
+<p><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^m = \left\{ \xi^m_i\right\}_{i=1,\cdots,m}" style="border:none;"> 所有 submap 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^s = \left\{ \xi^s_j\right\}_{j=1,\cdots,n}" style="border:none;"> 所有 scan 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 第 i 个 submap 相对于世界坐标系的位姿，上表 m 表示 submap<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;"> 第 j 帧 scan 相对于世界坐标系的位姿，上表 s 表示 scan<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi_{i,j}" style="border:none;"> 第 j 帧 scan 插入第 i 个 submap 的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Sigma_{i,j}" style="border:none;"> 协方差矩阵。表示 第 j 帧 scan 插入第 i 个 submap 的质量，即 scan matching 的评分。<br>约束残差 E 的计算方式：<br><img src="/../images/residual-E.png" alt="residual-E"><br>其中 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\rho" style="border:none;"> 为 loss function (目前使用的是 Huber loss)，用于减少当扫描匹配为优化问题添加不正确约束时可能出现在（SPA）中的异常值的影响(即:<strong>减少异常值outliers对优化结果的影响</strong>)。 例如：诸如办公室隔间等局部对称的环境。 异常值的可选方法参考：&gt; Robust map optimization using dynamic covariance scaling<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i}" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^s_j}" style="border:none;"> 分别表示 submap 和 scan 位姿中的 translation 部分。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i} - t_{\xi^s_j}" style="border:none;"> 则表示了 scan 在 submap 中的相对位姿在世界坐标系下的表示。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R_{\xi^m_i}" style="border:none;"> 表示 submap 在全局坐标系下的位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i}" style="border:none;"> 逆矩阵，表示 submap 局部坐标系到全局坐标系之间的变换关系<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i} \left( t_{\xi^m_i} - t_{\xi^s_j} \right)" style="border:none;"> 表示 scan 在 submap 中的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_{i;\theta}" style="border:none;"> 表示 scan 的姿态<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_{j;\theta}" style="border:none;"> 表示 submap 的姿态  </p>
+<p>全局优化（loop closure）的目的就是优化 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;">，使误差值尽可能的小。   </p>
+<p>每次局部匹配成功，则该时刻的位姿点都会作为一个节点。  </p>
+<p>约束分为全局约束和局部约束。  </p>
+<p>intra constraints<br>intra residuals<br>inter constraints, same trajectory<br>inter residuals, same trajectory<br>inter constraints, different trajectory (无)<br>inter residuals, different trajectory (无)  </p>
+<p>1、scan 数据<br>订阅激光数据 <code>Node::HandleLaserScanMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理激光数据。    </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddRangeData</code> 局部 scan-to-submap 匹配,将scan数据插入 submap，并返回局部匹配结果 matching_result<br> -&gt; 调用 <code>pose_graph_-&gt;AddNode</code> 根据局部匹配结果，添加节点及约束<br> -&gt; 调用 <code>local_slam_result_callback_</code> 即 <code>MapBuilderServer::OnLocalSlamResult</code> 更新日志  </p>
+<p>2、IMU 数据<br>订阅激光数据 <code>Node::HandleImuMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddImuData</code><br> -&gt; <code>pose_graph_-&gt;AddImuData</code></p>
+<p>3、Odometry 数据<br>订阅激光数据 <code>Node::HandleOdometryMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddOdometryData</code><br> -&gt; <code>pose_graph_-&gt;AddOdometryData</code></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/" class="post-title-link" itemprop="url">cartographer - RangeDataCollator</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>135</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>该类同步来自不同传感器的 TimedPointCloudData 数据。 每个传感器最多只缓存一帧数据，因此会引入最慢传感器的周期延迟(即:以最慢的传感器的周期来进行同步，因此对发布速率快的传感器会存在数据丢失或延迟处理的问题)，可以通过来 subdivisions 减轻该延迟。  </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/" class="post-title-link" itemprop="url">cartographer - assets writer</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>SLAM的目的是通过一个度量空间来计算单个传感器的轨迹。在更高的层面上，SLAM的输入是传感器的数据，输出的是对轨迹到目前为止的最佳估计。为了实时和高效，Cartographer 将大部分传感器数据立即扔掉。  </p>
+<p>轨迹单独没有什么作用，但是一旦估计出了最佳轨迹，就可以用全部的传感器数据来推导和显示周围环境的信息。  </p>
+<p>Cartographer提供assets writer来完成该功能。 assets writer 的输入内容：  </p>
+<ul>
+<li>原始传感器数据(例如：bag文件)  </li>
+<li>使用原始传感器数据执行 SLAM 得到的 pbstream 文件  </li>
+<li>传感器外部参数(例如：来自bag包或urdf模型的tf数据)  </li>
+<li>配置文件，.lua 文件</li>
+</ul>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>1）、生成 pbstream 文件<br><code>roslaunch cartographer_ros offline_backpack_3d.launch bag_filenames:=$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag</code><br>该指令会加载 cartographer_offline_node 节点。 该指令运行结束之后，会生成 b3-2016-04-05-14-14-00.bag.pbstream 文件。    </p>
+<p>当运行为 online node 时，cartographer 并不知道 bag 什么时候结束，因此需要主动调用如下服务来显式的完成当前轨迹，并使 cartographer 序列化其当前状态：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Finish the first trajectory. No further data will be accepted on it.</span><br><span class="line">rosservice call /finish_trajectory 0</span><br><span class="line"></span><br><span class="line"># Ask Cartographer to serialize its current state.</span><br><span class="line"># (press tab to quickly expand the parameter syntax)</span><br><span class="line">rosservice call /write_state &quot;&#123;filename: &#x27;$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag.pbstream&#x27;, include_unfinished_submaps: &#x27;true&#x27;&#125;&quot;  </span><br><span class="line">```   </span><br><span class="line">（注意：若不指定路径，默认写入 $&#123;HOME&#125;.ros 目录下）  </span><br><span class="line">![assets_writer](../images/assets_writer_path.png)</span><br><span class="line"></span><br><span class="line">2）、调用 assets writer 生成地图  </span><br></pre></td></tr></table></figure>
+<p>roslaunch cartographer_ros assets_writer_backpack_3d.launch <br>   bag_filenames:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag <br>   pose_graph_filename:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag.pbstream</p>
+<pre><code>可通过 `--output_file_prefix` 来指定输出文件前缀，若不指定，则默认为第一个 bag 包的名字。 例如：若指定 `--output_file_prefix=point.ply`，则此例中输出文件名为：`$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag_points.ply`  
+  
+### 配置  
+Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [PointsBatchs](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/points_batch.h) 组成。数据从第一个处理器流向下一个处理器，每个处理器都有机会在传递之前修改PointsBatch（点流）。  
+
+例如：assets_writer_backpack_3d.lua 使用 min_max_range_filter 来过滤离传感器太近或太远的点。然后，写 X-Rays，再根据传感器坐标系ID重新着色这个 PointBatch，并使用这些新的颜色来写另一组 X-Rays。  
+  
+所有的 PointsProcessor 都在 [cartographer/io](https://github.com/googlecartographer/cartographer/tree/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io) 子目录下，并记录在他们各自的头文件中。
+
+### 点云数据第一人称视角可视化  
+一般情况下，通过点生成 fly 需要两个步骤：  
+    ①、将想要显示的点写入 PLY 文件  
+    ②、使用[point_cloud_viewer](https://github.com/googlecartographer/point_cloud_viewer)  
+
+第一步通常通过使用 [IntensityToColorPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/intensity_to_color_points_processor.cc) 将点设置为非白色的颜色，然后使用 [PlyWritingPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/ply_writing_points_processor.h) 将这些点写入 PLY中。例如：assets_writer_backpack_2d.lua。  
+
+一旦有了PLY文件，按照 point_cloud_viewer 的README文档来生成一个存储在磁盘上的 octree 数据。  
 </code></pre>
 
       
@@ -389,7 +730,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/ROS/Publisher%E5%8F%8ASubscribe/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20LocalTrajectoryBuilder2D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -407,7 +748,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/ROS/Publisher%E5%8F%8ASubscribe/" class="post-title-link" itemprop="url">Publisher及Subscribe</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20LocalTrajectoryBuilder2D/" class="post-title-link" itemprop="url">cartographer - LocalTrajectoryBuilder2D</a>
         </h2>
 
         <div class="post-meta-container">
@@ -426,1139 +767,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>507</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ros::Publisher<br>可自定义有订阅者连接&#x2F;断开时的通知函数  </p>
-<pre><code class="C++">template&lt;class M &gt; Publisher advertise (const std::string &amp;topic, uint32_t queue_size, const SubscriberStatusCallback &amp;connect_cb, const SubscriberStatusCallback &amp;disconnect_cb=SubscriberStatusCallback(), const VoidConstPtr &amp;tracked_object=VoidConstPtr(), bool latch=false)
-</code></pre>
-<p>例如：（python为例）<br><code>rospy_tutorials/004_listener_subscribe_notify/listener_subscribe_notify.py</code></p>
-<p> <br>ros::Subscribe<br>可通过不同参数对同一个主题进行不同的处理<br>例如：<br><code>rospy_tutorials/003_listener_with_user_data/listener_with_user_data.py</code></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/ROS/NodeHandle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/Robot/ROS/NodeHandle/" class="post-title-link" itemprop="url">NodeHandle</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>793</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="访问节点信息"><a href="#访问节点信息" class="headerlink" title="访问节点信息"></a>访问节点信息</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Get the fully-qualified name of this node.</span></span><br><span class="line">ros::this_node::<span class="built_in">getName</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the fully-qualified namespace of this node.</span></span><br><span class="line">ros::this_node::<span class="built_in">getNamespace</span>()</span><br></pre></td></tr></table></figure>
-
-<h2 id="操作-Names"><a href="#操作-Names" class="headerlink" title="操作 Names"></a>操作 Names</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用NodeHandle的命名空间解析名称</span></span><br><span class="line">std::string ros::NodeHandle::<span class="built_in">resolveName</span>(<span class="type">const</span> std::string&amp; name, <span class="type">bool</span> remap = <span class="literal">true</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 node 的命名空间解析名称 </span></span><br><span class="line">std::string ros::names::<span class="built_in">resolve</span>(<span class="type">const</span> std::string&amp; name, <span class="type">bool</span> remap = <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// append right to left</span></span><br><span class="line">std::string ros::names::<span class="built_in">append</span>(<span class="type">const</span> std::string&amp; left, <span class="type">const</span> std::string&amp; right);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除重复的 / 字符</span></span><br><span class="line">std::string ros::names::<span class="built_in">clean</span>(<span class="type">const</span> std::string&amp; name);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检测名字是否合规</span></span><br><span class="line"><span class="type">bool</span> ros::names::<span class="built_in">validate</span>(<span class="type">const</span> std::string&amp; name, std::string&amp; error);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<pre><code class="C++">ros::init(argc, argv, &quot;my_node_name&quot;);
-ros::NodeHandle nh1(&quot;~&quot;);
-ros::NodeHandle nh2(&quot;~foo&quot;);
-</code></pre>
-<p>其中，<code>nh1</code> 的命名空间是 <code>/my_node_name</code>，<code>nh2</code> 的命名空间是 <code>/my_node_name/foo</code>。  </p>
-<p><img src="/./images/NodeHandle.png" alt="NodeHandle"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/" class="post-title-link" itemprop="url">Jetson-pytorch</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 15:33:40" itemprop="dateCreated datePublished" datetime="2024-09-21T15:33:40+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/Jetson/" itemprop="url" rel="index"><span itemprop="name">Jetson</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Jetson orin nano 8GB</p>
-<img src="/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921153500642.png" class="" title="image-20240921153500642">
-
-
-
-<p>L4T-r34.1.1</p>
-<ul>
-<li>JetPack5.0.1</li>
-</ul>
-<p>L4T-r35.2.1</p>
-<ul>
-<li>JetPack5.1<ul>
-<li>ubuntu20.04</li>
-<li>kernel 5.10 LTS</li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/archive/11.4.4/cuda-toolkit-release-notes/index.html">CUDA 11.4.19</a>（driver 470.82.01）</li>
-<li>cuDNN 8.6.0</li>
-<li>TensorRT 8.5.2</li>
-</ul>
-</li>
-</ul>
-<p>L4T-r35.3.1</p>
-<ul>
-<li>JetPack5.1.1</li>
-</ul>
-<p>L4T-r35.4.1</p>
-<ul>
-<li>JetPack5.1.2</li>
-</ul>
-<p>L4T-r36.3.0</p>
-<ul>
-<li>JetPack6.0<ul>
-<li>ubuntu2204</li>
-<li>kernel 5.15LTS</li>
-<li>python3.8</li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/archive/12.2.1/cuda-toolkit-release-notes/index.html#">CUDA 12.2</a>（driver 535.86.10）</li>
-<li>cuDNN 8.9.4</li>
-<li>TensorRT 8.6.2</li>
-</ul>
-</li>
-</ul>
-<p>内部 docker 容器 （基于 dustynv&#x2F;ros：noetic-desktop-l4t-r35.4.1）</p>
-<h1 id="安装-pytorch"><a href="#安装-pytorch" class="headerlink" title="安装 pytorch"></a>安装 pytorch</h1><p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html">https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://developer.download.nvidia.cn/compute/redist/jp/v512/pytorch/torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl -O torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install <span class="string">&#x27;Cython&lt;3&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此处其他库依赖 numpy 1.23.5 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install numpy==1.23.5 torch-2.1.0a0+41361538.nv23.06-cp38-cp38-linux_aarch64.whl</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>注：JetPack6 提供了 2.3.0 版本 pytorch 即相应版本的 torchvision</p>
-<img src="/2024/09/21/NVIDIA/Jetson/Jetson-pytorch/image-20240921162713885.png" class="" title="image-20240921162713885">
-
-
-
-<h1 id="安装-torchvision"><a href="#安装-torchvision" class="headerlink" title="安装 torchvision"></a>安装 torchvision</h1><p>参考<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048">https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install libjpeg-dev zlib1g-dev libpython3-dev libopenblas-dev libavcodec-dev libavformat-dev libswscale-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> --branch &lt;version&gt; https://github.com/pytorch/vision torchvision   <span class="comment"># see below for version of torchvision to download</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> torchvision</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> BUILD_VERSION=0.x.0  <span class="comment"># where 0.x.0 is the torchvision version</span></span>  </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 setup.py install --user</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> ../  <span class="comment"># attempting to load torchvision from build dir will result in import error</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install <span class="string">&#x27;pillow&lt;7&#x27;</span> <span class="comment"># always needed for Python 2.7, not needed torchvision v0.5.0+ with Python 3.6</span></span></span><br></pre></td></tr></table></figure>
-
-<p>版本对应关系</p>
-<p>● PyTorch v1.0 - torchvision v0.2.2</p>
-<p>● PyTorch v1.1 - torchvision v0.3.0</p>
-<p>● PyTorch v1.2 - torchvision v0.4.0</p>
-<p>● PyTorch v1.3 - torchvision v0.4.2</p>
-<p>● PyTorch v1.4 - torchvision v0.5.0</p>
-<p>● PyTorch v1.5 - torchvision v0.6.0</p>
-<p>● PyTorch v1.6 - torchvision v0.7.0</p>
-<p>● PyTorch v1.7 - torchvision v0.8.1</p>
-<p>● PyTorch v1.8 - torchvision v0.9.0</p>
-<p>● PyTorch v1.9 - torchvision v0.10.0</p>
-<p>● PyTorch v1.10 - torchvision v0.11.1</p>
-<p>● PyTorch v1.11 - torchvision v0.12.0</p>
-<p>● PyTorch v1.12 - torchvision v0.13.0</p>
-<p>● PyTorch v1.13 - torchvision v0.13.0</p>
-<p>● PyTorch v1.14 - torchvision v0.14.1</p>
-<p>● PyTorch v2.0 - torchvision v0.15.1</p>
-<p>● PyTorch v2.1 - torchvision v0.16.1</p>
-<p>● PyTorch v2.2 - torchvision v0.17.1</p>
-<p>● PyTorch v2.3 - torchvision v0.18.0</p>
-<h1 id="验证-pytorch"><a href="#验证-pytorch" class="headerlink" title="验证 pytorch"></a>验证 pytorch</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; import torch</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.__version__)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Pytorch 接口输出的 cuda 的版本并不一定是 Pytorch 在实际系统上运行时使用的 cuda 版本，而是编译该 Pytorch release 版本时使用的 cuda 版本</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.version.cuda)</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.is_available())</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.device_count()) <span class="comment"># GPU 数量</span></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.get_device_name(0))</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; <span class="built_in">print</span>(torch.cuda.current_device())</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或 python3 -c <span class="string">&quot;import torch; print(torch.cuda.is_available())&quot;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip list | grep torch</span></span><br><span class="line">knn_pytorch               0.1</span><br><span class="line">torch                     2.1.0a0+41361538.nv23.6</span><br><span class="line">torchvision               0.16.1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvcc -V</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pip show torch</span></span><br><span class="line">Name: torch</span><br><span class="line">Version: 2.1.0a0+41361538.nv23.6</span><br><span class="line">Summary: Tensors and Dynamic neural networks in Python with strong GPU acceleration</span><br><span class="line">Home-page: https://pytorch.org/</span><br><span class="line">Author: PyTorch Team</span><br><span class="line">Author-email: packages@pytorch.org</span><br><span class="line">License: BSD-3</span><br><span class="line">Location: /usr/local/miniconda/envs/test/lib/python3.8/site-packages</span><br><span class="line">Requires: filelock, fsspec, jinja2, networkx, sympy, typing-extensions</span><br><span class="line">Required-by: torchvision</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h1><h2 id="未编译"><a href="#未编译" class="headerlink" title="未编译"></a><strong>未编译</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 setup.py install --user</span></span><br><span class="line">setup.py:10: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html</span><br><span class="line">  from pkg_resources import DistributionNotFound, get_distribution, parse_version</span><br><span class="line">No CUDA runtime is found, using CUDA_HOME=&#x27;/usr/local/cuda&#x27;</span><br><span class="line">Building wheel torchvision-0.16.1</span><br><span class="line">Compiling extensions with following flags:</span><br></pre></td></tr></table></figure>
-
-<p>降低 setuptools 版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前 setuptools 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip list | grep setuptools</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若版本 &gt; 60, 则降低版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install setuptools==58</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ffmpeg-版本"><a href="#ffmpeg-版本" class="headerlink" title="ffmpeg 版本"></a>ffmpeg 版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: ‘AV_CODEC_CAP_INTRA_ONLY’ was not declared in this scope; did you mean ‘AV_CODEC_PROP_INTRA_ONLY’?</span><br></pre></td></tr></table></figure>
-
-<p>解决方法：降低 ffmpeg 版本。例如：<code>conda install ffmpeg==4.2</code></p>
-<h2 id="未找到-CUDA-Runtime"><a href="#未找到-CUDA-Runtime" class="headerlink" title="未找到 CUDA Runtime"></a>未找到 CUDA Runtime</h2><p><code>libcudart.so</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py install --user</span><br><span class="line">setup.py:10: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html</span><br><span class="line">  from pkg_resources import DistributionNotFound, get_distribution, parse_version</span><br><span class="line">No CUDA runtime is found, using CUDA_HOME=&#x27;/usr/local/cuda&#x27;</span><br><span class="line">Building wheel torchvision-0.16.1</span><br><span class="line">Compiling extensions with following flags:</span><br><span class="line">  FORCE_CUDA: False</span><br><span class="line">  FORCE_MPS: False</span><br><span class="line">  DEBUG: False</span><br><span class="line">  TORCHVISION_USE_PNG: True</span><br><span class="line">  TORCHVISION_USE_JPEG: True</span><br><span class="line">  TORCHVISION_USE_NVJPEG: True</span><br><span class="line">  TORCHVISION_USE_FFMPEG: True</span><br><span class="line">  TORCHVISION_USE_VIDEO_CODEC: True</span><br><span class="line">  NVCC_FLAGS: </span><br><span class="line">Compiling with debug mode OFF</span><br><span class="line">Building torchvision without PNG image support</span><br><span class="line">Running build on conda-build: False</span><br><span class="line">Running build on conda: True</span><br><span class="line">Building torchvision with JPEG image support</span><br><span class="line">  libjpeg include path: /usr/local/miniconda/envs/test/include</span><br><span class="line">  libjpeg lib path: /usr/local/miniconda/envs/test/lib</span><br><span class="line">Building torchvision without NVJPEG image support</span><br><span class="line">Building torchvision without ffmpeg support</span><br><span class="line">Building torchvision without video codec support</span><br><span class="line">running install</span><br><span class="line">/usr/local/miniconda/envs/test/lib/python3.8/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.</span><br><span class="line">!!</span><br></pre></td></tr></table></figure>
-
-
-
-<p><code>export FORCE_CUDA=&quot;1&quot;</code></p>
-<h2 id="IndexError-list-index-out-of-range"><a href="#IndexError-list-index-out-of-range" class="headerlink" title="IndexError: list index out of range"></a>IndexError: list index out of range</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cuda_flags = common_cflags + COMMON_NVCC_FLAGS + _get_cuda_arch_flags()</span><br><span class="line">  File &quot;/user/x/libs/anaconda3/envs/test1/lib/python3.7/site-packages/torch/utils/cpp_extension.py&quot;, line 1561, in _get_cuda_arch_flags</span><br><span class="line">    arch_list[-1] += &#x27;+PTX&#x27;</span><br><span class="line"></span><br><span class="line">IndexError: list index out of range</span><br></pre></td></tr></table></figure>
-
-<p>解决方法</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CUDA_VERSION=$(/usr/local/cuda/bin/nvcc --version | sed -n &#x27;s/^.*release \([0-9]\+\.[0-9]\+\).*$/\1/p&#x27;)</span><br><span class="line">if [[ $&#123;CUDA_VERSION&#125; == 9.0* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;7.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 9.2* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 10.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 11.0* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5;8.0+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 11.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX&quot;</span><br><span class="line">elif [[ $&#123;CUDA_VERSION&#125; == 12.* ]]; then</span><br><span class="line">    export TORCH_CUDA_ARCH_LIST=&quot;5.0;5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5;8.0;8.6;8.7;8.9;9.0+PTX&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;unsupported cuda version.&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>即：设置 <code>TORCH_CUDA_ARCH_LIST=&quot;YOUR_GPUs_CC + PTX&quot;</code> 或在 Dockerfile 中设置 <code>ARG TORCH_CUDA_ARCH_LIST=&quot;YOUR_GPUs_CC + PTX&quot;</code></p>
-<blockquote>
-<p>以下方式可获取 <code>TORCH_CUDA_ARCH_LIST</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.cuda.get_device_capability(<span class="number">0</span>)</span><br><span class="line">torch.cuda.get_arch_list()</span><br></pre></td></tr></table></figure>
-
-
-</blockquote>
-<p>docker 需访 cuda 库，因此需注意  <code>/etc/docker/daemon.json</code> 中设置 <code>default-runtime</code>，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 修改完成后需重启 docker：sudo systemctl restart docker</span><br><span class="line">&#123;</span><br><span class="line">    &quot;runtimes&quot;: &#123;</span><br><span class="line">        &quot;nvidia&quot;: &#123;</span><br><span class="line">            &quot;path&quot;: &quot;nvidia-container-runtime&quot;,</span><br><span class="line">            &quot;runtimeArgs&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;default-runtime&quot;: &quot;nvidia&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/NVIDIA/nvidia-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/NVIDIA/nvidia-docker/" class="post-title-link" itemprop="url">nvidia-docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 14:55:38" itemprop="dateCreated datePublished" datetime="2024-09-21T14:55:38+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 17:31:45" itemprop="dateModified" datetime="2024-09-22T17:31:45+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Docker-NVIDIA"><a href="#Docker-NVIDIA" class="headerlink" title="Docker NVIDIA"></a>Docker NVIDIA</h1><p>使⽤ NVIDIA 显卡，有 nvidia-docker、nvidia-docker2、nvidia-container-toolkits 选项</p>
-<ul>
-<li><strong>nvidia-docker</strong> 是 NVIDIA 第⼀代⽀持 docker 容器内使⽤ GPU 的项⽬，需配套使⽤ nvidia-docker 命令</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">This project has been superseded by the NVIDIA Container Toolkit.</span><br><span class="line">The tooling provided by this repository has been deprecated and the </span><br><span class="line">repository archived.</span><br><span class="line">The nvidia-docker wrapper is no longer supported, and the NVIDIA </span><br><span class="line">Container Toolkit has been extended to allow users to configure Docker </span><br><span class="line">to use the NVIDIA Container Runtime.</span><br><span class="line">For further instructions, see the NVIDIA Container Toolkit </span><br><span class="line">documentation and specifically the install guide.</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>nvidia-docker2</strong> 是 NVIDIA 第⼆代⽀持 docker 容器使⽤ GPU 资源的项⽬，仍需配套使⽤ nvidia-docker 命令，并需要指定参数 <code>--runtime=nvidia</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">既可以使用 nvidia docker 指令，会自动引入 --runtime=nvidia 参数;</span><br><span class="line">也可使用 docker 指令，并手动指定 --runtime=nvidia 参数</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>nvidia-container-toolkits</strong>：最新的⽅案。nvidia-docker2 已被 nvidia-container-toolkits 取代，使⽤ <code>--gpus</code> 参数，⽆需再指定 <code>--runtime</code></p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使⽤ nvidia docker 指令，或在指令中引⼊了 --runtime=nvidia 的⽅式均已弃⽤，当前使⽤ nvidia-container-toolkits ⼯具，使⽤ --gpus 参数即可。</span><br></pre></td></tr></table></figure>
-
-
-
-<img src="/2024/09/21/NVIDIA/nvidia-docker/nvidia-container-docker.png" class="" title="nvidia-container-stack">
-
-<p>nvidia-container-toolkits 包含一个 container runtime library（<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/libnvidia-container">libnvidia-container</a>） 和用于自动配置容器以利用NVIDIA gpu 的工具。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/gpu-containers-runtime/">https://developer.nvidia.com/zh-cn/blog/gpu-containers-runtime/</a></p>
-<h2 id="安装-nvidia-container-toolkits"><a href="#安装-nvidia-container-toolkits" class="headerlink" title="安装 nvidia-container-toolkits"></a>安装 <strong>nvidia-container-toolkits</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | <span class="built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkitkeyring.gpg \</span></span><br><span class="line"><span class="language-bash"> &amp;&amp; curl -s -L https://nvidia.github.io/libnvidiacontainer/stable/deb/nvidia-container-toolkit.list | \</span></span><br><span class="line"><span class="language-bash"> sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidiacontainer-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span></span><br><span class="line"><span class="language-bash"> <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get update</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install -y nvidia-container-toolkit</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置. nvidia-ctk 修改 /etc/docker/daemon.json 文件</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 1. 该方式需要 root 用户运行 docker</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> nvidia-ctk runtime configure --runtime=docker</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> systemctl restart docker</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 2. 该方式可使用非root运行docker</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvidia-ctk runtime configure --runtime=docker --config=<span class="variable">$HOME</span>/.config/docker/daemon.json</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">非root用户可运行</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl restart docker</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> nvidia-ctk config --<span class="built_in">set</span> nvidia-container-cli.no-cgroups --inplace</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -it --<span class="built_in">rm</span> --gpus all --<span class="built_in">env</span>=<span class="string">&quot;DISPLAY&quot;</span> --volume=<span class="string">&quot;/etc/group:/etc/group:ro&quot;</span> --volume=<span class="string">&quot;/etc/passwd:/etc/passwd:ro&quot;</span> --volume=<span class="string">&quot;/etc/shadow:/etc/shadow:ro&quot;</span> --volume=<span class="string">&quot;/etc/sudoers.d:/etc/sudoers.d:ro&quot;</span> --net host -v ~/workspaces/mycobot_ws:/home/user/mycobot_ws mynoetic</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">必须指定 -e NVIDIA_DRIVER_CAPABILITIES=all</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需先执行 xhost +<span class="built_in">local</span>:docker</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -ti --privileged --<span class="built_in">env</span>=<span class="string">&quot;DISPLAY&quot;</span> --<span class="built_in">env</span>=<span class="string">&quot;QT_X11_NO_MITSHM=1&quot;</span> --volume=<span class="string">&quot;/tmp/.X11-unix:/tmp/.X11-unix:rw&quot;</span> --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all --net host -v ~/workspaces/mycobot_ws:/home/user/mycobot_ws mynoetic</span></span><br></pre></td></tr></table></figure>
-
-<p>指定 <code>--gpus all</code> 参数，容器中程序如 RViz 等⽆法正常使⽤ NVIDIA GPU。解决⽅法，容器内部执⾏指令时，指定环境变量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">docker 启动时使用 --<span class="built_in">env</span> 指定这两个参数时无效</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia rviz2</span></span><br></pre></td></tr></table></figure>
-
-<p>尝试以下⽅法，均⽆效。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">xhost +<span class="built_in">local</span>:docker</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> xhost + <span class="comment"># 允许所有主机访问当前 X 服务器</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -it --<span class="built_in">rm</span> --gpus all --<span class="built_in">env</span>=<span class="string">&quot;DISPLAY&quot;</span> -e</span> </span><br><span class="line">__NV_PRIME_RENDER_OFFLOAD=1 -e __GLX_VENDOR_LIBRARY_NAME=nvidia -v </span><br><span class="line">/dev/dri:/dev/dri --env=&quot;QT_X11_NO_MITSHM=1&quot; --volume=&quot;/tmp/.X11-</span><br><span class="line">unix:/tmp/.X11-unix:rw&quot; --volume=&quot;/etc/group:/etc/group:ro&quot; --</span><br><span class="line">volume=&quot;/etc/passwd:/etc/passwd:ro&quot; --</span><br><span class="line">volume=&quot;/etc/shadow:/etc/shadow:ro&quot; --</span><br><span class="line">volume=&quot;/etc/sudoers.d:/etc/sudoers.d:ro&quot; --net host -v </span><br><span class="line">~/workspaces/mycobot_ws:/home/user/mycobot_ws mynoetic</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> xhost -</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -it \</span></span><br><span class="line"><span class="language-bash"> -e <span class="string">&quot;DISPLAY=<span class="variable">$DISPLAY</span>&quot;</span> \</span></span><br><span class="line"><span class="language-bash"> -<span class="built_in">env</span>=<span class="string">&quot;QT_X11_NO_MITSHM=1&quot;</span> \</span></span><br><span class="line"><span class="language-bash"> -v /tmp/.X11-unix:/tmp/.X11-unix \</span></span><br><span class="line"><span class="language-bash"> --device=/dev/dri:/dev/dri \</span></span><br><span class="line"><span class="language-bash"> --net host -v ~/workspaces/mycobot_ws:/home/user/mycobot_ws mynoetic</span></span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -it --gpus all \</span></span><br><span class="line"><span class="language-bash"> -e NVIDIA_DRIVER_CAPABILITIES=all \</span></span><br><span class="line"><span class="language-bash"> -v /tmp/.X11-unix:/tmp/.X11-unix \</span></span><br><span class="line"><span class="language-bash"> -v /dev/dri:/dev/dri \</span></span><br><span class="line"><span class="language-bash"> --device=/dev/snd \</span></span><br><span class="line"><span class="language-bash"> --device=/dev/dri/renderD128\</span></span><br><span class="line"><span class="language-bash"> -e DISPLAY=unix<span class="variable">$DISPLAY</span> \</span></span><br><span class="line"><span class="language-bash"> &lt;image name&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -ti --privileged --<span class="built_in">env</span>=<span class="string">&quot;DISPLAY&quot;</span> --<span class="built_in">env</span>=<span class="string">&quot;QT_X11_NO_MITSHM=1&quot;</span> --volume=<span class="string">&quot;/tmp/.X11-unix:/tmp/.X11-unix:rw&quot;</span> --runtime=nvidia --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all --net host -v ~/workspaces/mycobot_ws:/home/user/mycobot_ws mynoetic</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Jetson-docker"><a href="#Jetson-docker" class="headerlink" title="Jetson docker"></a>Jetson docker</h1><p><a target="_blank" rel="noopener" href="https://www.patzer0.com/archives/nvidia-jetson-xaiver-nx-install-latest-version-of-ros2-by-docker">https://www.patzer0.com/archives/nvidia-jetson-xaiver-nx-install-latest-version-of-ros2-by-docker</a></p>
-<h2 id="NGC-l4t"><a href="#NGC-l4t" class="headerlink" title="NGC l4t"></a>NGC l4t</h2><p>参考：</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-base">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-base</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-tensorrt">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-tensorrt</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-ml">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-ml</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-cuda">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-cuda</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-tensorflow">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-tensorflow</a></p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> docker pull nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3</span></span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>注: l4t -  Linux for tegra</p>
-</blockquote>
-<h2 id="jetson-containers"><a href="#jetson-containers" class="headerlink" title="jetson-containers"></a>jetson-containers</h2><p>在Jetson上不推荐直接使用公共 Docker Image，NVIDIA为一些常用的镜像编译了适合Jetson的版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/dusty-nv/jetson-containers.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">bash jetson-containers/install.sh</span></span><br></pre></td></tr></table></figure>
-
-<p>更改 runtime 为 nvidia，这样 NVCC 编译器和 GPU 才可用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改 /etc/docker/daemon.json，添加以下内容</span></span><br><span class="line">&#123;</span><br><span class="line">    &quot;runtimes&quot;: &#123;</span><br><span class="line">        &quot;nvidia&quot;: &#123;</span><br><span class="line">            &quot;path&quot;: &quot;nvidia-container-runtime&quot;,</span><br><span class="line">            &quot;runtimeArgs&quot;: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    &quot;default-runtime&quot;: &quot;nvidia&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启 docker</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span>  systemctl  daemon-reload</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span>  systemctl  restart  docker.service</span></span><br></pre></td></tr></table></figure>
-
-<p>拉取镜像，参考：<a target="_blank" rel="noopener" href="https://hub.docker.com/r/dustynv/ros/tags%E3%80%82%E6%B3%A8%E6%84%8F%EF%BC%8CL4T">https://hub.docker.com/r/dustynv/ros/tags。注意，L4T</a> 版本需高于镜像中版本(可通过 jtop 查看)</p>
-<blockquote>
-<p><code>注：L4T - Linux for Tegra</code></p>
-</blockquote>
-<p>jetson-container 默认带 <code>--rm</code> 参数，因此 exit 退出时会自动删除容器。</p>
-<p>若出现 <code>/tmp/.docker.xauth</code> 不存在问题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /tmp/.docker.xauth</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">touch</span> /tmp/.docker.xauth</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> xhost +si:localuser:root</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">XAUTH=/tmp/.docker.xauth</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">xauth nlist <span class="variable">$DISPLAY</span> | sed -e <span class="string">&#x27;s/^..../ffff/&#x27;</span> | xauth -f <span class="variable">$XAUTH</span> nmerge -</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">chmod</span> 777 <span class="variable">$XAUTH</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">参考 https://github.com/dusty-nv/jetson-containers</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">jetson-containers run dustynv/pytorch:2.1-r35.4.1</span></span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p><strong>Jetson 中，需确保 docker 镜像中的 OS 版本与 Jetson 环境一致。</strong></p>
-<p>例如：JetPack6.0 需使用 <code>dustynv/ros:xxx-l4t-r36.2.0</code> 镜像</p>
-</blockquote>
-<blockquote>
-<p>在JetPack 5上，CUDA&#x2F;cuDNN&#x2F;TensorRT 等被安装在容器内(不像 JetPack 4，它们通过NVIDIA runtime 从主机设备安装到容器中)。</p>
-</blockquote>
-<blockquote>
-<p>Jetson AGX Orin 32GB，容器镜像 <code>ros:noetic-pytorch-l4t-r34.1.1</code> ，容器内 CUDA 版本为 11.4。需将容器内 CUDA 升级到 11.8。</p>
-<p>方法：手动提取容器内的cuda-compat deb，然后安装cuda-toolkit或cuda-libraries包(只有cuda和cuda-runtime依赖于cuda-compat&#x2F;nvidia-l4t-core)。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># sudo docker build --network=host --tag cuda:12.2 .</span></span><br><span class="line"><span class="comment"># sudo docker run --runtime nvidia -it --rm --network host cuda:12.2 cuda-samples/bin/aarch64/linux/release/deviceQuery</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">20.04</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> DEBIAN_FRONTEND=noninteractive</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">            wget \</span></span><br><span class="line"><span class="language-bash">            git \</span></span><br><span class="line"><span class="language-bash">            binutils \</span></span><br><span class="line"><span class="language-bash">            xz-utils \</span></span><br><span class="line"><span class="language-bash">            ca-certificates \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; <span class="built_in">rm</span> -rf /var/lib/apt/lists/* \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; apt-get clean</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># download the CUDA Toolkit local installer</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/arm64/cuda-ubuntu2004.pin -O /etc/apt/preferences.d/cuda-repository-pin-600 &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    wget https://developer.download.nvidia.com/compute/cuda/12.2.2/local_installers/cuda-tegra-repo-ubuntu2004-12-2-local_12.2.2-1_arm64.deb &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    dpkg -i cuda-tegra-repo-*.deb &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">rm</span> cuda-tegra-repo-*.deb </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># add the signed keys</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">cp</span> /var/cuda-tegra-repo-*/cuda-tegra-*-keyring.gpg /usr/share/keyrings/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># manually extract cuda-compat</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> /var/cuda-compat &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">cd</span> /var/cuda-compat &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    ar x ../cuda-tegra-repo-*/cuda-compat-*.deb &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    tar xvf data.tar.xz -C / &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">rm</span> -rf /var/cuda-compat</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># install cuda-toolkit (doesn&#x27;t depend on cuda-compat/nvidia-l4t-core)</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">            cuda-toolkit-* \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; <span class="built_in">rm</span> -rf /var/lib/apt/lists/* \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; apt-get clean</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># environment variables </span></span><br><span class="line"><span class="keyword">ENV</span> NVIDIA_VISIBLE_DEVICES=all</span><br><span class="line"><span class="keyword">ENV</span> NVIDIA_DRIVER_CAPABILITIES=all</span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> CUDA_HOME=<span class="string">&quot;/usr/local/cuda&quot;</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/usr/local/cuda/bin:$&#123;PATH&#125;&quot;</span></span><br><span class="line"><span class="keyword">ENV</span> LD_LIBRARY_PATH=<span class="string">&quot;/usr/local/cuda/compat:/usr/local/cuda/lib64:$&#123;LD_LIBRARY_PATH&#125;&quot;</span></span><br><span class="line">   </span><br><span class="line"><span class="comment"># build cuda samples</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> git <span class="built_in">clone</span> --branch=v12.2 https://github.com/NVIDIA/cuda-samples &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">cd</span> cuda-samples/Samples/1_Utilities/deviceQuery &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    make</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br></pre></td></tr></table></figure>
-
-<p>参考：<a target="_blank" rel="noopener" href="https://github.com/dusty-nv/jetson-containers/issues/258">https://github.com/dusty-nv/jetson-containers/issues/258</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/20/NVIDIA/CUDA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/20/NVIDIA/CUDA/" class="post-title-link" itemprop="url">CUDA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-20 22:17:30" itemprop="dateCreated datePublished" datetime="2024-09-20T22:17:30+08:00">2024-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/CUDA/" itemprop="url" rel="index"><span itemprop="name">CUDA</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-
-<p>CUDA 与 CUDA Driver 并非一一对应，一台电脑上只有一个版本的 CUDA Driver，但可以有多个 CUDA 版本。</p>
-<p>CUDA API 包括 CUDA Runtime API 和 CUDA Driver API。</p>
-<img src="/2024/09/20/NVIDIA/CUDA/8718fcbd057ce429c15030472ca322c3.png" class="" title="CUDA layer">
-
-<ul>
-<li><p>Runtime API 与 Driver 最大区别是懒加载</p>
-<ul>
-<li><p>第一个 runtime API 调用时，进行 <code>cudaInit</code> 初始化</p>
-</li>
-<li><p>第一个需要 context 的 API 调用时，会调用 <code>cudaDevicePrimaryCtxRetain</code> 创建 context</p>
-</li>
-</ul>
-</li>
-<li><p><code>cuda</code> 开头的都是 Runtime API</p>
-</li>
-<li><p>Runtime API 对应 <code>cuda_runtime.h</code> 和 <code>libcudart.so</code></p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvidia-smi</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nvcc -V</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>CUDA 支持多种语言，无论哪种语言或接口，指令最终都会被 driver 转换为 PTX(Parallel Thread Execution) 代码。</p>
-<p>CUDA 架构组件包括：</p>
-<ul>
-<li>NVIDIA GPU 并行计算引擎</li>
-<li>对硬件初始化、配置的OS内核级支持</li>
-<li>硬件初始化、配置的OS内核级支持</li>
-<li>用于并行计算kernel和函数的PTX 指令集架构(ISA，Instruction set architecture)</li>
-</ul>
-<img src="/2024/09/20/NVIDIA/CUDA/format,webp-1726897215619-30.webp" class="" title="img">
-
-
-
-<h1 id="CUDA-Toolkit-与-conda-cudatoolkit"><a href="#CUDA-Toolkit-与-conda-cudatoolkit" class="headerlink" title="CUDA Toolkit 与 conda cudatoolkit"></a>CUDA Toolkit 与 conda cudatoolkit</h1><p>CUDA Toolkit 是 NVIDIA 官方提供的安装包，包含了 NVIDIA Driver、CUDA 编译器、开发工具等，参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#major-components">CUDA Toolkit major components</a>。</p>
-<p>CUDA Toolkit 包含了 CUDA 开发调试相关的所有组件。但对 Pytorch 等深度学习框架，其大多只需要使用 CUDA 的动态链接库。</p>
-<p>Anaconda 在安装 pytorch 等需要用到 CUDA 的框架时，会自动安装 cudatoolkit，其主要包含应用程序在使用 CUDA 时所依赖的动态库（不包括 runtime 层和以下的层，包括 nvcc 和 CUDA driver）。安装好之后，只需要 cudatoolkit 与 NVIDIA driver 兼容即可。Anaconda 安装的 cudatoolkit 位于 <code>~/anaconda3/pkgs/</code> 目录中。</p>
-<blockquote>
-<p>pytorch 检测 CUDA 版本的代码位于 <code>torch/utils/cpp_extension.py</code> 中的 <code>find_cuda_home</code> </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例如 v2.3.1 </span></span><br><span class="line">CUDA_HOME = _find_cuda_home() <span class="keyword">if</span> torch.cuda._is_compiled() <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如 v2.0.0</span></span><br><span class="line">CUDA_HOME = _find_cuda_home()</span><br></pre></td></tr></table></figure>
-
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从 nvidia 和 conda-forge channels 安装 cudatoolkit</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda install cudatoolkit=11.1 -c nvidia/label/cuda-11.1.1 -c conda-forge</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>实际调用哪个 CUDA 库，需根据 tf&#x2F;pytorch 生成时设置的链接库路径确定。如 pytorch setup.py 中指定了链接库的搜索路径，其中 <strong><code>CUDA_HOME</code></strong>  获取逻辑为：</p>
-<ul>
-<li>默认 cuda 安装路径 <code>/usr/local/cuda</code></li>
-<li>若默认路径不存在，则搜索 <code>nvcc</code> 所在目录</li>
-<li>若 <code>nvcc</code> 也不存在，则直接寻找 <code>cudart</code> 库文件目录（此时通常使用 conda 安装的 cudatoolkit），将其上级目录作为 <code>CUDA_HOME</code></li>
-<li>若未找到 <code>CUDA_HOME</code> ，则生成 CPU 版 pytorch</li>
-</ul>
-<h1 id="CUDA-W2L"><a href="#CUDA-W2L" class="headerlink" title="CUDA W2L"></a>CUDA W2L</h1><img src="/2024/09/20/NVIDIA/CUDA/777a274604017c74ddeb254b54d8bed65fbca309_2_500x500.jpeg" class="" title="wsl-launch-upt-0625-rz_editted">
-
-
-
-<h1 id="编程环境"><a href="#编程环境" class="headerlink" title="编程环境"></a>编程环境</h1><p>开发人员需关注两个版本信息：</p>
-<ul>
-<li>Compute capability</li>
-<li>CUDA Runtime 和 CUDA Driver APIs</li>
-</ul>
-<h2 id="Compute-Capability"><a href="#Compute-Capability" class="headerlink" title="Compute Capability"></a>Compute Capability</h2><p><strong>描述了硬件的特性，反映了设备支持的指令集以及其他规范，也称 SM Version</strong>，例如每个 block 的最大线程数和每个多处理器的寄存器数。Compute Capability 向后兼容。</p>
-<blockquote>
-<p>GPU Compute Capability 不等于 计算性能</p>
-</blockquote>
-<p>CUDA 版本需与算力匹配：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CUDA">https://en.wikipedia.org/wiki/CUDA</a></p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">架构</td>
-<td align="center">计算能力Compute Capability</td>
-<td align="center">发布时间</td>
-<td align="center">Tesla系列</td>
-<td align="center">Quadro系列</td>
-<td align="center">GeForce系列</td>
-<td align="center">Jetson系列</td>
-</tr>
-<tr>
-<td align="center">Tesla</td>
-<td align="center">X &#x3D; 1</td>
-<td align="center">2006</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Fermi</td>
-<td align="center">X &#x3D; 2</td>
-<td align="center">2010</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Kepler</td>
-<td align="center">X &#x3D; 3</td>
-<td align="center">2012</td>
-<td align="center">Kepler K系列</td>
-<td align="center">Quadro K系列</td>
-<td align="center">GeForce 600&#x2F;700系列</td>
-<td align="center">Tegra K1</td>
-</tr>
-<tr>
-<td align="center">Maxwell</td>
-<td align="center">X &#x3D; 5</td>
-<td align="center">2014</td>
-<td align="center">Maxwell M系列</td>
-<td align="center">Quadro M系列</td>
-<td align="center">GeForce 900系列</td>
-<td align="center">Tegra X1</td>
-</tr>
-<tr>
-<td align="center">Pascal</td>
-<td align="center">X &#x3D; 6</td>
-<td align="center">2016</td>
-<td align="center">Pascal P系列</td>
-<td align="center">Quadro P系列</td>
-<td align="center">GeForce 10系列</td>
-<td align="center">Tegra X2</td>
-</tr>
-<tr>
-<td align="center">Volta</td>
-<td align="center">X &#x3D; 7</td>
-<td align="center">2017</td>
-<td align="center">Tesla V系列</td>
-<td align="center">-</td>
-<td align="center">TITAN V</td>
-<td align="center">AGX Xavier</td>
-</tr>
-<tr>
-<td align="center">Turing</td>
-<td align="center">X.Y &#x3D; 7.5</td>
-<td align="center">2018</td>
-<td align="center">Tesla T系列</td>
-<td align="center">Quadro RTX系列</td>
-<td align="center">GeForce 16系列，GeForce 20系列</td>
-<td align="center">AGX Xavier</td>
-</tr>
-<tr>
-<td align="center">Ampere</td>
-<td align="center">X &#x3D; 8</td>
-<td align="center">2020</td>
-<td align="center">Tesla A系列</td>
-<td align="center">RTX A系列</td>
-<td align="center">GeForce 30系列</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Ada Lovelace</td>
-<td align="center">X.Y &#x3D; 8.9</td>
-<td align="center">2022</td>
-<td align="center">L4、L40</td>
-<td align="center">RTX Ada系列</td>
-<td align="center">GeForce 40系列</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Hopper</td>
-<td align="center">X &#x3D; 9</td>
-<td align="center">2022</td>
-<td align="center">H100</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>（来源：<a target="_blank" rel="noopener" href="https://qinganzhang.github.io/posts/cuda-learning-notes/gpu%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95%E5%85%BC%E5%AE%B9%E6%80%A7%E5%92%8C%E7%BC%96%E8%AF%91/">GPU架构发展、兼容性和编译</a>）</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/datacenter/tesla/drivers/index.html#cuda-arch-matrix">https://docs.nvidia.com/datacenter/tesla/drivers/index.html#cuda-arch-matrix</a></p>
-<p>不同 Compute Capability 支持的功能，参考 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#features-and-technical-specifications">Features and Technical Specifications</a></p>
-<p>设备中 GPU 的计算能力可以通过编程方式查询，如 <code>deviceQuery</code> CUDA Sample 所示。该程序的输出如下。此信息是通过调用 <em><code>cudaGetDeviceProperties()</code></em>  获得。</p>
-<img src="/2024/09/20/NVIDIA/CUDA/sample-cuda-configuration-data.png" class="" title="deviceQuery">
-
-<p>如图中，CUDA Capability 版本为 7.0</p>
-<p>附录K – <a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/cuda-computing-power-cn/">CUDA 计算能力</a></p>
-<h2 id="额外的硬件信息"><a href="#额外的硬件信息" class="headerlink" title="额外的硬件信息"></a>额外的硬件信息</h2><p>计算能力没有描述某些硬件特性。例如，无论计算能力如何，大多数 GPU(但不是所有 gpu) 都可以将内核执行与主机和设备之间的异步数据传输重叠。在这种情况下，调用 <code>cudaGetDeviceProperties()</code> 来确定设备是否具有特定功能。例如，<code>asyncEngineCount</code> 字段指示是否可能重叠内核执行和数据传输(如果是，可能有多少并发传输)，<code>canMapHostMemory</code> 字段表示是否可以执行零拷贝数据传输。</p>
-<h2 id="Compute-Capability-Target"><a href="#Compute-Capability-Target" class="headerlink" title="Compute Capability Target"></a>Compute Capability Target</h2><p>要针对特定版本的 NVIDIA 硬件和 CUDA 软件，请使用 nvcc 的 <code>-arch</code>， <code>-code</code> 和 <code>-gencode</code>选项。例如，使用 warp shuffle 操作的代码必须使用 <code>-arch=sm_30</code>(或更高的计算能力)进行编译。</p>
-<p>参考： <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#building-for-maximum-compatibility">Building for maximum compatibility</a></p>
-<h2 id="CUDA-Runtime"><a href="#CUDA-Runtime" class="headerlink" title="CUDA Runtime"></a>CUDA Runtime</h2><p>提供以下功能</p>
-<ul>
-<li>Device management</li>
-<li>Context management</li>
-<li>Memory management</li>
-<li>Code module management</li>
-<li>Execution control</li>
-<li>Texture reference management</li>
-<li>Interoperability with OpenGL and Direct3D</li>
-</ul>
-<p>与底层 CUDA Driver API 相比，CUDA Runtime 通过提供隐式初始化、上下文管理和设备代码模块管理，极大地简化了设备管理。nvcc 生成的 c++ 主机代码利用 CUDA Runtime，因此链接到此代码的应用程序将依赖于 CUDA Runtime；类似地，任何使用 cuBLAS, cuFFT 和其他 CUDA toolkit 库的代码也将依赖于 CUDA Runtime。</p>
-<p>CUDA Runtime 在内核启动之前处理内核加载和设置内核参数和启动配置。隐式驱动版本检查、代码初始化、CUDA 上下文管理、CUDA 模块管理(从库到函数映射)、内核配置和参数传递都是由CUDA Runtime 执行的。</p>
-<p>它包括两个主要部分:</p>
-<ul>
-<li>C 风格的函数接口(<code>cuda_runtime_api.h</code>)</li>
-<li>C++ 风格的封装(<code>cuda_runtime.h</code>)</li>
-</ul>
-<h1 id="CUDA-Compatibility"><a href="#CUDA-Compatibility" class="headerlink" title="CUDA Compatibility"></a>CUDA Compatibility</h1><p>CUDA 软件环境由三部分组成:</p>
-<ul>
-<li>CUDA Toolkit（库、CUDA Runtime 及开发工具）：用于开发者构建 CUDA 程序</li>
-<li>CUDA Driver：用户态驱动，如 linux 下的<code>libcuda.so</code></li>
-<li>NVIDIA GPU device driver：内核态驱动组件</li>
-</ul>
-<img src="/2024/09/20/NVIDIA/CUDA/CUDA-components.png" class="" title="Components of CUDA">
-
-<p>（来源：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#cuda-compatibility-developer-s-guide%EF%BC%89">https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#cuda-compatibility-developer-s-guide）</a></p>
-<p>在 Linux 系统上，CUDA Driver 和内核态组件在 NVIDIA display driver 中一起提供。</p>
-<p>为了方便起见，每个 CUDA Toolkit 附带了一个 NVIDIA display driver。该驱动程序支持该版本 CUDA Toolkit 中引入的所有功能。</p>
-<p>通常，升级 CUDA Toolkit 包括升级 Toolkit 和 Driver，以获得最先进的工具包和驱动程序功能。</p>
-<img src="/2024/09/20/NVIDIA/CUDA/forward-compatibility.png" class="" title="CUDA Upgrade Path">
-
-<p>但这并不总是必需的。CUDA 兼容性允许只升级某些组件，并不总是需要一个完整的系统升级。</p>
-<h2 id="CUDA-Toolkit-版本"><a href="#CUDA-Toolkit-版本" class="headerlink" title="CUDA Toolkit 版本"></a>CUDA Toolkit 版本</h2><p>从CUDA 11开始，Toolkit 版本基于行业标准的版本控制方案: <code>.x.y.z</code>:</p>
-<ul>
-<li><code>x</code> 代表主版本 - API 已经改变，二进制兼容性被打破</li>
-<li><code>y</code> 代表次要版本 - 引入新 API，弃用旧 API，源代码兼容性可能会被破坏，但保持二进制兼容性</li>
-<li><code>z</code> 代表发布&#x2F;补丁版本</li>
-</ul>
-<p>Toolkit 中各组件版本信息，可查看 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#cuda-major-component-versions">CUDA Toolkit Major Component Versions</a></p>
-<p>CUDA 支持几种兼容性选择：</p>
-<ul>
-<li>CUDA 向前兼容升级最初是在 CUDA 10 中引入的，旨在让用户能够访问新的 CUDA 功能，并在安装了较旧的 NVIDIA datacenter driver 的系统上运行使用新 CUDA 版本构建的应用程序</li>
-<li>CUDA 增强兼容性在 CUDA 11.1 中首次引入，提供了两个好处：<ul>
-<li>通过利用 CUDA Toolkit 中组件语义版本控制，可以为一个 CUDA 小版本(例如11.1)构建应用程序，并在主要家族(即11.x)中的所有未来小版本中工作</li>
-<li>CUDA Runtime 放宽了最低 driver 版本检查，因此在移动到新的次要版本时不再需要升级 driver</li>
-</ul>
-</li>
-<li>CUDA Driver 确保编译后的 CUDA 应用程序保持向后二进制兼容性。使用 CUDA Toolkit 3.2 编译的应用程序可以运行在较新的 Driver 上</li>
-</ul>
-<h2 id="源码兼容性"><a href="#源码兼容性" class="headerlink" title="源码兼容性"></a>源码兼容性</h2><p>源代码兼容性定义为库提供的一组保证，其中针对特定版本的库(使用SDK)构建的格式良好的应用程序将在安装新版本的SDK时继续构建和运行而不会出现错误。</p>
-<h2 id="二进制兼容性"><a href="#二进制兼容性" class="headerlink" title="二进制兼容性"></a>二进制兼容性</h2><p>二进制兼容性定义为库提供的一组保证，其中针对所述库的应用程序在与库的不同版本动态链接时将继续工作。</p>
-<p>CUDA Driver API 有一个 C-style ABI，它保证在旧驱动程序(例如CUDA 3.2)上运行的应用程序仍然可以在现代驱动程序(例如CUDA 11.0附带的驱动程序)上正常运行。</p>
-<p>因此，CUDA Driver API 是二进制兼容的，但不兼容源代码(根据较新的 SDK 重新构建应用程序可能需要更改源代码)。</p>
-<img src="/2024/09/20/NVIDIA/CUDA/CTK-and-min-driver-versions.png" class="" title="CUDA Toolkit and Minimum Driver Versions">
-
-
-
-
-
-<h2 id="Minor-Version-Compatibility"><a href="#Minor-Version-Compatibility" class="headerlink" title="Minor Version Compatibility"></a>Minor Version Compatibility</h2><h3 id="CUDA-11-开始支持-Minor-Version-Compatibility"><a href="#CUDA-11-开始支持-Minor-Version-Compatibility" class="headerlink" title="CUDA 11 开始支持 Minor Version Compatibility"></a>CUDA 11 开始支持 Minor Version Compatibility</h3><p>CUDA 11及后续版本默认为 Minor Version 兼容性。</p>
-<p>从CUDA 11开始，使用 CUDA major 发行系列中的 CUDA Toolkit 编译的应用程序可以在具有至少最低要求的 driver 版本的系统上运行，功能集有限。这个最低要求的 driver 可以不同于 CUDA  Toolkit 中打包的驱动程序，但应该<strong>属于同一个 major 版本</strong>。</p>
-<p>由于二进制向后兼容，基于任何旧的 CUDA Toolkit 构建的应用程序总是能在新 driver 上运行，在 CUDA 11 之前，基于新 CUDA  Toolkit 构建的应用程序在没有向前兼容包的旧 driver 上不受支持。</p>
-<p>如果使用的是新的 CUDA 10。则所需的最小驱动程序版本与打包为该工具包版本一部分的驱动程序版本相同。因此，在CUDA 11.1之前，每个新的 CUDA Toolkit 小版本都更改了所需的最低 driver 版本。因此，系统管理员总是必须升级 driver ，以支持基于CUDA Toolkit 构建的应用程序。</p>
-<h3 id="Minor-Compatibility-部署注意"><a href="#Minor-Compatibility-部署注意" class="headerlink" title="Minor Compatibility 部署注意"></a>Minor Compatibility 部署注意</h3><p>如上，直接依赖于 CUDA Runtime 的应用程序可以部署在以下两种场景中:</p>
-<ul>
-<li>系统上安装的 CUDA driver 比 Runtime 更新</li>
-<li>CUDA  Runtime 比系统上的 CUDA  driver 更新，但它们来自相同的 CUDA Toolkit 的 major 版本</li>
-</ul>
-<p>在场景 2 中，系统管理员应该意识到上述限制，并且应该能够在遇到任何问题时指出应用程序失败的原因。</p>
-<p>Minor 版本兼容性为库的使用和部署提供了灵活性。使用支持次要版本兼容性的库的应用程序可以部署在具有不同版本的 Toolkit 和库的系统上，而无需针对库版本的差异重新编译应用程序。这对库的旧版本和新版本都适用，前提是它们都来自同一个 major 发行系列。请注意，应该考虑库本身具有相互依赖性。例如，每个 cuDNN 版本都需要一个特定版本的 cuBLAS。</p>
-<h2 id="Forward-Compatibility"><a href="#Forward-Compatibility" class="headerlink" title="Forward Compatibility"></a>Forward Compatibility</h2><h3 id="支持跨-Toolkit-Major-版本"><a href="#支持跨-Toolkit-Major-版本" class="headerlink" title="支持跨 Toolkit Major 版本"></a>支持跨 Toolkit Major 版本</h3><img src="/2024/09/20/NVIDIA/CUDA/forward-compatibility-upgrade-path.png" class="" title="Forward Compatibility Upgrade Path">
-
-
-
-<p>Forward Compatibility 升级方式参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package">Installing the Forward Compatibility Package</a></p>
-<h3 id="Deployment-Considerations-for-Forward-Compatibility"><a href="#Deployment-Considerations-for-Forward-Compatibility" class="headerlink" title="Deployment Considerations for Forward Compatibility"></a>Deployment Considerations for Forward Compatibility</h3><p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package">https://docs.nvidia.com/deploy/cuda-compatibility/index.html#installing-the-forward-compatibility-package</a></p>
-<h1 id="CUDA-编程模型"><a href="#CUDA-编程模型" class="headerlink" title="CUDA 编程模型"></a>CUDA 编程模型</h1><img src="/2024/09/20/NVIDIA/CUDA/memory-hierarchy-in-gpus-1-625x381.png" class="" title="img">
-
-<p>（来源：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/%EF%BC%89">https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/）</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/20/NVIDIA/Jetson/Jetpack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/20/NVIDIA/Jetson/Jetpack/" class="post-title-link" itemprop="url">Jetpack</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-20 21:08:59" itemprop="dateCreated datePublished" datetime="2024-09-20T21:08:59+08:00">2024-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/Jetson/" itemprop="url" rel="index"><span itemprop="name">Jetson</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>NVIDIA JetPack SDK 是构建 AI 应用程序的最全面解决方案。JetPack SDK 提供了一个完整的开发环境。JetPack SDK 包括 Jetson Linux 驱动程序包（包含 Bootloader）、Linux内核、Ubuntu桌面环境，以及一套完整的加速GPU计算、多媒体、图形和计算机视觉的库。还包括用于主机和开发工具包的示例，文档和开发人员工具，并支持更高级别的sdk，如用于流媒体视频分析的 DeepStream，用于机器人的 Isaac 和用于会话 AI 的 Riva。</p>
-<img src="/2024/09/20/NVIDIA/Jetson/Jetpack/jetpack-metapackage.png" class="" title="jetpack-metapackage.png">
-
-<p>（来源：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/install-setup/index.html#list-of-debian-packages%EF%BC%89">https://docs.nvidia.com/jetson/jetpack/install-setup/index.html#list-of-debian-packages）</a></p>
-<p>安装 JetPack SDK 时，默认情况下会安装 Jetson Linux BSP 和 CUDA Toolkit</p>
-<img src="/2024/09/20/NVIDIA/Jetson/Jetpack/cuda-packaging-jetson.png" class="" title="Block diagram shows the compatibility of software modules between the Jetson Linux BSP and the CUDA Toolkit.">
-
-<p>CUDA Driver ：CUDA 驱动</p>
-<p>CUDA Toolkit 独立于 BSP，不包含 CUDA 驱动程序</p>
-<p>桌面级 CUDA 包</p>
-<img src="/2024/09/20/NVIDIA/Jetson/Jetpack/cuda-packaging-desktop.png" class="" title="Block diagram shows the interdependency of software modules between a standard Linux OS distribution, the NVIDIA UDA package, and the CUDA Toolkit as managed with the CUDA Installer.">
-
-
-
-<h1 id="Jetson-的可升级包"><a href="#Jetson-的可升级包" class="headerlink" title="Jetson 的可升级包"></a>Jetson 的可升级包</h1><p>参考：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/simplifying-cuda-upgrades-for-nvidia-jetson-users/">https://developer.nvidia.com/blog/simplifying-cuda-upgrades-for-nvidia-jetson-users/</a></p>
-<p>Jetson 两种系统：</p>
-<ul>
-<li>NVIDIA 打包好的 Jetpack</li>
-<li>基于 NVIDIA 提供的 BSP，第三方厂商自行构建的系统</li>
-</ul>
-<p>这两类系统中，都自带固定版本的 CUDA 开发包、运行时库、驱动程序。</p>
-<p>NVIDIA 从 CUDA 11.8 版本开始，才为 Jetson 提供 CUDA 升级包功能。</p>
-<p>以前不提供，是因为基本系统里已经包含经过检验的稳定的 CUDA 驱动和系统，若用户随意调整，将对整个 Jetpack 系统及 BSP 二次开发的稳定性造成影响，厂商需要重新测试，重新校验稳定性。</p>
-<p>但同时又存在需与频繁更新的 CUDA 开发包新功能同步的需求。因此，NVIDIA 从 Jetpack 5.0 和 CUDA 11.8 开始，对基本系统进行调整：从 CUDA 11.8 开始，引入升级路径，为 Jetson 提供了升级 CUDA 驱动和 CUDA Toolkit 的选项。</p>
-<img src="/2024/09/20/NVIDIA/Jetson/Jetpack/cuda-upgrade-path-jetson.png" class="" title="Flow diagram of the steps needed to upgrade CUDA software from previous releases.">
-
-<p>蓝色方框描述了 NVIDIA JetPack 5.0 SDK 中默认存在的组件。虚线将 Jetson Linux BSP 与 NVIDIA JetPack SDK 的其他组件分开。绿色框表示可以通过此功能升级到的 CUDA 组件。</p>
-<p>通过引入 CUDA 驱动程序（包括 <code>libcuda.so</code> 及其依赖项）升级，无需在像以前一样只能使用 Jetson Linux BSP 中打包的默认 CUDA 驱动提供的功能。</p>
-<img src="/2024/09/20/NVIDIA/Jetson/Jetpack/new-cuda-upgrade-path.png" class="" title="Figure shows which Jetson software modules are affected and how the new flexible upgrade path works to install the latest CUDA software release.">
-
-<p>升级操作参考：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/simplifying-cuda-upgrades-for-nvidia-jetson-users/">https://developer.nvidia.com/zh-cn/blog/simplifying-cuda-upgrades-for-nvidia-jetson-users/</a></p>
-<p>引入了中间兼容层 （cuCompart)。以前追求稳定的内置驱动，是直接和 NVMAP&#x2F;NVHOST&#x2F;EGL&#x2F;NVGPU 等更底层的组件直接交互的，所以不能轻易动，现在从 JP 5.0 起，驱动变成和 cuCompat 交互了，而 cuCompat 再和底层的 NVMAP&#x2F;NVHOST&#x2F;EGL&#x2F;NVGPU 交互，这样就多了一个中间层次了。可以简单理解成，多了一个抽象层，从原本的驱动中抽离，这个抽象层本身可以得到测试，可以稳定。而新版本的驱动变成了它上面的一个更高一层的软件了。</p>
-<h1 id="JetPack-SDK-安装配置"><a href="#JetPack-SDK-安装配置" class="headerlink" title="JetPack SDK 安装配置"></a>JetPack SDK 安装配置</h1><p>支持多种方式安装 JetPack。参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/install-setup/index.html">install-setup</a></p>
-<h2 id="SD卡镜像"><a href="#SD卡镜像" class="headerlink" title="SD卡镜像"></a>SD卡镜像</h2><h2 id="NVIDIA-SDK-Manager"><a href="#NVIDIA-SDK-Manager" class="headerlink" title="NVIDIA SDK Manager"></a>NVIDIA SDK Manager</h2><p>支持以下平台：</p>
-<ul>
-<li>NVIDIA Jetson AGX Orin Developer Kit</li>
-<li>NVIDIA Jetson Orin Nano Developer Kit</li>
-<li>NVIDIA Jetson AGX Orin 32GB module on a Jetson AGX Orin Developer Kit carrier board</li>
-<li>NVIDIA Jetson AGX Xavier series modules on a Jetson AGX Xavier Developer Kit carrier board</li>
-<li>NVIDIA Jetson Xavier NX modules on a Jetson Xavier NX Developer Kit carrier board</li>
-</ul>
-<p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/sdk-manager/index.html">https://docs.nvidia.com/sdk-manager/index.html</a></p>
-<h2 id="Package-Management-Tool"><a href="#Package-Management-Tool" class="headerlink" title="Package Management Tool"></a>Package Management Tool</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/20/NVIDIA/Jetson/Jetson/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/20/NVIDIA/Jetson/Jetson/" class="post-title-link" itemprop="url">Jetson</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-20 20:30:14" itemprop="dateCreated datePublished" datetime="2024-09-20T20:30:14+08:00">2024-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/" itemprop="url" rel="index"><span itemprop="name">NVIDIA</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/NVIDIA/Jetson/" itemprop="url" rel="index"><span itemprop="name">Jetson</span></a>
-        </span>
     </span>
 
   
@@ -1586,34 +794,19 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
     
     
     <div class="post-body" itemprop="articleBody">
-          <img src="/2024/09/20/NVIDIA/Jetson/Jetson/metropolis-jetson-platform-service-diagrams-3280429-jetson-software-r2.png" class="" title="Jetson software stack">
+          <p>LocalTrajectoryBuilder2D 激光数据处理过程：<br>1）同步多个 scan 传感器的数据，得到同步后的数据</p>
+<p>2）若未使能 IMU ，则在 <code>LocalTrajectoryBuilder2D::AddRangeData</code> 中调用 <code>InitializeExtrapolator(time)</code> 来初始化 PoseExtrapolator; 若使能 IMU ，则在 <code>LocalTrajectoryBuilder2D::AddIMUData</code> 中初始化。  </p>
+<p>若 PoseExtrapolator 未初始化完，则丢弃当前scan帧。   </p>
+<p>3）调用 <code>ExtrapolatePose()</code> 推算当前scan帧中，每个 scan point 对应的机器人位姿，并存入 <code>range_data_poses</code> 中</p>
+<p>4）scan过滤，去除小于 min_range 的点，并将大于 max_range 的点标记为 misses  </p>
+<p>5）累积 num_accumulated_range_data 帧数据，并进行重力对齐及 <code>VoxelFilter</code> 过滤</p>
+<p>6）调用 <code>AddAccumulatedRangeData</code> 对累积的数据进行处理, 在该方法中，调用 <code>extrapolator_-&gt;ExtrapolatePose()</code> 获取当前时刻的预测位姿，并进行重力对齐  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const transform::Rigid3d non_gravity_aligned_pose_prediction =</span><br><span class="line">  extrapolator_-&gt;ExtrapolatePose(time);</span><br><span class="line">const transform::Rigid2d pose_prediction = transform::Project2D(</span><br><span class="line">  non_gravity_aligned_pose_prediction * gravity_alignment.inverse());</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">7）将激光数据进行 AdaptiveVoxelFilter 过滤，并转换为 PointCloud 类型，然后调用 `ScanMatch` 进行匹配，得到校准后的位姿 `pose_estimate_2d`  </span><br><span class="line"></span><br><span class="line">8）将激光匹配得到的位姿进行重力对齐后，添加到 extrapolator 中，用于下次位姿预估     </span><br></pre></td></tr></table></figure>
+<p>const transform::Rigid3d pose_estimate &#x3D;<br>  transform::Embed3D(*pose_estimate_2d) * gravity_alignment;<br>&#x2F;&#x2F; 将激光匹配优化后的位姿添加到 extrapolator 中, 用于预估后续的位姿<br>extrapolator_-&gt;AddPose(time, pose_estimate);</p>
+<pre><code>AddPose 只在累积 num_accumulated_range_data 帧 scan 数据，进行匹配得到校准后的位姿后才会执行。  
 
-<p>（来源：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/develop/software%EF%BC%89">https://developer.nvidia.com/embedded/develop/software）</a></p>
-<h1 id="查看信息"><a href="#查看信息" class="headerlink" title="查看信息"></a>查看信息</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 jetpack 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt show nvidia-jetpack</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep nvidia-jetpack</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 CUDA 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep cuda-toolkit</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 cuDNN 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep cudnn</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">jetson_release <span class="comment"># 需安装 jetson-stats</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 tensorRT 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">dpkg -l | grep TensorRT</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/driver/nvidia/verion</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 L4T 版本及 CUDA 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /etc/nv_tegra_release</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /usr/local/cuda/version.txt</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="Jetson-软件架构"><a href="#Jetson-软件架构" class="headerlink" title="Jetson 软件架构"></a>Jetson 软件架构</h1><img src="/2024/09/20/NVIDIA/Jetson/Jetson/Architecture1.svg" class="" title="Jetson Linux system components">
-
-<p>（来源：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/AR/JetsonSoftwareArchitecture.html%EF%BC%89">https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/AR/JetsonSoftwareArchitecture.html）</a></p>
-<p>NVIDIA CUDA 是一个并行计算平台，可以轻松使用 GPU 进行通用计算。它对于实现图形化应用程序特别有用。它可以与任何几种编程语言一起使用。</p>
-<p>CUDA‑X 是一个软件包，其中包含几种常见的面向图形的任务的 CUDA 和基于 CUDA 的实现。</p>
-<h1 id="Boot-Flow"><a href="#Boot-Flow" class="headerlink" title="Boot Flow"></a>Boot Flow</h1><p>Boot Flow 是引导加载程序执行初始化 SoC 和启动 NVIDIA®Jetson™Linux的操作序列。</p>
-<p>BR-BCT：BootROM Boot Configuration Table </p>
-<p>MB1：Microboot1</p>
-<p>PSC：Platform Security Controller</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/AR/BootArchitecture.html">https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/AR/BootArchitecture.html</a></p>
-<h1 id="Cantroller-Area-Network-CAN"><a href="#Cantroller-Area-Network-CAN" class="headerlink" title="Cantroller Area Network(CAN)"></a>Cantroller Area Network(CAN)</h1><p>适用于:Jetson AGX Orin, Jetson Xavier NX系列和Jetson AGX Xavier系列</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/HR/ControllerAreaNetworkCan.html">https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/HR/ControllerAreaNetworkCan.html</a></p>
-<p>Time Triggered CAN controller</p>
-<ul>
-<li>支持标准帧和扩展帧</li>
-<li>CAN 总线速率 10kbps ~ 1Mbps</li>
-<li>支持 CAN FD 模式，最大速率为 15Mbps。所有类型的收发器都可以达到 5Mbps</li>
-<li>如果通过它的用户空间sysfs节点配置TDCR(传输延迟补偿寄存器)，它可以提供更高的数据比特率</li>
-</ul>
+9）将累积的点云数据转换到 local_trajectory 坐标系下，然后插入到 submap 中
+</code></pre>
 
       
     </div>
@@ -1640,7 +833,7 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/TRAC-IK%20Kinematics%20Solver/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/BBS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1658,7 +851,7 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/TRAC-IK%20Kinematics%20Solver/" class="post-title-link" itemprop="url">TRAC-IK Kinematics Solver</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/BBS/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1669,7 +862,7 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:33:15" itemprop="dateCreated datePublished" datetime="2024-09-17T21:33:15+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1677,27 +870,6 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">运动学求解器</span></a>
-        </span>
     </span>
 
   
@@ -1707,14 +879,14 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>992</span>
+      <span>0</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -1725,49 +897,99 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>TRAC-IK 是由 TRACLabs 开发的一款逆运动学求解器，它通过线程将两种 IK 实现结合在一起，以实现比常用的开源 IK 求解器更可靠的解决方案。从官方文档：(TRACK-ik)为 KDL 中流行的雅可比矩阵逆方法提供了一种可选的逆运动学求解器。具体地说，KDL 的收敛算法是基于牛顿方法的，这种方法在存在关节限制的情况下不能很好地工作——这在许多机器人平台中很常见。trac-IK 同时运行两种 IK 实现：</p>
-<ul>
-<li>一个是对 KDL 基于牛顿的 convergence 的简单扩展，该算法通过随机跳跃检测并缓解由于关节限制而导致的局部最小值</li>
-<li>第二种是 SQP(Sequential Quadratic Programming,即:顺序二次规划)非线性优化方法。使用能够更好地处理关节限制的准牛顿(quasi-Newton)方法</li>
-</ul>
-<p>默认情况下，当这些算法中的任何一个收敛到一个解时，IK 搜索会立即返回。为了获得 “最佳” IK 解，还提供了距离和可操作性的次要约束条件。</p>
-<p>trac_ik_kinematics_plugin 包提供了一个 KinematicsBase MoveIt 接口，可以替换默认的 KDL 求解器。目前不支持模拟关节。</p>
-<p>安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install ros-melodic-trac-ik-kinematics-plugin</span> </span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
 
-<p>​             </p>
-<p>使用</p>
-<ul>
-<li>安装 trac_ik_kinematics_plugin 和 trac_ik_lib 包</li>
-<li>修改 MoveIt! kinematics.yaml 文件</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin</span><br><span class="line">替换为</span><br><span class="line">kinematics_solver: trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p>​           </p>
-<ul>
-<li><p>设置参数</p>
-</li>
-<li><ul>
-<li><p>kinematics_solver_timeout 及 position_only_ik</p>
-</li>
-<li><p>solve_type 可以是：</p>
-</li>
-<li><ul>
-<li>Speed，默认值</li>
-<li>Distance</li>
-<li>Manipulation1</li>
-<li>Manipulation2</li>
-</ul>
-</li>
-<li><p>kinematics_solver_attempts：不需要，与 KDL 不同，Trac-IK 解析器失败时会自动重启</p>
-</li>
-<li><p>kinematic_solver_search_resolution</p>
-</li>
-</ul>
-</li>
-<li><p>注意：用于确定有效解决方案的笛卡尔误差距离是 1e-5，因为这是硬编码到 MoveIt 的 KDL 插件中的。</p>
-</li>
-</ul>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>66</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>地图类型：基于特征的地图和基于位置的地图。  </p>
+<p>基于位置的地图：<br>1）、占用栅格地图  </p>
+<p>二维度量图、图形化的拓扑地图、占用栅格地图、图像镶嵌图等</p>
 
       
     </div>
@@ -1786,8 +1008,212 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E7%96%91%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E7%96%91%E9%97%AE/" class="post-title-link" itemprop="url">疑问</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>48</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>1、噪声互相依赖的可能原因？<br>1）人经常会劣化几个相邻传感器的测量<br>2）模型 m 的误差<br>3）后验的近似等  </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">阅读笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-机器人学不确定性"><a href="#1-机器人学不确定性" class="headerlink" title="1. 机器人学不确定性"></a>1. 机器人学不确定性</h3><p>1)、机器人所处环境不可预测. 在非结构化环境(例如:高速公路、家庭等)中, 环境高度动态, 且在许多方便是无法预测的.<br>2)、传感器误差及限制. 例如:相机无法看到墙后的物体, 激光雷达穿透玻璃等. 此外, 传感器还受噪声的限制.<br>3)、执行机构(例如:电机)是不可预测的. 其不确定性来自:控制噪声、机械磨损、机械故障等.<br>4)、软件导致的不确定性. 如：模型误差<br>5)、近似算法引入的不确定性. 机器人是实时系统, 这就限制了可执行的计算次数. 许多流行算法都是近似算法, 通过牺牲精度而得到实时响应.  </p>
+<p>机器人感知问题用概率来描述，就是一个状态估计问题。概率算法能计算机器人的瞬间不确定性，也能预知未来的不确定性，并在决定正确的控制选择时， 对未来的不确定性进行考虑。</p>
+<p>与传统模型的机器人技术相比，概率算法有如下优势：<br>1)、概率算法对机器人模型的精度要求较低<br>2)、概率算法对传感器精度要求比许多反应技术要低  </p>
+<p>概率算法的两个局限：计算的复杂性(computational complexity)和近似的必要性(need to approximate)。</p>
+<h3 id="2-递归状态估计"><a href="#2-递归状态估计" class="headerlink" title="2. 递归状态估计"></a>2. 递归状态估计</h3><p>概率机器人技术的核心是由传感器数据来估计状态。 <strong>状态估计</strong>解决的是从不能直接观测但可以推断的传感器数据中估计数量的问题。</p>
+<p><strong>贝叶斯准则</strong>在概率机器人中起着主导作用。贝叶斯公式：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)} = \frac{p(y|x)p(x)}{\Sigma_{x'}p(y|x')p(x')}}" style="border:none;"> – 离散<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)}} = \frac{p(y|x)p(x)}{\displaystyle \int {p(y|x')p(x')dx'}}" style="border:none;"> – 连续<br>若 x 是一个希望由 y 推测出来的数值，则概率 p(x) 称为<strong>先验概率分布</strong>。其中，y 称为数据（例如：传感器测量值）。 p(x|y) 称为在 X 上的后验概率分布(posterior probability distribution)。 贝叶斯准则为利用’逆’条件概率 p(y|x) 和先验概率 p(x) 一起去计算后验概率 p(x|y) 提供了一种方便的方法。<br>p(y|x) 在机器人学中，通常被称为: 生成模型 - <strong>generative model</strong>，因为在一定的抽象层面上，它表示状态变量 X 如何引起了检测数据 Y。</p>
+<p><strong>机器人的置信度</strong>是对给定的所有过去的传感器测量值和所有过去控制的环境状态（包括机器人状态）的一个后验分布。大多数计算置信度的通用算法都是由贝叶斯算法给出的。该算法根据测量和控制数据计算置信度分布 bel()。  </p>
+<p>贝叶斯滤波算法的两个步骤：<br>  1）、<strong>控制更新（或预测 prediction）</strong>，基于 t-1 时刻的置信度和控制  <img src="http://chart.googleapis.com/chart?cht=tx&chl=u_t" style="border:none;">   来计算状态  <img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"> 的置信度。<br>  2）、<strong>测量更新（measurement update）</strong>，用观测到的测量 <img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;"> 的概率乘以置信度 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\bar{bel}(x_t)" style="border:none;">。  </p>
+<p>总之，贝叶斯滤波算法以 到时间 t 的测量和控制数据为条件来计算状态 <img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"> 的后验。该算法在任何具体实现中都需要三个概率分布：初始置信度 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x_0)" style="border:none;"> 、测量概率<img src="http://chart.googleapis.com/chart?cht=tx&chl=p(z_t | x_t)" style="border:none;">  、状态转移概率 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x_t | u_t, x_{t_1})" style="border:none;">   </p>
+<h3 id="6、机器人感知"><a href="#6、机器人感知" class="headerlink" title="6、机器人感知"></a>6、机器人感知</h3><p>环境测量模型(environment measurement models)包括概率机器人学中仅次于运动模型的第二个特定领域模型。测量模型描述在客观世界生成传感器测量的过程。模型的特性取决于传感器：成像传感器最好通过投影几何学建立模型，而声呐传感器最好通过描述声波和声波在环境表面上的反射来建立模型。  </p>
+<p>概率机器人为传感器测量噪声建立模型。形式上，测量模型定义为条件概率分布<img src="http://chart.googleapis.com/chart?cht=tx&chl=p(z_t|x_t, m)" style="border:none;">   </p>
+<ul>
+<li><img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;">:机器人位姿  </li>
+<li><img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;">:t时刻的测量值  </li>
+<li>m: 环境地图</li>
+</ul>
+<p>传感器模型越精确，得到的结果越好。  </p>
+<h3 id="7-定位"><a href="#7-定位" class="headerlink" title="7. 定位"></a>7. 定位</h3><h4 id="1、定位问题分类"><a href="#1、定位问题分类" class="headerlink" title="1、定位问题分类"></a>1、定位问题分类</h4><p>1.1、定位问题是以最初及运行期间可供使用信息的类型为特征的。随着难度的增加，可分为三类定位问题：<br>1）、位置跟踪（position tracking）<br>假定机器人初始位姿已知，通过适应机器人运动噪声来完成定位机器人。该方法的前提是传感器误差小。位姿不确定性用单峰分布(例如：高斯分布)来近似。 位置跟踪问题是一个局部问题，因为不确定性是局部的，并且局限于机器人真是位姿附近的区域。<br>即：在局部范围内，可认为传感器数据（例如里程计等）是准确的或者误差小的。<br>2）、全局定位<br>机器人初始位姿未知。机器人放置在环境中的某个地方，但缺少它的位置信息。全局定位方法不能假定位姿误差的有界性。 全局定位包括了位置跟踪。<br>3）、绑架问题（kidnapped）<br>绑架问题是全局定位问题的变种，但更加困难。运动过程中，机器人被绑架，瞬间移动到其它位置。 绑架问题比全局定位更困难的地方在于：机器人可能相信知道自己在哪，因为机器人不知道被绑架到其它位置了，仍然相信之前的定位是准确的。</p>
+<p>1.2、影响定位的第二个方面是环境，环境又分为静态环境和动态环境<br>1）、静态环境<br>静态环境是指<strong>仅有的变量是机器人位姿</strong>的环境。即：只有机器人是移动的。<br>2）、动态环境<br>动态拥有出机器人外，位置和配置随时间变化的物体。及还有其它运动或动态物体。  </p>
+<p>1.3、定位算法是否控制机器人运动<br>1）、被动定位（passive）<br>定位模块仅观察机器人运行。<br>2）、主动定位（active）<br>该类算法控制机器人，以便最小化定位误差。<br>例一：海岸导航。<br>例二：假设机器人位于对称的长廊环境，机器人在长廊过道中时，由于环境的局部对称性使得定位机器人是不可能的，只有当它运动进入其中一个房间才能消除模糊性并定位自身位姿。在这种情况下，主动定位可以主动控制机器人进入其中一个房间，来确定自身的位姿。  </p>
+<p>1.4、单机器人与多机器人定位<br>多机器人环境中，每个机器人都能独立定位自身，因此多机器人定位问题可以通过单一机器人定位解决。然而，如果机器人能相互探测，定位可能更好。</p>
+<h4 id="2、定位方法"><a href="#2、定位方法" class="headerlink" title="2、定位方法"></a>2、定位方法</h4><p>本章主要介绍单峰高斯定位技术。  </p>
+<h3 id="8、蒙特卡洛定位与栅格定位"><a href="#8、蒙特卡洛定位与栅格定位" class="headerlink" title="8、蒙特卡洛定位与栅格定位"></a>8、蒙特卡洛定位与栅格定位</h3><p>本章介绍两个能解决全局定位问题的定位算法：栅格定位和蒙特卡洛定位（MCL）。<br><strong>栅格定位</strong>：使用直方图滤波表示后验置信度。 栅格定位存在的问题是：对于高分辨率的栅格，定位的计算量大；低分辨率的栅格又会导致附加信息的损失，会负面影响滤波。<br><strong>蒙特卡洛定位</strong>：使用粒子滤波估计机器人位姿的后验置信度。  </p>
+<h4 id="1、栅格定位"><a href="#1、栅格定位" class="headerlink" title="1、栅格定位"></a>1、栅格定位</h4><h4 id="2、蒙特卡洛定位"><a href="#2、蒙特卡洛定位" class="headerlink" title="2、蒙特卡洛定位"></a>2、蒙特卡洛定位</h4>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1810,14 +1236,14 @@ ros::NodeHandle nh2(&quot;~foo&quot;);
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">677k</span>
+    <span title="站点总字数">765k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">20:31</span>
+    <span title="站点阅读时长">23:11</span>
   </span>
 </div>
 <div class="busuanzi-count">
