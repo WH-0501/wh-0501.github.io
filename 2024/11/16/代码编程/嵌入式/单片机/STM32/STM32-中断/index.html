@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="常见内部中断：复位、不可屏蔽中断(NMI)、硬件异常等。内部中断不能被打断，不能设置优先级(优先于外部中断)。 中断嵌套即打断其他正在执行的中断。 STM32 有两个中断优先级：抢占式优先级(主)和响应优先级(次) 抢占优先级任何比任何响应优先级高。只有抢占优先级更高的才具有中断嵌套功能；抢占优先级相同的中断，高响应优先级的不可以打断低响应优先级的中断；抢占优先级相同的中断，在同时发生时，响应优先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32-中断">
+<meta property="og:url" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="常见内部中断：复位、不可屏蔽中断(NMI)、硬件异常等。内部中断不能被打断，不能设置优先级(优先于外部中断)。 中断嵌套即打断其他正在执行的中断。 STM32 有两个中断优先级：抢占式优先级(主)和响应优先级(次) 抢占优先级任何比任何响应优先级高。只有抢占优先级更高的才具有中断嵌套功能；抢占优先级相同的中断，高响应优先级的不可以打断低响应优先级的中断；抢占优先级相同的中断，在同时发生时，响应优先">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-16T05:43:41.000Z">
+<meta property="article:modified_time" content="2024-11-16T05:46:06.318Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/","path":"2024/11/16/代码编程/嵌入式/单片机/STM32/STM32-中断/","title":"STM32-中断"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>STM32-中断 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="STM32-中断 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STM32-中断
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:43:41 / 修改时间：13:46:06" itemprop="dateCreated datePublished" datetime="2024-11-16T13:43:41+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>常见内部中断：复位、不可屏蔽中断(NMI)、硬件异常等。内部中断不能被打断，不能设置优先级(优先于外部中断)。</p>
+<p>中断嵌套即打断其他正在执行的中断。</p>
+<p>STM32 有两个中断优先级：抢占式优先级(主)和响应优先级(次)</p>
+<p>抢占优先级任何比任何响应优先级高。<strong>只有抢占优先级更高的才具有中断嵌套功能</strong>；<strong>抢占优先级相同的中断，高响应优先级的不可以打断低响应优先级的中断</strong>；<strong>抢占优先级相同的中断，在同时发生时，响应优先级高的先执行</strong>。例如：</p>
+<p>假定设置中断优先级组为2，然后设置中断3(RTC_WKUP中断)的抢占优先级为2，响应优先级为1。中断6（外部中断0）的抢占优先级为3，响应优先级为0。中断7（外部中断1）的抢占优先级为2，响应优先级为0。那么这3个中断的优先级顺序为：中断7&gt;中断3&gt;中断6。</p>
+<p>Cortex-M3定义了 8bits 用于设置中断优先级。 Cortex-M3 允许具有较少中断源时使用较少的寄存器指定中断源的优先级，因此，STM32中，则把中断优先级寄存器位减少到 4bits。</p>
+<p>NVIC(Nested Vector interrupt controller)：中断控制器，负责除了 SYSTICK 之外的所有中断的控制。但 NVIC 只能配置 16 级中断优先级。库中将中断分为 5 组，分别为： </p>
+<table>
+<thead>
+<tr>
+<th>NVIC_PriorityGroup</th>
+<th>NVIC_IRQChannelPreemptionPriority(抢占优先级)</th>
+<th>NVIC_IRQChannelSubPriority(响应优先级)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NVIC_PriorityGroup_0</td>
+<td>0</td>
+<td>0-15</td>
+<td>0位抢占优先级,4位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_1</td>
+<td>0-1</td>
+<td>0-7</td>
+<td>1位抢占优先级,3位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_2</td>
+<td>0-3</td>
+<td>0-3</td>
+<td>2位抢占优先级,2位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_3</td>
+<td>0-7</td>
+<td>0-1</td>
+<td>3位抢占优先级,1位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_4</td>
+<td>0-15</td>
+<td>0</td>
+<td>4位抢占优先级,0位响应优先级</td>
+</tr>
+</tbody></table>
+<p>中断优先级分组在一个程序中只能设定一次。每个中断可设置抢占优先级为 0~7(越小优先级越高)，响应优先级位 1 或 0。</p>
+<p>STM32 的外部中断通过边沿触发(上升沿触发、下降沿触发和双边沿触发)，不支持电平触发。</p>
+<p>STM32 总共有 <strong>16 根中断线：EXTI0~EXTI15</strong>。</p>
+<p>中断相关寄存器：</p>
+<ul>
+<li>ISER：Interrupt Set-Enable Registers 中断使能寄存器组</li>
+<li>ICER：Interrupt Clear-Enable Registers 中断清除寄存器组</li>
+<li>ISPR：Interrupt Set-Pending Registers 中断挂起控制寄存器组</li>
+<li>ICPR：Interrupt Clear-Pending Registers 中断解除挂起控制寄存器组</li>
+<li>IABR：Interrupt Active Registers 中断激活寄存器组</li>
+<li>IP[240]：Interrupt Priority Regitsters 中断优先级寄存器组</li>
+</ul>
+<p>STM32 编程步骤：</p>
+<p>① 配置时钟，包括中断时钟、系统时钟等</p>
+<p>② 设置GPIO(根据需要)</p>
+<p>③ EXTI 配置，包括：中断源的选择、清除中断标志、触发模式等</p>
+<p>④ NVIC 设置(即:配置中断优先级)，例如：所属组、指定信息等</p>
+<p>⑤ 编写中断服务子程序(中断服务函数 <code>EXTIn_IRQHandler</code> 和中断处理回调函数 <code>HAL_GPIO_EXTI_IRQHandler</code>)</p>
+<p>默认情况下，调用 <code>HAL_Init</code> 之后，会设置中断优先级分组组号为 4。可修改 HAL 库中的 HAL_Init 接口，修改默认分组组号。例如，STM32F429IGT，找到 stm32f4xx_hal.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123; </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">/* Set Interrupt Group Priority */</span></span><br><span class="line">  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2);<span class="comment">//中断优先级分组2</span></span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>STM32 中断服务函数注意事项：</p>
+<p>① 中断服务函数函数名是固定的，在启动代码中已经确定下来</p>
+<p>② 先清中断标志，再执行中断处理(如果把清除中断标志放在中断服务函数的最后，会出现当发出清中断标志指令后，硬件还没有把相关标志清除掉，程序就已经跳出了中断服务函数，这个时候NVIC又会识别到标志是1，出现重复中断)。如果要先执行中断处理再清中断标志，需要注意等待清除成功后再往下执行</p>
+<p>③ 中断服务函数应尽量简短，不要在中断中做延时等长时间占用 CPU 的操作</p>
+<p>④ 中断服务函数不会被任何函数调用</p>
+<p>⑤ 中断服务函数不能返回值</p>
+<p>⑥ 中断服务函数不能传递参数</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/STM32/" rel="tag"># STM32</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="STM32-启动过程">
+                  <i class="fa fa-angle-left"></i> STM32-启动过程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/FreeRTOS/" rel="next" title="FreeRTOS">
+                  FreeRTOS <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">794k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">24:03</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

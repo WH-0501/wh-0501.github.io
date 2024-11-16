@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="8 种工作模式 四种输入  输入浮空 - 在浮空输入状态下，GPIO的电平状态是不确定的，完全由外部输入确定。 输入上拉 输出上拉 模拟输入   四种输出  开漏输出 开漏复用：直接输出到片上外设 推挽式输出 推挽式复用    推挽 和 开漏 的区别 ：  推挽 ：可以输出强高低电平，连接数字器件  开漏 ：只可以输出强低电平，高电平得靠外部电阻拉高， 适合做电流型的驱动。   四种输出速率 2M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32-GPIO">
+<meta property="og:url" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="8 种工作模式 四种输入  输入浮空 - 在浮空输入状态下，GPIO的电平状态是不确定的，完全由外部输入确定。 输入上拉 输出上拉 模拟输入   四种输出  开漏输出 开漏复用：直接输出到片上外设 推挽式输出 推挽式复用    推挽 和 开漏 的区别 ：  推挽 ：可以输出强高低电平，连接数字器件  开漏 ：只可以输出强低电平，高电平得靠外部电阻拉高， 适合做电流型的驱动。   四种输出速率 2M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-16T05:26:43.000Z">
+<meta property="article:modified_time" content="2024-11-16T05:30:41.139Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/","path":"2024/11/16/代码编程/嵌入式/单片机/STM32/STM32-GPIO/","title":"STM32-GPIO"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>STM32-GPIO | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">8 种工作模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E8%BE%93%E5%87%BA%E9%80%9F%E7%8E%87"><span class="nav-number">2.</span> <span class="nav-text">四种输出速率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E7%94%A8%E4%B8%8E%E9%87%8D%E6%98%A0%E5%B0%84"><span class="nav-number">4.</span> <span class="nav-text">复用与重映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GPIO-%E4%B8%80%E8%88%AC%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">5.</span> <span class="nav-text">GPIO 一般使用步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HAL-GPIO%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3"><span class="nav-number">6.</span> <span class="nav-text">HAL GPIO相关接口</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="STM32-GPIO | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STM32-GPIO
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:26:43 / 修改时间：13:30:41" itemprop="dateCreated datePublished" datetime="2024-11-16T13:26:43+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="8-种工作模式"><a href="#8-种工作模式" class="headerlink" title="8 种工作模式"></a>8 种工作模式</h1><ul>
+<li><p>四种输入</p>
+<ul>
+<li>输入浮空 - 在浮空输入状态下，GPIO的电平状态是不确定的，完全由外部输入确定。</li>
+<li>输入上拉</li>
+<li>输出上拉</li>
+<li>模拟输入</li>
+</ul>
+</li>
+<li><p>四种输出</p>
+<ul>
+<li>开漏输出</li>
+<li>开漏复用：直接输出到片上外设</li>
+<li>推挽式输出</li>
+<li>推挽式复用</li>
+</ul>
+</li>
+</ul>
+<p>推挽 和 开漏 的区别 ：</p>
+<ul>
+<li><p>推挽 ：可以输出强高低电平，连接数字器件</p>
+</li>
+<li><p>开漏 ：只可以输出强低电平，高电平得靠外部电阻拉高， 适合做电流型的驱动。</p>
+</li>
+</ul>
+<h1 id="四种输出速率"><a href="#四种输出速率" class="headerlink" title="四种输出速率"></a>四种输出速率</h1><ul>
+<li>2MHz 低速</li>
+<li>25MHz 中速</li>
+<li>50MHz 快速</li>
+<li>100MHz 高速</li>
+</ul>
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>每个通用 I&#x2F;O 端口包括 10 个寄存器：</p>
+<ul>
+<li><p>4 个 32 位配置寄存器</p>
+<ul>
+<li>GPIOx_MODER - 端口模式寄存器</li>
+<li>GPIOx_OTYPER - 输出类型寄存器</li>
+<li>GPIOx_OSPEEDR - 输出速度寄存器</li>
+<li>GPIOx_PUPDR - 上下拉寄存器</li>
+</ul>
+</li>
+<li><p>2 个 32 位数据寄存器</p>
+<ul>
+<li>GPIOx_IDR - 输入数据寄存器</li>
+<li>GPIOx_ODR - 输出数据寄存器</li>
+</ul>
+</li>
+<li><p>1 个 32 位置位&#x2F;复位寄存器  GPIOx_BSRR</p>
+</li>
+<li><p>1 个 32 位<strong>锁定寄存器</strong>  GPIOx_LCKR</p>
+</li>
+<li><p>2 个 32 位<strong>复用功能选择</strong>寄存器</p>
+<ul>
+<li>GPIOx_AFRH - 高位</li>
+<li>GPIOx_AFRL - 低位</li>
+</ul>
+</li>
+</ul>
+<h1 id="复用与重映射"><a href="#复用与重映射" class="headerlink" title="复用与重映射"></a>复用与重映射</h1><p>复用 - STM32 所有内置外设(例如：I2C、ADC、ISP、USART等)的外部引脚都是与标准 GPIO 引脚复用的，如果有多个复用功能模块对应同一个引脚，只能使能其中之一，其它模块保持非使能状态。</p>
+<p>重映射 - 复用功能的引出脚可以通过重映射，从不同的 I&#x2F;O 管脚引出，即复用功能的引出脚位是可通过程序改变到其他的引脚上</p>
+<p>配置重映射步骤：</p>
+<p>①. 确保对应引脚的 GPIO 时钟和功能模块时钟开启</p>
+<p>②. 配置时，选择推挽复用输出(AF_PP)或开漏复用输出(AF_OD)</p>
+<p>③. I&#x2F;O 重映射开启</p>
+<p>④. 配置重映射引脚，选择需要的功能，去除不需要的</p>
+<h1 id="GPIO-一般使用步骤"><a href="#GPIO-一般使用步骤" class="headerlink" title="GPIO 一般使用步骤"></a>GPIO 一般使用步骤</h1><ul>
+<li><p>首先通过原理图确定要操作的 GPIO </p>
+</li>
+<li><p>通过芯片手册查找要操作的寄存器，找到该 GPIO 基地址</p>
+<ul>
+<li>目标寄存器地址 &#x3D; 基地址 + 地址偏移</li>
+</ul>
+</li>
+<li><p>软件编码</p>
+<ul>
+<li>使能 GPIO 时钟</li>
+<li>设置 GPIO 参数，包括:输入&#x2F;输出、工作模式、速率</li>
+<li>操作 GPIO</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基于 HAL 库</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">    GPIO_InitTypeDef GPIO_Initure;</span><br><span class="line">    __HAL_RCC_GPIOB_CLK_ENABLE();           <span class="comment">// 使能 GPIO 时钟</span></span><br><span class="line">	</span><br><span class="line">    GPIO_Initure.Pin=GPIO_PIN_0|GPIO_PIN_1; <span class="comment">//PB1,0 设置引脚</span></span><br><span class="line">    GPIO_Initure.Mode=GPIO_MODE_OUTPUT_PP;  <span class="comment">//推挽输出</span></span><br><span class="line">    GPIO_Initure.Pull=GPIO_PULLUP;          <span class="comment">//上拉</span></span><br><span class="line">    GPIO_Initure.Speed=GPIO_SPEED_HIGH;     <span class="comment">// 高速</span></span><br><span class="line">    HAL_GPIO_Init(GPIOB,&amp;GPIO_Initure);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接寄存器操作</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;    	 </span><br><span class="line">	RCC-&gt;AHB1ENR|=<span class="number">1</span>&lt;&lt;<span class="number">1</span>;<span class="comment">//使能PORTB时钟 </span></span><br><span class="line">	GPIO_Set(GPIOB,PIN0|PIN1,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU); <span class="comment">//PB0,PB1设置</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//GPIO通用设置 </span></span><br><span class="line"><span class="comment">//GPIOx:GPIOA~GPIOI.</span></span><br><span class="line"><span class="comment">//BITx:0X0000~0XFFFF,位设置,每个位代表一个IO,第0位代表Px0,第1位代表Px1,依次类推.</span></span><br><span class="line"><span class="comment">//                      比如0X0101,代表同时设置Px0和Px8.</span></span><br><span class="line"><span class="comment">//MODE:0~3;模式选择,0,输入(系统复位默认状态);1,普通输出;2,复用功能;3,模拟输入.</span></span><br><span class="line"><span class="comment">//OTYPE:0/1;输出类型选择,0,推挽输出;1,开漏输出.</span></span><br><span class="line"><span class="comment">//OSPEED:0~3;输出速度设置,0,2Mhz;1,25Mhz;2,50Mhz;3,100Mh. </span></span><br><span class="line"><span class="comment">//PUPD:0~3:上下拉设置,0,不带上下拉;1,上拉;2,下拉;3,保留.</span></span><br><span class="line"><span class="comment">//注意:在输入模式(普通输入/模拟输入)下,OTYPE和OSPEED参数无效!!</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">GPIO_Set</span><span class="params">(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD)</span></span><br><span class="line">&#123;  </span><br><span class="line">	u32 pinpos=<span class="number">0</span>,pos=<span class="number">0</span>,curpin=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(pinpos=<span class="number">0</span>;pinpos&lt;<span class="number">16</span>;pinpos++)</span><br><span class="line">	&#123;</span><br><span class="line">		pos=<span class="number">1</span>&lt;&lt;pinpos;	<span class="comment">//Ò»¸ö¸öÎ»¼ì²é </span></span><br><span class="line">		curpin=BITx&amp;pos;<span class="comment">//¼ì²éÒý½ÅÊÇ·ñÒªÉèÖÃ</span></span><br><span class="line">		<span class="keyword">if</span>(curpin==pos)	<span class="comment">//ÐèÒªÉèÖÃ</span></span><br><span class="line">		&#123;</span><br><span class="line">			GPIOx-&gt;MODER&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;MODER|=MODE&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÄ£Ê½ </span></span><br><span class="line">			<span class="keyword">if</span>((MODE==<span class="number">0X01</span>)||(MODE==<span class="number">0X02</span>))	<span class="comment">//Èç¹ûÊÇÊä³öÄ£Ê½/¸´ÓÃ¹¦ÄÜÄ£Ê½</span></span><br><span class="line">			&#123;  </span><br><span class="line">				GPIOx-&gt;OSPEEDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OSPEEDR|=(OSPEED&lt;&lt;(pinpos*<span class="number">2</span>));<span class="comment">//ÉèÖÃÐÂµÄËÙ¶ÈÖµ  </span></span><br><span class="line">				GPIOx-&gt;OTYPER&amp;=~(<span class="number">1</span>&lt;&lt;pinpos) ;		<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OTYPER|=OTYPE&lt;&lt;pinpos;		<span class="comment">//ÉèÖÃÐÂµÄÊä³öÄ£Ê½</span></span><br><span class="line">			&#125;  </span><br><span class="line">			GPIOx-&gt;PUPDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;PUPDR|=PUPD&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÉÏÏÂÀ­</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="HAL-GPIO相关接口"><a href="#HAL-GPIO相关接口" class="headerlink" title="HAL GPIO相关接口"></a>HAL GPIO相关接口</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span><br><span class="line">HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)    </span><br><span class="line"></span><br><span class="line"><span class="comment">// 引脚的电平翻转</span></span><br><span class="line">HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span><br><span class="line"></span><br><span class="line">HAL_GPIO_EXTI_Callback(<span class="type">uint16_t</span> GPIO_Pin)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/STM32/" rel="tag"># STM32</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/" rel="prev" title="STM32-DMA">
+                  <i class="fa fa-angle-left"></i> STM32-DMA
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-WDG/" rel="next" title="STM32-WDG">
+                  STM32-WDG <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">794k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">24:03</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

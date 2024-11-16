@@ -144,18 +144,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">189</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/TRAC-IK%20Kinematics%20Solver/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20Pose%20extrapolator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,7 +199,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/TRAC-IK%20Kinematics%20Solver/" class="post-title-link" itemprop="url">TRAC-IK Kinematics Solver</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20Pose%20extrapolator/" class="post-title-link" itemprop="url">cartographer - Pose extrapolator</a>
         </h2>
 
         <div class="post-meta-container">
@@ -210,7 +210,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:33:15" itemprop="dateCreated datePublished" datetime="2024-09-17T21:33:15+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -218,27 +218,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">运动学求解器</span></a>
-        </span>
     </span>
 
   
@@ -248,590 +227,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>992</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>TRAC-IK 是由 TRACLabs 开发的一款逆运动学求解器，它通过线程将两种 IK 实现结合在一起，以实现比常用的开源 IK 求解器更可靠的解决方案。从官方文档：(TRACK-ik)为 KDL 中流行的雅可比矩阵逆方法提供了一种可选的逆运动学求解器。具体地说，KDL 的收敛算法是基于牛顿方法的，这种方法在存在关节限制的情况下不能很好地工作——这在许多机器人平台中很常见。trac-IK 同时运行两种 IK 实现：</p>
-<ul>
-<li>一个是对 KDL 基于牛顿的 convergence 的简单扩展，该算法通过随机跳跃检测并缓解由于关节限制而导致的局部最小值</li>
-<li>第二种是 SQP(Sequential Quadratic Programming,即:顺序二次规划)非线性优化方法。使用能够更好地处理关节限制的准牛顿(quasi-Newton)方法</li>
-</ul>
-<p>默认情况下，当这些算法中的任何一个收敛到一个解时，IK 搜索会立即返回。为了获得 “最佳” IK 解，还提供了距离和可操作性的次要约束条件。</p>
-<p>trac_ik_kinematics_plugin 包提供了一个 KinematicsBase MoveIt 接口，可以替换默认的 KDL 求解器。目前不支持模拟关节。</p>
-<p>安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt-get install ros-melodic-trac-ik-kinematics-plugin</span> </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<p>使用</p>
-<ul>
-<li>安装 trac_ik_kinematics_plugin 和 trac_ik_lib 包</li>
-<li>修改 MoveIt! kinematics.yaml 文件</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin</span><br><span class="line">替换为</span><br><span class="line">kinematics_solver: trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin</span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
-<ul>
-<li><p>设置参数</p>
-</li>
-<li><ul>
-<li><p>kinematics_solver_timeout 及 position_only_ik</p>
-</li>
-<li><p>solve_type 可以是：</p>
-</li>
-<li><ul>
-<li>Speed，默认值</li>
-<li>Distance</li>
-<li>Manipulation1</li>
-<li>Manipulation2</li>
-</ul>
-</li>
-<li><p>kinematics_solver_attempts：不需要，与 KDL 不同，Trac-IK 解析器失败时会自动重启</p>
-</li>
-<li><p>kinematic_solver_search_resolution</p>
-</li>
-</ul>
-</li>
-<li><p>注意：用于确定有效解决方案的笛卡尔误差距离是 1e-5，因为这是硬编码到 MoveIt 的 KDL 插件中的。</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/OPW%20Kinematics%20Solver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/OPW%20Kinematics%20Solver/" class="post-title-link" itemprop="url">OPW Kinematics Solver</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 21:33:03" itemprop="dateCreated datePublished" datetime="2024-09-17T21:33:03+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">运动学求解器</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>工业机械手 <strong>OPW</strong> 运动学求解器。</p>
-<p>摘自 <a target="_blank" rel="noopener" href="https://github.com/Jmeyer1292/opw_kinematics">opw_kinematics</a>：一个简单的解析逆运动学库，<strong>用于具有平行底座和球形手腕的工业机器人</strong>。基于 Mathias Brandstötter、Arthur Angerer 和 Michael Hofbaur 的论文(An Analytical Solution of the Inverse Kinematics Problem of Industrial Serial Manipulators with an Ortho-parallel Basis and a Spherical)。</p>
-<p>该软件包旨在为具有平行底座和球形手腕的工业机器人提供一种更简单的替代方案，而不是基于 IK-Fast 的解决方案。这种配置在工业机器人中非常常见。</p>
-<p>1、安装使用</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/JeroenDM/moveit_opw_kinematics_plugin">opw_kinematics_plugin</a> </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install ros-noetic-moveit-opw-kinematics-plugin</span></span><br></pre></td></tr></table></figure>
-
-<p>​            </p>
-<p>替换 kinematics.yaml 中的 kinematics_solver</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin</span><br><span class="line">替换为</span><br><span class="line">kinematics_solver: moveit_opw_kinematics_plugin/MoveItOPWKinematicsPlugin</span><br></pre></td></tr></table></figure>
-
-<p>​        </p>
-<p>并设置参数来描述机械手的几何形状。参数可从机器人手册中查询。以下是KUKA KR 6 R700所需的参数示例</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">manipulator:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">moveit_opw_kinematics_plugin/MoveItOPWKinematicsPlugin</span></span><br><span class="line">  <span class="attr">opw_kinematics_geometric_parameters:</span></span><br><span class="line">    <span class="attr">a1:</span>  <span class="number">0.025</span></span><br><span class="line">    <span class="attr">a2:</span> <span class="number">-0.035</span></span><br><span class="line">    <span class="attr">b:</span>   <span class="number">0.000</span></span><br><span class="line">    <span class="attr">c1:</span>  <span class="number">0.400</span></span><br><span class="line">    <span class="attr">c2:</span>  <span class="number">0.315</span></span><br><span class="line">    <span class="attr">c3:</span>  <span class="number">0.365</span></span><br><span class="line">    <span class="attr">c4:</span>  <span class="number">0.080</span></span><br><span class="line">  <span class="attr">opw_kinematics_joint_offsets:</span> [<span class="number">0.0</span>, <span class="number">-1.57079632679</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">  <span class="attr">opw_kinematics_joint_sign_corrections:</span> [<span class="number">-1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">-1</span>, <span class="number">1</span>, <span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
-<p>参数的含义可以通过草图来最好地理解。如果与 URDF 不匹配，插件将在启动时报错:</p>
- <img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/OPW%20Kinematics%20Solver/image-20240917213358269.png" class="" title="image-20240917213358269">
-
-<p>我们计划收集 OPW 参数集，作为 ros-industrial robot 支持包的一部分。发那科已经开始这样做了。以 <a target="_blank" rel="noopener" href="https://github.com/ros-industrial/fanuc/blob/3ea2842baca3184cc621071b785cbf0c588a4046/fanuc_m10ia_support/config/opw_parameters_m10ia.yaml">M-10iA</a> 为例，kinematics.yaml 可精简为</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">manipulator:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">moveit_opw_kinematics_plugin/MoveItOPWKinematicsPlugin</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>然后在 launch&#x2F;planning_context.launch 中添加一条 rosparam load，使该文件中的参数被加载到参数服务器:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Load default settings for kinematics; these settings are overridden by settings in a node&#x27;s namespace --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;$(arg robot_description)_kinematics&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find opw_tutorial)/config/kinematics.yaml&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;manipulator&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find fanuc_lrmate200ib_support)/config/opw_parameters_lrmate200ib.yaml&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>需先下载 fanuc_lrmate200ib_support 包。</p>
-<p>注意：ns 参数需与 planning group 匹配。</p>
-<p>MoveIt Setup Assistant 可以自动插入这一行，无需手动编辑planning_context.launch 文件。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/IKFast%20Kinematics%20Solver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/IKFast%20Kinematics%20Solver/" class="post-title-link" itemprop="url">IKFast Kinematics Solver</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 21:26:39" itemprop="dateCreated datePublished" datetime="2024-09-17T21:26:39+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">运动学求解器</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>机器人运动学编译器 IKFast 是 Rosen Diankov 的 OpenRAVE 运动规划软件中提供的一个强大的逆运动学求解器。与大多数逆运动学求解器不同，<strong>IKFast 可以解析任何复杂运动学链的运动学方程</strong>，并生成特定语言的文件(如c++)供以后使用。最终的结果是非常稳定的解决方案。</p>
-<p>MoveIt IKFast 是使用 OpenRAVE 生成的 cpp 文件为 MoveIt 生成 IKFast 运动学插件的工具。本教程将引导设置机器人以利用 IKFast 的强大功能。MoveIt IKFast 插件生成器工具不适用于 &gt;7 DOF 的手臂。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><strong>方法一</strong></p>
-<p>安装依赖</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cmake g++ git ipython minizip python-dev python-h5py python-numpy python-scipy qt4-dev-tools</span><br><span class="line"></span><br><span class="line">sudo apt-get install libassimp-dev libavcodec-dev libavformat-dev libavformat-dev libboost-all-dev libboost-date-time-dev libbullet-dev libfaac-dev libglew-dev libgsm1-dev liblapack-dev liblog4cxx-dev libmpfr-dev libode-dev libogg-dev libpcrecpp0v5 libpcre3-dev libqhull-dev libqt4-dev libsoqt-dev-common libsoqt4-dev libswscale-dev libswscale-dev libvorbis-dev libx264-dev libxml2-dev libxvidcore-dev</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 OpenSceneGraph-3.4 ,以使能 OpenRave viewer</span></span><br><span class="line">sudo apt-get install libcairo2-dev libjasper-dev libpoppler-glib-dev libsdl2-dev libtiff5-dev libxrandr-dev</span><br><span class="line">git clone https://github.com/openscenegraph/OpenSceneGraph.git --branch OpenSceneGraph-3.4</span><br><span class="line">cd OpenSceneGraph</span><br><span class="line">mkdir build; cd build</span><br><span class="line">cmake .. -DDESIRED_QT_VERSION=4</span><br><span class="line">make -j$(nproc)</span><br><span class="line">sudo make install</span><br><span class="line">sudo make install_ld_conf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pip install --upgrade --user sympy==0.7.1</span></span><br><span class="line">pip install --upgrade --user sympy -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br><span class="line">sudo apt remove python-mpmath</span><br></pre></td></tr></table></figure>
-
-<p>安装 MoveIt IKFast</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指令安装</span></span><br><span class="line">sudo apt-get install ros-melodic-moveit-kinematics</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">源码安装</span></span><br><span class="line">git clone https://github.com/ros-planning/moveit.git</span><br></pre></td></tr></table></figure>
-
-<p>安装 openRAVE</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 OpenRAVE. 验证失败。使用源码安装</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">sudo</span> apt-get install ros-melodic-openrave</span> </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> PYTHONPATH=<span class="variable">$PYTHONPATH</span>:`openrave-config --python-dir`</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">源码安装 OpenRAVE</span></span><br><span class="line">git clone --branch latest_stable https://github.com/rdiankov/openrave.git</span><br><span class="line">cd openrave &amp;&amp; mkdir build &amp;&amp; cd build</span><br><span class="line">cmake -DODE_USE_MULTITHREAD=ON -DOSG_DIR=/usr/local/lib64/ ..</span><br><span class="line">make -j$(nproc)</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
-<p>上述方法编译时失败，改用如下方法二</p>
-<p><strong>方法二</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/crigroup/openrave-installation</span><br><span class="line">cd openrave-installation</span><br><span class="line">./install-dependencies.sh</span><br><span class="line">./install-osg.sh</span><br><span class="line">./install-fcl.sh</span><br><span class="line"></span><br><span class="line">./install-openrave.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="创建-Collada-文件"><a href="#创建-Collada-文件" class="headerlink" title="创建 Collada 文件"></a><strong>创建 Collada 文件</strong></h1><p>参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MYROBOT_NAME - name of robot as in your URDF</span><br><span class="line">PLANNING_GROUP - planning group 名, 在SRDF和kinematics.yam中引用</span><br><span class="line">MOVEIT_IK_PLUGIN_PKG - name of the new package you just created</span><br><span class="line">IKFAST_OUTPUT_PATH - 生成的 IKFast output.cpp 文件的位置</span><br></pre></td></tr></table></figure>
-
-<p>为了使该示例的复制&#x2F;粘贴更加友好，设置一个 MYROBOT_NAME 环境变量为机器人的名字:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export MYROBOT_NAME=&quot;panda_arm&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>首先，需要机器人描述文件，它是 Collada 或 OpenRAVE 机器人格式的。如果机器人不是这种格式，建议创建一个 ROS URDF 文件。</p>
-<p>如果是 xacro 格式，则先转换为 urdf 格式：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun xacro xacro --inorder -o <span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.urdf <span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.urdf.xacro</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>将 URDF 转为 Collada(.dae) 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun collada_urdf urdf_to_collada <span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.urdf <span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.dae</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>在将 URDF 文件转换为 Collada 文件时，经常会出现浮点问题，因此创建了一个脚本，将 .dae 文件中的所有数字四舍五入到小数点后 x 位。最好一开始就跳过这一步，看看 IKFast 是否可以用默认值生成一个解决方案，但如果生成器花费的时间超过了，比如说，一个小时，试试下面的方法:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export IKFAST_PRECISION=&quot;5&quot;</span><br><span class="line">cp &quot;$MYROBOT_NAME&quot;.dae &quot;$MYROBOT_NAME&quot;.backup.dae  # create a backup of your full precision dae.</span><br><span class="line">rosrun moveit_kinematics round_collada_numbers.py &quot;$MYROBOT_NAME&quot;.dae &quot;$MYROBOT_NAME&quot;.dae &quot;$IKFAST_PRECISION&quot;</span><br></pre></td></tr></table></figure>
-
-<p>根据经验，推荐小数点后 5 位，但如果 OpenRAVE IKFast 生成器需要很长时间才能找到解决方案，可以降低小数点后的位数。</p>
-<p>查看生成的 dae 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果是一个 7DOF 的手臂，需要填写一个 -freeindex 参数</span></span><br><span class="line">openrave-robot.py &quot;$MYROBOT_NAME&quot;.dae --info links</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看 dae 文件</span></span><br><span class="line">openrave &quot;$MYROBOT_NAME&quot;.dae</span><br></pre></td></tr></table></figure>
-
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/IKFast%20Kinematics%20Solver/image-20240917212908429.png" class="" title="image-20240917212908429">
-
-
-
-<p>例如：gen3</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rosrun xacro xacro --inorder -o gen3.urdf gen3.xacro</span><br><span class="line">rosrun collada_urdf urdf_to_collada gen3.urdf gen3.dae</span><br><span class="line">rosrun moveit_kinematics round_collada_numbers.py gen3.dae gen3.dae 5</span><br><span class="line">openrave gen3.dae</span><br></pre></td></tr></table></figure>
-
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/IKFast%20Kinematics%20Solver/image-20240917212932924.png" class="" title="image-20240917212932924">
-
-<h1 id="创建-IKFast-Soulution-CPP-文件"><a href="#创建-IKFast-Soulution-CPP-文件" class="headerlink" title="创建 IKFast Soulution CPP 文件"></a><strong>创建 IKFast Soulution CPP 文件</strong></h1><h2 id="选择-IK-类型"><a href="#选择-IK-类型" class="headerlink" title="选择 IK 类型"></a><strong>选择 IK 类型</strong></h2><p>需要选择想要的 IK。最常见的 IK 类型是 transform6d。</p>
-<p><a target="_blank" rel="noopener" href="http://openrave.org/docs/latest_stable/openravepy/ikfast/#ik-types">IK types</a>：</p>
-<ul>
-<li><strong>Transform6D</strong>：end effector reaches desired 6D transformation</li>
-<li><strong>Rotation3D</strong>：end effector reaches desired 3D rotation</li>
-<li><strong>Translation3D</strong>：end effector origin reaches desired 3D translation</li>
-<li><strong>Direction3D</strong>：末端执行器坐标系的方向达到预期方向 direction</li>
-<li><strong>Ray4D</strong>：ray on end effector coordinate system reaches desired global ray</li>
-<li><strong>Lookat3D</strong>：末端执行器坐标系统的方向指向期望的三维位置</li>
-<li><strong>TranslationDirection5D</strong>：end effector origin and direction reaches desired 3D translation and direction. Can be thought of as Ray IK where the origin of the ray must coincide.</li>
-<li><strong>TranslationXY2D</strong>：end effector origin reaches desired XY translation position, Z is ignored. The coordinate system with relative to the base link.</li>
-<li><strong>TranslationLocalGlobal6D</strong>：local point on end effector origin reaches desired 3D global point. Because both local point and global point can be specified, there are 6 values</li>
-<li><strong>TranslationXAxisAngle4D,TranslationYAxisAngle4D, TranslationZAxisAngle4D</strong>： end effector origin reaches desired 3D translation, manipulator direction makes a specific angle with x&#x2F;y&#x2F;z-axis (defined in the manipulator base link’s coordinate system)</li>
-<li><strong>ranslationXAxisAngleZNorm4D，TranslationYAxisAngleXNorm4D，TranslationZAxisAngleYNorm4D</strong>：end effector origin reaches desired 3D translation, manipulator direction needs to be orthogonal to z, x, or y axis and be rotated at a certain angle starting from the x, y, or z axis (defined in the manipulator base link’s coordinate system)</li>
-</ul>
-<h2 id="选择-planning-group"><a href="#选择-planning-group" class="headerlink" title="选择 planning group"></a><strong>选择 planning group</strong></h2><p>如果希望为机器人生成 IKFast 解决方案，机器人有多个手臂或 planning  group ，需生成其中一个。例如，可能有两个 planning group:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;planning_group_name&gt; = &quot;left_arm&quot; &lt;planning_group_name&gt; = &quot;right_arm&quot;    </span><br></pre></td></tr></table></figure>
-
-<p>​          </p>
-<p>设置环境变量，方便使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PLANNING_GROUP=&quot;panda_arm&quot;   </span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
-<h2 id="定义-Links-数目"><a href="#定义-Links-数目" class="headerlink" title="定义 Links 数目"></a><strong>定义 Links 数目</strong></h2><p>还需要 base_link 和 end_link 的 link index，在这两者之间计算IK。可以通过查看的模型中的 links 列表来计算链接的数量:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">openrave-robot.py <span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.dae --info links</span>  </span><br></pre></td></tr></table></figure>
-
-<p>​            </p>
-<p>根据 ROS 规范的要求，一个典型的 6-DOF 机械手应该有 6 个 arm links + 一个虚拟的 base_link。如果模型中没有额外的 link，则得到: baselink&#x3D;0 和 eelink&#x3D;6。通常，会提供一个额外的 tool_link 来定位 grasp&#x2F;tool 坐标系，给出 eelink&#x3D;7。</p>
-<p>下例中的机械手也有另一个 dummy mounting_link，给出 baselink&#x3D;1 和 eelink&#x3D;8</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>index</th>
-<th>parents</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>panda_link0</td>
-<td>0</td>
-<td></td>
-</tr>
-<tr>
-<td>panda_link1</td>
-<td>1</td>
-<td>panda_link0</td>
-</tr>
-<tr>
-<td>panda_link2</td>
-<td>2</td>
-<td>panda_link1</td>
-</tr>
-<tr>
-<td>panda_link3</td>
-<td>3</td>
-<td>panda_link2</td>
-</tr>
-<tr>
-<td>panda_link4</td>
-<td>4</td>
-<td>panda_link3</td>
-</tr>
-<tr>
-<td>panda_link5</td>
-<td>5</td>
-<td>panda_link4</td>
-</tr>
-<tr>
-<td>panda_link6</td>
-<td>6</td>
-<td>panda_link5</td>
-</tr>
-<tr>
-<td>panda_link7</td>
-<td>7</td>
-<td>panda_link6</td>
-</tr>
-<tr>
-<td>panda_link8</td>
-<td>8</td>
-<td>panda_link7</td>
-</tr>
-</tbody></table>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export BASE_LINK=&quot;0&quot; export EEF_LINK=&quot;8&quot;  </span><br></pre></td></tr></table></figure>
-
-<p>如果是 7-DOF 的手臂，需要指定一个自由关节。为 7-DOF 机器人选择正确的自由关节可以对运动学插件的性能产生重大影响。建议对自由关节进行不同选择的试验</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export FREE_INDEX=&quot;1&quot;     </span><br></pre></td></tr></table></figure>
-
-<p>​         </p>
-<p><strong>4）生成 IK Solver</strong></p>
-<p>为了生成 6-DOF 机械手底座和工具框架之间的 IK 解决方案，使用以下命令格式。建议将输出命名为 ikfast61_”$PLANNING_GROUP”.cpp:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export IKFAST_OUTPUT_PATH=`pwd`/ikfast61_&quot;$PLANNING_GROUP&quot;.cpp   </span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
-<p>对 6-DOF 机械臂：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python `openrave-config --python-dir`/openravepy/_openravepy_/ikfast.py --robot=<span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.dae --iktype=transform6d --baselink=<span class="string">&quot;<span class="variable">$BASE_LINK</span>&quot;</span> --eelink=<span class="string">&quot;<span class="variable">$EEF_LINK</span>&quot;</span> --savefile=<span class="string">&quot;<span class="variable">$IKFAST_OUTPUT_PATH</span>&quot;</span></span> </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<p>对 7-DOF 机械臂，需要指定一个自由 link(–freeindex)：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python `openrave-config --python-dir`/openravepy/_openravepy_/ikfast.py --robot=<span class="string">&quot;<span class="variable">$MYROBOT_NAME</span>&quot;</span>.dae --iktype=transform6d --baselink=<span class="string">&quot;<span class="variable">$BASE_LINK</span>&quot;</span> --eelink=<span class="string">&quot;<span class="variable">$EEF_LINK</span>&quot;</span> --freeindex=<span class="string">&quot;<span class="variable">$FREE_INDEX</span>&quot;</span> --savefile=<span class="string">&quot;<span class="variable">$IKFAST_OUTPUT_PATH</span>&quot;</span></span>  </span><br></pre></td></tr></table></figure>
-
-<p>​            </p>
-<p>这个过程的速度和成功将取决于机器人的复杂性。一个典型的 6-DOF 机械手，在底部或手腕处有 3 个相交轴，只需要几分钟就可以生成 IK。</p>
-<p>已知问题: freeindex 参数有一个错误，它不能正确处理树索引。假设 -baselink&#x3D;2 -eelink&#x3D;16, links index 从 3 到 9 与当前 planning group 链无关。在这种情况下 -freeindex 将期望索引2作为link 2，但是索引 3 作为link 10，索引 9 作为 link 16。</p>
-<h1 id="创建插件"><a href="#创建插件" class="headerlink" title="创建插件"></a><strong>创建插件</strong></h1><p>建议插件包命名格式：”$MYROBOT_NAME”<em>ikfast</em>“$PLANNING_GROUP”_plugin:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export MOVEIT_IK_PLUGIN_PKG=&quot;$MYROBOT_NAME&quot;_ikfast_&quot;$PLANNING_GROUP&quot;_plugin cd ~/catkin_ws/src catkin_create_pkg &quot;$MOVEIT_IK_PLUGIN_PKG&quot; catkin build  </span><br></pre></td></tr></table></figure>
-
-<p>​            </p>
-<p>创建插件源码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun moveit_kinematics create_ikfast_moveit_plugin.py &quot;$MYROBOT_NAME&quot; &quot;$PLANNING_GROUP&quot; &quot;$MOVEIT_IK_PLUGIN_PKG&quot; &quot;$IKFAST_OUTPUT_PATH&quot;       </span><br></pre></td></tr></table></figure>
-
-<p>​       </p>
-<p>或者，不使用 ROS：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python /path/to/create_ikfast_moveit_plugin.py &quot;$MYROBOT_NAME&quot; &quot;$PLANNING_GROUP&quot; &quot;$MOVEIT_IK_PLUGIN_PKG&quot; &quot;$IKFAST_OUTPUT_PATH&quot; </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a><strong>使用</strong></h1><p>IKFast 插件的功能应该与默认的 KDL IK 求解器相同，但性能会大大提高。MoveIt 配置文件由 moveit_ikfast 脚本自动编辑，但是可以使用机器人运动学中的 kinematics_solver 参数在 KDL 和 IKFast 求解器之间切换。yaml文件:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosed &quot;$MYROBOT_NAME&quot;_moveit_config kinematics.yaml     </span><br></pre></td></tr></table></figure>
-
-<p>​         </p>
-<p>编辑以下部分：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&lt;planning_group&gt;:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">&lt;myrobot_name&gt;_&lt;planning_group&gt;_kinematics/IKFastKinematicsPlugin</span></span><br><span class="line"><span class="string">-INSTEAD</span> <span class="string">OF-</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">kdl_kinematics_plugin/KDLKinematicsPlugin</span></span><br></pre></td></tr></table></figure>
-
-<p>​    </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/kinematics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/kinematics/" class="post-title-link" itemprop="url">kinematics配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-17 21:22:24" itemprop="dateCreated datePublished" datetime="2024-09-17T21:22:24+08:00">2024-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">运动学求解器</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -849,64 +245,54 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><strong>MoveIt! 使用插件结构，尤其是允许用户编写自己的逆运动学算法。Forward kinematics（正向运动学） and finding jacobians（查找雅可比矩阵） 被整合到自己的 RobotState 类。默认逆运动学插件配置使用 KDL numerical jacobian-based solver。由 MoveIt! Setup Assistant 自动配置。</strong></p>
-<p>用户可以选择执行自己的运动学求解器，例如 PR2 有自己的运动学求解器。要实现这样的求解的一种流行的方法是使用 ikfast 包产生需要与特定工作的机器人的 C++ 代码。</p>
-<p>在规划场景中，冲突检测通过 CollisionWorld 对象来配置，由 FCL 包（主要的CC库）来执行。</p>
-<p>Allowed Collision Matrix (ACM)（免检冲突矩阵），在运动规划里，冲突检测会耗费甚至达到 90% 的计算资源。ACM 编码需要检测的对象间的对应关系（机器人的或世界的）。如果在 ACM 关联两对象的值为1，那就不需要检测，这情况就比如两个对象相隔很远，永远不会发生碰撞。</p>
-<h1 id="kinematics-配置"><a href="#kinematics-配置" class="headerlink" title="kinematics 配置"></a>kinematics 配置</h1><p>kinematics 配置参数位于 kinematics.yaml 文件中。例如：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">panda_arm:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">kdl_kinematics_plugin/KDLKinematicsPlugin</span></span><br><span class="line">  <span class="attr">kinematics_solver_search_resolution:</span> <span class="number">0.005</span></span><br><span class="line">  <span class="attr">kinematics_solver_timeout:</span> <span class="number">0.05</span></span><br><span class="line">  <span class="attr">kinematics_solver_attempts:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a>通用参数</h2><ul>
-<li><strong>kinematics_solver</strong>：运动学求解器插件名。必须与 plugin description 文件中的名字一致</li>
-<li><strong>kinematics_solver_search_resolution</strong>：指定求解器可能用于在冗余空间中搜索逆运动学的分辨率</li>
-<li><strong>kinematics_solver_timeout</strong>：逆运动学求解器可能执行的每个内部迭代的默认超时(以秒为单位)。典型的迭代(例如，数值求解器)将包括从种子状态随机重新启动，然后是求解周期(适用于此超时)。解算器可以尝试多次重启。默认的重启次数由 kinematics_solver_attempts 参数定义</li>
-<li><strong>kinematics_solver_attempts</strong>：重试次数。最好将超时设置得较低，并在单个解决方案周期中快速失败</li>
-</ul>
-<h2 id="KDL-Kinematics-插件"><a href="#KDL-Kinematics-插件" class="headerlink" title="KDL Kinematics 插件"></a>KDL Kinematics 插件</h2><p>KDL kinematics 插件封装了 Orocos KDL 包提供的数值逆运动学求解器。</p>
+          <p>PoseExtrapolator 类：将 pose 保持一定时间以估计线速度和角速度。使用速度来推断运动。 如果有IMU&#x2F;Odometry，则使用IMU和&#x2F;或odometry数据来改进该推断(extrapolation)。  </p>
+<p>(旧版本cartographer使用UKF来进行数据融合来估计位姿)  </p>
+<p>如果没有 imu，则在第一帧 scan 数据处理时初始化 extrapolator，若有 imu，则在每帧 imu 数据处理时都调用 InitializeExtrapolator，但因为该接口中对 extrapolator_ 进行判断，因此不会每次都重新初始化 extrapolator。 若使用 scan + odometery 建图，也只在第一帧 scan 处理时初始化 extrapolator，在处理 odom 数据时，只是将该数据添加到 extrapolator 中。  </p>
+<p><strong>timed_pose_queue_</strong>: 缓存经过匹配校准后的位姿点。该队列不会一直缓存，会删除间隔超过 pose_queue_duration_ 的点<br><strong>cached_extrapolated_pose_</strong>: 缓存根据 odom&#x2F;imu&#x2F;历史位姿点(timed_pose_queue_) 推断出的位姿。该队列不会清除   </p>
+<p>odometry_imu_tracker_、extrapolation_imu_tracker_: 都指向 imu_tracker_    </p>
+<p>ImuTracker:使用来自IMU的角速度和线加速度来跟踪方向。 因为平均线性加速度（假设慢速运动）是重力的直接测量，所以滚动&#x2F;俯仰虽然会导致yaw角偏离，但不会出现漂移。  </p>
+<p><strong>AddPose：</strong><br>AddPose 只在累积 <code>num_accumulated_range_data</code> 帧 scan 数据，进行匹配得到校准后的位姿后才会执行。将校准后的位姿存入 <code>timed_pose_queue_</code> 缓存中：   </p>
 <ul>
-<li>默认的运动学插件</li>
-<li>遵守 URDF 中指定的关节限制(如果 URDF 中指定了 safety 限制，则将使用 safety 限制)</li>
-<li>KDL 运动学插件目前只适用于串行链(serial chains)</li>
+<li>若 <code>imu_tracker_</code> 为空, 则创建并初始化 </li>
+<li>将匹配校准或的位姿点存入 timed_pose_queue_ 缓存中</li>
+<li>删除 timed_pose_queue_ 中距当前时间超过 <code>kExtrapolationEstimationTimeSec</code>(0.001s) 的点(前提是当前缓存中点数&gt;2,确保删除后还有至少两个点)  </li>
+<li>根据 timed_pose_queue_ 中的 pose 点及点之间的时间间隔计算线速度和角速度  </li>
+<li>更新 imu_tracker_ - AdvanceImuTracker  </li>
+<li>TrimImuData() - 删除 imu_data_ 中的无用数据(过期数据)</li>
+<li>TrimOdometryData() - 删除 odometry_data_ 中的无用数据</li>
+<li>构建 odometry_imu_tracker_ 及 extrapolation_imu_tracker_ 指针(每次执行 AddPose 都会重新 make_unique 构建)</li>
 </ul>
-<h2 id="LMA-Kinematic-插件"><a href="#LMA-Kinematic-插件" class="headerlink" title="LMA Kinematic 插件"></a>LMA Kinematic 插件</h2><p>LMA (Levenberg-Marquardt)运动学插件也是封装了 Orocos KDL 包提供的数值逆运动学求解器。</p>
+<p><strong>ExtrapolatePose：推算位姿</strong>  </p>
 <ul>
-<li>遵守 URDF 中指定的关节限制(如果 URDF 中指定了 safety 限制，则将使用 safety 限制)</li>
-<li>该插件目前只适用于串行链(serial chains)</li>
+<li>调用 <code>ExtrapolateTranslation</code> 方法计算偏移量  <ul>
+<li>若有里程计数据，则根据从里程计数据得到的线速度 <code>linear_velocity_from_odometry_</code> 及时间间隔 来计算偏移量  </li>
+<li>若没有里程计数据，则根据从缓存的两点计算得到的线速度 <code>linear_velocity_from_poses_</code> 及时间间隔 来计算偏移量</li>
 </ul>
-<p>使用方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kinematics_solver: lma_kinematics_plugin/LMAKinematicsPlugin  </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Cached-IK-插件"><a href="#Cached-IK-插件" class="headerlink" title="Cached IK 插件"></a><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/master/moveit_kinematics/cached_ik_kinematics_plugin/README.md">Cached IK 插件</a></h2><p>Cched IK 运动学插件创建 IK 解决方案的持久缓存。这个缓存然后被用来加速任何其他 IK 求解器。对 IK 求解器的调用将在缓存中使用类似的状态作为 IK 求解器的种子(seed)。如果不能返回一个解，则使用用户指定的 seed 状态再次调用 IK 求解器。若新的 IK 解决方案与缓存中的状态有很大不同，将被添加到缓存中。定期将缓存保存到磁盘。</p>
-<p>要使用缓存 IK 运动学插件，需要修改文件 kinematics.yaml:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">manipulator:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">kdl_kinematics_plugin/KDLKinematicsPlugin</span></span><br></pre></td></tr></table></figure>
-
-<p>修改为：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">manipulator:</span></span><br><span class="line">  <span class="attr">kinematics_solver:</span> <span class="string">cached_ik_kinematics_plugin/CachedKDLKinematicsPlugin</span></span><br><span class="line">  <span class="comment"># optional parameters for caching:</span></span><br><span class="line">  <span class="attr">max_cache_size:</span> <span class="number">10000</span></span><br><span class="line">  <span class="attr">min_pose_distance:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">min_joint_config_distance:</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>kinematics_solver 的可能值包括：</p>
+</li>
+</ul>
+<p>计算得到的偏移量 + 上一点的位置信息，得到预估的点的坐标信息    </p>
 <ul>
-<li><p><strong>cached_ik_kinematics_plugin&#x2F;CachedKDLKinematicsPlugin</strong>: 封装默认的 KDL IK 求解器</p>
-</li>
-<li><p><strong>cached_ik_kinematics_plugin&#x2F;CachedSrvKinematicsPlugin</strong>: 使用 ros service 调用与扩展 IK 求解器通信.</p>
-</li>
-<li><p><strong>cached_ik_kinematics_plugin&#x2F;CachedTRACKinematicsPlugin</strong>: 封装 <a target="_blank" rel="noopener" href="https://bitbucket.org/traclabs/trac_ik">TRAC IK solver</a>。编译时必须能检测到 KDL IK 运动学插件</p>
-</li>
-<li><p><strong>cached_ik_kinematics_plugin&#x2F;CachedUR5KinematicsPlugin</strong>: 封装用于 UR5 机械臂的 <strong>analytic IK solver</strong>.</p>
+<li>调用 <code>ExtrapolateRotation</code> 方法计算旋转量(即:偏转角度)  <ul>
+<li>调用 <code>AdvanceImuTracker</code>  </li>
+<li>根据 imu_tracker 获取上次的方向 <code>imu_tracker_-&gt;orientation()</code> </li>
+<li>计算偏转角 <code>last_orientation.inverse() * imu_tracker-&gt;orientation()</code></li>
+</ul>
 </li>
 </ul>
-<h2 id="Position-Only-IK"><a href="#Position-Only-IK" class="headerlink" title="Position Only IK"></a><strong>Position Only IK</strong></h2><p>该求解器可以很容易地启用(只有当使用 KDL 运动学插件)通过添加以下行到 kinematics.yaml 文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">position_only_ik: True  </span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="逆运动学求解算法对比"><a href="#逆运动学求解算法对比" class="headerlink" title="逆运动学求解算法对比"></a>逆运动学求解算法对比</h1><img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%B1%82%E8%A7%A3%E5%99%A8/kinematics/image-20240917213610685.png" class="" title="image-20240917213610685">
-
+<p>根据计算得到的偏转角及上一次时机器人的方位，得到预估的点的方位信息    </p>
+<ul>
+<li>将预估的位姿点存入 <code>cached_extrapolated_pose_</code> 中</li>
+</ul>
+<p><strong>AdvanceImuTracker：</strong>  </p>
+<ul>
+<li>若IMU为空，或IMU时间戳异常，若有 odom 数据，则使用从 odom 得到的角速度 <code>angular_velocity_from_odometry_</code> 来更新位姿，若没有 odom ，则根据缓存的历史位姿点计算得到的角速度 <code>angular_velocity_from_poses_</code> 来更新方向。<br><strong>注意：<code>angular_velocity_from_odometry_</code>并不是直接取 odom 主题中的角速度，而是根据 <code>odometry_data_</code> 队列中首尾元素之间的变换矩阵中的 <code>rotation/dt</code> 得到</strong>       </li>
+<li>有可用的IMU数据, 则根据 IMU 数据中的 <code>linear_acceleration</code> 及 <code>angular_velocity</code> 来更新方向   <ul>
+<li><code>AddImuLinearAccelerationObservation</code>: 线加速度用于更新 gravity_vector_, 然后使用 gravity_vector_ 来更新姿态</li>
+<li></li>
+<li><code>AddImuAngularVelocityObservation</code></li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -933,7 +319,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/OMPL/OMPL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -951,7 +337,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/OMPL/OMPL/" class="post-title-link" itemprop="url">OMPL</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20%E5%85%A8%E5%B1%80%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">cartographer - 全局优化</a>
         </h2>
 
         <div class="post-meta-container">
@@ -962,7 +348,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:20:20" itemprop="dateCreated datePublished" datetime="2024-09-17T21:20:20+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -970,23 +356,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/OMPL/" itemprop="url" rel="index"><span itemprop="name">OMPL</span></a>
-        </span>
     </span>
 
   
@@ -1014,140 +383,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>OMPL：Open Motion Planning Library，是一个包含许多常用的<strong>基于采样</strong>的运动规划算法（以基于采样的算法，如RRT、PRM为主）的 C++ 库。也是 Moveit!(工具集) 默认采用的运动规划算法库。</p>
-<p>OMPL.app 是 OMPL 的前端，它是一个包含 <a target="_blank" rel="noopener" href="https://github.com/flexible-collision-library/fcl">FCL</a> 和 <a target="_blank" rel="noopener" href="http://gamma.cs.unc.edu/SSV">PQP</a> 碰撞检测器和基于 PyQt&#x2F;PySide 的简单 GUI 用户界面的轻量级包。</p>
-<p>特性：基于采样，概率完备，非最优&#x2F;渐进最优。</p>
-<h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a><strong>核心概念</strong></h1><p>运动规划问题核心概念</p>
-<ul>
-<li><strong>状态空间</strong>：即 构型空间，内部的点表征着规划系统的特点状态。对于一个自有运动的刚体，其状态空间由三个平移状态和三个旋转状态构成；而对于具有 n 个转动关节的机械臂，状态空间可被表征为一个 n 维的圆环面</li>
-<li><strong>控制空间</strong>：表征控制量空间的参数化。控制空间适用于动力学系统，对于集合层面的规划，无需考虑控制量问题</li>
-<li><strong>采样器</strong>：用于从状态空间内产生不同的状态。对于基于控制的系统，使用独立的控制量采样机对控制空间进行采样</li>
-<li><strong>状态有效性检测器</strong>：用于区分状态空间的有小部分和无效部分的算法。如：使用状态有效性检测器进行避障检测，以及速度和加速度超限检测等</li>
-<li><strong>局部规划器</strong>：在集合层面进行规划时，局部规划用于进行状态点之间的插补</li>
-</ul>
-<p>OMPL 中的规划算法都是在非常抽象的<strong>状态空间</strong>中工作。OMPL 中已实现了多种常用状态空间，例如：</p>
-<ul>
-<li>SE(2)：平面平移及旋转</li>
-<li>SE(3)：空间平移及旋转</li>
-<li>R^n：<a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/classompl_1_1base_1_1RealVectorStateSpace.html"><strong>ompl::base::RealVectorStateSpace</strong></a></li>
-<li>SO(2)：平面旋转</li>
-<li>SO(3)：空间旋转</li>
-<li>Time</li>
-<li>Discrete：离散状态</li>
-<li>Dubins：Dubins car’s 状态空间</li>
-<li>ReedsShepp：Reeds-Shepp car’s 状态空间</li>
-<li>OpenDE：Open Dynamics Engine</li>
-<li>Constrained state spaces：约束状态空间</li>
-</ul>
-<p>OMPL 中实现的控制空间包括：</p>
-<ul>
-<li>R^n：<a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/classompl_1_1control_1_1RealVectorControlSpace.html"><strong>ompl::control::RealVectorControlSpace</strong></a></li>
-<li>Discrete：<a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/classompl_1_1control_1_1DiscreteControlSpace.html"><strong>ompl::control::DiscreteControlSpace</strong></a></li>
-<li>OpenDE：<a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/classompl_1_1control_1_1OpenDEControlSpace.html"><strong>ompl::control::OpenDEControlSpace</strong></a></li>
-</ul>
-<h1 id="OMPL-算法"><a href="#OMPL-算法" class="headerlink" title="OMPL 算法"></a><strong>OMPL 算法</strong></h1><p><strong>基于采样运动规划</strong>：基本思想是使用<strong>图结构</strong>近似搜索空间的连续性，然后对搜索空间进行采样并选择样本点作为近似图的顶点，近似图内各顶点之间的连线表示有效路径。</p>
-<p>OMPL 包含许多基于采样的算法的实现：</p>
-<ul>
-<li>RPM</li>
-<li>RRT</li>
-<li>EST</li>
-<li>SBL</li>
-<li>KPIECE</li>
-<li>SyCLOP</li>
-</ul>
-<p>OMPL 规划算法分为两类：</p>
-<ul>
-<li><strong>几何规划(Geometric planners)</strong></li>
-<li><strong>控制规划(Control-based planners)</strong></li>
-</ul>
-<h2 id="几何规划"><a href="#几何规划" class="headerlink" title="几何规划"></a><strong>几何规划</strong></h2><p><strong>只考虑系统的几何和运动学约束</strong>。</p>
-<ul>
-<li><p><strong>多任务规划</strong>(Multi-query planners)：为整个任务空间建立 roadmap</p>
-</li>
-<li><ul>
-<li><p>PRM(Probabilistic Roadmap Method)</p>
-</li>
-<li><p>LazyPRM</p>
-</li>
-<li><p>PRM*</p>
-</li>
-<li><p>LazyPRM</p>
-</li>
-<li><ul>
-<li>SPARS(SPArse Roadmap Spanner algorithm)</li>
-<li>SPARS2</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>单任务规划</strong>(Single-query planners)：通过可行的运动节点生成一棵树。他们的不同之处在于使用不同的启发式来生长树</p>
-</li>
-<li><ul>
-<li><p>RRT(Rapidly-exploring Random Trees)</p>
-</li>
-<li><ul>
-<li>RRT Connect(RRTConnect)</li>
-<li>RRT*</li>
-<li>Lower Bound Tree RRT(LBTRRT)</li>
-<li>Sparse Stable RRT</li>
-<li>T-RRT(Transition-based RRT)</li>
-<li>Vector Field RRT</li>
-<li>pRRT(Parallel RRT)</li>
-<li>LazyRRT(Lazy RRT)</li>
-</ul>
-</li>
-<li><p>EST(Expansive Space Trees)</p>
-</li>
-<li><p>KPIECE(Kinematic Planning by Interior-Exterior Cell Exploration)</p>
-</li>
-<li><p>PDST(Path-Directed Subdivision Trees)</p>
-</li>
-<li><p>FMT*(Fast Marching Tree algorithm)</p>
-</li>
-<li><p>BFMT*(Bidirectional Fast Marching Tree)</p>
-</li>
-</ul>
-</li>
-<li><p><strong>优化 planners</strong>(Optimizing planners)</p>
-</li>
-<li><ul>
-<li>PRM*</li>
-<li>LazyPRM*</li>
-<li>RRT*</li>
-<li>RRT#</li>
-<li>RRTX</li>
-<li>Informed RRT*</li>
-<li>Batch Informed Trees(BIT*)</li>
-<li>Sparse Stable RRT</li>
-<li>T-RRT</li>
-<li>SPARS</li>
-<li>SPARS2</li>
-<li>FMT*</li>
-<li>CForest</li>
-<li>APS(AnytimePathShortening)</li>
-</ul>
-</li>
-</ul>
-<h2 id="控制规划"><a href="#控制规划" class="headerlink" title="控制规划"></a><strong>控制规划</strong></h2><p>这类 planners 依靠状态传播(state propagation)而不是简单的插值(interpolation)来产生运动。</p>
-<ul>
-<li><p><strong>RRT</strong>(Rapidly-exploring Random Trees)</p>
-</li>
-<li><p><strong>SST</strong>(Sparse Stable RRT)</p>
-</li>
-<li><p><strong>EST</strong>(Expansive Space Trees)</p>
-</li>
-<li><p><strong>KPIECE</strong>(Kinodynamic Planning by Interior-Exterior Cell Exploration)</p>
-</li>
-<li><p><strong>PDST</strong>(Path-Directed Subdivision Trees)</p>
-</li>
-<li><p>Syclop</p>
-</li>
-<li><ul>
-<li>Syclop using RRT as low-level planner</li>
-<li>Syclop using EST as the low-level planner</li>
-</ul>
-</li>
-</ul>
+          <p>trajectory 状态：ACTIVE, FINISHED, FROZEN, DELETED。  </p>
+<p>FastCorrelativeScanMatcher2D (Real-Time Correlative Scan Matching) 构建 node 和 submap 之间的约束。<br>FastCorrelativeScanMatcher3D (BBS算法)。  </p>
+<h2 id="Closing-Loops"><a href="#Closing-Loops" class="headerlink" title="Closing Loops"></a>Closing Loops</h2><p>通过 Sparse Pose Adjustment(SPA) 算法优化所有 scan 和 submap 的位姿，来实现全局优化。  </p>
+<p>LocalTrajectorBuilder 中，构建了一个个 submap，也记录了每帧 scan 插入到 submap 中的 pose。 由于传感器测量值存在误差，虽然在局部范围内(即 submap 中)误差影响不大，但由于建图是一个增量式的过程，第 n 个 pose 的预估值依赖于前面 n-1 个 pose 的估计值，因而，会导致误差的累积。因此需要 loop closure 来消除这种误差累积。  </p>
+<p>一旦局部 scan-to-submap 成功，就将该 scan 的 pose 作为节点添加到优化问题中。   </p>
+<h3 id="optimization-problem"><a href="#optimization-problem" class="headerlink" title="optimization problem"></a>optimization problem</h3><p>与 scan matching 一样，回环优化也被公式化为<strong>非线性最小二乘问题</strong>(nonlinear least squares problem)，每隔几秒钟，就会使用 Ceres 来计算结果：<br><img src="/../images/spa.png" alt="SPA"></p>
+<p><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^m = \left\{ \xi^m_i\right\}_{i=1,\cdots,m}" style="border:none;"> 所有 submap 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Xi^s = \left\{ \xi^s_j\right\}_{j=1,\cdots,n}" style="border:none;"> 所有 scan 的绝对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 第 i 个 submap 相对于世界坐标系的位姿，上表 m 表示 submap<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;"> 第 j 帧 scan 相对于世界坐标系的位姿，上表 s 表示 scan<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi_{i,j}" style="border:none;"> 第 j 帧 scan 插入第 i 个 submap 的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\Sigma_{i,j}" style="border:none;"> 协方差矩阵。表示 第 j 帧 scan 插入第 i 个 submap 的质量，即 scan matching 的评分。<br>约束残差 E 的计算方式：<br><img src="/../images/residual-E.png" alt="residual-E"><br>其中 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\rho" style="border:none;"> 为 loss function (目前使用的是 Huber loss)，用于减少当扫描匹配为优化问题添加不正确约束时可能出现在（SPA）中的异常值的影响(即:<strong>减少异常值outliers对优化结果的影响</strong>)。 例如：诸如办公室隔间等局部对称的环境。 异常值的可选方法参考：&gt; Robust map optimization using dynamic covariance scaling<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i}" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^s_j}" style="border:none;"> 分别表示 submap 和 scan 位姿中的 translation 部分。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=t_{\xi^m_i} - t_{\xi^s_j}" style="border:none;"> 则表示了 scan 在 submap 中的相对位姿在世界坐标系下的表示。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R_{\xi^m_i}" style="border:none;"> 表示 submap 在全局坐标系下的位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i}" style="border:none;"> 逆矩阵，表示 submap 局部坐标系到全局坐标系之间的变换关系<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=R^{-1}_{\xi^m_i} \left( t_{\xi^m_i} - t_{\xi^s_j} \right)" style="border:none;"> 表示 scan 在 submap 中的相对位姿<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_{i;\theta}" style="border:none;"> 表示 scan 的姿态<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_{j;\theta}" style="border:none;"> 表示 submap 的姿态  </p>
+<p>全局优化（loop closure）的目的就是优化 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^m_i" style="border:none;"> 和 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\xi^s_j" style="border:none;">，使误差值尽可能的小。   </p>
+<p>每次局部匹配成功，则该时刻的位姿点都会作为一个节点。  </p>
+<p>约束分为全局约束和局部约束。  </p>
+<p>intra constraints<br>intra residuals<br>inter constraints, same trajectory<br>inter residuals, same trajectory<br>inter constraints, different trajectory (无)<br>inter residuals, different trajectory (无)  </p>
+<p>1、scan 数据<br>订阅激光数据 <code>Node::HandleLaserScanMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理激光数据。    </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddRangeData</code> 局部 scan-to-submap 匹配,将scan数据插入 submap，并返回局部匹配结果 matching_result<br> -&gt; 调用 <code>pose_graph_-&gt;AddNode</code> 根据局部匹配结果，添加节点及约束<br> -&gt; 调用 <code>local_slam_result_callback_</code> 即 <code>MapBuilderServer::OnLocalSlamResult</code> 更新日志  </p>
+<p>2、IMU 数据<br>订阅激光数据 <code>Node::HandleImuMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddImuData</code><br> -&gt; <code>pose_graph_-&gt;AddImuData</code></p>
+<p>3、Odometry 数据<br>订阅激光数据 <code>Node::HandleOdometryMessage</code>，并最终调用 <code>GlobalTrajectoryBuilder::AddSensorData</code> 来处理IMU数据。  </p>
+<p><code>GlobalTrajectoryBuilder::AddSensorData</code><br> -&gt; <code>local_trajectory_builder_-&gt;AddOdometryData</code><br> -&gt; <code>pose_graph_-&gt;AddOdometryData</code></p>
 
       
     </div>
@@ -1174,7 +426,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1192,7 +444,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/" class="post-title-link" itemprop="url">trajOpt</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20RangeDataCollator/" class="post-title-link" itemprop="url">cartographer - RangeDataCollator</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1203,7 +455,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:18:33" itemprop="dateCreated datePublished" datetime="2024-09-17T21:18:33+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1211,27 +463,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
-        </span>
     </span>
 
   
@@ -1241,7 +472,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>508</span>
+      <span>135</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1259,23 +490,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://ros-planning.github.io/moveit_tutorials/doc/trajopt_planner/trajopt_planner_tutorial.html">TrajOpt planner</a> 仍然是 MoveIt 2019 年夏季实习项目的 alpha 功能，需要进一步加强。</p>
-<p>TrajOpt 是一种用于运动规划问题的序列凸优化算法，其中非凸、非仿射等式和非等式约束被放松、近似线性化和凸化以创建目标函数。这项工作是基于[<a target="_blank" rel="noopener" href="https://ros-planning.github.io/moveit_tutorials/doc/trajopt_planner/trajopt_planner_tutorial.html#schulman2013">schulman2013</a>] 和<a target="_blank" rel="noopener" href="https://github.com/ros-industrial-consortium/trajopt_ros">原始实现</a>完成的。顺序凸规划，简单地说就是使用一个凸模型并重复地最小化它。考虑以下非凸问题:</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211853088.png" class="" title="image-20240917211853088">
-
-<p>其中 f(x) 是最小长度路径</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211910096.png" class="" title="image-20240917211910096">
-
-<p>基本思想是通过维护一个解的估计和一个凸信任域来迭代，在这个凸信任域上信任解。这两个关键点是:</p>
-<ul>
-<li>f(x) 和 g(x) 在信赖域上的凸逼近。然后将近似值转换为惩罚函数</li>
-<li>h(x) 在可信区域上的仿射逼近。然后通过考虑 h(x) 的绝对值，将近似 h(x) 转换为罚函数</li>
-</ul>
-<p>TrajOpt 算法流程：</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/trajOpt/image-20240917211931527.png" class="" title="image-20240917211931527">
-
-<p>将关节空间或笛卡尔空间中的避障、关节限制、目标姿态等约束条件转化为惩罚函数，得到最终目标函数。最内环是用序列二次规划作为信赖域方法。它在盒子信赖域内计算二阶泰勒近似。</p>
-<p>TrajOpt 的一个重要部分是如何制定避障约束。在离散情况下，约束基本是有符号距离(机器人与自身或与障碍物之间的链接)与安全值之间的差值，在连续情况下，有符号距离是两个路径点与障碍物之间的凸包。</p>
+          <p>该类同步来自不同传感器的 TimedPointCloudData 数据。 每个传感器最多只缓存一帧数据，因此会引入最慢传感器的周期延迟(即:以最慢的传感器的周期来进行同步，因此对发布速率快的传感器会存在数据丢失或延迟处理的问题)，可以通过来 subdivisions 减轻该延迟。  </p>
 
       
     </div>
@@ -1302,7 +517,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/STOMP/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1320,7 +535,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/STOMP/" class="post-title-link" itemprop="url">STOMP</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20assets%20writer/" class="post-title-link" itemprop="url">cartographer - assets writer</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1331,7 +546,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:16:38" itemprop="dateCreated datePublished" datetime="2024-09-17T21:16:38+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1339,27 +554,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
-        </span>
     </span>
 
   
@@ -1369,14 +563,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -1387,70 +581,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><strong>Stochastic Trajectory Optimization for Motion Planning</strong>，是一种<strong>概率优化</strong>框架(Kalakrishnan et al. 2011)。STOMP 在合理的时间内产生平滑且性能良好的无碰撞路径。该方法依赖于生成噪声轨迹来探索初始（可能不可行）轨迹周围的空间，然后将其组合以产生成本更低的更新轨迹。在每次迭代中优化基于障碍和平滑成本组合的成本函数。使用的特定优化算法不需要梯度信息，因此可能无法获得 derivatives 的一般成本（例如，对应于约束和电机扭矩的成本）可以包含在成本函数中。 STOMP 的一些优势包括：它可以包含额外的目标函数，例如扭矩限制、能量和工具约束。STOMP  可以处理不需要可微分的成本函数。它使用距离场和球面近似来快速计算距离查询和碰撞成本。</p>
-<p>使用要求</p>
+          <p>SLAM的目的是通过一个度量空间来计算单个传感器的轨迹。在更高的层面上，SLAM的输入是传感器的数据，输出的是对轨迹到目前为止的最佳估计。为了实时和高效，Cartographer 将大部分传感器数据立即扔掉。  </p>
+<p>轨迹单独没有什么作用，但是一旦估计出了最佳轨迹，就可以用全部的传感器数据来推导和显示周围环境的信息。  </p>
+<p>Cartographer提供assets writer来完成该功能。 assets writer 的输入内容：  </p>
 <ul>
-<li>必须安装最新版本的 MoveIt。在 ROS Melodic 上，需要从源代码构建 MoveIt。需要从源代码构建，因为 STOMP 还不是正式发布的一部分。因此，它不包含在二进制包中</li>
-<li>要将 STOMP 与机器人一起使用，必须已经为机器人准备了一个MoveIt 配置包。例如，Panda 机器人，为 panda_moveit_config 包。这通常是使用 MoveIt setup assisant 构建的</li>
-<li>还必须从源代码中构建 ros-industrial&#x2F;industrial_moveit 包。这需要从源代码构建，因为 industrial_moveit 还没有作为 debian 发布。只需要从 industrial_moveit 构建 stomp_core 包，因为使用 moveIt 的 STOMP 功能不需要其他包</li>
+<li>原始传感器数据(例如：bag文件)  </li>
+<li>使用原始传感器数据执行 SLAM 得到的 pbstream 文件  </li>
+<li>传感器外部参数(例如：来自bag包或urdf模型的tf数据)  </li>
+<li>配置文件，.lua 文件</li>
 </ul>
-<p><strong>1、使用 STMOP</strong></p>
-<p>注意：如果正在使用此 panda_moveit_config，则可以跳过这些步骤，直接执行步骤 ③</p>
-<p>① 下载 stomp_planning_pipeline.launch.xml 到 MoveIt config 包的 launch 目录。最新版的 MoveIt Setup Assistant 会默认生成该文件。该文件内容：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Stomp Plugin for MoveIt --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;planning_plugin&quot;</span> <span class="attr">value</span>=<span class="string">&quot;stomp_moveit/StompPlannerManager&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- The request adapters (plugins) ORDER MATTERS --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;planning_adapters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/AddTimeParameterization</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixWorkspaceBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateBounds</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStateCollision</span></span></span><br><span class="line"><span class="string"><span class="tag">       default_planner_request_adapters/FixStartStatePathConstraints&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;start_state_max_bounds_error&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;planning_plugin&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg planning_plugin)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;request_adapters&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg planning_adapters)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;start_state_max_bounds_error&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg start_state_max_bounds_error)&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find panda_moveit_config)/config/stomp_planning.yaml&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>1）、生成 pbstream 文件<br><code>roslaunch cartographer_ros offline_backpack_3d.launch bag_filenames:=$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag</code><br>该指令会加载 cartographer_offline_node 节点。 该指令运行结束之后，会生成 b3-2016-04-05-14-14-00.bag.pbstream 文件。    </p>
+<p>当运行为 online node 时，cartographer 并不知道 bag 什么时候结束，因此需要主动调用如下服务来显式的完成当前轨迹，并使 cartographer 序列化其当前状态：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Finish the first trajectory. No further data will be accepted on it.</span><br><span class="line">rosservice call /finish_trajectory 0</span><br><span class="line"></span><br><span class="line"># Ask Cartographer to serialize its current state.</span><br><span class="line"># (press tab to quickly expand the parameter syntax)</span><br><span class="line">rosservice call /write_state &quot;&#123;filename: &#x27;$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag.pbstream&#x27;, include_unfinished_submaps: &#x27;true&#x27;&#125;&quot;  </span><br><span class="line">```   </span><br><span class="line">（注意：若不指定路径，默认写入 $&#123;HOME&#125;.ros 目录下）  </span><br><span class="line">![assets_writer](../images/assets_writer_path.png)</span><br><span class="line"></span><br><span class="line">2）、调用 assets writer 生成地图  </span><br></pre></td></tr></table></figure>
+<p>roslaunch cartographer_ros assets_writer_backpack_3d.launch <br>   bag_filenames:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag <br>   pose_graph_filename:&#x3D;${HOME}&#x2F;Downloads&#x2F;b3-2016-04-05-14-14-00.bag.pbstream</p>
+<pre><code>可通过 `--output_file_prefix` 来指定输出文件前缀，若不指定，则默认为第一个 bag 包的名字。 例如：若指定 `--output_file_prefix=point.ply`，则此例中输出文件名为：`$&#123;HOME&#125;/Downloads/b3-2016-04-05-14-14-00.bag_points.ply`  
+  
+### 配置  
+Assets writer被建模为一个pipeline。由 PointProcessors 和流过它的 [PointsBatchs](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/points_batch.h) 组成。数据从第一个处理器流向下一个处理器，每个处理器都有机会在传递之前修改PointsBatch（点流）。  
 
+例如：assets_writer_backpack_3d.lua 使用 min_max_range_filter 来过滤离传感器太近或太远的点。然后，写 X-Rays，再根据传感器坐标系ID重新着色这个 PointBatch，并使用这些新的颜色来写另一组 X-Rays。  
+  
+所有的 PointsProcessor 都在 [cartographer/io](https://github.com/googlecartographer/cartographer/tree/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io) 子目录下，并记录在他们各自的头文件中。
 
+### 点云数据第一人称视角可视化  
+一般情况下，通过点生成 fly 需要两个步骤：  
+    ①、将想要显示的点写入 PLY 文件  
+    ②、使用[point_cloud_viewer](https://github.com/googlecartographer/point_cloud_viewer)  
 
-<p>② 下载 stomp_planning.yaml 文件到 MoveIt config 包的 config 目录。该文件包含 STOMP 所需的参数。这些参数特定于 SRDF 文件中定义的每个“planning group”。因此，如果有三个规划组，那么配置文件将为每个规划组定义一组特定的参数</p>
-<p>③ 修改 move_group.launch 文件，将 pipeline 参数改为 stomp：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- move_group settings --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;allow_trajectory_execution&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;fake_execution&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;max_safe_path_cost&quot;</span> <span class="attr">default</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;jiggle_fraction&quot;</span> <span class="attr">default</span>=<span class="string">&quot;0.05&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;publish_monitored_planning_scene&quot;</span> <span class="attr">default</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Planning Functionality --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">ns</span>=<span class="string">&quot;move_group&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find myworkcell_moveit_config)/launch/planning_pipeline.launch.xml&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;pipeline&quot;</span> <span class="attr">value</span>=<span class="string">&quot;stomp&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br></pre></td></tr></table></figure>
+第一步通常通过使用 [IntensityToColorPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/intensity_to_color_points_processor.cc) 将点设置为非白色的颜色，然后使用 [PlyWritingPointsProcessor](https://github.com/googlecartographer/cartographer/blob/30f7de1a325d6604c780f2f74d9a345ec369d12d/cartographer/io/ply_writing_points_processor.h) 将这些点写入 PLY中。例如：assets_writer_backpack_2d.lua。  
 
-
-
-<p>运行 demo：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo.launch</span>     </span><br></pre></td></tr></table></figure>
-
-<p>​         </p>
-<p>运行带障碍物场景 demo：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">roslaunch panda_moveit_config demo_stomp.launch rosrun moveit_tutorials collision_scene_example.py cluttered</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun moveit_tutorials collision_scene_example.py sparse</span>              </span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>2、调整 STOMP 参数</strong></p>
-<p>STOMP 有一些与之相关的参数。这些可以针对正在使用的特定环境&#x2F;机器人进行修改，这些参数通常在 stomp_planning.yaml 文件中。在工作的机器人的配置文件夹中。如果机器人不存在此文件，可以创建它并设置所需的参数值。例如：</p>
-<p><strong>1）Optimization 参数</strong></p>
-<ul>
-<li>num_timesteps：</li>
-<li>num_iterations：</li>
-<li>num_iterations_after_valid：</li>
-<li>num_rollouts：</li>
-<li>max_rollouts：</li>
-<li>initialization method：</li>
-<li>control_cost_weight：</li>
-</ul>
-<p><strong>2）Noise Generator 参数</strong></p>
-<ul>
-<li>class：可设置为：NormalDistributionSampling(默认值) 或 <a target="_blank" rel="noopener" href="https://github.com/ros-industrial/industrial_moveit/blob/kinetic-devel/stomp_plugins/example_pages.dox">GoalGuidedMultivariateGaussian</a></li>
-<li>stddev：关节噪声程度。该阵列中的每个值都是施加到该阵列中该位置的关节上的噪声的振幅。例如，数组中最左边的值将用于设置机器人第一个关节的噪声(在本例中为 panda_joint1)。该数组的维数应等于规划组名称中的关节数。较大的“stddev”值对应于较大的关节运动</li>
-</ul>
-<p><strong>3）Cost Function 参数</strong></p>
-<ul>
-<li>class：</li>
-<li>collision_penalty：</li>
-<li>cost_weight：</li>
-<li>kernel_window_percentage：</li>
-<li>longest_valid_joint_move：</li>
-</ul>
-<p><strong>4）Update Filter 参数</strong></p>
-<ul>
-<li>class：</li>
-<li>poly_order：</li>
-</ul>
-<p><strong>3、STOMP 测试单元</strong></p>
-<p>为了运行单元测试，必须从 ros-industrial&#x2F;industrial_moveit 中获得 stomp_core 包。如果这些测试成功运行，这意味着系统上成功构建并运行了 STOMP。运行 STOMP 单元测试:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make run_tests_stomp_moveit stomp_moveit_utest</span>   </span><br></pre></td></tr></table></figure>
-
-<p>​           </p>
+一旦有了PLY文件，按照 point_cloud_viewer 的README文档来生成一个存储在磁盘上的 octree 数据。  
+</code></pre>
 
       
     </div>
@@ -1477,7 +638,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/SBPL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/cartographer%20-%20LocalTrajectoryBuilder2D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1495,7 +656,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/SBPL/" class="post-title-link" itemprop="url">SBPL</a>
+          <a href="/2024/09/21/Robot/Map/cartographer/cartographer%20-%20LocalTrajectoryBuilder2D/" class="post-title-link" itemprop="url">cartographer - LocalTrajectoryBuilder2D</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1506,7 +667,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:16:13" itemprop="dateCreated datePublished" datetime="2024-09-17T21:16:13+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1514,27 +675,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
-        </span>
     </span>
 
   
@@ -1544,7 +684,110 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>LocalTrajectoryBuilder2D 激光数据处理过程：<br>1）同步多个 scan 传感器的数据，得到同步后的数据</p>
+<p>2）若未使能 IMU ，则在 <code>LocalTrajectoryBuilder2D::AddRangeData</code> 中调用 <code>InitializeExtrapolator(time)</code> 来初始化 PoseExtrapolator; 若使能 IMU ，则在 <code>LocalTrajectoryBuilder2D::AddIMUData</code> 中初始化。  </p>
+<p>若 PoseExtrapolator 未初始化完，则丢弃当前scan帧。   </p>
+<p>3）调用 <code>ExtrapolatePose()</code> 推算当前scan帧中，每个 scan point 对应的机器人位姿，并存入 <code>range_data_poses</code> 中</p>
+<p>4）scan过滤，去除小于 min_range 的点，并将大于 max_range 的点标记为 misses  </p>
+<p>5）累积 num_accumulated_range_data 帧数据，并进行重力对齐及 <code>VoxelFilter</code> 过滤</p>
+<p>6）调用 <code>AddAccumulatedRangeData</code> 对累积的数据进行处理, 在该方法中，调用 <code>extrapolator_-&gt;ExtrapolatePose()</code> 获取当前时刻的预测位姿，并进行重力对齐  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const transform::Rigid3d non_gravity_aligned_pose_prediction =</span><br><span class="line">  extrapolator_-&gt;ExtrapolatePose(time);</span><br><span class="line">const transform::Rigid2d pose_prediction = transform::Project2D(</span><br><span class="line">  non_gravity_aligned_pose_prediction * gravity_alignment.inverse());</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">7）将激光数据进行 AdaptiveVoxelFilter 过滤，并转换为 PointCloud 类型，然后调用 `ScanMatch` 进行匹配，得到校准后的位姿 `pose_estimate_2d`  </span><br><span class="line"></span><br><span class="line">8）将激光匹配得到的位姿进行重力对齐后，添加到 extrapolator 中，用于下次位姿预估     </span><br></pre></td></tr></table></figure>
+<p>const transform::Rigid3d pose_estimate &#x3D;<br>  transform::Embed3D(*pose_estimate_2d) * gravity_alignment;<br>&#x2F;&#x2F; 将激光匹配优化后的位姿添加到 extrapolator 中, 用于预估后续的位姿<br>extrapolator_-&gt;AddPose(time, pose_estimate);</p>
+<pre><code>AddPose 只在累积 num_accumulated_range_data 帧 scan 数据，进行匹配得到校准后的位姿后才会执行。  
+
+9）将累积的点云数据转换到 local_trajectory 坐标系下，然后插入到 submap 中
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/cartographer/BBS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/cartographer/BBS/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>0</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1562,7 +805,99 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>基于搜索的规划库</p>
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/Map/%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/Map/%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>66</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>地图类型：基于特征的地图和基于位置的地图。  </p>
+<p>基于位置的地图：<br>1）、占用栅格地图  </p>
+<p>二维度量图、图形化的拓扑地图、占用栅格地图、图像镶嵌图等</p>
 
       
     </div>
@@ -1589,7 +924,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E7%96%91%E9%97%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1607,7 +942,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/" class="post-title-link" itemprop="url">Pilz Industrial</a>
+          <a href="/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E7%96%91%E9%97%AE/" class="post-title-link" itemprop="url">疑问</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1618,7 +953,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:14:43" itemprop="dateCreated datePublished" datetime="2024-09-17T21:14:43+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1626,27 +961,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
-        </span>
     </span>
 
   
@@ -1656,14 +970,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
+      <span>48</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -1674,83 +988,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>pilz_industrial_motion_planner 提供了一个轨迹生成器，以使用MoveIt PlanerManager 插件的接口，规划标准的机器人运动，如 PTP, LIN, CIRC。</p>
-<p><strong>1、User Interface MoveGroup</strong></p>
-<p>这个包实现了 MoveIt 的 planning_interface::PlannerManager 接口。通过加载相应的 planning pipeline(pilz_industrial_motion_planner_planning_pipeline.launch.xml)，轨迹生成功能可以通过用户界面访问(c++、python或rviz) move_group 提供的节点,例如 &#x2F;plan_kinematics_path 服务和 move_group action。参考 Move Group c++ Interface。</p>
-<p><strong>2、Joint limits</strong></p>
-<p>对于所有命令，planner 使用来自参数服务器的最大速度和加速度。使用 MoveIt setup assistant，文件 joint_limits.yaml 会使用适当的默认值自动生成并在启动期间加载。</p>
-<p>参数服务器上的限制会覆盖来自 URDF 机器人描述的限制。请注意，虽然在 URDF 和参数服务器中都可以设置位置限制和速度限制，但<strong>只能通过参数服务器设置加速度限制</strong>。作为对常用 has_acceleration 和 max_acceleration 参数的扩展，添加了设置 has_deceleration 和 max_deceleration(&lt;0.0) 的功能。</p>
-<p>限制合并的<strong>前提是来自参数服务器的限制必须更严格或至少等于 URDF 中设置的参数</strong>。</p>
-<p>目前，计算的轨迹将通过使用所有限制的最严格组合作为所有关节的共同限制来遵守限制。</p>
-<p><strong>3、Cartesian limits</strong></p>
-<p>对于笛卡尔轨迹生成(LIN&#x2F;CIRC)，该 planner 需要三维笛卡尔空间中最大速度的信息。即平移&#x2F;旋转速度&#x2F;加速&#x2F;减速需要在参数服务器上进行如下设置:</p>
-<p>​                cartesian_limits:  max_trans_vel: 1  max_trans_acc: 2.25  max_trans_dec: -5  max_rot_vel: 1.57              </p>
-<p>对于平动梯形和旋转梯形，planner 假定相同的加速度比。因此，旋转加速度计算为 max_trans_acc &#x2F; max_trans_vel * max_rot_vel(相应的减速)。</p>
-<p><strong>4、Planning Interface</strong></p>
-<p>这个包使用 moveit_msgs::MotionPlanRequest 和 moveit_msgs::MotionPlanResponse 作为运动规划的输入和输出。</p>
-<p><strong>5、PTP motion command</strong></p>
-<p>该规划器生成具有梯形关节速度分布的完全同步的点对点轨迹。假设所有关节具有相同的最大关节速度&#x2F;加速度&#x2F;减速极限。如果没有，则采用最严格的限制。以达到目标时间最长的轴为导向轴(<strong>lead axis</strong>)。其他轴都是减速的，以便它们与导向轴共享相同的加速&#x2F;匀速&#x2F;减速阶段</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211529434.png" class="" title="image-20240917211529434">
-
-<p>1）输入参数</p>
-<p>moveit_msgs::MotionPlanRequest</p>
-<ul>
-<li><p>planner_id：PTP</p>
-</li>
-<li><p>group_name：规划组名称</p>
-</li>
-<li><p>max_velocity_scaling_factor：</p>
-</li>
-<li><p>max_acceleration_scaling_factor：</p>
-</li>
-<li><p>start_state&#x2F;joint_state&#x2F;(name,position and velocity)：</p>
-</li>
-<li><p>goal_constraints：</p>
-</li>
-<li><p>关节空间目标点</p>
-</li>
-<li><ul>
-<li>goal_constraints&#x2F;joint_constraints&#x2F;joint_name: goal joint name</li>
-<li>goal_constraints&#x2F;joint_constraints&#x2F;position: goal joint position</li>
-</ul>
-</li>
-<li><p>笛卡尔空间目标点</p>
-</li>
-<li><ul>
-<li>goal_constraints&#x2F;position_constraints&#x2F;header&#x2F;frame_id: 该数据关联的坐标系</li>
-<li>goal_constraints&#x2F;position_constraints&#x2F;link_name: target link name</li>
-<li>goal_constraints&#x2F;position_constraints&#x2F;constraint_region: bounding volume of the target point</li>
-<li>goal_constraints&#x2F;position_constraints&#x2F;target_point_offset: offset (in the link frame) for the target point on the target link (optional)</li>
-</ul>
-</li>
-</ul>
-<p><strong>6、LIN motion command</strong></p>
-<p>该 planner 生成目标和开始位姿之间的线性笛卡尔轨迹。规划器使用笛卡尔限制在笛卡尔空间中生成梯形速度剖面。平移运动是起始位置向量与目标位置向量之间的线性插值。旋转运动是四元数 slerp 之间的开始和目标方向。</p>
-<p>平动和旋转运动在时间上是同步的。这个计划器只接受零速度的开始状态。规划结果是一个关节轨迹。如果运动计划因违反关节空间限制而失败，用户需要调整笛卡尔速度&#x2F;加速度比例因子。</p>
-<p><strong>7、CIRC motion command</strong></p>
-<p><strong>8、示例</strong></p>
-<p>​                sudo apt install ros-melodic-prbt-moveit-config roslaunch prbt_moveit_config demo.launch              </p>
-<p><strong>9、使用 Planner</strong></p>
-<p>pilz_industrial_motion_planner::CommandPlanner 是作为 MoveIt motion planning pipeline 提供的，因此，可以与使用 MoveIt 的所有其他 manipulators 一起使用。加载插件需要在 move_group 节点启动之前，将 &#x2F;move_group&#x2F;planning_plugin 参数设置为 pilz_industrial_motion_planner::CommandPlanner。</p>
-<p>要使用 command planner，必须定义 cartesian limits。该限制应该在名称空间 _planning 下。其中 是指 URDF 加载的参数。例如，如果 URDF 被加载到 &#x2F;robot_description 中，cartesian limits 必须定义在 &#x2F;robot_description_planning。</p>
-<p>参考：prbt_moveit_config 包</p>
-<p><strong>1）Sequence of multiple segments</strong></p>
-<p>要连接多个轨迹并一次规划轨迹，可以使用序列功能。这减少了规划开销，并允许遵循预先描述的路径，而无需在中间点停下来。</p>
-<p>请注意:如果某个序列中的命令规划失败，则该顺序中的命令将全部不执行。</p>
-<p>请注意:序列命令<strong>允许包含多个组的命令</strong>(例如“机械手”，“抓手”)</p>
-<p><strong>2）User interface sequence capability</strong></p>
-<p>接受 moveit_msgs::<strong>MotionSequenceRequest</strong> 作为输入。该请求包含上面描述的后续目标列表和一个额外的 blend_radius 参数。如果给定的blend_radius(meter)大于零，则对应的轨迹与下面的目标合并在一起，使机器人不停留在当前目标。</p>
-<img src="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/Pilz/image-20240917211548571.png" class="" title="image-20240917211548571">
-
-<p>参考：<a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/blob/master/moveit_planners/pilz_industrial_motion_planner/doc/MotionBlendAlgorithmDescription.pdf">MotionBlendAlgorithmDescription.pdf</a></p>
-<p>MotionSequenceRequest 的限制</p>
-<ul>
-<li>只有第一个魔表有 start state。后续轨迹以前一个目标点为起点</li>
-<li>两个随后的 blend_radius 球体不能重叠。Blend_radius(i) + Blend_radius(i+1) 必须小于目标之间的距离</li>
-</ul>
-<p>用户可以通过 action server <strong>&#x2F;sequence_move_group</strong> 执行moveit_msgs::MotionSequenceRequest</p>
-<p>在单个点上，MoveGroupSequenceAction 与标准 MoveGroup 能力不同:如果机器人已经在目标位置，路径仍然被执行。底层的 PlannerManager 可以检查单个 moveit_msgs::MotionPlanRequest 的约束是否已经满足，但 MoveGroupSequenceAction 功能没有实现这样的检查，以允许在圆形或类似的路径上移动。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://github.com/PilzDE/pilz_industrial_motion/blob/melodic-devel/pilz_robot_programming/examples/demo_program.py">pilz_robot_programming</a></p>
+          <p>1、噪声互相依赖的可能原因？<br>1）人经常会劣化几个相邻传感器的测量<br>2）模型 m 的误差<br>3）后验的近似等  </p>
 
       
     </div>
@@ -1777,7 +1015,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1795,7 +1033,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/17/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/OMPL/" class="post-title-link" itemprop="url">OMPL</a>
+          <a href="/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">阅读笔记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1806,7 +1044,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-17 21:11:37" itemprop="dateCreated datePublished" datetime="2024-09-17T21:11:37+08:00">2024-09-17</time>
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1814,27 +1052,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/" itemprop="url" rel="index"><span itemprop="name">MoveIt</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/" itemprop="url" rel="index"><span itemprop="name">MotionPlanning</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt/MotionPlanning/Planners/" itemprop="url" rel="index"><span itemprop="name">Planners</span></a>
-        </span>
     </span>
 
   
@@ -1844,14 +1061,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>26 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -1862,93 +1079,130 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Open Motion Planning Library 是一个强大的集合，包含了最先进的基于采样的运动规划算法，是 MoveIt 中的默认规划器。</p>
-<h1 id="OMPL-设置"><a href="#OMPL-设置" class="headerlink" title="OMPL 设置"></a><strong>OMPL 设置</strong></h1><p>对应 ompl_planning.yaml 文件。例如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line">planner_configs:</span><br><span class="line">  SBLkConfigDefault:</span><br><span class="line">    type: geometric::SBL</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ESTkConfigDefault:</span><br><span class="line">    type: geometric::EST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0 setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LBKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::LBKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  BKPIECEkConfigDefault:</span><br><span class="line">    type: geometric::BKPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  KPIECEkConfigDefault:</span><br><span class="line">    type: geometric::KPIECE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    border_fraction: 0.9  # Fraction of time focused on boarder default: 0.9 (0.0,1.]</span><br><span class="line">    failed_expansion_score_factor: 0.5  # When extending motion fails, scale score by factor. default: 0.5</span><br><span class="line">    min_valid_path_fraction: 0.5  # Accept partially valid moves above fraction. default: 0.5</span><br><span class="line">  RRTkConfigDefault:</span><br><span class="line">    type: geometric::RRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">  RRTConnectkConfigDefault:</span><br><span class="line">    type: geometric::RRTConnect</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  RRTstarkConfigDefault:</span><br><span class="line">    type: geometric::RRTstar</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1</span><br><span class="line">  TRRTkConfigDefault:</span><br><span class="line">    type: geometric::TRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05</span><br><span class="line">    max_states_failed: 10  # when to start increasing temp. default: 10</span><br><span class="line">    temp_change_factor: 2.0  # how much to increase or decrease temp. default: 2.0</span><br><span class="line">    min_temperature: 10e-10  # lower limit of temp change. default: 10e-10</span><br><span class="line">    init_temperature: 10e-6  # initial temperature. default: 10e-6</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountierNodeRatio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    k_constant: 0.0  # value used to normalize expresssion. default: 0.0 set in setup()</span><br><span class="line">  PRMkConfigDefault:</span><br><span class="line">    type: geometric::PRM</span><br><span class="line">    max_nearest_neighbors: 10  # use k nearest neighbors. default: 10</span><br><span class="line">  PRMstarkConfigDefault:</span><br><span class="line">    type: geometric::PRMstar</span><br><span class="line">  FMTkConfigDefault:</span><br><span class="line">    type: geometric::FMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.1  # multiplier used for the nearest neighbors search radius. default: 1.1</span><br><span class="line">    nearest_k: 1  # use Knearest strategy. default: 1</span><br><span class="line">    cache_cc: 1  # use collision checking cache. default: 1</span><br><span class="line">    heuristics: 0  # activate cost to go heuristics. default: 0</span><br><span class="line">    extended_fmt: 1  # activate the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  BFMTkConfigDefault:</span><br><span class="line">    type: geometric::BFMT</span><br><span class="line">    num_samples: 1000  # number of states that the planner should sample. default: 1000</span><br><span class="line">    radius_multiplier: 1.0  # multiplier used for the nearest neighbors search radius. default: 1.0</span><br><span class="line">    nearest_k: 1  # use the Knearest strategy. default: 1</span><br><span class="line">    balanced: 0  # exploration strategy: balanced true expands one tree every iteration. False will select the tree with lowest maximum cost to go. default: 1</span><br><span class="line">    optimality: 1  # termination strategy: optimality true finishes when the best possible path is found. Otherwise, the algorithm will finish when the first feasible path is found. default: 1</span><br><span class="line">    heuristics: 1  # activates cost to go heuristics. default: 1</span><br><span class="line">    cache_cc: 1  # use the collision checking cache. default: 1</span><br><span class="line">    extended_fmt: 1  # Activates the extended FMT*: adding new samples if planner does not finish successfully. default: 1</span><br><span class="line">  PDSTkConfigDefault:</span><br><span class="line">    type: geometric::PDST</span><br><span class="line">  STRIDEkConfigDefault:</span><br><span class="line">    type: geometric::STRIDE</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    use_projected_distance: 0  # whether nearest neighbors are computed based on distances in a projection of the state rather distances in the state space itself. default: 0</span><br><span class="line">    degree: 16  # desired degree of a node in the Geometric Near-neightbor Access Tree (GNAT). default: 16</span><br><span class="line">    max_degree: 18  # max degree of a node in the GNAT. default: 12</span><br><span class="line">    min_degree: 12  # min degree of a node in the GNAT. default: 12</span><br><span class="line">    max_pts_per_leaf: 6  # max points per leaf in the GNAT. default: 6</span><br><span class="line">    estimated_dimension: 0.0  # estimated dimension of the free space. default: 0.0</span><br><span class="line">    min_valid_path_fraction: 0.2  # Accept partially valid moves above fraction. default: 0.2</span><br><span class="line">  BiTRRTkConfigDefault:</span><br><span class="line">    type: geometric::BiTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    temp_change_factor: 0.1  # how much to increase or decrease temp. default: 0.1</span><br><span class="line">    init_temperature: 100  # initial temperature. default: 100</span><br><span class="line">    frountier_threshold: 0.0  # dist new state to nearest neighbor to disqualify as frontier. default: 0.0 set in setup()</span><br><span class="line">    frountier_node_ratio: 0.1  # 1/10, or 1 nonfrontier for every 10 frontier. default: 0.1</span><br><span class="line">    cost_threshold: 1e300  # the cost threshold. Any motion cost that is not better will not be expanded. default: inf</span><br><span class="line">  LBTRRTkConfigDefault:</span><br><span class="line">    type: geometric::LBTRRT</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">    epsilon: 0.4  # optimality approximation factor. default: 0.4</span><br><span class="line">  BiESTkConfigDefault:</span><br><span class="line">    type: geometric::BiEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  ProjESTkConfigDefault:</span><br><span class="line">    type: geometric::ProjEST</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">    goal_bias: 0.05  # When close to goal select goal, with this probability. default: 0.05</span><br><span class="line">  LazyPRMkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRM</span><br><span class="line">    range: 0.0  # Max motion added to tree. ==&gt; maxDistance_ default: 0.0, if 0.0, set on setup()</span><br><span class="line">  LazyPRMstarkConfigDefault:</span><br><span class="line">    type: geometric::LazyPRMstar</span><br><span class="line">  SPARSkConfigDefault:</span><br><span class="line">    type: geometric::SPARS</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 1000  # maximum consecutive failure limit. default: 1000</span><br><span class="line">  SPARStwokConfigDefault:</span><br><span class="line">    type: geometric::SPARStwo</span><br><span class="line">    stretch_factor: 3.0  # roadmap spanner stretch factor. multiplicative upper bound on path quality. It does not make sense to make this parameter more than 3. default: 3.0</span><br><span class="line">    sparse_delta_fraction: 0.25  # delta fraction for connection distance. This value represents the visibility range of sparse samples. default: 0.25</span><br><span class="line">    dense_delta_fraction: 0.001  # delta fraction for interface detection. default: 0.001</span><br><span class="line">    max_failures: 5000  # maximum consecutive failure limit. default: 5000</span><br><span class="line">  TrajOptDefault:</span><br><span class="line">    type: geometric::TrajOpt</span><br><span class="line"></span><br><span class="line">panda_arm:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">panda_arm_hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br><span class="line">hand:</span><br><span class="line">  planner_configs:</span><br><span class="line">    - SBLkConfigDefault</span><br><span class="line">    - ESTkConfigDefault</span><br><span class="line">    - LBKPIECEkConfigDefault</span><br><span class="line">    - BKPIECEkConfigDefault</span><br><span class="line">    - KPIECEkConfigDefault</span><br><span class="line">    - RRTkConfigDefault</span><br><span class="line">    - RRTConnectkConfigDefault</span><br><span class="line">    - RRTstarkConfigDefault</span><br><span class="line">    - TRRTkConfigDefault</span><br><span class="line">    - PRMkConfigDefault</span><br><span class="line">    - PRMstarkConfigDefault</span><br><span class="line">    - FMTkConfigDefault</span><br><span class="line">    - BFMTkConfigDefault</span><br><span class="line">    - PDSTkConfigDefault</span><br><span class="line">    - STRIDEkConfigDefault</span><br><span class="line">    - BiTRRTkConfigDefault</span><br><span class="line">    - LBTRRTkConfigDefault</span><br><span class="line">    - BiESTkConfigDefault</span><br><span class="line">    - ProjESTkConfigDefault</span><br><span class="line">    - LazyPRMkConfigDefault</span><br><span class="line">    - LazyPRMstarkConfigDefault</span><br><span class="line">    - SPARSkConfigDefault</span><br><span class="line">    - SPARStwokConfigDefault</span><br><span class="line">    - TrajOptDefault</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Longest-Valid-Segment-Fraction"><a href="#Longest-Valid-Segment-Fraction" class="headerlink" title="Longest Valid Segment Fraction"></a><strong>Longest Valid Segment Fraction</strong></h2><p>最长有效分段分数。<strong>longest_valid_segment_fraction</strong> 参数定义用于碰撞检测的机器人运动离散化程度，极大地影响了基于 ompl 的解决方案的性能和可靠性。本文中，motion 可以被认为是图中两个节点之间的边，其中节点是沿轨迹的路点。OMPL 中的默认运动碰撞检查器只是将边缘离散为许多子状态以进行碰撞检查。<strong>目前在 OMPL&#x2F;MoveIt 中没有可用的连续碰撞检查</strong>。</p>
-<p>具体来说，<strong>longest_valid_segment_fraction</strong> 是机器人状态空间的一部分，假设机器人当前未处于碰撞中，假设机器人可以在保持无碰撞的情况下移动。例如，如果 <em>longest_valid_segment_fraction &#x3D; 0.01</em>，假设两个节点之间的边小于状态空间的 1&#x2F;100，那么不需要明确地检查沿这条边的任何子状态，只需要检查它连接的两个节点。</p>
-<p>除了 ompl_planning.yaml 中的 longest_valid_segment_fraction 参数之外，还有 <strong>maximum_waypoint_distance</strong>，可在 dynamic reconfigure 文件中找到。maximum_waypoint_distance 为碰撞检查定义了相同的机器人运动离散化，但它是在绝对 level 上实现的，而不是使用状态空间的 fractions。例如，如果 maximum_waypoint_distance &#x3D; 0.1，那么如果一条状态空间距离小于 0.1 的边，那么不会显式地检查沿该边的任何子状态，而只需要检测两点。</p>
-<p>如果同时设置了 longest_valid_segment_fraction 和 maximum_waypoint_distance，则选择产生最保守离散化的变量（在给定边缘上生成最多碰撞检查状态的变量）。</p>
-<p>将 longest_valid_segment_fraction（或 maximum_waypoint_distance）设置得太低，碰撞检查&#x2F;运动规划会很慢。设置得太高，会错过小&#x2F;窄物体。此外，高碰撞检查分辨率会导致路径平滑器输出难以理解的运动，因为它们能够“捕捉”无效路径，然后尝试通过对其进行采样来修复它们，但并不完美。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ros-planning/moveit/pull/337">此处记录了此参数对两个 MoveIt 教程示例的影响的快速分析</a>。</p>
-<h2 id="Projection-Evaluator"><a href="#Projection-Evaluator" class="headerlink" title="Projection Evaluator"></a><strong>Projection Evaluator</strong></h2><p><strong>projection_evaluator</strong> 参数可以包含一个关节或 links 列表，以近似地覆盖配置空间。Planner 使用此设置，如:</p>
+          <h3 id="1-机器人学不确定性"><a href="#1-机器人学不确定性" class="headerlink" title="1. 机器人学不确定性"></a>1. 机器人学不确定性</h3><p>1)、机器人所处环境不可预测. 在非结构化环境(例如:高速公路、家庭等)中, 环境高度动态, 且在许多方便是无法预测的.<br>2)、传感器误差及限制. 例如:相机无法看到墙后的物体, 激光雷达穿透玻璃等. 此外, 传感器还受噪声的限制.<br>3)、执行机构(例如:电机)是不可预测的. 其不确定性来自:控制噪声、机械磨损、机械故障等.<br>4)、软件导致的不确定性. 如：模型误差<br>5)、近似算法引入的不确定性. 机器人是实时系统, 这就限制了可执行的计算次数. 许多流行算法都是近似算法, 通过牺牲精度而得到实时响应.  </p>
+<p>机器人感知问题用概率来描述，就是一个状态估计问题。概率算法能计算机器人的瞬间不确定性，也能预知未来的不确定性，并在决定正确的控制选择时， 对未来的不确定性进行考虑。</p>
+<p>与传统模型的机器人技术相比，概率算法有如下优势：<br>1)、概率算法对机器人模型的精度要求较低<br>2)、概率算法对传感器精度要求比许多反应技术要低  </p>
+<p>概率算法的两个局限：计算的复杂性(computational complexity)和近似的必要性(need to approximate)。</p>
+<h3 id="2-递归状态估计"><a href="#2-递归状态估计" class="headerlink" title="2. 递归状态估计"></a>2. 递归状态估计</h3><p>概率机器人技术的核心是由传感器数据来估计状态。 <strong>状态估计</strong>解决的是从不能直接观测但可以推断的传感器数据中估计数量的问题。</p>
+<p><strong>贝叶斯准则</strong>在概率机器人中起着主导作用。贝叶斯公式：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)} = \frac{p(y|x)p(x)}{\Sigma_{x'}p(y|x')p(x')}}" style="border:none;"> – 离散<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)}} = \frac{p(y|x)p(x)}{\displaystyle \int {p(y|x')p(x')dx'}}" style="border:none;"> – 连续<br>若 x 是一个希望由 y 推测出来的数值，则概率 p(x) 称为<strong>先验概率分布</strong>。其中，y 称为数据（例如：传感器测量值）。 p(x|y) 称为在 X 上的后验概率分布(posterior probability distribution)。 贝叶斯准则为利用’逆’条件概率 p(y|x) 和先验概率 p(x) 一起去计算后验概率 p(x|y) 提供了一种方便的方法。<br>p(y|x) 在机器人学中，通常被称为: 生成模型 - <strong>generative model</strong>，因为在一定的抽象层面上，它表示状态变量 X 如何引起了检测数据 Y。</p>
+<p><strong>机器人的置信度</strong>是对给定的所有过去的传感器测量值和所有过去控制的环境状态（包括机器人状态）的一个后验分布。大多数计算置信度的通用算法都是由贝叶斯算法给出的。该算法根据测量和控制数据计算置信度分布 bel()。  </p>
+<p>贝叶斯滤波算法的两个步骤：<br>  1）、<strong>控制更新（或预测 prediction）</strong>，基于 t-1 时刻的置信度和控制  <img src="http://chart.googleapis.com/chart?cht=tx&chl=u_t" style="border:none;">   来计算状态  <img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"> 的置信度。<br>  2）、<strong>测量更新（measurement update）</strong>，用观测到的测量 <img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;"> 的概率乘以置信度 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\bar{bel}(x_t)" style="border:none;">。  </p>
+<p>总之，贝叶斯滤波算法以 到时间 t 的测量和控制数据为条件来计算状态 <img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"> 的后验。该算法在任何具体实现中都需要三个概率分布：初始置信度 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x_0)" style="border:none;"> 、测量概率<img src="http://chart.googleapis.com/chart?cht=tx&chl=p(z_t | x_t)" style="border:none;">  、状态转移概率 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x_t | u_t, x_{t_1})" style="border:none;">   </p>
+<h3 id="6、机器人感知"><a href="#6、机器人感知" class="headerlink" title="6、机器人感知"></a>6、机器人感知</h3><p>环境测量模型(environment measurement models)包括概率机器人学中仅次于运动模型的第二个特定领域模型。测量模型描述在客观世界生成传感器测量的过程。模型的特性取决于传感器：成像传感器最好通过投影几何学建立模型，而声呐传感器最好通过描述声波和声波在环境表面上的反射来建立模型。  </p>
+<p>概率机器人为传感器测量噪声建立模型。形式上，测量模型定义为条件概率分布<img src="http://chart.googleapis.com/chart?cht=tx&chl=p(z_t|x_t, m)" style="border:none;">   </p>
 <ul>
-<li>KPIECE</li>
-<li>BKPIECE</li>
-<li>LBKPIECE</li>
-<li>PDST</li>
+<li><img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;">:机器人位姿  </li>
+<li><img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;">:t时刻的测量值  </li>
+<li>m: 环境地图</li>
 </ul>
-<h2 id="Enforce-Planning-in-Joint-Space"><a href="#Enforce-Planning-in-Joint-Space" class="headerlink" title="Enforce Planning in Joint Space"></a><strong>Enforce Planning in Joint Space</strong></h2><p>根据 planning problem 的不同，MoveIt 在<strong>关节空间</strong>和<strong>笛卡尔空间</strong>之间进行选择，以表征规划问题。设置 group 参数 <strong>enforce_joint_model_state_space</strong> 将强制所有规划使用 joint space。</p>
-<p><strong>默认情况下，带有方向路径约束的规划请求是在笛卡尔空间中采样的，因此调用 IK 作为生成采样器</strong>。</p>
-<p>通过强制执行 joint space，规划过程将使用拒绝抽样来找到有效的请求。</p>
-<h1 id="Smoothing-Paths"><a href="#Smoothing-Paths" class="headerlink" title="Smoothing Paths"></a><strong>Smoothing Paths</strong></h1><p>OMPL 中的许多 planners(包括默认的 planner)更倾向于寻找解决方案路径的速度而不是路径质量。在后处理阶段对可行路径进行平滑和缩短，以获得更接近最优路径。然而，由于 OMPL 中的算法是概率性的，因此不能保证每次都能找到全局最优解或相同的解。其他库，如基于搜索的规划库(Search Based Planning Library, SBPL)提供了确定性结果，即给定相同的环境、起点和目标，将始终得到相同的路径。SBPL 是基于 A* 的，因此将根据所选的搜索分辨率获得最佳结果。然而，SBPL 也有缺点，例如难以以适当的分辨率定义状态空间格(例如，如何定义关节角度或末端执行器姿态的良好离散化)和调整特殊的启发式。</p>
-<p>在 OMPL 中有几个 planners 可以提供理论上的最优性保证，但通常只是渐近的:它们收敛到最优解，但收敛速度可能很慢。这些规划器使用的优化目标通常是路径长度的最小化，但也可以使用其他优化目标。</p>
-<h2 id="OMPL-Optimization-Objectives"><a href="#OMPL-Optimization-Objectives" class="headerlink" title="OMPL Optimization Objectives"></a><strong>OMPL Optimization Objectives</strong></h2><p>OMPL 规划库中的几个 planners 能够针对指定的优化目标进行优化。目前可用于 MoveIt 的渐近最优 planner 是：</p>
-<ul>
-<li><p>RRT*</p>
-</li>
-<li><p>PRM*</p>
-</li>
-<li><p>LazyPRM*</p>
-</li>
-<li><p>BFMT</p>
-</li>
-<li><p>FMT</p>
-</li>
-<li><p>Lower Bound Tree RRT(LBTRRT)</p>
-</li>
-<li><p>SPARS</p>
-</li>
-<li><p>SPARS2</p>
-</li>
-<li><p>Transition-based RRT(T-RRT)</p>
-</li>
-</ul>
-<p>OMPL 还提供了一种称为 <strong>AnytimePathShortening</strong> 的 meta-optimization 算法，该算法重复并行运行多个规划器，并与路径捷径和路径杂交(这两种技术用于局部优化解决方案路径)交织在一起。虽然没有被证明是最优的，但在实践中通常是获得渐近最优解路径的有效策略。</p>
-<p>以及 OMPL 中的其他优化规划器，但尚未在 MoveIt 中公开：</p>
-<ul>
-<li>RRT#</li>
-<li>RRTX</li>
-<li>Informed RRT*</li>
-<li>Batch Informed Trees(BIT*)</li>
-<li>Sparse Stable RRT</li>
-<li>FMT*</li>
-<li>CForest</li>
-</ul>
-<p>以下优化目标是可用的:</p>
-<ul>
-<li>PathLengthOptimizationObjective (Default，路径长度)</li>
-<li>MechanicalWorkOptimizationObjective</li>
-<li>MaximizeMinClearanceObjective (最大化最小间隙)</li>
-<li>StateCostIntegralObjective (状态代价积分)</li>
-<li>MinimaxObjective</li>
-</ul>
-<p>这些优化目标的配置可以通过 ompl_planning.yaml 中的 <strong>optimization_objective</strong> 完成。该参数的值被设置为所选优化目标的名称。例如，要配置 RRTstar 以使用 maximizemclearanceobjective, ompl_planning.yaml 中的 planner entry:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">optimization_objective:</span> <span class="string">MaximizeMinClearanceObjective</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>传感器模型越精确，得到的结果越好。  </p>
+<h3 id="7-定位"><a href="#7-定位" class="headerlink" title="7. 定位"></a>7. 定位</h3><h4 id="1、定位问题分类"><a href="#1、定位问题分类" class="headerlink" title="1、定位问题分类"></a>1、定位问题分类</h4><p>1.1、定位问题是以最初及运行期间可供使用信息的类型为特征的。随着难度的增加，可分为三类定位问题：<br>1）、位置跟踪（position tracking）<br>假定机器人初始位姿已知，通过适应机器人运动噪声来完成定位机器人。该方法的前提是传感器误差小。位姿不确定性用单峰分布(例如：高斯分布)来近似。 位置跟踪问题是一个局部问题，因为不确定性是局部的，并且局限于机器人真是位姿附近的区域。<br>即：在局部范围内，可认为传感器数据（例如里程计等）是准确的或者误差小的。<br>2）、全局定位<br>机器人初始位姿未知。机器人放置在环境中的某个地方，但缺少它的位置信息。全局定位方法不能假定位姿误差的有界性。 全局定位包括了位置跟踪。<br>3）、绑架问题（kidnapped）<br>绑架问题是全局定位问题的变种，但更加困难。运动过程中，机器人被绑架，瞬间移动到其它位置。 绑架问题比全局定位更困难的地方在于：机器人可能相信知道自己在哪，因为机器人不知道被绑架到其它位置了，仍然相信之前的定位是准确的。</p>
+<p>1.2、影响定位的第二个方面是环境，环境又分为静态环境和动态环境<br>1）、静态环境<br>静态环境是指<strong>仅有的变量是机器人位姿</strong>的环境。即：只有机器人是移动的。<br>2）、动态环境<br>动态拥有出机器人外，位置和配置随时间变化的物体。及还有其它运动或动态物体。  </p>
+<p>1.3、定位算法是否控制机器人运动<br>1）、被动定位（passive）<br>定位模块仅观察机器人运行。<br>2）、主动定位（active）<br>该类算法控制机器人，以便最小化定位误差。<br>例一：海岸导航。<br>例二：假设机器人位于对称的长廊环境，机器人在长廊过道中时，由于环境的局部对称性使得定位机器人是不可能的，只有当它运动进入其中一个房间才能消除模糊性并定位自身位姿。在这种情况下，主动定位可以主动控制机器人进入其中一个房间，来确定自身的位姿。  </p>
+<p>1.4、单机器人与多机器人定位<br>多机器人环境中，每个机器人都能独立定位自身，因此多机器人定位问题可以通过单一机器人定位解决。然而，如果机器人能相互探测，定位可能更好。</p>
+<h4 id="2、定位方法"><a href="#2、定位方法" class="headerlink" title="2、定位方法"></a>2、定位方法</h4><p>本章主要介绍单峰高斯定位技术。  </p>
+<h3 id="8、蒙特卡洛定位与栅格定位"><a href="#8、蒙特卡洛定位与栅格定位" class="headerlink" title="8、蒙特卡洛定位与栅格定位"></a>8、蒙特卡洛定位与栅格定位</h3><p>本章介绍两个能解决全局定位问题的定位算法：栅格定位和蒙特卡洛定位（MCL）。<br><strong>栅格定位</strong>：使用直方图滤波表示后验置信度。 栅格定位存在的问题是：对于高分辨率的栅格，定位的计算量大；低分辨率的栅格又会导致附加信息的损失，会负面影响滤波。<br><strong>蒙特卡洛定位</strong>：使用粒子滤波估计机器人位姿的后验置信度。  </p>
+<h4 id="1、栅格定位"><a href="#1、栅格定位" class="headerlink" title="1、栅格定位"></a>1、栅格定位</h4><h4 id="2、蒙特卡洛定位"><a href="#2、蒙特卡洛定位" class="headerlink" title="2、蒙特卡洛定位"></a>2、蒙特卡洛定位</h4>
+      
+    </div>
 
-<p>有关 OMPL 最优规划者的更多信息，请参阅: <a target="_blank" rel="noopener" href="http://ompl.kavrakilab.org/optimalPlanning.html">OMPL-最优规划文档</a>。</p>
-<h2 id="OMPL-优化器停止条件"><a href="#OMPL-优化器停止条件" class="headerlink" title="OMPL 优化器停止条件"></a><strong>OMPL 优化器停止条件</strong></h2><p>当超过给定的时间限制时，OMPL 中的规划器会终止求解。但是，可以通过 <strong>termination_condition</strong> 参数(ompl_planning.yaml)为每个规划程序配置指定额外的规划程序终止条件。可能的值为：</p>
-<ul>
-<li>**Iteration [num]**：迭代 num 次后终止</li>
-<li>**CostConvergence [solutionsWindow，epsilon]**：在代价（由优化目标指定）收敛之后终止。参数 solutionsWindow 指定的最小解决方案数，用于确认 planner 是否收敛。参数 ε 是要考虑收敛的阈值。应该是接近 0 的正数。如果在找到新的更好的解决方案后累积移动平均值没有以 ε 的相对分数变化，则已经达到收敛。OMPL 版本 ≥ 1.5.0</li>
-<li><strong>ExactSolution</strong>：找到确切的解决方案或发生超时后立即终止。这修改了 anytime&#x2F;optimizing 规划器的逻辑，在发现第一个可行解决方案时终止</li>
-</ul>
-<p>在所有情况下，planner 将在满足用户指定的终止条件或达到 timeout 指定的时间限制时终止，两者中以先发生者为准。</p>
-<p>例如，要指定 RRTstar 应该在收敛时终止，可以使用以下设置:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">RRTstarkConfigDefault:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::RRTstar</span></span><br><span class="line">    <span class="attr">termination_condition:</span> <span class="string">CostConvergence[10,.1]</span></span><br><span class="line">    <span class="attr">range:</span> <span class="number">0.0</span></span><br><span class="line">    <span class="attr">goal_bias:</span> <span class="number">0.05</span></span><br><span class="line">    <span class="attr">delay_collision_checking:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<p>注意，没有指定优化目标(optimization_objective)，因此将使用默认的 <strong>PathLengthOptimizationObjective</strong>。</p>
-<h2 id="Post-Processing-Smoothing"><a href="#Post-Processing-Smoothing" class="headerlink" title="Post-Processing Smoothing"></a><strong>Post-Processing Smoothing</strong></h2><p>请注意，平滑对于减少间接路由的程度是有限度的。还要注意，这里只讨论基于几何（运动学）的平滑。速度&#x2F;加速度&#x2F;急动平滑在其他地方处理，参考：Time Parameterization。</p>
-<p><strong>可以通过增加 planning time 来调整 MoveIt 在平滑上花费的时间</strong>。在找到初始规划之后但在 <strong>allowed_planning_time</strong> 用完之前的任何剩余时间都将用于平滑。MoveIt 还进行路径混合(path hybridization)，将 N 个不同规划运行的最佳部分拼接在一起。因此，<strong>num_planning_attempts</strong> 也会影响质量。</p>
-<p>虽然目前未在 MoveIt 的顶层公开，但可以通过在 model_based_planning_context.cpp 中将简化持续时间(simplification duration)设置为 0（无限制）来实现更多平滑。这将启用 OMPL 的 simpleMax() 函数。</p>
-<p>除了内部 OMPL 平滑器之外，最近还努力使用 STOMP&#x2F;CHOMP 进行后处理。请参考：<a target="_blank" rel="noopener" href="https://moveit.ros.org/moveit!/ros/2018/10/25/gsoc-motion-planning-support.html">gsoc-motion-planning-support</a>。</p>
-<h1 id="Persistent-Roadmaps"><a href="#Persistent-Roadmaps" class="headerlink" title="Persistent Roadmaps"></a><strong>Persistent Roadmaps</strong></h1><p>默认情况下，对于每个运动规划请求，规划算法均从头开始。但是，对于构建环境路线图的某些规划器，如果规划场景或多或少是静态的，则可以从先前的运动计划请求中重用路线图。请考虑以下计划配置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">PersistentLazyPRMstar:</span> <span class="comment"># use this with a representative environment to create a roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">PersistentLazyPRM:</span> <span class="comment"># use this to load a previously created roadmap</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">planner_data_path:</span> <span class="string">/tmp/roadmap.graph</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRMstar:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRMstar</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">SemiPersistentLazyPRM:</span> <span class="comment"># reuses roadmap during lifetime of node but doesn&#x27;t save/load roadmap to/from disk</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">geometric::LazyPRM</span></span><br><span class="line">    <span class="attr">multi_query_planning_enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">store_planner_data:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">load_planner_data:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
-<p>第一个规划程序配置 <strong>PersistentLazyPRMstar</strong>，将使用 LazyPRM* 来随着每个运动计划请求，在采样的机器人配置之间不断发展渐近最优路径的路线图。销毁规划器实例后，它将把路线图保存到磁盘中。 <strong>PersistentLazyPRM</strong> 配置与之类似，不同之处在于它将从磁盘加载路线图，但销毁后不会将其保存。<strong>SemiPersistent</strong> 规划器配置不会加载&#x2F;保存路线图，但是会随着每个运动规划请求的进行而不断扩展路线图（而不是在规划之前清除路线图的默认行为）。**支持持续性规划功能的四个计划器是：PRM，PRM*，LazyPRM 和 LazyPRM***。它们之间的关键区别在于，当在路线图中搜索有效路径时，惰性变体将根据需要，重新验证节点和边的有效性。非惰性变体将不会检查路线图对于当前环境是否仍然有效。换句话说，对于静态环境，请使用非惰性变体；对于变化很小的环境，请使用惰性变体；如果环境可能发生重大变化，请使用非持久性计划器。</p>
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%AF%E8%AF%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/21/Robot/%E6%A6%82%E7%8E%87%E6%9C%BA%E5%99%A8%E4%BA%BA/%E6%9C%AF%E8%AF%AD/" class="post-title-link" itemprop="url">术语</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 19:30:31" itemprop="dateCreated datePublished" datetime="2024-09-21T19:30:31+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>置信度(belief)<strong>：反映了机器人有关环境状态的内部信息。机器人的状态不能直接测量，必须从数据中推测其位姿，因此要从位姿的内部置信度识别出真正的状态。概率机器人通过条件概率分布表示置信度。置信度分布可以获得数据为条件的关于状态变量的后验概率。用 <img src="http://chart.googleapis.com/chart?cht=tx&chl={bel}(x_t)" style="border:none;"> 表示状态变量 <img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"> 的置信度：<img src="http://chart.googleapis.com/chart?cht=tx&chl={bel}(x_t) = p(x_t | z_{1:t}, u_{1:t})" style="border:none;"><br>1:t 表示从其实到 t 时刻的而所有值。<br>  用  <img src="http://chart.googleapis.com/chart?cht=tx&chl=\bar{bel}(x_t)" style="border:none;"> 表示预测(prediction)，即刚刚执行完控制  <img src="http://chart.googleapis.com/chart?cht=tx&chl=u_t" style="border:none;"> 之后，综合  <img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;"> 之前计算得到的后验值，是是基于以前状态的后验：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=\bar{bel}(x_t) = p(x_t | z_{1:t-1}, u_{1:t})" style="border:none;"><br>由 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\bar{bel}(x_t)" style="border:none;"> 计算 <img src="http://chart.googleapis.com/chart?cht=tx&chl={bel}(x_t)" style="border:none;"> 称为</strong>修正(correction) 或 测量更新(measurement update)</strong></p>
+<p><strong>置信区间</strong>：<br>**海岸导航(coastal navigation)**：  </p>
+<p><strong>马尔可夫假设</strong>：如果知道当前状态，马尔可夫假设设定过去和未来的数据都是独立的。  </p>
+<p>隐马尔可夫模型(Hidden Markov Model - HMM)：<br>动态贝叶斯网络(Dynamic Bayes Network - DBN)：  </p>
+<p>普通密度函数都是具有均值 μ 和方差 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\sigma^2" style="border:none;"> 的一维正态分布。<br>正态分布的概率密度函数：<br>1)、假设x为标量 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x)=(2\pi\sigma^2)^{-\frac{1}{2}} exp\{-\frac{1}{2}\frac{(x-\mu)^2}{\sigma^2}\}" style="border:none;"><br>2)、假设x为多维矢量 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x)=det(2\pi\Sigma)^{-\frac{1}{2}} exp\{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\}" style="border:none;"><br>其正态分布缩写方式：<img src="http://chart.googleapis.com/chart?cht=tx&chl=N(x;\mu, \delta^2)" style="border:none;"><br>**概率密度函数(Probability Density Function 即 PDF)**的积分总是等于 1，即：<img src="http://chart.googleapis.com/chart?cht=tx&chl=\displaystyle \int {p(x)dx} = 1" style="border:none;">  </p>
+<p><strong>贝叶斯定理</strong>：基于新数据和与事件相关条件的先验知识，对事件概率进行更新的规则。贝叶斯公式：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)} = \frac{p(y|x)p(x)}{\Sigma_{x'}p(y|x')p(x')}}" style="border:none;"> – 离散<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\frac{p(y|x)p(x)}{p(y)}} = \frac{p(y|x)p(x)}{\displaystyle \int {p(y|x')p(x')dx'}}" style="border:none;"> – 连续<br>若 x 是一个希望由 y 推测出来的数值，则概率 p(x) 称为<strong>先验概率分布</strong>。其中，y 称为数据（例如：传感器测量值）。 p(x|y) 称为在 X 上的后验概率。 贝叶斯准则为利用 p(y|x) 和先验概率 p(x) 一起去计算后验概率 p(x|y) 提供了一种方便的方法。<br>贝叶斯准则的分母 p(y) 不依赖 x。因此贝叶斯公式中因子 <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(y)^{-1}" style="border:none;"> 对任何 x 的后验概率 p(x|y) 都是相同的。因此，<img src="http://chart.googleapis.com/chart?cht=tx&chl=p(y)^{-1}" style="border:none;"> 经常写成贝叶斯准则中的归一化变量，通常用 <img src="http://chart.googleapis.com/chart?cht=tx&chl=\eta" style="border:none;"> 表示: <img src="http://chart.googleapis.com/chart?cht=tx&chl=p(x|y)=\eta{p(y|x)p(x)}" style="border:none;">   </p>
+<p><strong>期望值（expectation）</strong>：即均值。是试验中每次可能结果的概率乘以其结果的总和。<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=E(X)=\Sigma\limits_{x}xp(x) " style="border:none;"> – 离散<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=E(X)=\displaystyle \int {xp(x)dx} " style="border:none;"> – 连续  </p>
+<p><strong>协方差 Cov</strong> 衡量的是偏离均值的二次方期望：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=Cov[x]=E[X - E[X]]^2 = E[X^2] - E[X]^2" style="border:none;"> </p>
+<p><strong>熵（entropy）</strong>：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=H_p(x)=E[-log_2p(x)]" style="border:none;"><br>是<strong>信息杂乱程度的描述，是 x 所携带的期望信息</strong>。离散情况下，假定 p(x) 是观测 x 的概率，则 $-log_2p(x)$ 就是使用最佳编码对 x 进行编码所需的比特数。熵用在机器人信息收集，用以表达机器人在执行具体行动时可能接收到的信息。  </p>
+<p><strong>运动学状态（kinematic state）</strong>：例如机器人转动关节的关节角度等<br><strong>动态学状态（dynamic state）</strong>：例如机器人速度、角速度<br>环境中，移动的人或物体也有其自身的运动和动态状态。  </p>
+<p><strong>状态</strong>：<img src="http://chart.googleapis.com/chart?cht=tx&chl=x_t" style="border:none;"><br><strong>测量（或观察、认知percept）</strong>：基于传感器测量数据。用<img src="http://chart.googleapis.com/chart?cht=tx&chl=z_t" style="border:none;"> 表示<br><strong>控制数据</strong>：控制数据携带环境中关于状态改变的信息，例如：机器人的速度、odometry等。 控制数据用 <img src="http://chart.googleapis.com/chart?cht=tx&chl=u_t" style="border:none;">表示。  </p>
 
       
     </div>
@@ -1968,7 +1222,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1991,14 +1245,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">765k</span>
+    <span title="站点总字数">794k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">23:11</span>
+    <span title="站点阅读时长">24:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

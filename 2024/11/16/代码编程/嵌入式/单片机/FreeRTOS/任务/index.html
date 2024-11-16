@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="FreeRTOS 中，每个执行线程都被称为任务。 前台系统：是单任务系统。单片机裸机一般是在 main 函数中用  while 循环来完成所有的处理，即应用是一个无限循环，循环中调用相应的函数完成相应的处理，有时也会需要在中断中完成一些处理。 前台系统中，中断服务函数称为前台程序，外层的 while 循环为后台程序。前台系统各任务依次轮流执行，实时性差。 FreeRTOS 是一个抢占式实时多任务系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="任务">
+<meta property="og:url" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="FreeRTOS 中，每个执行线程都被称为任务。 前台系统：是单任务系统。单片机裸机一般是在 main 函数中用  while 循环来完成所有的处理，即应用是一个无限循环，循环中调用相应的函数完成相应的处理，有时也会需要在中断中完成一些处理。 前台系统中，中断服务函数称为前台程序，外层的 while 循环为后台程序。前台系统各任务依次轮流执行，实时性差。 FreeRTOS 是一个抢占式实时多任务系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/image-20241116135052583.png">
+<meta property="article:published_time" content="2024-11-16T05:49:47.000Z">
+<meta property="article:modified_time" content="2024-11-16T05:59:44.581Z">
+<meta property="article:author" content="Damon">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="FreeRTOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/image-20241116135052583.png">
+
+
+<link rel="canonical" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/","path":"2024/11/16/代码编程/嵌入式/单片机/FreeRTOS/任务/","title":"任务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>任务 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%8D%8F%E7%A8%8B-Co-Routine"><span class="nav-number">1.</span> <span class="nav-text">任务与协程(Co-Routine)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81"><span class="nav-number">2.</span> <span class="nav-text">任务状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.</span> <span class="nav-text">任务优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">任务实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E4%BB%BB%E5%8A%A1"><span class="nav-number">4.1.</span> <span class="nav-text">空闲任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%A0%86%E6%A0%88"><span class="nav-number">5.</span> <span class="nav-text">任务堆栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%90%8C%E6%AD%A5"><span class="nav-number">6.</span> <span class="nav-text">任务同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">6.1.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%A0%87%E5%BF%97%E7%BB%84"><span class="nav-number">6.2.</span> <span class="nav-text">事件标志组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E9%80%9A%E7%9F%A5"><span class="nav-number">6.3.</span> <span class="nav-text">任务通知</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">任务调度</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="任务 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          任务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:49:47 / 修改时间：13:59:44" itemprop="dateCreated datePublished" datetime="2024-11-16T13:49:47+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>FreeRTOS 中，每个执行线程都被称为任务。</p>
+<p>前台系统：是单任务系统。单片机裸机一般是在 main 函数中用  while 循环来完成所有的处理，即应用是一个无限循环，循环中调用相应的函数完成相应的处理，有时也会需要在中断中完成一些处理。</p>
+<p>前台系统中，中断服务函数称为前台程序，外层的 while 循环为后台程序。前台系统各任务依次轮流执行，实时性差。</p>
+<p>FreeRTOS 是一个抢占式实时多任务系统(并不是同一时刻执行多个任务)。FreeRTOS 的任务调度器也是抢占式的。高优先级的任务可以打断低优先级任务的运行而取得 CPU 的使用权，以确保紧急任务的运行。</p>
+<h1 id="任务与协程-Co-Routine"><a href="#任务与协程-Co-Routine" class="headerlink" title="任务与协程(Co-Routine)"></a>任务与协程(Co-Routine)</h1><p>任务和协程使用不同的 API 函数，因此不能通过队列(或信号量)将数据从任务发送给协程，反之亦然。协程是为那些资源很少的 MCU 准备的，其开销很小，但是目前 MCU 性能越来越强大，协程已经很少用到，且 FreeRTOS 官方已经不再更新协程了。</p>
+<p>不同点：</p>
+<p>① 堆栈。所有协程使用同一个堆栈，而每个任务都有自己的堆栈。因此协程消耗更少的 RAM</p>
+<p>② 协程使用合作式调度器，但可以在抢占式的调度器中使用协程</p>
+<p>③ 协程通过宏定义实现</p>
+<p>④ 为了降低 RAM 消耗，做了很多限制</p>
+<h1 id="任务状态"><a href="#任务状态" class="headerlink" title="任务状态"></a>任务状态</h1><img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/image-20241116135052583.png" class="" title="image-20241116135052583">
+
+<p>阻塞状态：任务正在等待某个事件。任务可进入阻塞态以等待以下两种不同类型的事件：</p>
+<ul>
+<li><p>定时事件</p>
+</li>
+<li><p>同步事件</p>
+</li>
+</ul>
+<p>挂起状态：调用 <code>vTaskSuspend()</code> 接口进入挂起状态，并调用 <code>vTaskResume()/vTaskResumeFromISR()</code> 接口唤醒进入就绪状态等待系统调度</p>
+<h1 id="任务优先级"><a href="#任务优先级" class="headerlink" title="任务优先级"></a>任务优先级</h1><p>每个任务都可以分配一个从 <strong>0 ~ <code>configMAX_PRIOROTIES-1</code></strong> 的优先级(<code>configMAX_PRIOROTIES</code> 在 FreeRTOSConfig.h 中定义)。FreeRTOS 本身并没有限定 <strong><code>configMAX_PRIOROTIES</code></strong> 的最大值，但这个值越大，则内核花销的内存空间就越多。所以总是建议将此常量设为能够用到的最小值。</p>
+<p><strong>数越小，对应的优先级越低</strong>。</p>
+<p><strong>configUSE_TIME_SLICING</strong> 为 1 时，多个任务可共用一个优先级，此时处于就绪状态的优先级相同的任务会使用时间片轮转调度器获取运行时间。</p>
+<p>任务优先级也可在调度器启动后调用 <em>vTaskPrioritySet()</em> 接口修改。</p>
+<p>调度器在以时间片为单位来切换任务执行。</p>
+<p>时间片的长度通过 tick 中断的频率进行设定，tick 中断频率由 <strong>configTICK_RATE_HZ</strong> 进行配置。</p>
+<p>FreeRTOS API 函数调用中指定的时间总是以 tick 中断为单位。常量<strong>portTICK_RATE_MS</strong> 用于将以 tick 为单位的时间值转化为以毫秒为单位的时间值。有效精度依赖于系统 tick 频率。</p>
+<p><strong>tick count</strong>（tick 计数器）表示从调度器启动开始，tick 中断的总数。用户程序在指定延迟周期时不必考虑 tick count 溢出问题。</p>
+<h1 id="任务实现"><a href="#任务实现" class="headerlink" title="任务实现"></a>任务实现</h1><p>FreeRTOS 中，使用 <code>xTaskCreate()</code> 和 <code>xTaskCreateStatic()</code> 来创建任务。任务函数格式为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">vATaskFunction</span><span class="params">( voidvoid *pvParameters )</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">for</span>( ;; )  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="comment">/* 功能代码 */</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">/* 任务不可以从这个函数返回或退出。在较新的FreeRTOS移植包中，如果</span></span><br><span class="line"><span class="comment">     * 试图从一个任务中返回，将会调用 configASSERT()。</span></span><br><span class="line"><span class="comment">    * 如果一个任务确实要退出函数，那么这个任务应调用 vTaskDelete(NULL) </span></span><br><span class="line"><span class="comment">    * 函数，以便处理一些清理工作</span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    vTaskDelete( <span class="literal">NULL</span> );  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>任务函数不应该返回</li>
+<li>任务函数的参数为 void 指针类型</li>
+<li>任务具体执行过程是一个大循环，循环中为任务功能代码</li>
+<li>任务函数一般不允许跳出循环，若要跳出循环，需要调用 <code>vTaskDelete()</code> 函数删除任务</li>
+</ul>
+<p>在创建任务时，会自动为每个任务分配一个任务控制块 TCB_t，存储任务属性等内容。</p>
+<h2 id="空闲任务"><a href="#空闲任务" class="headerlink" title="空闲任务"></a>空闲任务</h2><p>为保证系统至少有一个任务处于运行态，当调用 <code>vTaskStartScheduler()</code> 时，调度器会自动创建一个空闲任务（优先级为 0）。</p>
+<p>通过空闲任务钩子函数(或称回调，hook, or call-back)，可以直接在空闲任务中添加应用程序相关的功能。空闲任务钩子函数会被空闲任务每循环一次就自动调用一次。</p>
+<p>空闲任务钩子函数通常被用于：</p>
+<ul>
+<li>执行低优先级，后台或需要不停处理的功能代码</li>
+<li>测试系统处理裕量(空闲任务只会在所有其它任务都不运行时才有机会执行，所以测量出空闲任务占用的处理时间就可以清楚的知道系统有多少富余的处理时间)</li>
+<li>将处理器配置到低功耗模式</li>
+</ul>
+<p>空闲任务钩子函数的限制：</p>
+<ul>
+<li>绝对不能阻塞或挂起。空闲任务只会在其它任务都不运行时才会被执行(除非有应用任务共享空闲任务优先级)。以任何方式阻塞空闲任务都可能导致没有任务能够进入运行态</li>
+<li>如果应用程序用到了 <code>vTaskDelete()</code> 函数，则空闲钩子函数必须能够尽快返回。因为<strong>在任务被删除后，空闲任务负责回收内核资源</strong>。如果空闲任务一直运行在钩子函数中，则无法进行回收工作</li>
+</ul>
+<h1 id="任务堆栈"><a href="#任务堆栈" class="headerlink" title="任务堆栈"></a>任务堆栈</h1><p>创建任务时需要指定堆栈，若使用 <code>xTaskCreate()</code> 创建任务，则会自动创建堆栈；若使用 <code>xTaskCreateStatic()</code> 创建任务，则需要手动指定任务堆栈。</p>
+<p>空闲任务的堆栈大小为：<code>configMINIMAL_STACK_SIZE</code>。</p>
+<h1 id="任务同步"><a href="#任务同步" class="headerlink" title="任务同步"></a>任务同步</h1><p>FreeRTOS 中可使用<strong>信号量、事件标志组</strong>来实现同步。</p>
+<p>使用信号量进行同步，任务只能与单个的事件或任务进行同步。使用事件标志组可以实现任务与多个事件或任务进行同步。</p>
+<p>从 FreeRTOS v8.2 版本开始，新增了任务通知(Task Notifications)功能，可替代信号量、消息队列、事件标志组等。</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>FreeRTOS中信号量又分为二值信号量、计数型信号量、互斥信号量和递归信号量。</p>
+<p>二值信号量与互斥信号量类似，但互斥信号量拥有优先级继承机制，二值信号量没有优先级继承。</p>
+<h2 id="事件标志组"><a href="#事件标志组" class="headerlink" title="事件标志组"></a>事件标志组</h2><h2 id="任务通知"><a href="#任务通知" class="headerlink" title="任务通知"></a>任务通知</h2><h1 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/FreeRTOS/" rel="tag"># FreeRTOS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="prev" title="内存管理">
+                  <i class="fa fa-angle-left"></i> 内存管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/" rel="next" title="栈">
+                  栈 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">794k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">24:03</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
