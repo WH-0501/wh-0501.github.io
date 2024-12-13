@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="版本区别0.5.1 版本与 0.5.6 版本：  代码架构调整：0.5.1 版本中，中断功能分散，频繁调用 run_control_loop() 函数。0.5.6 版本中，中断功能集中到 TIM8 中，简化了结构 操作指令变化：主要是无感电机的操作指令变化 单位和参数变化：input_pos, input_vel, pos_estimate_linear, pos_estimate_circula">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ODrive">
+<meta property="og:url" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="版本区别0.5.1 版本与 0.5.6 版本：  代码架构调整：0.5.1 版本中，中断功能分散，频繁调用 run_control_loop() 函数。0.5.6 版本中，中断功能集中到 TIM8 中，简化了结构 操作指令变化：主要是无感电机的操作指令变化 单位和参数变化：input_pos, input_vel, pos_estimate_linear, pos_estimate_circula">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-16T09:02:04.000Z">
+<meta property="article:modified_time" content="2024-11-19T03:33:08.265Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/","path":"2024/11/16/代码编程/嵌入式/电机/ODrive/ODrive/","title":"ODrive"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ODrive | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">版本区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">编译配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%83%A7%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">编译烧录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E8%80%97%E6%95%A3%E7%94%B5%E9%98%BB"><span class="nav-number">3.</span> <span class="nav-text">功率耗散电阻</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">编码器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%BD%86%E7%B4%A2%E5%BC%95%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">5.1.</span> <span class="nav-text">⽆索引信号的编码器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E7%B4%A2%E5%BC%95%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">5.2.</span> <span class="nav-text">带索引信号的编码器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E6%97%8B%E8%BD%AC%E7%BC%96%E7%A0%81%E5%99%A8%E7%B4%A2%E5%BC%95%E6%90%9C%E7%B4%A2"><span class="nav-number">5.3.</span> <span class="nav-text">反向旋转编码器索引搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8%E5%99%AA%E5%A3%B0"><span class="nav-number">5.4.</span> <span class="nav-text">编码器噪声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AS5047-AS5048"><span class="nav-number">5.5.</span> <span class="nav-text">AS5047&#x2F;AS5048</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">5.6.</span> <span class="nav-text">编码器测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%B0%83%E6%95%B4"><span class="nav-number">6.1.</span> <span class="nav-text">参数调整</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">控制方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%BB%91%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">7.1.</span> <span class="nav-text">平滑位置控制</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ODrive | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ODrive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-16 17:02:04" itemprop="dateCreated datePublished" datetime="2024-11-16T17:02:04+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-19 11:33:08" itemprop="dateModified" datetime="2024-11-19T11:33:08+08:00">2024-11-19</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="版本区别"><a href="#版本区别" class="headerlink" title="版本区别"></a>版本区别</h1><p>0.5.1 版本与 0.5.6 版本：</p>
+<ul>
+<li>代码架构调整：0.5.1 版本中，中断功能分散，频繁调用 <code>run_control_loop()</code> 函数。0.5.6 版本中，中断功能集中到 TIM8 中，简化了结构</li>
+<li>操作指令变化：主要是无感电机的操作指令变化</li>
+<li>单位和参数变化：<code>input_pos</code>, <code>input_vel</code>, <code>pos_estimate_linear</code>, <code>pos_estimate_circular</code>的单位从<code>[counts]</code>或<code>[counts/s]</code>变更为<code>[turns]</code>或<code>[turns/s]</code>。此外，<code>pos_gain</code>, <code>vel_gain</code>, <code>vel_integrator_gain</code>的单位也发生了变化</li>
+</ul>
+<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><ul>
+<li>make: 调⽤ tup</li>
+<li>Tup: ⽤于调⽤编译命令的构建系统</li>
+<li>ARM GNU Compiler: 交叉编译⼯具</li>
+<li>ARM GDB: ⽤于调试代码</li>
+<li>OpenOCD: ⽤于使⽤ STLink v2 编程器对 ODrive 进⾏烧录</li>
+<li>Python3: ⽤于运⾏Python⼯具，并且安装 PyYAML，Jinja2 ，jsonschema 包</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">arm-none-eabi-gcc --version</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">arm-none-eabi-gdb --version</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">openocd --version <span class="comment"># should be 0.10.0 or later</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tup --version <span class="comment"># should be 0.7.5 or later</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python --version <span class="comment"># should be 3.7 or later</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改完代码后，执行该指令即可完成编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./dockerbuild.sh build</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="编译配置"><a href="#编译配置" class="headerlink" title="编译配置"></a>编译配置</h2><p>要⾃定义编译时参数，请将⽂件 <code>Firmware/tup.config.default</code> 复制或重命名为<code>Firmware/tup.config</code>。配置参数说明：</p>
+<ul>
+<li><code>CONFIG_BOARD_VERSION</code>：ODrive 硬件版本，当前⽀持 v3.1, v3.2, v3.3, v3.4-24V, v3.4-48V, v3.5-24V, v3.5-48V, v3.6-56V</li>
+<li><code>CONFIG_DEBUG</code>：定义编译固件时是否启⽤调试；特别是 -g -gdwarf-2 标志。请注意，仅当 <code>tup.config</code> 指定 <code>USB_PROTOCOL</code> 或 <code>UART_PROTOCOL</code> 作为 stdout 并且定义了 <code>DEBUG_PRINT</code> 时， printf 调试才会起作⽤</li>
+<li><code>CONFIG_USE_PROTOCOL</code>：定义 ODrive 在 USB 接⼝上使⽤的协议。⽀持以下参数值：<ul>
+<li><code>native</code>：ODrive 原⽣通信协议。ODrive 以 USB 设备被识别</li>
+<li><code>native-stream</code>：与原⽣通信协议类似，只是 ODrive 被识别为 UART</li>
+<li><code>none</code>：禁⽤ USB 通信，设备仍能识别，但不会响应指令</li>
+</ul>
+</li>
+<li><code>CONFIG_UART_PROTOCOL</code>：定义在 UART 接⼝(GPIO1 和 GPIO2)上使⽤哪种协议<ul>
+<li><code>native</code>：ODrive 原⽣通信协议。如果要使⽤UART将ODrive连接到PC，并且想使⽤python⼯具来控制和设置ODrive，请使⽤此功能</li>
+<li><code>ascii</code>：ASCII 格式通信协议。如果要使⽤arduino控制ODrive，请使⽤此功能。ODrive Arduino 库尚不⽀持 ODrive 原⽣通信协议</li>
+<li><code>none</code>：禁⽤ UART</li>
+</ul>
+</li>
+</ul>
+<h2 id="编译烧录"><a href="#编译烧录" class="headerlink" title="编译烧录"></a>编译烧录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> Firmware</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br></pre></td></tr></table></figure>
+
+<p>也可通过 <code>./dockerbuild.sh build</code> 编译</p>
+<p>烧录可使⽤ DFU（Device Firmware Update， v3.4 以上版本）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令将连接到 GitHub 服务器以检索最新的固件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">odrivetool dfu</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果要刷新特定的固件文件而不是自动下载文件，可以运行</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">odrivetool dfu path/to/firmware/file.hex <span class="comment"># linux 平台为 elf 文件</span></span></span><br></pre></td></tr></table></figure>
+
+<p>v3.4 以下版本需使⽤ STLink V2 烧录</p>
+<ul>
+<li>烧录器连接 J2 端⼦上的 GND、SWD、SWC</li>
+<li>在 Firmware ⽬录下执⾏ make flash</li>
+</ul>
+<blockquote>
+<p>如果提示 can’t find target interface&#x2F;stlink-v2.cfg 或类似错误，则需设置 openOCD 环境变量 OPENOCD_SCRIPTS</p>
+</blockquote>
+<p>ODrive v3.5 及之后版本：需将板⼦上的拨码开关(DFU, RUN)拨到 DFU，若只变动拨码开关⽆效，则同时将 GPIO6 连接到 GND。</p>
+<p>若 odrivetool dfu 失败，可使⽤ dfu-util ⼯具。先进⼊ DFU 模式，然后执⾏：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install dfu-util</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若提示 More than one DFU capable USB device found! Try `--list<span class="string">&#x27; and</span></span> </span><br><span class="line">specify the serial number or disconnect all but one device</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">则通过 dfu-util --list 查看设备列表，并指定设备</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">还可通过 -s 0x08000000:leave 指定加载地址和在完成后重启目标</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo dfu-util -a 0 -s 0x08000000 -D build/ODriveFirmware.bin -d 0483:df11 -S 355333603235</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">重官网下载的 ELF 固件，可通过以下方式先转为 bin 文件</span></span></span><br><span class="line">arm-none-eabi-objcopy -O binary firmware.elf firmware.bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>tools&#x2F;run_tests.py 可⾃动测试固件的某些特性，还能对 ODrive 进⾏⽼化测试。某些测试项需要加上带编码器的电机即可，还有部分测试需要测试台</p>
+<h1 id="功率耗散电阻"><a href="#功率耗散电阻" class="headerlink" title="功率耗散电阻"></a>功率耗散电阻</h1><p>功率耗散电阻：建议 50W 以上，连接到 ODrive AUX 接⼝。若⽆功率耗散电阻，减速期间会将多余的功率回充到供电电源，以达到所需的减速扭矩。如果供电电源不能吸收掉这些能量（通常在电池供电时才能吸收），可能造成开关电源损坏。总线电压过⾼时，ODrive 的过压保护也将触发，电机将停⽌输出⼒矩，在惯性作⽤下⾃由旋转到停⽌。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>默认电流限制为 10A。可通过 <code>odrv0.axis0.motor.config.current_lim</code> 设置电流限制。</p>
+<blockquote>
+<p>重新设置电流限制后，需调整电流采样范围：</p>
+<p><code>odrv0.axis0.motor.config.requested_current_range</code>，配置完成后，需保存配置，然后重启 ODrive。</p>
+<p>需注意：电机电流和电源电流不同。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/abf1234444/article/details/107171749">https://blog.csdn.net/abf1234444/article/details/107171749</a></p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.motor.config.current_lim # 电机电流上限</span><br><span class="line">odrv0.axis0.motor.config.requested_current_range # 电流采样范围</span><br><span class="line">odrv0.axis0.motor.config.calibration_current # 电机校准电流限制</span><br><span class="line">odrv0.axis0.controller.config.vel_limit # 电机转速限制</span><br><span class="line">odrv0.config.brake_resistance # 功率耗散电阻值</span><br><span class="line">odrv0.axis0.motor.config.pole_pairs # 磁极对数(磁刚个数/2)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">电机类型。若为常规无刷电机选择 MOTOR_TYPE_HIGH_CURRENT;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若为小电流云台无刷电机，选择 MOTOR_TYPE_GIMBAL(注意：若将非小电流云台电机设置为该值，可能导致电机或ODrive过热)</span></span><br><span class="line">odrv0.axis0.motor.config.motor_type</span><br><span class="line">odrv0.axis0.encoder.config.cpr # 编码器每转计数。是每转脉冲数(PPR)的4倍</span><br><span class="line">odrv0.axis0.error = 0 # M0 错误清除</span><br><span class="line">odrv0.&lt;axis&gt;.encoder.pos_estimate # 查看当前编码器位置</span><br><span class="line">odrv0.&lt;axis&gt;.encoder.vel_estimate # 查看当前电机转速</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 计算转矩</span></span></span><br><span class="line">odrv0.&lt;axis&gt;.motor.current_control.Iq_setpoint # 查看设置的电机电流</span><br><span class="line">odrv0.&lt;axis&gt;.motor.current_control.Iq_measured # 查看电机实际电流</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">转矩[N.m] = 8.27 * 电流[A] / KV</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">电机校准. 首先策略电机电气特性(相电阻和相电感)，然后进行编码器偏移校准</span></span><br><span class="line">odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动闭环控制. 将保持电机转子位置，扭动电机时会有阻力。可提高 current_lim，电</span></span><br><span class="line">机会提供更大扭力对抗外部转动。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若开启闭环控制，手动扭动电机轴后开始抖动，则需降低控制器增益</span></span><br><span class="line">odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL</span><br><span class="line">odrv0.axis0.controller.input_pos = 10 # 绝对位置。0.5 表示正向转动到 180度</span><br></pre></td></tr></table></figure>
+
+<p>⽆传感器（⽆编码器&#x2F;霍尔反馈）模式运⾏</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.controller.config.vel_gain = 0.01</span><br><span class="line">odrv0.axis0.controller.config.vel_integrator_gain = 0.05</span><br><span class="line">odrv0.axis0.controller.config.control_mode = 2</span><br><span class="line">odrv0.axis0.controller.vel_setpoint = 400</span><br><span class="line">odrv0.axis0.motor.config.direction = 1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">必须正确设置 pm_flux_linage</span></span><br><span class="line">odrv0.axis0.sensorless_estimator.config.pm_flux_linkage = 5.51328895422 / (&lt;pole pairs&gt; * &lt;motor kv&gt;)</span><br><span class="line">&lt;axis&gt;.requested_state = AXIS_STATE_SENSORLESS_CONTROL # 启动</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>ODrive 的 A、B、Z 输⼊内部集成 3.3K 上拉电阻，⽤于开漏输出型编码器。对于具有弱驱动电流（&lt;4mA）的单端推挽信号，需⾃⾏去掉该上拉电阻。</p>
+<blockquote>
+<p>常⽤编码器型号：</p>
+<ul>
+<li>AS5047P&#x2F;D、AS5048A&#x2F;B、TLE5012B、⻨格恩 MT6709、昆泰芯 KTM5900&#x2F;KTH7824，分别安装在⾼低速轴、MA730（TLE5012B磁感元件为 GMR 巨磁阻， AS5047P&#x2F;D、AS5048A&#x2F;B 为霍尔）</li>
+</ul>
+</blockquote>
+<h2 id="⽆索引信号的编码器"><a href="#⽆索引信号的编码器" class="headerlink" title="⽆索引信号的编码器"></a>⽆索引信号的编码器</h2><p>在编码器校准过程中，必须允许转⼦旋转⽽且不能有偏载。 这意味着载荷均匀和较弱的摩擦载荷才⾏，但是重载或类似弹簧载荷不⾏。在 odrivetool 中输⼊ <axis>.requested_state &#x3D; AXIS_STATE_ENCODER_OFFSET_CALIBRATION。</p>
+<p>要验证⼀切正常，请检查以下变量：</p>
+<ul>
+<li><p><code>&lt;axis&gt;.error</code> 应为 0</p>
+</li>
+<li><p><code>&lt;axis&gt;.encoder.config.offset</code> 输出数值如 -326 或 1364 等</p>
+</li>
+<li><p><code>&lt;axis&gt;.motor.config.direction</code> 应输出 1 或 -1</p>
+</li>
+</ul>
+<h2 id="带索引信号的编码器"><a href="#带索引信号的编码器" class="headerlink" title="带索引信号的编码器"></a>带索引信号的编码器</h2><p>如果编码器带有索引（Z）信号，则可以避免每次启动时都必须进⾏编码器偏移校准，⽽可以使⽤索引信号将编码器重新同步到存储的偏移校准。</p>
+<p>以下是进⾏⼀次性校准和配置的步骤。 请注意，可以⼀次校准⼀台电机，也可以同时将所有电机⼀起按照这些步骤操作。</p>
+<ul>
+<li>只需要做⼀次，建议将电机与编码器以外的任何其他机械分离，以使其⾃由旋转</li>
+<li>设置 <code>&lt;axis&gt;.encoder.config.use_index</code> 为 True</li>
+<li>执⾏ <code>&lt;axis&gt;.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH</code>。将使电机朝个⽅向旋转，直到找到编码器索引</li>
+</ul>
+<h2 id="反向旋转编码器索引搜索"><a href="#反向旋转编码器索引搜索" class="headerlink" title="反向旋转编码器索引搜索"></a>反向旋转编码器索引搜索</h2><p>若希望索引搜索仅在特定⽅向上进⾏（默认设置的相反），⽽不是通过交换⻢达线来实现，</p>
+<p>可将以下三个值设置为负数：</p>
+<ul>
+<li><code>&lt;axis&gt;.config.calibration_lockin.vel</code></li>
+<li><code>&lt;axis&gt;.config.calibration_lockin.accel</code></li>
+<li><code>&lt;axis&gt;.config.calibration_lockin.ramp_distance</code></li>
+</ul>
+<h2 id="编码器噪声"><a href="#编码器噪声" class="headerlink" title="编码器噪声"></a>编码器噪声</h2><p>噪声主要来源</p>
+<ul>
+<li>最⼤可能，编码器线可能太靠近电机线，尽可能避免重叠</li>
+<li>编码器与 ODrive 之间连线太⻓</li>
+<li>使⽤排线连接编码器和 ODrive</li>
+</ul>
+<p>若使⽤ SPI，可在 CLK 上串联⼀个 20～50欧姆 的电阻。</p>
+<p>带索引信号的编码器 Z 输⼊噪声，现象</p>
+<ul>
+<li>编码器校准很难成功</li>
+<li>执⾏完 <code>odrv0.save_configuration</code> 和 <code>odrv0.reboot</code> 后有⼀些奇怪现象</li>
+</ul>
+<h2 id="AS5047-AS5048"><a href="#AS5047-AS5048" class="headerlink" title="AS5047&#x2F;AS5048"></a><strong>AS5047&#x2F;AS5048</strong></h2><p>基于霍尔效应的磁旋转编码器。</p>
+<p>AS5047 有三种独⽴的信号输出接⼝: SPI, ABI, PWM</p>
+<p>AS5048 有四种独⽴的信号输出接⼝: SPI, ABI, I2C, PWM</p>
+<p>默认的ODrive固件⽀持通过ABI与AS5047&#x2F;AS5048连接。 在接线时，将A，B，3.3v，GND 连接到ODrive上标记的引脚。</p>
+<p>TobinHall编写了⼀个⽀持AS5047&#x2F;AS5048上SPI选项的分⽀。</p>
+<h2 id="编码器测试"><a href="#编码器测试" class="headerlink" title="编码器测试"></a>编码器测试</h2><p>转动电机，查看 <code>&lt;axis&gt;,encoder.shadow_count</code> 是否变化</p>
+<p>使⽤示波器查看电机转动时 AB 引脚是否为⽅波。</p>
+<h1 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h1><p>电机控制器是级联式位置、速度和电流控制环路</p>
+
+
+<p>每个控制回路都是基于 PID 控制器。</p>
+<p>位置环控制器：是⼀个具有单个⽐例增益的 P 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pos_error = pos_setpoint - pos_feedback</span><br><span class="line">vel_cmd = pos_error * pos_gain + vel_feedforward</span><br></pre></td></tr></table></figure>
+
+<p>速度环控制器：是⼀个 PI 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vel_error = vel_cmd - vel_feedback</span><br><span class="line">current_integral += vel_error * vel_integrator_gain</span><br><span class="line">current_cmd = vel_error * vel_gain + current_integral + current_feedforward</span><br></pre></td></tr></table></figure>
+
+<p>电流环控制器：实际也是⼀个 PI 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">current_error = current_cmd - current_feedback,</span><br><span class="line">voltage_integral += current_error * current_integrator gain,</span><br><span class="line">voltage_cmd = current_error * current_gain + voltage_integral + ...</span><br><span class="line"> ... + voltage_feedforward (when we have motor model)</span><br></pre></td></tr></table></figure>
+
+<p><strong>控制器的最终输出是施加到每个 FET 栅极的电压</strong>，以通过电机的每个线圈输送电流。<strong>通过电机的电流与电机的扭矩输出呈线性关系</strong>。这意味着级联控制器的输⼊理论上是电机的位置（⻆度）、速度（⻆度&#x2F;时间）和加速度（⻆度&#x2F;时间&#x2F;时间）。请注意，当从电机的物理⻆度考虑控制器时，您会期望在速度和电流环路中看到时间，但它不存在，因为迭代之间的时间差始终为 125 微秒（8kHz）。因为控制器循环之间的时间差是⼀个常数，可以简单地包装到控制器增益中。</p>
+<p>控制器每个阶段的输出在馈⼊下⼀阶段之前都会被钳位。因此，在从位置控制器计算出vel_cmd 之后，vel_cmd 被钳位到速度极限。然后，速度控制器的 Torque_cmd 输出被钳位并馈⼊电流控制器。奇怪的是，控制器类不包含电流控制器，⽽是由于电机驱动器架构的复杂性，电流控制器被安置在电机类中。</p>
+<p>使⽤位置或速度控制模式时可⽤的前馈项旨在在系统动态已知且主机控制器可以根据负载预测运动时实现更好的性能。⼀个完美的例⼦是使⽤轨迹控制器，该控制器根据所需的位置、速度和加速度设置位置、速度和扭矩。如果您采⽤梯形速度曲线，您可以想象在向上的斜坡上速度将随着时间的推移⽽增加，⽽扭矩是⼀个⾮零常数。在曲线的平坦部分，速度将是⼀个⾮零常数，但加速度将为零。此轨迹控制器⽤例使⽤具有多个输⼊的级联控制器来实现具最佳性能的所需运动。</p>
+<h2 id="参数调整"><a href="#参数调整" class="headerlink" title="参数调整"></a>参数调整</h2><p>调整电机控制器是释放 ODrive 全部潜⼒的重要⼀步。通过调节，控制器可以快速响应系统中的⼲扰或变化（例如施加的外⼒或设定点的变化），⽽不会变得不稳定。正确设置三个调整参数（称为增益）可确保 ODrive 以最有效的⽅式控制电机。这三个参数是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.controller.config.pos_gain = 20.0 # pos_gain[(turn/s)/turn]</span><br><span class="line">odrv0.axis0.controller.config.vel_gain = 0.16 # vel_gain [Nm/(turn/s)]</span><br><span class="line">odrv0.axis0.controller.config.vel_integrator_gain = 0.32 # vel_integrator_gain [Nm/((turn/s) * s)]</span><br></pre></td></tr></table></figure>
+
+<p>即将推出⾃动调整功能的版本。在此之前可按以下步骤粗率调整：</p>
+<ul>
+<li>设置 vel_integrator_gain 为 0</li>
+<li>逐渐减⼩另两个值使系统达到稳定状态</li>
+<li>逐渐增加 vel_gain，每次增加 30% 左右，直到电机出现轻微振荡</li>
+<li>设置 vel_gain 为出现轻微振荡时值的 50%</li>
+<li>逐渐增加 pos_gain，每次增加 30% 左右，直到看到有些过冲</li>
+<li>逐渐减⼩ pos_gain，直到过冲消失</li>
+<li>可将积分器 vel_integrator_gain 设置为 0.5 * 带宽 * vel_gain（带宽：系统控制带宽）</li>
+</ul>
+<p>liveplotter ⼯具对调整控制器参数有很⼤帮组。可通过以下指令⼀曲线形式实时显示设置位置和实际位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_liveplotter(lambda:[odrv0.axis0.encoder.pos_estimate, odrv0.axis0.controller.pos_setpoint])</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="控制方式"><a href="#控制方式" class="headerlink" title="控制方式"></a>控制方式</h1><ul>
+<li><p>位置控制</p>
+</li>
+<li><p>平滑位置控制</p>
+</li>
+<li><p>轨迹控制</p>
+</li>
+<li><p>循环位置控制：连续的增量位置运动。控制器将尝试仅在电机旋转⼀圈之内跟踪位置，input_pos 范围应为 [0,1)，若设置为超过 turn&#x2F;2 步的⼤步幅增加位置，则电机将以相反的⽅向旋转。若需要处理较⼤步幅的应⽤，可通过设置<code>controller.config.circular_setpoints_range = N</code> 来设置要约束的循环范围值</p>
+</li>
+<li><p>转速控制</p>
+</li>
+<li><p>转速爬升控制</p>
+</li>
+<li><p>转矩控制</p>
+</li>
+</ul>
+<h2 id="平滑位置控制"><a href="#平滑位置控制" class="headerlink" title="平滑位置控制"></a>平滑位置控制</h2><p>建议将输⼊滤波带宽设置为位置指令发送频率的⼀半。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axis.controller.config.input_filter_bandwidth = 2.0 # 滤波带宽</span><br><span class="line">axis.controller.config.input_mode = INPUT_MODE_POS_FILTER # 使能平滑位置控制模式</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="prev" title="资源管理">
+                  <i class="fa fa-angle-left"></i> 资源管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/" rel="next" title="电机基础">
+                  电机基础 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">827k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">25:04</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

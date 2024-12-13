@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116094030781.png">
 <meta property="og:image" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116094033994.png">
 <meta property="article:published_time" content="2024-11-16T01:33:23.000Z">
-<meta property="article:modified_time" content="2024-11-16T03:37:06.582Z">
+<meta property="article:modified_time" content="2024-11-19T09:45:33.143Z">
 <meta property="article:author" content="Damon">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116111923141.png">
@@ -146,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%83%A7%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">烧录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hex-%E4%B8%8E-flash"><span class="nav-number">2.</span> <span class="nav-text">hex 与 flash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">三种启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%8B%E8%BD%BD%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">串口下载步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">寄存器配置过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">时钟源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E6%BA%90-1"><span class="nav-number">5.1.</span> <span class="nav-text">时钟源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HAL-%E6%97%B6%E9%92%9F%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">HAL 时钟系统配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">IO复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HAL-%E5%BA%93%E4%B8%8E%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">7.</span> <span class="nav-text">HAL 库与标准库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STM32-%E7%B3%BB%E5%88%97-flash-%E9%99%90%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">STM32 系列 flash 限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attribute-at"><span class="nav-number">9.</span> <span class="nav-text">__attribute__((at()))</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87"><span class="nav-number">10.</span> <span class="nav-text">获取系统时钟频率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HAL-%E5%BA%93"><span class="nav-number">10.1.</span> <span class="nav-text">HAL 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">10.2.</span> <span class="nav-text">标准库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stm32-Clock-Init-%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F"><span class="nav-number">11.</span> <span class="nav-text">Stm32_Clock_Init 设置系统时钟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SysTick"><span class="nav-number">12.</span> <span class="nav-text">SysTick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HAL-GPIO-TogglePin-vs-HAL-GPIO-WritePin"><span class="nav-number">13.</span> <span class="nav-text">HAL_GPIO_TogglePin vs HAL_GPIO_WritePin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3"><span class="nav-number">14.</span> <span class="nav-text">空间不足</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E6%8E%A5%E6%94%B6%E6%9C%AA%E8%A7%A6%E5%8F%91"><span class="nav-number">15.</span> <span class="nav-text">串口中断接收未触发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DMA-%E4%B8%B2%E5%8F%A3%E6%8E%A5%E6%94%B6%E9%94%99%E8%AF%AF"><span class="nav-number">16.</span> <span class="nav-text">DMA 串口接收错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DMA-%E5%8F%91%E9%80%81%E6%B3%A8%E6%84%8F"><span class="nav-number">17.</span> <span class="nav-text">DMA 发送注意</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%83%A7%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">烧录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hex-%E4%B8%8E-flash"><span class="nav-number">2.</span> <span class="nav-text">hex 与 flash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">三种启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%8B%E8%BD%BD%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">串口下载步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">寄存器配置过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">时钟源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E6%BA%90-1"><span class="nav-number">5.1.</span> <span class="nav-text">时钟源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSCLK"><span class="nav-number">5.1.1.</span> <span class="nav-text">SYSCLK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTC-%E6%97%B6%E9%92%9F%E6%BA%90"><span class="nav-number">5.1.2.</span> <span class="nav-text">RTC 时钟源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IWDGCLK"><span class="nav-number">5.1.3.</span> <span class="nav-text">IWDGCLK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USBCLK"><span class="nav-number">5.1.4.</span> <span class="nav-text">USBCLK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%AE%BE%E6%97%B6%E9%92%9F%E6%BA%90"><span class="nav-number">5.1.5.</span> <span class="nav-text">外设时钟源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RCC"><span class="nav-number">5.1.6.</span> <span class="nav-text">RCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCO"><span class="nav-number">5.1.7.</span> <span class="nav-text">MCO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HAL-%E6%97%B6%E9%92%9F%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">5.2.</span> <span class="nav-text">HAL 时钟系统配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">IO复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HAL-%E5%BA%93%E4%B8%8E%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">7.</span> <span class="nav-text">HAL 库与标准库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STM32-%E7%B3%BB%E5%88%97-flash-%E9%99%90%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">STM32 系列 flash 限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attribute-at"><span class="nav-number">9.</span> <span class="nav-text">__attribute__((at()))</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87"><span class="nav-number">10.</span> <span class="nav-text">获取系统时钟频率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HAL-%E5%BA%93"><span class="nav-number">10.1.</span> <span class="nav-text">HAL 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">10.2.</span> <span class="nav-text">标准库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stm32-Clock-Init-%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F"><span class="nav-number">11.</span> <span class="nav-text">Stm32_Clock_Init 设置系统时钟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SysTick"><span class="nav-number">12.</span> <span class="nav-text">SysTick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HAL-GPIO-TogglePin-vs-HAL-GPIO-WritePin"><span class="nav-number">13.</span> <span class="nav-text">HAL_GPIO_TogglePin vs HAL_GPIO_WritePin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3"><span class="nav-number">14.</span> <span class="nav-text">空间不足</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E6%8E%A5%E6%94%B6%E6%9C%AA%E8%A7%A6%E5%8F%91"><span class="nav-number">15.</span> <span class="nav-text">串口中断接收未触发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DMA-%E4%B8%B2%E5%8F%A3%E6%8E%A5%E6%94%B6%E9%94%99%E8%AF%AF"><span class="nav-number">16.</span> <span class="nav-text">DMA 串口接收错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DMA-%E5%8F%91%E9%80%81%E6%B3%A8%E6%84%8F"><span class="nav-number">17.</span> <span class="nav-text">DMA 发送注意</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -159,7 +159,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-count">206</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -225,9 +225,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-11-16 09:33:23 / 修改时间：11:37:06" itemprop="dateCreated datePublished" datetime="2024-11-16T09:33:23+08:00">2024-11-16</time>
+      <time title="创建时间：2024-11-16 09:33:23" itemprop="dateCreated datePublished" datetime="2024-11-16T09:33:23+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-19 17:45:33" itemprop="dateModified" datetime="2024-11-19T17:45:33+08:00">2024-11-19</time>
     </span>
 
   
@@ -244,14 +250,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
+      <span>6.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -308,20 +314,30 @@
 
 
 
+<p><strong>STM32 启动过程中，在进入 main 函数之前，会执行 <code>SytemInit</code> 来设置系统时钟</strong>。</p>
+<p>相关术语：</p>
+<ul>
+<li>RCC：Reset and Clock Control，复位和时钟控制。用于管理复位和时钟信号的关键模块。</li>
+</ul>
 <h2 id="时钟源-1"><a href="#时钟源-1" class="headerlink" title="时钟源"></a>时钟源</h2><p>STM32 中有五个时钟源：</p>
 <ul>
-<li>HSI：High Speed Interal 高速时钟。</li>
-<li>HSE：High Speed External 高速外部时钟。</li>
-<li>LSI：Low Speed Interal 低速时钟。</li>
-<li>LSE：Low Speed External 低速外部时钟。</li>
-<li>PLL：高速时钟。分为 主PLL、PLLI2S(I2S专用)、PLLSAI(SAI专用)</li>
+<li><strong>HSI</strong>：High Speed Interal 高速内部时钟。由内部RC振荡器产生，频率通常为8&#x2F;16MHz，精度较高，适用于对时钟精度要求较高的场合</li>
+<li><strong>HSE</strong>：High Speed External 高速外部时钟</li>
+<li><del><strong>MSI</strong>：Middle Speed Interal 中速内部时钟。频率范围为100kHz~4MHz，精度介于HSI和LSI之间，适用于对时钟精度要求中等的场合</del></li>
+<li><strong>LSI</strong>：Low Speed Interal 低速内部时钟。频率约为32kHz，精度较低，适用于对时钟精度要求不高的场合，如实时时钟（RTC）等</li>
+<li><strong>LSE</strong>：Low Speed External 低速外部时钟</li>
+<li><strong>PLL</strong>：高速时钟。分为 主PLL、PLLI2S(I2S专用)、PLLSAI(SAI专用)。<strong>PLL可以将 HSI 或 HSE 时钟信号进行倍频</strong>，产生更高频率的时钟信号，从而提高系统的性能</li>
 </ul>
-<p>HSE、LSE是外部时钟，通过外接晶振的方式获取，其它为内部时钟。</p>
-<p>系统时钟 SYSCLK 的三个来源：HSI、HSE、PLL</p>
-<p>RTC时钟来源：LSE、LSI、LSE的128分频</p>
-<p>看门狗时钟 IWDGCLK 来源：LSI</p>
-<p>USB 时钟 USBCLK 来源：PLL经预分频产生1&#x2F;1.5分频</p>
-<p><strong>系统时钟(SYSCLK)通过 AHB 分频器给外设提供时钟</strong>。AHB 分频器输出的时钟作为模块的输入：</p>
+<p><strong>HSE、LSE是外部时钟，通过外接晶振的方式获取，其它为内部时钟</strong>。</p>
+<h3 id="SYSCLK"><a href="#SYSCLK" class="headerlink" title="SYSCLK"></a>SYSCLK</h3><p>系统时钟 SYSCLK 的三个来源：HSI、HSE、PLL</p>
+
+
+<h3 id="RTC-时钟源"><a href="#RTC-时钟源" class="headerlink" title="RTC 时钟源"></a>RTC 时钟源</h3><p>RTC时钟来源：LSE、LSI、HSE的128分频</p>
+
+
+<h3 id="IWDGCLK"><a href="#IWDGCLK" class="headerlink" title="IWDGCLK"></a>IWDGCLK</h3><p>看门狗时钟 IWDGCLK 来源：LSI</p>
+<h3 id="USBCLK"><a href="#USBCLK" class="headerlink" title="USBCLK"></a>USBCLK</h3><p>USB 时钟 USBCLK 来源：只能从 PLL 输出端获取。当需要使用USB模块时，PLL必须使能，并且需要配置<strong>其时钟频率为 48MHz</strong>。如果经过 PLL 倍频后输出 72MHZ，需要再经USB预分频器1.5分频后再供给USB使用</p>
+<h3 id="外设时钟源"><a href="#外设时钟源" class="headerlink" title="外设时钟源"></a>外设时钟源</h3><p><strong>系统时钟(SYSCLK)通过 AHB 分频器给外设提供时钟</strong>。AHB 分频器输出的时钟作为模块的输入：</p>
 <ul>
 <li>给 AHB 总线、core、内存和 DMA 使用的 HCLK</li>
 <li>系统时钟定时器</li>
@@ -330,7 +346,23 @@
 <li>APB2 外设。主要是高速外设，例如:UART1、SPI1、Timer1、ADC1~3、所有普通 I&#x2F;O 等(具体可通过查看 STM32 参考手册中的 “系统架构&#x2F;结构” 部分)</li>
 </ul>
 <p>注意：当 APBx 预分频系数为 1 时，TIMxCLK &#x3D; PCLKx。否则，TIMxCLK &#x3D; 2 * PCLKx。(通过观察在 STM32CubeMX 中改变 APB 预分频系数的结果可以看出)</p>
-<p>STM32 启动过程中，在进入 main 函数之前，会执行 <code>SytemInit</code> 来设置系统时钟。</p>
+<h3 id="RCC"><a href="#RCC" class="headerlink" title="RCC"></a>RCC</h3><p>Reset and Clock Control，复位和时钟控制。RCC 模块可以选择不同的时钟源，包括 HSI、HSE、LSI 和 LSE 等。</p>
+<p>STM32CubeMX 中配置时</p>
+
+
+<p>此处配置外部时钟源：</p>
+<ul>
+<li><code>BYPASS Clock Source</code>：旁路时钟源。系统时钟由外部提供</li>
+<li><code>Crystal/Ceramic Resonator</code>：晶体&#x2F;陶瓷振荡器。系统时钟由外部晶振和芯片内部电路协作提供</li>
+</ul>
+<h3 id="MCO"><a href="#MCO" class="headerlink" title="MCO"></a>MCO</h3><p>Microcontroller Clock Output（即：STM32CubeMX RCC 配置中的 Master Clock Output），微控制器时钟输出。允许将内部时钟信号输出到特定的引脚上，通常这个引脚是 PA8。通过 MCO，可以将系统时钟、外部时钟或内部 RC 振荡器的时钟信号输出到外部，供外部设备使用或进行时钟信号的测试和调试</p>
+<p>MCO配置步骤：</p>
+<ul>
+<li>设置 PA8 为<strong>复用推挽输出</strong>模式：首先需要配置 GPIOA 的第 8 个引脚（PA8）为复用推挽输出模式，以便于输出时钟信号</li>
+<li>选择输出时钟源：通过RCC的CFGR寄存器中的MCO[2:0]位来控制输出的时钟源</li>
+<li>配置MCO的分频系数：可以选择不同的分频系数来控制输出时钟的频率，例如，如果外部振荡器是25MHz，可以选择不进行分频（RCC_MCO1Div_1），或者选择分频以降低输出频率</li>
+</ul>
+<p>注意：<strong>STM32 的 GPIO 输出管脚的最大响应频率为 50MHz，如果输出频率超过 50MHz，则输出的波形会失真</strong>。</p>
 <h2 id="HAL-时钟系统配置"><a href="#HAL-时钟系统配置" class="headerlink" title="HAL 时钟系统配置"></a>HAL 时钟系统配置</h2><p>系统启动之后，会执行 HAL 库定义的 <code>SystemInit</code> 函数，进行系统的一些初始化配置：</p>
 <ul>
 <li>FPU 设置</li>
@@ -474,14 +506,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">794k</span>
+    <span title="站点总字数">827k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">24:03</span>
+    <span title="站点阅读时长">25:04</span>
   </span>
 </div>
 <div class="busuanzi-count">

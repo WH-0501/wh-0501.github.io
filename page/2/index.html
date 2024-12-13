@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-count">206</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-WDG/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/Simulink%E4%BB%BF%E7%9C%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,7 +199,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-WDG/" class="post-title-link" itemprop="url">STM32-WDG</a>
+          <a href="/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/Simulink%E4%BB%BF%E7%9C%9F/" class="post-title-link" itemprop="url">Simulink仿真</a>
         </h2>
 
         <div class="post-meta-container">
@@ -209,22 +209,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-11-16 13:30:33 / 修改时间：13:32:10" itemprop="dateCreated datePublished" datetime="2024-11-16T13:30:33+08:00">2024-11-16</time>
+      <time title="创建时间：2024-11-21 11:05:04" itemprop="dateCreated datePublished" datetime="2024-11-21T11:05:04+08:00">2024-11-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
+        <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
-        </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-22 10:25:22" itemprop="dateModified" datetime="2024-11-22T10:25:22+08:00">2024-11-22</time>
     </span>
 
   
@@ -234,7 +227,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>340</span>
+      <span>627</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -252,39 +245,36 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>WDG：看门狗。STM32 有两个看门狗：独立看门狗(IWDG)和窗口看门狗(WWDG)。</p>
-<p>IWDG:</p>
+          <p>双击搜索模块</p>
+<p>连线上 右键可创建新连接</p>
+<h2 id="安装硬件支持"><a href="#安装硬件支持" class="headerlink" title="安装硬件支持"></a>安装硬件支持</h2>
+
+<blockquote>
+<p>当前支持的硬件包括：</p>
+
+
+<p>(来源：<a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/hardware-support/arduino.html%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%8E%E6%AD%A4%E5%A4%84%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E6%94%AF%E6%8C%81%E5%8C%85%EF%BC%8C%E5%8F%8C%E5%87%BB%E5%AE%89%E8%A3%85%EF%BC%8C%E9%9C%80%E7%A1%AE%E4%BF%9D%E8%AE%B8%E5%8F%AF%E8%AF%81%E5%9C%A8%E6%9C%89%E6%95%88%E6%9C%9F%E5%86%85">https://ww2.mathworks.cn/hardware-support/arduino.html，也可从此处直接下载支持包，双击安装，需确保许可证在有效期内</a>)</p>
+<p>也可下载离线包：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1zk5wER9TIrcdoJ6dK2rrNg?pwd=e55x">https://pan.baidu.com/s/1zk5wER9TIrcdoJ6dK2rrNg?pwd=e55x</a> ，参考 readme.txt 进行安装</p>
+</blockquote>
+<h2 id="硬件配置"><a href="#硬件配置" class="headerlink" title="硬件配置"></a>硬件配置</h2><p>Matlab 命令行输入 <code>arduinosetup</code> </p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\电机\Matlab仿真\Simulink仿真\image-20241121143614213.png" alt="image-20241121143614213"></p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\电机\Matlab仿真\Simulink仿真\image-20241121143906371.png" alt="image-20241121143906371"></p>
+<p>单击 <code>Program</code>，加载程序到 Arduino 板子。下载完成后，点击 <code>Test connection</code> 进行测试</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\电机\Matlab仿真\Simulink仿真\image-20241121144115799.png" alt="image-20241121144115799"></p>
+<p>打开 Simulink -&gt; Library browser -&gt; Simulink Support Package for Arduino Hardware，可看到官方封装好的模块。</p>
+<h1 id="BLDC"><a href="#BLDC" class="headerlink" title="BLDC"></a>BLDC</h1><p>该模型位于永磁库（Permanent Magnet）中</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\电机\Matlab仿真\Simulink仿真\image-20241121201626039.png" alt="image-20241121201626039"></p>
+<p>左侧段子为电气接口，右侧端子为机械接口。</p>
 <ul>
-<li>使用内部低速时钟 LSI，在主时钟故障时仍能正常工作</li>
-<li>无中断</li>
-<li>12位递减</li>
-<li>只有下限</li>
-<li>适合用于主程序之外，能完全独立工作，并且对事件精度要求低的场合</li>
-<li>一般用于避免程序跑飞或死循环</li>
+<li>~：三相输入端口</li>
+<li>C：Motor case。与电机外壳相连的机械旋转保护端口（接地）</li>
+<li>R：Motor rotor。与电机转子相连的机械旋转端口。用于连接到表示电机转子位置和速度的传感器或者用于输出这些机械量。例如，它可以连接到一个转速传感器或者是一个编码器，以提供电机转子的实时位置和速度信息</li>
 </ul>
-<p>WWDG:</p>
+<p>双击模型，设置转子(Rotor)、定子(Stator)、机械(Mechanical)参数</p>
 <ul>
-<li>使用系统时钟 APB1ENR (由APB1时域分频得到)</li>
-<li>有中断</li>
-<li>7位递减</li>
-<li>有下限和上限</li>
-<li>适合用于要求看门狗在精确计时窗口起作用的应用程序</li>
-<li>一般用于避免程序不按预定逻辑执行</li>
+<li><strong>Maximum Flux Linkage</strong>：最大磁通</li>
 </ul>
-<p>IWDG 使用步骤：</p>
-<p>① 取消寄存器写保护</p>
-<p>② 设置 IWDG 预分频系数，确定时钟</p>
-<p>③ 设置看门狗重装载值，确定溢出时间</p>
-<p>④ 使能看门狗</p>
-<p>⑤ 喂狗</p>
-<p>WWDG 使用步骤：</p>
-<p>① 使能看门狗时钟</p>
-<p>② 设置分频值，确定时钟</p>
-<p>③ 设置窗口值</p>
-<p>④ 开启 WWDG 中断并分组</p>
-<p>⑤ 编写中断服务函数</p>
-<p>⑥ 使能看门狗</p>
-<p>⑦ 喂狗</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\电机\Matlab仿真\BLDC反电动势\image-20241122102112119.png" alt="image-20241122102112119"></p>
 
       
     </div>
@@ -311,7 +301,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/Keil/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -329,7 +319,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/" class="post-title-link" itemprop="url">STM32-GPIO</a>
+          <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/Keil/" class="post-title-link" itemprop="url">Keil</a>
         </h2>
 
         <div class="post-meta-container">
@@ -339,22 +329,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-11-16 13:26:43 / 修改时间：13:30:41" itemprop="dateCreated datePublished" datetime="2024-11-16T13:26:43+08:00">2024-11-16</time>
+      <time title="创建时间：2024-11-19 20:12:23" itemprop="dateCreated datePublished" datetime="2024-11-19T20:12:23+08:00">2024-11-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
+        <i class="far fa-calendar-check"></i>
       </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
-        </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-25 17:55:23" itemprop="dateModified" datetime="2024-11-25T17:55:23+08:00">2024-11-25</time>
     </span>
 
   
@@ -364,195 +347,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="8-种工作模式"><a href="#8-种工作模式" class="headerlink" title="8 种工作模式"></a>8 种工作模式</h1><ul>
-<li><p>四种输入</p>
-<ul>
-<li>输入浮空 - 在浮空输入状态下，GPIO的电平状态是不确定的，完全由外部输入确定。</li>
-<li>输入上拉</li>
-<li>输出上拉</li>
-<li>模拟输入</li>
-</ul>
-</li>
-<li><p>四种输出</p>
-<ul>
-<li>开漏输出</li>
-<li>开漏复用：直接输出到片上外设</li>
-<li>推挽式输出</li>
-<li>推挽式复用</li>
-</ul>
-</li>
-</ul>
-<p>推挽 和 开漏 的区别 ：</p>
-<ul>
-<li><p>推挽 ：可以输出强高低电平，连接数字器件</p>
-</li>
-<li><p>开漏 ：只可以输出强低电平，高电平得靠外部电阻拉高， 适合做电流型的驱动。</p>
-</li>
-</ul>
-<h1 id="四种输出速率"><a href="#四种输出速率" class="headerlink" title="四种输出速率"></a>四种输出速率</h1><ul>
-<li>2MHz 低速</li>
-<li>25MHz 中速</li>
-<li>50MHz 快速</li>
-<li>100MHz 高速</li>
-</ul>
-<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>每个通用 I&#x2F;O 端口包括 10 个寄存器：</p>
-<ul>
-<li><p>4 个 32 位配置寄存器</p>
-<ul>
-<li>GPIOx_MODER - 端口模式寄存器</li>
-<li>GPIOx_OTYPER - 输出类型寄存器</li>
-<li>GPIOx_OSPEEDR - 输出速度寄存器</li>
-<li>GPIOx_PUPDR - 上下拉寄存器</li>
-</ul>
-</li>
-<li><p>2 个 32 位数据寄存器</p>
-<ul>
-<li>GPIOx_IDR - 输入数据寄存器</li>
-<li>GPIOx_ODR - 输出数据寄存器</li>
-</ul>
-</li>
-<li><p>1 个 32 位置位&#x2F;复位寄存器  GPIOx_BSRR</p>
-</li>
-<li><p>1 个 32 位<strong>锁定寄存器</strong>  GPIOx_LCKR</p>
-</li>
-<li><p>2 个 32 位<strong>复用功能选择</strong>寄存器</p>
-<ul>
-<li>GPIOx_AFRH - 高位</li>
-<li>GPIOx_AFRL - 低位</li>
-</ul>
-</li>
-</ul>
-<h1 id="复用与重映射"><a href="#复用与重映射" class="headerlink" title="复用与重映射"></a>复用与重映射</h1><p>复用 - STM32 所有内置外设(例如：I2C、ADC、ISP、USART等)的外部引脚都是与标准 GPIO 引脚复用的，如果有多个复用功能模块对应同一个引脚，只能使能其中之一，其它模块保持非使能状态。</p>
-<p>重映射 - 复用功能的引出脚可以通过重映射，从不同的 I&#x2F;O 管脚引出，即复用功能的引出脚位是可通过程序改变到其他的引脚上</p>
-<p>配置重映射步骤：</p>
-<p>①. 确保对应引脚的 GPIO 时钟和功能模块时钟开启</p>
-<p>②. 配置时，选择推挽复用输出(AF_PP)或开漏复用输出(AF_OD)</p>
-<p>③. I&#x2F;O 重映射开启</p>
-<p>④. 配置重映射引脚，选择需要的功能，去除不需要的</p>
-<h1 id="GPIO-一般使用步骤"><a href="#GPIO-一般使用步骤" class="headerlink" title="GPIO 一般使用步骤"></a>GPIO 一般使用步骤</h1><ul>
-<li><p>首先通过原理图确定要操作的 GPIO </p>
-</li>
-<li><p>通过芯片手册查找要操作的寄存器，找到该 GPIO 基地址</p>
-<ul>
-<li>目标寄存器地址 &#x3D; 基地址 + 地址偏移</li>
-</ul>
-</li>
-<li><p>软件编码</p>
-<ul>
-<li>使能 GPIO 时钟</li>
-<li>设置 GPIO 参数，包括:输入&#x2F;输出、工作模式、速率</li>
-<li>操作 GPIO</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基于 HAL 库</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">    GPIO_InitTypeDef GPIO_Initure;</span><br><span class="line">    __HAL_RCC_GPIOB_CLK_ENABLE();           <span class="comment">// 使能 GPIO 时钟</span></span><br><span class="line">	</span><br><span class="line">    GPIO_Initure.Pin=GPIO_PIN_0|GPIO_PIN_1; <span class="comment">//PB1,0 设置引脚</span></span><br><span class="line">    GPIO_Initure.Mode=GPIO_MODE_OUTPUT_PP;  <span class="comment">//推挽输出</span></span><br><span class="line">    GPIO_Initure.Pull=GPIO_PULLUP;          <span class="comment">//上拉</span></span><br><span class="line">    GPIO_Initure.Speed=GPIO_SPEED_HIGH;     <span class="comment">// 高速</span></span><br><span class="line">    HAL_GPIO_Init(GPIOB,&amp;GPIO_Initure);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接寄存器操作</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;    	 </span><br><span class="line">	RCC-&gt;AHB1ENR|=<span class="number">1</span>&lt;&lt;<span class="number">1</span>;<span class="comment">//使能PORTB时钟 </span></span><br><span class="line">	GPIO_Set(GPIOB,PIN0|PIN1,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU); <span class="comment">//PB0,PB1设置</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//GPIO通用设置 </span></span><br><span class="line"><span class="comment">//GPIOx:GPIOA~GPIOI.</span></span><br><span class="line"><span class="comment">//BITx:0X0000~0XFFFF,位设置,每个位代表一个IO,第0位代表Px0,第1位代表Px1,依次类推.</span></span><br><span class="line"><span class="comment">//                      比如0X0101,代表同时设置Px0和Px8.</span></span><br><span class="line"><span class="comment">//MODE:0~3;模式选择,0,输入(系统复位默认状态);1,普通输出;2,复用功能;3,模拟输入.</span></span><br><span class="line"><span class="comment">//OTYPE:0/1;输出类型选择,0,推挽输出;1,开漏输出.</span></span><br><span class="line"><span class="comment">//OSPEED:0~3;输出速度设置,0,2Mhz;1,25Mhz;2,50Mhz;3,100Mh. </span></span><br><span class="line"><span class="comment">//PUPD:0~3:上下拉设置,0,不带上下拉;1,上拉;2,下拉;3,保留.</span></span><br><span class="line"><span class="comment">//注意:在输入模式(普通输入/模拟输入)下,OTYPE和OSPEED参数无效!!</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">GPIO_Set</span><span class="params">(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD)</span></span><br><span class="line">&#123;  </span><br><span class="line">	u32 pinpos=<span class="number">0</span>,pos=<span class="number">0</span>,curpin=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(pinpos=<span class="number">0</span>;pinpos&lt;<span class="number">16</span>;pinpos++)</span><br><span class="line">	&#123;</span><br><span class="line">		pos=<span class="number">1</span>&lt;&lt;pinpos;	<span class="comment">//Ò»¸ö¸öÎ»¼ì²é </span></span><br><span class="line">		curpin=BITx&amp;pos;<span class="comment">//¼ì²éÒý½ÅÊÇ·ñÒªÉèÖÃ</span></span><br><span class="line">		<span class="keyword">if</span>(curpin==pos)	<span class="comment">//ÐèÒªÉèÖÃ</span></span><br><span class="line">		&#123;</span><br><span class="line">			GPIOx-&gt;MODER&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;MODER|=MODE&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÄ£Ê½ </span></span><br><span class="line">			<span class="keyword">if</span>((MODE==<span class="number">0X01</span>)||(MODE==<span class="number">0X02</span>))	<span class="comment">//Èç¹ûÊÇÊä³öÄ£Ê½/¸´ÓÃ¹¦ÄÜÄ£Ê½</span></span><br><span class="line">			&#123;  </span><br><span class="line">				GPIOx-&gt;OSPEEDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OSPEEDR|=(OSPEED&lt;&lt;(pinpos*<span class="number">2</span>));<span class="comment">//ÉèÖÃÐÂµÄËÙ¶ÈÖµ  </span></span><br><span class="line">				GPIOx-&gt;OTYPER&amp;=~(<span class="number">1</span>&lt;&lt;pinpos) ;		<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OTYPER|=OTYPE&lt;&lt;pinpos;		<span class="comment">//ÉèÖÃÐÂµÄÊä³öÄ£Ê½</span></span><br><span class="line">			&#125;  </span><br><span class="line">			GPIOx-&gt;PUPDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;PUPDR|=PUPD&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÉÏÏÂÀ­</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="HAL-GPIO相关接口"><a href="#HAL-GPIO相关接口" class="headerlink" title="HAL GPIO相关接口"></a>HAL GPIO相关接口</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span><br><span class="line">HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)    </span><br><span class="line"></span><br><span class="line"><span class="comment">// 引脚的电平翻转</span></span><br><span class="line">HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span><br><span class="line"></span><br><span class="line">HAL_GPIO_EXTI_Callback(<span class="type">uint16_t</span> GPIO_Pin)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/" class="post-title-link" itemprop="url">STM32-DMA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 13:23:22 / 修改时间：13:26:32" itemprop="dateCreated datePublished" datetime="2024-11-16T13:23:22+08:00">2024-11-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -570,54 +365,84 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>DMA(Direct Memory Access)。DMA传输方式无需 CPU 直接控制传输，也没有中断处理的保留现场和恢复现场的过程，通过硬件为 RAM 与 I&#x2F;O 设备开辟直接数据传输通路，大大提高 CPU 效率。</p>
-<p>DMA 传输过程的五个事件标志：</p>
-<ul>
-<li>DMA 半传输</li>
-<li>DMA 传输完成</li>
-<li>DMA 传输错误</li>
-<li>DMA FIFO 错误</li>
-<li>直接模式错误</li>
-</ul>
-<p>DMA控制器执行直接存储器传输：因为采用AHB主总线，它可以控制AHB总线矩阵来启动AHB事务。它可以执行下列事务：</p>
-<ul>
-<li>外设到存储器的传输</li>
-<li>存储器到外设的传输</li>
-<li>存储器到存储器的传输</li>
-<li>外设到外设的传输</li>
-</ul>
-<p>存储器到存储器需要外设接口可以访问存储器。STM32F429 中，只有 DMA2 的外设接口可以访问存储器。</p>
-<p>DMA 主要配置参数：源地址、目的地址、传输数据量。</p>
-<p>STM32Cubex 配置 DMA(以 STM32F103C8T6 为例)</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/image-20241116132448140.png" class="" title="image-20241116132448140">
+          <h1 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h1><p>创建项目目录 <code>D:\workspaces\Project_test</code>，新建项目</p>
+<p>Keil 5 Project -&gt; New uVision Project，定位到刚创建的 USER 目录，然后选择相应 CPU 型号（此处以 STM32F103C8T6 为例）</p>
 
-<p>参数说明：</p>
-<ul>
-<li><p>Mode：</p>
-<ul>
-<li>Normal：buffer 满了就不再接收</li>
-<li>Circular：buffer 满了后会覆盖</li>
-</ul>
-</li>
-<li><p>Increment Address：地址自加。DMA 中外设就相当于一个单一的寄存器，地址不自增；而存储器，接收一个数据就存储，然后地址自增，指向下一个写入的地址</p>
-</li>
-<li><p>Data Width：数据宽度</p>
-<ul>
-<li>Byte</li>
-<li>Half Word</li>
-<li>Word</li>
-</ul>
+
 <blockquote>
-<p>在32位机中，Word &#x3D; 32bit，Half word &#x3D; 16bit，Byte &#x3D; 8bit；在16位机中，Word &#x3D; 16bit，Half word &#x3D; 8bit，Byte &#x3D; 8bit；在 8 位机中，Word &#x3D; 16bit，Half word &#x3D; 8bit，Byte &#x3D; 8bit</p>
+<p>若列表中只有 ARM，没有 STM32 系列，则通过 Pack Installer 安装相应包</p>
+
+
+
 </blockquote>
-</li>
-</ul>
-<p>配置完成后生成的代码中，在 <code>HAL_UART_MspInit</code> 接口中新增了 DMA 初始化部分：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* USART1 DMA Init */</span></span><br><span class="line"><span class="comment">/* USART1_RX Init */</span></span><br><span class="line">hdma_usart1_rx.Instance = DMA1_Channel5;</span><br><span class="line">hdma_usart1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;</span><br><span class="line">hdma_usart1_rx.Init.PeriphInc = DMA_PINC_DISABLE;</span><br><span class="line">hdma_usart1_rx.Init.MemInc = DMA_MINC_ENABLE;</span><br><span class="line">hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;</span><br><span class="line">hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;</span><br><span class="line">hdma_usart1_rx.Init.Mode = DMA_NORMAL;</span><br><span class="line">hdma_usart1_rx.Init.Priority = DMA_PRIORITY_LOW;</span><br><span class="line"><span class="keyword">if</span> (HAL_DMA_Init(&amp;hdma_usart1_rx) != HAL_OK)</span><br><span class="line">&#123;</span><br><span class="line">  Error_Handler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 RTE 窗口中选择 CORE 及 Startup</p>
 
 
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 设置 DMA 传输参数</span></span><br><span class="line"><span class="comment">  * HAL_DMA_Start 及 HAL_DMA_Start_IT 中会调用该函数设置参数</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">DMA_SetConfig()</span><br></pre></td></tr></table></figure>
+
+<p><del>在该目录下分别创建 CORE、OBJ、STM32_F103x_FWLIB、SYSTEM、USER</del></p>
+<p>创建 CMSIS、FWLIB、Project、Startup、User 目录。</p>
+<table>
+<thead>
+<tr>
+<th>文件夹名称</th>
+<th>存放内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CMSIS</td>
+<td>内核相关的文件</td>
+</tr>
+<tr>
+<td>FWLIB</td>
+<td>标准库文件</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>工程文件</td>
+</tr>
+<tr>
+<td>Startup</td>
+<td>芯片启动文件</td>
+</tr>
+<tr>
+<td>User</td>
+<td>用户编写的相关文件，主要编写的文件都在这个文件夹里</td>
+</tr>
+<tr>
+<td>Doc</td>
+<td>对整个工程项目的补充说明、介绍和简介</td>
+</tr>
+</tbody></table>
+<p>下载标准库及启动文件</p>
+
+
+
+
+
+
+
+
+<h2 id="CMSIS-目录"><a href="#CMSIS-目录" class="headerlink" title="CMSIS 目录"></a>CMSIS 目录</h2><p>从 CubeMX 生成的项目中拷贝过来。</p>
+<h2 id="FWLib"><a href="#FWLib" class="headerlink" title="FWLib"></a>FWLib</h2><p>存放 ST 标准库文件。将 <code>STM32F10x_StdPeriph_Lib_V3.6.0\Libraries\STM32F10x_StdPeriph_Driver</code> 中的 inc 及 src 目录拷贝进来即可。</p>
+<h2 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h2>
+
+
+
+
+
+<h1 id="使用问题"><a href="#使用问题" class="headerlink" title="使用问题"></a>使用问题</h1><h2 id="‘Default-Compiler-Version-5’-which-is-not-available"><a href="#‘Default-Compiler-Version-5’-which-is-not-available" class="headerlink" title="‘Default Compiler Version 5’ which is not available"></a>‘Default Compiler Version 5’ which is not available</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*** Target &#x27;STM32F103C8x&#x27; uses ARM-Compiler &#x27;Default Compiler Version 5&#x27; which is not available.</span><br></pre></td></tr></table></figure>
+
+<p>原因：当前 Keil 版本默认安装 Arm Compiler version 6，因此需修改配置</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\单片机\Keil\image-20241125162300926.png" alt="image-20241125162300926"></p>
+<h2 id="ArmClang-error-unsupported-option-‘–C99’"><a href="#ArmClang-error-unsupported-option-‘–C99’" class="headerlink" title="ArmClang: error: unsupported option ‘–C99’"></a>ArmClang: error: unsupported option ‘–C99’</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\单片机\Keil\image-20241125162655394.png" alt="image-20241125162655394"></p>
+<h2 id="unknown-type-name-‘namespace’"><a href="#unknown-type-name-‘namespace’" class="headerlink" title="unknown type name ‘namespace’"></a>unknown type name ‘namespace’</h2><p>需如上添加 -xc++</p>
+<h2 id="error-expected-‘-‘-after-‘asm’-asm-void-MSR-MSP-u32-addr"><a href="#error-expected-‘-‘-after-‘asm’-asm-void-MSR-MSP-u32-addr" class="headerlink" title="error: expected ‘(‘ after ‘asm’ __asm void MSR_MSP(u32 addr)"></a>error: expected ‘(‘ after ‘asm’ __asm void MSR_MSP(u32 addr)</h2><p>将</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__asm <span class="type">void</span> <span class="title">MSR_MSP</span><span class="params">(u32 addr)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MSR MSP, r0 			<span class="comment">//set Main Stack value</span></span><br><span class="line">    BX r14</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.12 之后版本编译器对于汇编和 C 的混合代码格式做了要求，按照以下方式修改汇编代码，即可编译通过。</p>
+<p>替换为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MSR_MSP</span><span class="params">(u32 addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="function">__ASM <span class="title">volatile</span><span class="params">(<span class="string">&quot;MSR MSP, r0&quot;</span>)</span></span>; </span><br><span class="line"><span class="function">__ASM <span class="title">volatile</span><span class="params">(<span class="string">&quot;BX r14&quot;</span>)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="function">__asm <span class="type">void</span> <span class="title">wait</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">   BX lr</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wait</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">__ASM <span class="title">volatile</span><span class="params">(<span class="string">&quot;BX lr&quot;</span>)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -645,7 +470,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -663,7 +488,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/" class="post-title-link" itemprop="url">代码编程嵌入式单片机STM32STM32-IAP</a>
+          <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">使用问题</a>
         </h2>
 
         <div class="post-meta-container">
@@ -675,7 +500,743 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-16 13:11:30 / 修改时间：13:22:58" itemprop="dateCreated datePublished" datetime="2024-11-16T13:11:30+08:00">2024-11-16</time>
+      <time title="创建时间：2024-11-19 11:33:41 / 修改时间：11:35:05" itemprop="dateCreated datePublished" datetime="2024-11-19T11:33:41+08:00">2024-11-19</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>242</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Not-a-genuine-ODrive-Some-features-may-not-work-as-expected"><a href="#Not-a-genuine-ODrive-Some-features-may-not-work-as-expected" class="headerlink" title="Not a genuine ODrive! Some features may not work as expected"></a><strong>Not a genuine ODrive! Some features may not work as expected</strong></h1><p>烧录官⽅ 0.5.6 固件后，提示⾮标准 ODrive 设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device 355333603235: Not a genuine ODrive! Some features may not work as expected.</span><br><span class="line">Connected to device 355333603235 as dev0</span><br></pre></td></tr></table></figure>
+
+<p>查看源码 <code>/usr/local/lib/python3.10/dist-packages/odrive/shell.py</code></p>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%BC%96%E7%A0%81%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%BC%96%E7%A0%81%E5%99%A8/" class="post-title-link" itemprop="url">编码器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-19 11:13:37" itemprop="dateCreated datePublished" datetime="2024-11-19T11:13:37+08:00">2024-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-25 21:09:45" itemprop="dateModified" datetime="2024-11-25T21:09:45+08:00">2024-11-25</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>150</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>常⽤编码器型号：</p>
+<ul>
+<li>AS5047P&#x2F;D、AS5048A&#x2F;B、TLE5012B、⻨格恩 MT6709、昆泰芯 KTM5900&#x2F;KTH7824，分别安装在⾼低速轴、MA730（TLE5012B磁感元件为 GMR 巨磁阻， AS5047P&#x2F;D、AS5048A&#x2F;B 为霍尔）</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">电机基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-19 09:52:42" itemprop="dateCreated datePublished" datetime="2024-11-19T09:52:42+08:00">2024-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-27 21:38:29" itemprop="dateModified" datetime="2024-11-27T21:38:29+08:00">2024-11-27</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>假设 P 功率(W)，T 转矩(N.M)，N 转速(R&#x2F;min) 。则有：</p>
+<ul>
+<li>P &#x3D; T * N &#x2F; 9550</li>
+<li>T &#x3D; P * 9550 &#x2F; N</li>
+</ul>
+<p>假设 V 线速度(m&#x2F;s)，N 转速(n&#x2F;min)，w 角速度(rad&#x2F;s)</p>
+<ul>
+<li>N &#x3D; V * 1000 * 60 &#x2F; (2π R)</li>
+<li>w &#x3D; 2π * N &#x2F; 60</li>
+</ul>
+<p>NEMA17</p>
+<p>NEMA：国家电气制造商协会。NEMA-17 是一种混合式步进电机，尺寸 1.7 * 1.7 英寸(42 * 42 mm)，步距角 1.8°，旋转一圈 200 步。混合表示是永磁体和可变磁阻步进电机的组合。</p>
+<p>TMC8670：集成 EtherCAT 通信和 FOC 伺服运动控制芯片</p>
+<p>在电机控制器中实现的最重要的功能如下：</p>
+<ul>
+<li>对电动机速度、转矩或功率输出的调节</li>
+<li>启动阶段控制（软启动）</li>
+<li>防止电路故障和过载</li>
+<li>加速和减速 profile</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nidec.com/cn/technology/motor/glossary/item/slot-pole_combination/">https://www.nidec.com/cn/technology/motor/glossary/item/slot-pole_combination/</a></li>
+<li>王成元《现代电机控制》</li>
+<li>陈伯时《交流调速系统》</li>
+<li>辜承林《电机学》</li>
+<li>贺益康 《电机控制》</li>
+<li>Bimal K.Bose《现代电力电子学与交流传动》</li>
+<li>敖杰 《基于TMS320LF2406A的永磁同步电机矢量控制系统研究 》</li>
+<li>知乎 只是学电的 《永磁同步电机矢量控制之——“基础”》</li>
+<li>知乎 蒋昊 《电机控制要点解疑：SPWM，SVPWM和矢量控制》</li>
+<li>知乎 J Pan 《永磁同步电机》</li>
+<li>Csdn博客 《FOC中的Clarke变换和Park变换详解》</li>
+</ul>
+<h1 id="术语及参数"><a href="#术语及参数" class="headerlink" title="术语及参数"></a>术语及参数</h1><p>BLDC：直流无刷电机</p>
+<p>PMSM：永磁同步电机</p>
+<p>Hall：霍尔传感器，用于检测转子位置。通常嵌入在定子中，并且与转子上的永磁体位置相对应。每个霍尔传感器会在转子的磁极接近时产生高低电平信号，这些信号用于确定转子的精确位置</p>
+<p>EMF：Electromotive dorce，电动势。当载流导体置于磁场中或导体切断磁场时，在导体中感应或产生电动势（EMF）。由于电动机中感应到的电动势与发电机的电动势相反，因此任何电动机中由于运动而产生的电动势都被称为反电动势（back-EMF，即 BEMF）。</p>
+<h2 id="同步电机与异步电机"><a href="#同步电机与异步电机" class="headerlink" title="同步电机与异步电机"></a>同步电机与异步电机</h2><p>同步电机和异步电机最大的区别在于转子速度与定子旋转磁场，电机的转子速度与定子旋转磁场相同就叫同步电机，反之，则叫异步电机。</p>
+<p>同步电机与异步电机的定子绕组是相同的，区别在于电机的转子结构。异步电机的转子是短路的绕组，靠电磁感应产生电流。而同步电机的转子结构相对复杂，有直流励磁绕组，因此需要外加励磁电源，通过滑环引入电流。</p>
+<p>同步电机转速与电磁转速同步，而异步电动机的转速则低于电磁转速，同步电机不论负载大小，只要不失步，转速就不会变化，异步电动机的转速时刻跟随负载大小的变化而变化。</p>
+<h2 id="KV"><a href="#KV" class="headerlink" title="KV"></a>KV</h2><p>KV 值表示电机的每伏特电压下的转速，即 <strong>不带负载情况下每伏特电压产⽣的每分钟转数（RPM）</strong>，即：[ RPM &#x3D; KV * V ]。例如：如果有⼀个 KV 为 1000 的电机，施加 12V 电压，在⽆负载的情况下电机的转速会是：[ 1000 , KV × 12 V &#x3D; 12000 RPM ] 。</p>
+<ul>
+<li>⾼ <strong>KV</strong>：通常意味着电机会运⾏得更快，每伏特电压下产⽣的RPM更⾼。这适合需要⾼速度的应⽤，但通常扭矩较低</li>
+<li>低 <strong>KV</strong>：则意味着电机运⾏较慢，但每伏特电压产⽣的扭矩更⼤。这适⽤于需要⾼扭矩的应⽤，⽐如⼤螺旋桨或⾼负载场景</li>
+</ul>
+<h2 id="电角度"><a href="#电角度" class="headerlink" title="电角度"></a>电角度</h2><p>电机内部磁场和电场关系的一个重要物理量。是定子电流矢量与转子磁极矢量之间的夹角。表征了电机的磁场变化情况。</p>
+<h2 id="极对数与槽"><a href="#极对数与槽" class="headerlink" title="极对数与槽"></a>极对数与槽</h2><p>极对数：Pole Pair Number</p>
+
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jn5tiSIo5xc%EF%BC%89">https://www.youtube.com/watch?v=jn5tiSIo5xc）</a></p>
+<p>左图 2-poles，即 2 个磁极，极对数为 1；右图 4-poles，极对数为 2。</p>
+<h1 id="直流有刷"><a href="#直流有刷" class="headerlink" title="直流有刷"></a>直流有刷</h1>
+
+
+
+<p>参数</p>
+<ul>
+<li>额定电压：电机正常工作的电压</li>
+<li>额定电流：即负载电流，点击带负载正常工作时的电流</li>
+<li>额定转速：也叫负载转速 r&#x2F;min，即 RPM</li>
+<li>额定扭矩：电机额定电流下输出力的大小，kg·cm</li>
+<li>减速比：</li>
+</ul>
+<h1 id="径向磁铁"><a href="#径向磁铁" class="headerlink" title="径向磁铁"></a>径向磁铁</h1><p>主要作用</p>
+<ul>
+<li><strong>产生旋转磁场</strong>：电机轴上的径向磁铁在电机旋转时，产生的磁场也会随之旋转。这个旋转的磁场对于电机的运转至关重要，因为它与电机中的其他部件（如定子）相互作用，产生使电机旋转的力矩</li>
+<li><strong>角度检测</strong>：在一些磁编码器的应用中，径向磁铁与霍尔元件相结合，可以检测旋转位置。霍尔元件检测磁场分布的变化，将其转换成电气信号，从而实现对旋转角度的精确检测</li>
+<li><strong>提高电机效率</strong>：在轴向磁通电机中，使用径向磁化的磁铁可以减少侧面漏出的磁场，从而降低对周围设备的不良影响，同时提高电机的效率</li>
+</ul>
+<h1 id="反电动势"><a href="#反电动势" class="headerlink" title="反电动势"></a>反电动势</h1><p>运动的磁场会在导体中产生感应电流，从而产生感应电压，即感应电动势。因此永磁体在电机旋转时，会在定子绕组中产生感应电动势，也即反电势。不同的定转子结构，会在定子绕组中产生不同波形的反电势，目前主流的就两种，一种是梯形波，另一种是正弦波。</p>
+
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://www.powerelectronicsnews.com/learning-the-basics-of-motor-control/%EF%BC%89">https://www.powerelectronicsnews.com/learning-the-basics-of-motor-control/）</a></p>
+<p>由于BEMF波形不同，因此需要不同的控制方式。</p>
+<h1 id="步进电机与无刷电机"><a href="#步进电机与无刷电机" class="headerlink" title="步进电机与无刷电机"></a>步进电机与无刷电机</h1><ul>
+<li><p>工作原理：</p>
+<ul>
+<li>步进电机：其旋转是通过改变电流在电机中的流动来实现的，每输入一个脉冲信号，步进电机前进一步<ul>
+<li>通过给定子的一个或多个相通电，线圈中流动的电流产生磁场，转子与该磁场对齐实现电能到动能的转化</li>
+<li>通过依次提供不同的相位，转子可以旋转特定的量以到达所需的最终位置</li>
+</ul>
+</li>
+<li>无刷电机中，由电子控制器来完成换相，通过电子换相线路去驱动电机本体使电枢绕组（定子绕组）依次馈电，从而在定子上产生旋转的磁场，驱动永磁转子转动</li>
+</ul>
+</li>
+<li><p>控制方式：</p>
+<ul>
+<li>步进电机<ul>
+<li>需要专用的步进电机驱动器，有脉冲发生控制单元、功率驱动单元、保护单元等组成</li>
+<li>步进电机的基本操作模式包括<strong>全步模式</strong>、<strong>半步模式</strong>和<strong>微步模式</strong>，其中微步模式能够有效降低步进电机相电流的噪声，改善步进电机固有的噪声震动问题</li>
+</ul>
+</li>
+<li>无刷电机<ul>
+<li>使用专门的电子控制器来驱动，这增加了系统的成本和复杂性</li>
+<li>控制电路相对复杂，需要根据转子位置传感器的输出信号确定转子位置，然后通过电子换相线路去驱动电机本体</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>特点</p>
+<ul>
+<li>步进电机<ul>
+<li>可精确控制转子的位置和速度，控制电路相对简单，成本低</li>
+<li>转速较低，不适用于高转速场景</li>
+<li>启动转矩小，功率密度相对较低</li>
+</ul>
+</li>
+<li>无刷电机<ul>
+<li>噪音低</li>
+<li>有较高的转速范围和较高的功率密度</li>
+<li>控制电路复杂，成本高</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>步进电机适合于需要精确位置控制的应用，而无刷电机则适合于需要高效率和高转速的应用。</p>
+<h1 id="BLDC-与-PMSM"><a href="#BLDC-与-PMSM" class="headerlink" title="BLDC 与 PMSM"></a>BLDC 与 PMSM</h1><p>BLDC 与 PMSM 基本结构相同：</p>
+<ul>
+<li>都是永磁电机，转子由永磁体组成基本结构，定子则为多相交流绕组</li>
+<li>都是由永久磁铁转子和定子的交流电流相互作用产生电机的转矩</li>
+<li>绕组中定子电流与转子位置反馈同步</li>
+<li>转子反馈信号可来自转子位置传感器，或者像在一些无传感器控制方式那样通过检测电机相绕组的反电动势等方法得到</li>
+</ul>
+<p>不同之处：</p>
+<ul>
+<li>反电动势不同，<strong>PMSM 具有正弦波反电动势，BLDC 则具有梯形反电动势</strong></li>
+<li>定子绕组分布不同，<strong>PMSM 采用短距分布绕组</strong>，有时也采用分数槽或正弦绕组，以进一步减小纹波转矩；<strong>BLDC 则采用整距集中绕组</strong>（注意：集中整距绕组不一定是 BLDC，分布短距绕组大概率是 PMSM。理论上以反电势波形区分）</li>
+<li>电流驱动模式不同，<strong>PMSM 采用正弦波驱动；而 BLDC 则采用方波驱动</strong>。BLDC 是采用六步换相控制，PMSM 采用正弦波的三相旋转交流电来控制</li>
+<li>传感器不同，PMSM 采用旋变传感器、磁编码器等，而 BLDC 采用霍尔传感器</li>
+<li>永磁体形状不同，PMSM的永磁体形状通常呈抛物线形，以适应其正弦波分布的需求。BLDC 则为瓦片形</li>
+<li>BLDC 本质是直流电机，对于开环 BLDC 控制，其转速随负载而降低；而 PMSM 本质上是同步电机，其转速只与电机极对数和频率有关，与负载大小没有直接关系。即：<strong>随着负载的增加，BLDC转速降低，而PMSM转速是恒定的</strong>。这也反应了 PMSM 控制近端更高。但 PMSM 存在失步现象，如果负载转矩超过堵转转矩，转子转速就没办法跟上旋转磁场转速，导致转速降低，直到停止</li>
+<li>功率密度和转矩惯量比：<strong>集中绕组的BLDC通常具有较高的功率密度</strong>，这使得它们在对重量敏感的应用中（如航模电机）更受欢迎</li>
+<li>转矩波动：PMSM通常具有较小的转矩波动，而BLDC可能因为其控制方式导致较大的转矩波动。然而，使用磁场定向控制（FOC）等现代控制技术可以显著降低BLDC的转矩波动</li>
+</ul>
+<blockquote>
+<p>短距分布绕组更容易产生正弦波反电势，而整距集中绕组产生的通常是介于梯形和正弦波之间的波形（完美梯形很难产生）。也就是说，从集中整距绕组的电机结构上，没办法判断确定电机是BLDC。而集中整距绕组工艺制造上，相对更容易，所以对要求不高的BLDC，就一般用集中整距绕组来做定子了。</p>
+<p><strong>集中绕组端部轴向尺寸小，提高了铜的利用率，所以集中绕组的电机一般效率较高</strong>。</p>
+</blockquote>
+<p>控制上的区别：</p>
+
+
+
+
+<p><strong>BLDC 也可以使用矢量控制，PMSM 也可以使用方波控制</strong>。</p>
+
+
+<p>矢量控制时，三相同时工作；而方波控制时，同时只有两相工作。</p>
+<h1 id="驱动桥"><a href="#驱动桥" class="headerlink" title="驱动桥"></a>驱动桥</h1><p>无刷直流电机的驱动桥用于控制电机的相电流。分为：</p>
+<ul>
+<li>半桥（Half-Bridge）驱动：最简单，常用于单极性电源，由两个功率开关组成，分别连接到电机的两个相<ul>
+<li>只能提供正向电流，不能反向</li>
+<li>适用于单电源驱动</li>
+</ul>
+</li>
+<li>全桥（Full-Bridge）驱动：包含 4 个功率开关，可提供正反向电流，适用于双电源电机驱动<ul>
+<li>提供正反相电流，可改变电机转向</li>
+</ul>
+</li>
+<li>三相桥（Three-Phase Bridge）驱动：包含六个功率开关（如：MOSFET），每个相连接两个</li>
+</ul>
+
+
+
+
+<h1 id="六步控制"><a href="#六步控制" class="headerlink" title="六步控制"></a>六步控制</h1><p>BLDC 与 PMSM 的控制都需要知道转子位置，有了转子位置才能确定三相桥的开关状态，从而控制定子的磁场方向。</p>
+<p>由于BLDC的反电动势是梯形波，存在快速的”换向点”，因此检测 BLDC 的位置相对来讲是比较简单：可以在定子内嵌入<strong>逻辑霍尔传感器</strong>，检测转子磁钢的位置进行直接的定位；也可以通过检测<strong>反电动势的换向点</strong>进行无传感器的位置检测。</p>
+<p>对于间隔 120° 的三相电机。通电方式共有 6 种：AB&#x2F;AC&#x2F;BA&#x2F;BC&#x2F;CA&#x2F;CB。以下图为例，6种通电方式，将圆周方向均分为6等分。<strong>这就意味着如果能够每 60° 对相位进行正确的变换，那么电机就能够顺利的转起来。</strong>这就是所谓的 BLDC 6 步控制或梯形控制。</p>
+
+
+<p>极对数越多，换向越频繁。</p>
+
+
+<p>该控制方法关键在于：相与相之间两两导通，另外一个线圈不流过电流，可以作为反电动势的检测“传感器”。该控制的本质还是基于位置信息的通电逻辑控制，因此该控制方法对芯片的<strong>要求极低</strong>，并且不需要额外的传感器成本，因此是BLDC最主流的控制方案。但是该控制的颗粒度很大，一般来讲转矩脉动和噪音都是比较大的，对于大功率，高性能的应用场合出现的频率比较小。</p>
+<h1 id="FOC-控制"><a href="#FOC-控制" class="headerlink" title="FOC 控制"></a>FOC 控制</h1><p>磁场定向控制。<strong>PMSM电机控制是使得电机定子磁场和转子磁场始终保证90°，以获取最大转矩，所以采用了FOC（Field-Oriented Control）控制</strong>。</p>
+<p>磁场定向控制（FOC）的基本原理：通过<strong>高精度的角度解析</strong>，产生和转子相对静止的控制磁场，实现对 PMSM 的像素级控制。其关键是电机转子位置信息，可通过以下方式获取：</p>
+<ul>
+<li><strong>位置编码器</strong>：通过高精度的光栅感应定子旋转过程中引起的数字编码变化，从而解析转子位置信息，一般应用在<strong>高精度的伺服系统</strong>中</li>
+<li><strong>Hall 磁编码器</strong>：通过在电机轴的端部安装的永磁体旋转，引起Hall传感器的磁感线变化，从而解析转子位置信息，一般应用在中小功率泵类驱动系统中</li>
+<li><strong>旋转变压器</strong>：电机轴的旋转引起旋转变压器感应电压的变化，通过一定的解码算法，从而解析转子位置信息，一般应用在<strong>高可靠性、高寿命的电动汽车系统</strong>中</li>
+<li><strong>观测器位置算法</strong>：无位置传感器，通过电机模型的建模计算出反电动势的变化，从而解析出转子的位置信息，该方法可靠性高，成本低，维护方便，也是电机控制最火热的方向</li>
+</ul>
+<p>对比PMSM的FOC控制，BLDC 的梯形控制中，定子磁场与转子磁场角度从未达到 90°，且角度在一定范围内波动（60°内）。<strong>一方面这种控制无法达到最大转矩，另外一方面也会存在转速和转矩的波动</strong>。这种控制经济、简单，更适合用于小电机，也就是为什么大电机 PMSM 需要需求一个更加复杂和可靠的FOC控制。</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/415924876">https://zhuanlan.zhihu.com/p/415924876</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599658549">https://zhuanlan.zhihu.com/p/599658549</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/" class="post-title-link" itemprop="url">ODrive</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-16 17:02:04" itemprop="dateCreated datePublished" datetime="2024-11-16T17:02:04+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-19 11:33:08" itemprop="dateModified" datetime="2024-11-19T11:33:08+08:00">2024-11-19</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="版本区别"><a href="#版本区别" class="headerlink" title="版本区别"></a>版本区别</h1><p>0.5.1 版本与 0.5.6 版本：</p>
+<ul>
+<li>代码架构调整：0.5.1 版本中，中断功能分散，频繁调用 <code>run_control_loop()</code> 函数。0.5.6 版本中，中断功能集中到 TIM8 中，简化了结构</li>
+<li>操作指令变化：主要是无感电机的操作指令变化</li>
+<li>单位和参数变化：<code>input_pos</code>, <code>input_vel</code>, <code>pos_estimate_linear</code>, <code>pos_estimate_circular</code>的单位从<code>[counts]</code>或<code>[counts/s]</code>变更为<code>[turns]</code>或<code>[turns/s]</code>。此外，<code>pos_gain</code>, <code>vel_gain</code>, <code>vel_integrator_gain</code>的单位也发生了变化</li>
+</ul>
+<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><ul>
+<li>make: 调⽤ tup</li>
+<li>Tup: ⽤于调⽤编译命令的构建系统</li>
+<li>ARM GNU Compiler: 交叉编译⼯具</li>
+<li>ARM GDB: ⽤于调试代码</li>
+<li>OpenOCD: ⽤于使⽤ STLink v2 编程器对 ODrive 进⾏烧录</li>
+<li>Python3: ⽤于运⾏Python⼯具，并且安装 PyYAML，Jinja2 ，jsonschema 包</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">arm-none-eabi-gcc --version</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">arm-none-eabi-gdb --version</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">openocd --version <span class="comment"># should be 0.10.0 or later</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tup --version <span class="comment"># should be 0.7.5 or later</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python --version <span class="comment"># should be 3.7 or later</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改完代码后，执行该指令即可完成编译</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./dockerbuild.sh build</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="编译配置"><a href="#编译配置" class="headerlink" title="编译配置"></a>编译配置</h2><p>要⾃定义编译时参数，请将⽂件 <code>Firmware/tup.config.default</code> 复制或重命名为<code>Firmware/tup.config</code>。配置参数说明：</p>
+<ul>
+<li><code>CONFIG_BOARD_VERSION</code>：ODrive 硬件版本，当前⽀持 v3.1, v3.2, v3.3, v3.4-24V, v3.4-48V, v3.5-24V, v3.5-48V, v3.6-56V</li>
+<li><code>CONFIG_DEBUG</code>：定义编译固件时是否启⽤调试；特别是 -g -gdwarf-2 标志。请注意，仅当 <code>tup.config</code> 指定 <code>USB_PROTOCOL</code> 或 <code>UART_PROTOCOL</code> 作为 stdout 并且定义了 <code>DEBUG_PRINT</code> 时， printf 调试才会起作⽤</li>
+<li><code>CONFIG_USE_PROTOCOL</code>：定义 ODrive 在 USB 接⼝上使⽤的协议。⽀持以下参数值：<ul>
+<li><code>native</code>：ODrive 原⽣通信协议。ODrive 以 USB 设备被识别</li>
+<li><code>native-stream</code>：与原⽣通信协议类似，只是 ODrive 被识别为 UART</li>
+<li><code>none</code>：禁⽤ USB 通信，设备仍能识别，但不会响应指令</li>
+</ul>
+</li>
+<li><code>CONFIG_UART_PROTOCOL</code>：定义在 UART 接⼝(GPIO1 和 GPIO2)上使⽤哪种协议<ul>
+<li><code>native</code>：ODrive 原⽣通信协议。如果要使⽤UART将ODrive连接到PC，并且想使⽤python⼯具来控制和设置ODrive，请使⽤此功能</li>
+<li><code>ascii</code>：ASCII 格式通信协议。如果要使⽤arduino控制ODrive，请使⽤此功能。ODrive Arduino 库尚不⽀持 ODrive 原⽣通信协议</li>
+<li><code>none</code>：禁⽤ UART</li>
+</ul>
+</li>
+</ul>
+<h2 id="编译烧录"><a href="#编译烧录" class="headerlink" title="编译烧录"></a>编译烧录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> Firmware</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make</span></span><br></pre></td></tr></table></figure>
+
+<p>也可通过 <code>./dockerbuild.sh build</code> 编译</p>
+<p>烧录可使⽤ DFU（Device Firmware Update， v3.4 以上版本）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令将连接到 GitHub 服务器以检索最新的固件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">odrivetool dfu</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果要刷新特定的固件文件而不是自动下载文件，可以运行</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">odrivetool dfu path/to/firmware/file.hex <span class="comment"># linux 平台为 elf 文件</span></span></span><br></pre></td></tr></table></figure>
+
+<p>v3.4 以下版本需使⽤ STLink V2 烧录</p>
+<ul>
+<li>烧录器连接 J2 端⼦上的 GND、SWD、SWC</li>
+<li>在 Firmware ⽬录下执⾏ make flash</li>
+</ul>
+<blockquote>
+<p>如果提示 can’t find target interface&#x2F;stlink-v2.cfg 或类似错误，则需设置 openOCD 环境变量 OPENOCD_SCRIPTS</p>
+</blockquote>
+<p>ODrive v3.5 及之后版本：需将板⼦上的拨码开关(DFU, RUN)拨到 DFU，若只变动拨码开关⽆效，则同时将 GPIO6 连接到 GND。</p>
+<p>若 odrivetool dfu 失败，可使⽤ dfu-util ⼯具。先进⼊ DFU 模式，然后执⾏：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> apt install dfu-util</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若提示 More than one DFU capable USB device found! Try `--list<span class="string">&#x27; and</span></span> </span><br><span class="line">specify the serial number or disconnect all but one device</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">则通过 dfu-util --list 查看设备列表，并指定设备</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">还可通过 -s 0x08000000:leave 指定加载地址和在完成后重启目标</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">sudo dfu-util -a 0 -s 0x08000000 -D build/ODriveFirmware.bin -d 0483:df11 -S 355333603235</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">重官网下载的 ELF 固件，可通过以下方式先转为 bin 文件</span></span></span><br><span class="line">arm-none-eabi-objcopy -O binary firmware.elf firmware.bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>tools&#x2F;run_tests.py 可⾃动测试固件的某些特性，还能对 ODrive 进⾏⽼化测试。某些测试项需要加上带编码器的电机即可，还有部分测试需要测试台</p>
+<h1 id="功率耗散电阻"><a href="#功率耗散电阻" class="headerlink" title="功率耗散电阻"></a>功率耗散电阻</h1><p>功率耗散电阻：建议 50W 以上，连接到 ODrive AUX 接⼝。若⽆功率耗散电阻，减速期间会将多余的功率回充到供电电源，以达到所需的减速扭矩。如果供电电源不能吸收掉这些能量（通常在电池供电时才能吸收），可能造成开关电源损坏。总线电压过⾼时，ODrive 的过压保护也将触发，电机将停⽌输出⼒矩，在惯性作⽤下⾃由旋转到停⽌。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>默认电流限制为 10A。可通过 <code>odrv0.axis0.motor.config.current_lim</code> 设置电流限制。</p>
+<blockquote>
+<p>重新设置电流限制后，需调整电流采样范围：</p>
+<p><code>odrv0.axis0.motor.config.requested_current_range</code>，配置完成后，需保存配置，然后重启 ODrive。</p>
+<p>需注意：电机电流和电源电流不同。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/abf1234444/article/details/107171749">https://blog.csdn.net/abf1234444/article/details/107171749</a></p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.motor.config.current_lim # 电机电流上限</span><br><span class="line">odrv0.axis0.motor.config.requested_current_range # 电流采样范围</span><br><span class="line">odrv0.axis0.motor.config.calibration_current # 电机校准电流限制</span><br><span class="line">odrv0.axis0.controller.config.vel_limit # 电机转速限制</span><br><span class="line">odrv0.config.brake_resistance # 功率耗散电阻值</span><br><span class="line">odrv0.axis0.motor.config.pole_pairs # 磁极对数(磁刚个数/2)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">电机类型。若为常规无刷电机选择 MOTOR_TYPE_HIGH_CURRENT;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若为小电流云台无刷电机，选择 MOTOR_TYPE_GIMBAL(注意：若将非小电流云台电机设置为该值，可能导致电机或ODrive过热)</span></span><br><span class="line">odrv0.axis0.motor.config.motor_type</span><br><span class="line">odrv0.axis0.encoder.config.cpr # 编码器每转计数。是每转脉冲数(PPR)的4倍</span><br><span class="line">odrv0.axis0.error = 0 # M0 错误清除</span><br><span class="line">odrv0.&lt;axis&gt;.encoder.pos_estimate # 查看当前编码器位置</span><br><span class="line">odrv0.&lt;axis&gt;.encoder.vel_estimate # 查看当前电机转速</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 计算转矩</span></span></span><br><span class="line">odrv0.&lt;axis&gt;.motor.current_control.Iq_setpoint # 查看设置的电机电流</span><br><span class="line">odrv0.&lt;axis&gt;.motor.current_control.Iq_measured # 查看电机实际电流</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">转矩[N.m] = 8.27 * 电流[A] / KV</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">电机校准. 首先策略电机电气特性(相电阻和相电感)，然后进行编码器偏移校准</span></span><br><span class="line">odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动闭环控制. 将保持电机转子位置，扭动电机时会有阻力。可提高 current_lim，电</span></span><br><span class="line">机会提供更大扭力对抗外部转动。</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若开启闭环控制，手动扭动电机轴后开始抖动，则需降低控制器增益</span></span><br><span class="line">odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL</span><br><span class="line">odrv0.axis0.controller.input_pos = 10 # 绝对位置。0.5 表示正向转动到 180度</span><br></pre></td></tr></table></figure>
+
+<p>⽆传感器（⽆编码器&#x2F;霍尔反馈）模式运⾏</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.controller.config.vel_gain = 0.01</span><br><span class="line">odrv0.axis0.controller.config.vel_integrator_gain = 0.05</span><br><span class="line">odrv0.axis0.controller.config.control_mode = 2</span><br><span class="line">odrv0.axis0.controller.vel_setpoint = 400</span><br><span class="line">odrv0.axis0.motor.config.direction = 1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">必须正确设置 pm_flux_linage</span></span><br><span class="line">odrv0.axis0.sensorless_estimator.config.pm_flux_linkage = 5.51328895422 / (&lt;pole pairs&gt; * &lt;motor kv&gt;)</span><br><span class="line">&lt;axis&gt;.requested_state = AXIS_STATE_SENSORLESS_CONTROL # 启动</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>ODrive 的 A、B、Z 输⼊内部集成 3.3K 上拉电阻，⽤于开漏输出型编码器。对于具有弱驱动电流（&lt;4mA）的单端推挽信号，需⾃⾏去掉该上拉电阻。</p>
+<blockquote>
+<p>常⽤编码器型号：</p>
+<ul>
+<li>AS5047P&#x2F;D、AS5048A&#x2F;B、TLE5012B、⻨格恩 MT6709、昆泰芯 KTM5900&#x2F;KTH7824，分别安装在⾼低速轴、MA730（TLE5012B磁感元件为 GMR 巨磁阻， AS5047P&#x2F;D、AS5048A&#x2F;B 为霍尔）</li>
+</ul>
+</blockquote>
+<h2 id="⽆索引信号的编码器"><a href="#⽆索引信号的编码器" class="headerlink" title="⽆索引信号的编码器"></a>⽆索引信号的编码器</h2><p>在编码器校准过程中，必须允许转⼦旋转⽽且不能有偏载。 这意味着载荷均匀和较弱的摩擦载荷才⾏，但是重载或类似弹簧载荷不⾏。在 odrivetool 中输⼊ <axis>.requested_state &#x3D; AXIS_STATE_ENCODER_OFFSET_CALIBRATION。</p>
+<p>要验证⼀切正常，请检查以下变量：</p>
+<ul>
+<li><p><code>&lt;axis&gt;.error</code> 应为 0</p>
+</li>
+<li><p><code>&lt;axis&gt;.encoder.config.offset</code> 输出数值如 -326 或 1364 等</p>
+</li>
+<li><p><code>&lt;axis&gt;.motor.config.direction</code> 应输出 1 或 -1</p>
+</li>
+</ul>
+<h2 id="带索引信号的编码器"><a href="#带索引信号的编码器" class="headerlink" title="带索引信号的编码器"></a>带索引信号的编码器</h2><p>如果编码器带有索引（Z）信号，则可以避免每次启动时都必须进⾏编码器偏移校准，⽽可以使⽤索引信号将编码器重新同步到存储的偏移校准。</p>
+<p>以下是进⾏⼀次性校准和配置的步骤。 请注意，可以⼀次校准⼀台电机，也可以同时将所有电机⼀起按照这些步骤操作。</p>
+<ul>
+<li>只需要做⼀次，建议将电机与编码器以外的任何其他机械分离，以使其⾃由旋转</li>
+<li>设置 <code>&lt;axis&gt;.encoder.config.use_index</code> 为 True</li>
+<li>执⾏ <code>&lt;axis&gt;.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH</code>。将使电机朝个⽅向旋转，直到找到编码器索引</li>
+</ul>
+<h2 id="反向旋转编码器索引搜索"><a href="#反向旋转编码器索引搜索" class="headerlink" title="反向旋转编码器索引搜索"></a>反向旋转编码器索引搜索</h2><p>若希望索引搜索仅在特定⽅向上进⾏（默认设置的相反），⽽不是通过交换⻢达线来实现，</p>
+<p>可将以下三个值设置为负数：</p>
+<ul>
+<li><code>&lt;axis&gt;.config.calibration_lockin.vel</code></li>
+<li><code>&lt;axis&gt;.config.calibration_lockin.accel</code></li>
+<li><code>&lt;axis&gt;.config.calibration_lockin.ramp_distance</code></li>
+</ul>
+<h2 id="编码器噪声"><a href="#编码器噪声" class="headerlink" title="编码器噪声"></a>编码器噪声</h2><p>噪声主要来源</p>
+<ul>
+<li>最⼤可能，编码器线可能太靠近电机线，尽可能避免重叠</li>
+<li>编码器与 ODrive 之间连线太⻓</li>
+<li>使⽤排线连接编码器和 ODrive</li>
+</ul>
+<p>若使⽤ SPI，可在 CLK 上串联⼀个 20～50欧姆 的电阻。</p>
+<p>带索引信号的编码器 Z 输⼊噪声，现象</p>
+<ul>
+<li>编码器校准很难成功</li>
+<li>执⾏完 <code>odrv0.save_configuration</code> 和 <code>odrv0.reboot</code> 后有⼀些奇怪现象</li>
+</ul>
+<h2 id="AS5047-AS5048"><a href="#AS5047-AS5048" class="headerlink" title="AS5047&#x2F;AS5048"></a><strong>AS5047&#x2F;AS5048</strong></h2><p>基于霍尔效应的磁旋转编码器。</p>
+<p>AS5047 有三种独⽴的信号输出接⼝: SPI, ABI, PWM</p>
+<p>AS5048 有四种独⽴的信号输出接⼝: SPI, ABI, I2C, PWM</p>
+<p>默认的ODrive固件⽀持通过ABI与AS5047&#x2F;AS5048连接。 在接线时，将A，B，3.3v，GND 连接到ODrive上标记的引脚。</p>
+<p>TobinHall编写了⼀个⽀持AS5047&#x2F;AS5048上SPI选项的分⽀。</p>
+<h2 id="编码器测试"><a href="#编码器测试" class="headerlink" title="编码器测试"></a>编码器测试</h2><p>转动电机，查看 <code>&lt;axis&gt;,encoder.shadow_count</code> 是否变化</p>
+<p>使⽤示波器查看电机转动时 AB 引脚是否为⽅波。</p>
+<h1 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h1><p>电机控制器是级联式位置、速度和电流控制环路</p>
+
+
+<p>每个控制回路都是基于 PID 控制器。</p>
+<p>位置环控制器：是⼀个具有单个⽐例增益的 P 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pos_error = pos_setpoint - pos_feedback</span><br><span class="line">vel_cmd = pos_error * pos_gain + vel_feedforward</span><br></pre></td></tr></table></figure>
+
+<p>速度环控制器：是⼀个 PI 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vel_error = vel_cmd - vel_feedback</span><br><span class="line">current_integral += vel_error * vel_integrator_gain</span><br><span class="line">current_cmd = vel_error * vel_gain + current_integral + current_feedforward</span><br></pre></td></tr></table></figure>
+
+<p>电流环控制器：实际也是⼀个 PI 环路</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">current_error = current_cmd - current_feedback,</span><br><span class="line">voltage_integral += current_error * current_integrator gain,</span><br><span class="line">voltage_cmd = current_error * current_gain + voltage_integral + ...</span><br><span class="line"> ... + voltage_feedforward (when we have motor model)</span><br></pre></td></tr></table></figure>
+
+<p><strong>控制器的最终输出是施加到每个 FET 栅极的电压</strong>，以通过电机的每个线圈输送电流。<strong>通过电机的电流与电机的扭矩输出呈线性关系</strong>。这意味着级联控制器的输⼊理论上是电机的位置（⻆度）、速度（⻆度&#x2F;时间）和加速度（⻆度&#x2F;时间&#x2F;时间）。请注意，当从电机的物理⻆度考虑控制器时，您会期望在速度和电流环路中看到时间，但它不存在，因为迭代之间的时间差始终为 125 微秒（8kHz）。因为控制器循环之间的时间差是⼀个常数，可以简单地包装到控制器增益中。</p>
+<p>控制器每个阶段的输出在馈⼊下⼀阶段之前都会被钳位。因此，在从位置控制器计算出vel_cmd 之后，vel_cmd 被钳位到速度极限。然后，速度控制器的 Torque_cmd 输出被钳位并馈⼊电流控制器。奇怪的是，控制器类不包含电流控制器，⽽是由于电机驱动器架构的复杂性，电流控制器被安置在电机类中。</p>
+<p>使⽤位置或速度控制模式时可⽤的前馈项旨在在系统动态已知且主机控制器可以根据负载预测运动时实现更好的性能。⼀个完美的例⼦是使⽤轨迹控制器，该控制器根据所需的位置、速度和加速度设置位置、速度和扭矩。如果您采⽤梯形速度曲线，您可以想象在向上的斜坡上速度将随着时间的推移⽽增加，⽽扭矩是⼀个⾮零常数。在曲线的平坦部分，速度将是⼀个⾮零常数，但加速度将为零。此轨迹控制器⽤例使⽤具有多个输⼊的级联控制器来实现具最佳性能的所需运动。</p>
+<h2 id="参数调整"><a href="#参数调整" class="headerlink" title="参数调整"></a>参数调整</h2><p>调整电机控制器是释放 ODrive 全部潜⼒的重要⼀步。通过调节，控制器可以快速响应系统中的⼲扰或变化（例如施加的外⼒或设定点的变化），⽽不会变得不稳定。正确设置三个调整参数（称为增益）可确保 ODrive 以最有效的⽅式控制电机。这三个参数是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">odrv0.axis0.controller.config.pos_gain = 20.0 # pos_gain[(turn/s)/turn]</span><br><span class="line">odrv0.axis0.controller.config.vel_gain = 0.16 # vel_gain [Nm/(turn/s)]</span><br><span class="line">odrv0.axis0.controller.config.vel_integrator_gain = 0.32 # vel_integrator_gain [Nm/((turn/s) * s)]</span><br></pre></td></tr></table></figure>
+
+<p>即将推出⾃动调整功能的版本。在此之前可按以下步骤粗率调整：</p>
+<ul>
+<li>设置 vel_integrator_gain 为 0</li>
+<li>逐渐减⼩另两个值使系统达到稳定状态</li>
+<li>逐渐增加 vel_gain，每次增加 30% 左右，直到电机出现轻微振荡</li>
+<li>设置 vel_gain 为出现轻微振荡时值的 50%</li>
+<li>逐渐增加 pos_gain，每次增加 30% 左右，直到看到有些过冲</li>
+<li>逐渐减⼩ pos_gain，直到过冲消失</li>
+<li>可将积分器 vel_integrator_gain 设置为 0.5 * 带宽 * vel_gain（带宽：系统控制带宽）</li>
+</ul>
+<p>liveplotter ⼯具对调整控制器参数有很⼤帮组。可通过以下指令⼀曲线形式实时显示设置位置和实际位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_liveplotter(lambda:[odrv0.axis0.encoder.pos_estimate, odrv0.axis0.controller.pos_setpoint])</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="控制方式"><a href="#控制方式" class="headerlink" title="控制方式"></a>控制方式</h1><ul>
+<li><p>位置控制</p>
+</li>
+<li><p>平滑位置控制</p>
+</li>
+<li><p>轨迹控制</p>
+</li>
+<li><p>循环位置控制：连续的增量位置运动。控制器将尝试仅在电机旋转⼀圈之内跟踪位置，input_pos 范围应为 [0,1)，若设置为超过 turn&#x2F;2 步的⼤步幅增加位置，则电机将以相反的⽅向旋转。若需要处理较⼤步幅的应⽤，可通过设置<code>controller.config.circular_setpoints_range = N</code> 来设置要约束的循环范围值</p>
+</li>
+<li><p>转速控制</p>
+</li>
+<li><p>转速爬升控制</p>
+</li>
+<li><p>转矩控制</p>
+</li>
+</ul>
+<h2 id="平滑位置控制"><a href="#平滑位置控制" class="headerlink" title="平滑位置控制"></a>平滑位置控制</h2><p>建议将输⼊滤波带宽设置为位置指令发送频率的⼀半。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axis.controller.config.input_filter_bandwidth = 2.0 # 滤波带宽</span><br><span class="line">axis.controller.config.input_mode = INPUT_MODE_POS_FILTER # 使能平滑位置控制模式</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">资源管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 14:03:51 / 修改时间：14:05:49" itemprop="dateCreated datePublished" datetime="2024-11-16T14:03:51+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -687,7 +1248,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
         </span>
     </span>
 
@@ -698,14 +1259,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -716,86 +1277,35 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>IAP(In Application Programming)：目的是为了在产品发布后能够通过预留的通信口对产品中的<strong>固件程序进行在线升级</strong>。</p>
-<p>该方法不同于 ICP(In-Circuit Programming) 及 ISP。<strong>ICP通过在线仿真器对单片机程序进行烧写</strong>；而 <strong>ISP 则是通过单片机内置的 bootloader 程序(System memory 中的 bootloader)引导的烧写技术</strong>。ICP 和 ISP 均需要连接下载线等操作。</p>
-<p>IAP 的前提是必须是基于可重复编程闪存的微控制器。STM32 带有可编程的内置内存。</p>
-<p>IAP 的核心是一段预先烧录在单片机内部的 IAP 程序(BootLoader)，该程序主要负责与外部的上位机软件进行同步，然后通信接口将来自上位机软件的程序数据接收后写入单片机内部制定的闪存区域，然后跳转执行新写入的程序。</p>
-<p>正常情况下，STM32 内置 Flash 布局及中断响应过程：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/STM32%E5%86%85%E7%BD%AEFlash%E5%B8%83%E5%B1%80.png" class="" title="STM32内置Flash布局">
-
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131514957.png" class="" title="image-20241116131514957">
-
-<p>使用 IAP 方案时，内置 Flash 布局及中断响应流程：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131536241.png" class="" title="image-20241116131536241">
-
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131555216.png" class="" title="image-20241116131555216">
-
-<p>(此处假设 BootLoader 占用 N+M 字节)</p>
-<p>使用 IAP 过程写入的程序需满足两个要求：</p>
-<ul>
-<li>新程序必须从 IAP 程序之后的某个偏移量为 x 的地址开始</li>
-<li>必须将新程序的中断向量表相应的移动，移动偏移量为 x。对应接口：<code>void NVIC_SetVectorTable(u32 NVIC_VectTab, u32 Offset)</code></li>
+          <h2 id="临界段代码"><a href="#临界段代码" class="headerlink" title="临界段代码"></a>临界段代码</h2><p>临界段代码也叫临界区，指必须完整运行，不能被打断的代码段。FreeRTOS 进入临界区时，需要关闭中断，处理完临界段之后再打开中断。</p>
+<h3 id="临界段代码保护-API"><a href="#临界段代码保护-API" class="headerlink" title="临界段代码保护 API"></a>临界段代码保护 API</h3><ul>
+<li><code>taskENTER_CRITICAL()</code> 任务级保护</li>
+<li><code>taskEXIT_CRITICAL()</code></li>
+<li><code>taskENTER_CRITICAL_FROM_ISR()</code> 中断级保护。用于中断服务程序中，且该中断的优先级必须要低于 <code>configMAX_SYSCALL_INTERRUPT_PRIORITY</code></li>
+<li><code>taskEXIT_CRITICAL_FROM_ISR()</code></li>
 </ul>
-<p>IAP 使用注意事项：</p>
-<ul>
-<li>应用程序要编译成 bin 格式(<strong>hex文化包含了数据和地址信息，bin文件只包含数据</strong>)</li>
-<li><strong>IAP 程序不需要从串口&#x2F;USB口&#x2F;其它接口接收数据，固件传输由应用程序自行完成</strong></li>
-<li>接收完升级程序数据之后，校验，并复位系统</li>
-<li><strong>IAP 程序只检查固件升级标志</strong>，若未设置固件升级标志，则加载 Flash 中的 APP 程序</li>
-<li>若 APP 设置了<strong>固件升级标志</strong>，<strong>固件地址及固件加密方式</strong>，IAP 程序会根据这些信息，进入固件升级流程</li>
-<li>固件升级流程：解除 Flash 的 lock 状态&#x2F;读写保护，读取外部存储器中的固件，对固件解密后写入内部 Flash，重新开启读保护和写保护</li>
-</ul>
-<p>要点：</p>
-<ul>
-<li><p>flash 擦除及写入：flash操作过程：flash解锁、flash擦除、flash写入、flash上锁</p>
-<ul>
-<li>a) flash 解锁 - <code>FLASH_Unlock()/HAL_FLASH_Unlock()</code></li>
-<li>b) flash 擦除 - <code>FLASH_ErasePage()/HAL_FLASHex_Erase()</code></li>
-<li>c) flash 写入 - <code>FLASH_ProgramHalfWord()/HAL_FLASH_Program()</code></li>
-<li>d) flash 上锁 - <code>FLASH_Lock()/HAL_FLASH_Lock()</code></li>
-</ul>
-</li>
-<li><p>中断向量表的偏移设置：对于BootLoader程序只需设置中断向量表的指向在 <code>0x08000000</code> 处，假设用户程序需要设置中断向量表的指向在 <code>0x08008000</code> 处：</p>
-<ul>
-<li><code>NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x0);</code></li>
-<li><code>NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x8000);</code></li>
-<li>其中: <code>NAVIC_VectTable_FLASH</code> 为 <code>0x08000000</code></li>
-</ul>
-</li>
-</ul>
-<p>BootLoader 实现过程：</p>
-<ul>
-<li>初始化时钟</li>
-<li>初始化中断向量表地址</li>
-<li>初始化串口</li>
-</ul>
-<p>官方 IAP demo 分析：</p>
-<ul>
-<li><p>初始化 HAL 库</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_Init();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置系统时钟</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SystemClock_Config();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>升级操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Initialise Flash */</span></span><br><span class="line">FLASH_If_Init();</span><br><span class="line"><span class="comment">/* Execute the IAP driver in order to reprogram the Flash */</span></span><br><span class="line">IAP_Init();</span><br><span class="line"><span class="comment">/* Display main menu */</span></span><br><span class="line">Main_Menu ();</span><br></pre></td></tr></table></figure>
+<p>临界区代码要精简，因为进入临界区会关闭中断，导致无法响应优先级低于 <code>configMAX_SYSCALL_INTERRUPT_PRIORITY</code> 的中断。</p>
+<h1 id="临界区与挂起调度器"><a href="#临界区与挂起调度器" class="headerlink" title="临界区与挂起调度器"></a>临界区与挂起调度器</h1><h2 id="基本临界区"><a href="#基本临界区" class="headerlink" title="基本临界区"></a>基本临界区</h2><p><code>taskENTER_CRITICAL()</code> 与 <code>taskEXIT_CRITICAL()</code> 之间的代码区间。</p>
+<p>例如，使用临界区对寄存器的访问进行保护：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 为保证对 PORTA 寄存器的访问不被中断，将其访问操作放入临界区 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 进入临界区</span></span><br><span class="line">taskENTER_CRITICAL();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  在 taskENTER_CRITICAL 和 taskEXIT_CRITICAL 之间不会切换到其它任务。</span></span><br><span class="line"><span class="comment"> *  中断可执行，也允许嵌套，但只对优先级高于 configMAX_SYSCALL_INTERRUPT_PRIORITY</span></span><br><span class="line"><span class="comment"> *  的中断，且这些中断不允许调用 FreeRTOS API。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">PORTA |= <span class="number">0x01</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 退出临界区</span></span><br><span class="line">taskEXIT_CRITICAL()</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解锁 flash 以进行写访问</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">FLASH_If_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* Unlock the Program memory */</span></span><br><span class="line">  HAL_FLASH_Unlock();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Clear all FLASH flags */</span></span><br><span class="line">  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_PGSERR | FLASH_FLAG_WRPERR | FLASH_FLAG_OPTVERR);</span><br><span class="line">  <span class="comment">/* Unlock the Program memory */</span></span><br><span class="line">  HAL_FLASH_Lock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>而 <code>IAP_Init()</code> 则主要是配置 USART</p>
-<p><code>Main_Menu()</code> 方法显示升级菜单，输入 1 则表示下载镜像并写入 flash：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">&#x27;1&#x27;</span> :</span><br><span class="line">      <span class="comment">/* Download user application in the Flash */</span></span><br><span class="line">      SerialDownload();</span><br><span class="line">      <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>若无升级操作，则执行主程序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> APPLICATION_ADDRESS     (uint32_t)0x08008000</span></span><br><span class="line">......</span><br><span class="line"><span class="comment">// 检查栈顶地址是否为 0x20000000</span></span><br><span class="line"><span class="keyword">if</span> (((*(__IO <span class="type">uint32_t</span>*)APPLICATION_ADDRESS) &amp; <span class="number">0x2FFE0000</span> ) == <span class="number">0x20000000</span>)</span><br></pre></td></tr></table></figure>
 
-<p><code>(__IO uint32_t*)APPLICATION_ADDRESS</code> 即取从 <code>APPLICATION_ADDRESS</code> 开始的首 4 个字节。而应用程序中将中断向量表放在了起始位置(即：<code>APPLICATION_ADDRESS</code>)；而中断向量表中第一个元素即为<strong>栈顶地址</strong>的值。此处通过判断栈顶地址是否正确来确认应用程序是否已经下载。</p>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JumpAddress = *(__IO <span class="type">uint32_t</span>*) (APPLICATION_ADDRESS + <span class="number">4</span>)</span><br><span class="line">JumpToApplication = (pFunction) JumpAddress;</span><br><span class="line"><span class="comment">/* Initialize user application&#x27;s Stack Pointer */</span></span><br><span class="line">__set_MSP(*(__IO <span class="type">uint32_t</span>*) APPLICATION_ADDRESS); <span class="comment">// 设置主函数栈指针</span></span><br><span class="line">JumpToApplication(); <span class="comment">// 执行复位函数</span></span><br></pre></td></tr></table></figure>
-
-<p><code>APPLICATION_ADDRESS + 4</code> 地址中存放的是中断向量表的第二项：<strong>复位地址</strong>。</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116132242126.png" class="" title="image-20241116132242126">
+<p>临界区的工作仅仅是简单地把中断全部关掉，或是关掉优先级在 configMAX_SYSCAL_INTERRUPT_PRIORITY 及以下的中断。</p>
+<p><strong>抢占式上下文切换只可能在某个中断中完成</strong>，所以调用 taskENTER_CRITICAL() 的任务可以在中断关闭的时段一直保持运行态，直到退出临界区。</p>
+<p><strong>临界区必须只具有很短的时间</strong>。因此对标准输出的保护不应使用临界区。</p>
+<h2 id="挂起调度器"><a href="#挂起调度器" class="headerlink" title="挂起调度器"></a>挂起调度器</h2><p>可通过挂起调度器（即：锁定调度器）来创建临界区。</p>
+<p>基本临界区保护一段代码区间不被其它任务或中断打断。由挂起调度器实现的临界区只可以保护一段代码区间不被其它任务打断，因为这种方式下，中断是使能的。</p>
+<p><strong>挂起调度器可以停止上下文切换而不用关中断</strong>。如果某个中断在调度器挂起过程中要求进行上下文切换，则个这请求也会被挂起，直到调度器被唤醒后才会得到执行。在调度器处于挂起状态时，不能调用FreeRTOS API 函数。</p>
+<h1 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h1><p>互斥量是一种特殊的二值信号量。互斥量用于互斥功能，二值信号量用于同步，两者最大的区别在于信号量被获取之后所发生的事：</p>
+<p>- 用于互斥的信号量必须归还（<code>xSemaphoreGive()</code>）</p>
+<p>- 用于同步的信号量通常是完成同步之后便丢弃</p>
+<p><code>xSemaphoreTake()</code>只可能在成功获得互斥量后返回，所以无需检测返回值。如果指定了等待超时时间，则代码必须检测到 <code>xSemaphoreTake()</code>返回<code>pdTRUE</code>后，才能访问共享资源(此处是指标准输出)。</p>
+<h2 id="优先级反转"><a href="#优先级反转" class="headerlink" title="优先级反转"></a>优先级反转</h2><p>使用互斥量，若低优先级的任务持有互斥量，则高优先级的任务也必须等待该低优先级任务放弃对互斥量的持有权才能执行。这种高优先级任务被低优先级任务阻塞推迟的行为被称为 “<strong>优先级反转</strong>“。</p>
+<h2 id="优先级继承"><a href="#优先级继承" class="headerlink" title="优先级继承"></a>优先级继承</h2><p>互斥量与二值信号量的另一个区别是互斥量自动提供一个基本的优先级继承机制。</p>
+<p>优先级继承是最小化 “优先级反转” 的负面影响的一种方案——其并不能修正优先级反转带来的问题，仅仅是减小优先级反转的影响。优先级继承使得系统行为的数学分析更为复杂，所以如果可以避免的话，并不建议系统实现对优先级继承有所依赖。</p>
+<h1 id="守护任务"><a href="#守护任务" class="headerlink" title="守护任务"></a>守护任务</h1><p>守护任务提供了一种干净利落的方法来实现互斥功能，而不用担心会发生优先级反转和死锁。</p>
+<p>守护任务是对某个资源具有唯一所有权的任务。只有守护任务才可以直接访问其守护的资源——其它任务要访问该资源只能间接地通过守护任务提供的服务。</p>
 
       
     </div>
@@ -822,7 +1332,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E6%80%BB%E7%BA%BF%E9%80%9A%E4%BF%A1/UART/UART%E5%8F%8AUSART/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -840,7 +1350,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E6%80%BB%E7%BA%BF%E9%80%9A%E4%BF%A1/UART/UART%E5%8F%8AUSART/" class="post-title-link" itemprop="url">UART及USART</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">中断管理</a>
         </h2>
 
         <div class="post-meta-container">
@@ -852,721 +1362,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-16 13:04:28 / 修改时间：13:08:26" itemprop="dateCreated datePublished" datetime="2024-11-16T13:04:28+08:00">2024-11-16</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>731</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>USART(Universal Synchronous and Asynchronous Receiver and Transmitter): 通用同步和异步收发器</p>
-<p>UART(Universal Asynchronous Receiver and Transmitter): 通用异步收发器</p>
-<p>同步：发送数据后，等待应答再发下一个数据。阻塞模式</p>
-<p>异步：无需等待应答。非阻塞模式</p>
-<p>总线信号：</p>
-<p>UART - <strong>TX RX</strong>  </p>
-<p>USART - <strong>TX RX CK</strong>  </p>
-<p>异步通信时，两者无差别。</p>
-<p>USART 多了同步通信功能，因此可以将 USART 当做 SPI 使用。</p>
-<p>STM32 串口使用：</p>
-<ul>
-<li>使能串口时钟。串口属于外设，其时钟由外设时钟使能寄存器控制</li>
-<li>串口配置，包括: 设置 IO 模式、波特率、数据位长度、奇偶校验位、收发模式等信息</li>
-</ul>
-<p>串口传输方式：</p>
-<ul>
-<li>查询</li>
-<li>中断</li>
-<li>DMA</li>
-</ul>
-<p>对应 HAL 库 API:</p>
-<ul>
-<li><p><code>HAL_UART_Transmit</code></p>
-</li>
-<li><p><code>HAL_UART_Receive</code></p>
-</li>
-<li><p><code>HAL_UART_Transmit_IT</code>  &#x2F;&#x2F; 中断</p>
-</li>
-<li><p><code>HAL_UART_Receive_IT</code></p>
-</li>
-<li><p><code>HAL_UART_Transmit_DMA</code> &#x2F;&#x2F; DMA</p>
-</li>
-<li><p><code>HAL_UART_Receive_DMA</code></p>
-</li>
-</ul>
-<p>串口发送&#x2F;接收数据：</p>
-<ul>
-<li><p>查询方式效率非常低;</p>
-</li>
-<li><p>中断方式，如果每个字节触发一个中断，效率也不高，且需要自行解包;</p>
-</li>
-<li><p><strong>空闲中断</strong>可实现按帧传输。空闲中断：串口空闲时产生的中断。若两帧数据之间间隔超过一定时间，接收端就可以产生空闲中断。使用空闲中断：</p>
-<ul>
-<li>可以接收不定长数据</li>
-<li>不需要复杂帧格式（如：不需要帧头&#x2F;帧尾）</li>
-<li>一帧错误不影响后续帧</li>
-</ul>
-</li>
-<li><p>DMA + 空闲中断的方式可以进一步提升传输效率</p>
-</li>
-</ul>
-<p>串口数据帧常见格式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帧头[2] + [版本[1]] + [命令/功能[1]] + 长度[1] + 数据[n] + 校验[2] + 帧尾[2]   </span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E6%80%BB%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">总线</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 11:37:48 / 修改时间：11:42:46" itemprop="dateCreated datePublished" datetime="2024-11-16T11:37:48+08:00">2024-11-16</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>727</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>AMBA 总线规范(ARM公司提出)。定义了 AHB(Advanced High-performance Bus)、ASB(Advanced System Bus)、APB(Advanced Peripheral Bus)。</p>
-<p>AHB：用于高性能、高时钟频率的系统结构，典型的有：内部高速 RAM、Nand Flash、DMA、Bridge等；</p>
-<p>APB：用于连接外部设备</p>
-<p>AHB 总线系统</p>
-<p>特性：</p>
-<ul>
-<li><p>burst transfers(突发传输)</p>
-</li>
-<li><p>split transactions()</p>
-</li>
-<li><p>single cycle bus master handover()</p>
-</li>
-<li><p>single clock edge operation</p>
-</li>
-<li><p>non-tristate implementation</p>
-</li>
-<li><p>wider data bus configurations (64&#x2F;128 bits).</p>
-</li>
-</ul>
-<p>例如：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E6%80%BB%E7%BA%BF/image-20241116114113611.png" class="" title="image-20241116114113611">
-
-<p>STM32主系统由 32位 多层 AHB 总线矩阵构成。总线矩阵使用 循环调度算法 控制总线之间的访问仲裁管理。可实现如下部分的互联：</p>
-<ul>
-<li><p>八条主控总线是：</p>
-<ul>
-<li>Cortex-M4内核I总线, D总线和S总线;<ul>
-<li>I 总线(S0)：指令总线。内核通过该总线获取指令，访问的对象是包括代码的存储器</li>
-<li>D 总线(S1)：数据总线。内核通过该总线进行立即数加载和调试访问</li>
-<li>S 总线(S2)：系统总线。该总线用于访问外设或 SRAM 中的数据</li>
-</ul>
-</li>
-<li>DMA1存储器总线, DMA2存储器总线;</li>
-<li>DMA2外设总线;</li>
-<li>以太网DMA总线;</li>
-<li>USB OTG HS DMA总线;</li>
-</ul>
-</li>
-<li><p>七条被控总线：</p>
-<ul>
-<li><p>内部FLASH ICode总线;</p>
-</li>
-<li><p>内部FLASH DCode总线;</p>
-</li>
-<li><p>主要内部SRAM1(112KB)</p>
-</li>
-<li><p>辅助内部SRAM2(16KB);</p>
-</li>
-<li><p>辅助内部SRAM3(64KB)(仅适用STM32F42xx和STM32F43xx系列器件);</p>
-</li>
-<li><p>AHB1外设和AHB2外设;</p>
-</li>
-<li><p>FSMC</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/CubeMX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/CubeMX/" class="post-title-link" itemprop="url">CubeMX</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 09:45:07 / 修改时间：11:18:51" itemprop="dateCreated datePublished" datetime="2024-11-16T09:45:07+08:00">2024-11-16</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>196</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="CubeMX-配置"><a href="#CubeMX-配置" class="headerlink" title="CubeMX 配置"></a>CubeMX 配置</h1><img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/CubeMX/image-20241116094523306.png" class="" title="image-20241116094523306">
-
-
-
-<h1 id="使能-FreeRTOS"><a href="#使能-FreeRTOS" class="headerlink" title="使能 FreeRTOS"></a>使能 FreeRTOS</h1><p>STM32CubeMx 使能 FreeRTOS 后，NVIC 配置中 Priority Group 只能选择: 4 bits for pre-emption priority 0 bits for subpriority     </p>
-<p>FreeRTOS 的中断配置没有处理亚优先级(即:响应优先级)这种情况，因此只能配置为分组 4，即: 16 个抢占优先级。这样中断优先级的管理将非常方便，这也是官方建议的方式。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">使用记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 09:33:23 / 修改时间：11:37:06" itemprop="dateCreated datePublished" datetime="2024-11-16T09:33:23+08:00">2024-11-16</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="烧录"><a href="#烧录" class="headerlink" title="烧录"></a>烧录</h1><p>四种烧录方式</p>
-<ul>
-<li>JTAG<br>主要引脚：电源、复位、TDI(数据输入)、TDO(数据输出)、TMS(模式选择)、TCK(时钟)<br>实现工具：J-Link</li>
-<li>SWD<br>串行调试口，JTAG通常与SWDIO接口复用。只需两根线(不包括VCC、GND)：SWCLK(串行时钟线)、SWDIO(串行数据线)<br>实现工具：J-Link</li>
-<li>ISP<br>串口烧录。与单片机连接时，要交叉连接，即：TXD 接 RXD。STM32使用 UART 下载程序时，需要选择 BOOT 的模式，但现在通过 CH340G 芯片(USB转串口)可实现自动 ISP 的下载方式，不再需要手动设置 BOOT 模式(需要先切到 SYSTEM 模式通过串口下载代码，然后再切换回来)。System Memory中有一段 BOOTLOADER 来接收串口来的数据，把它们烧写到FLASH中。</li>
-<li>SWIM<br>实现工具：如 ST-Link</li>
-<li>IAP<br>需要在 Flash 中写入一段操作flash的程序。</li>
-</ul>
-<p>STM8 系统通过 SWIM 接口与 ST-Link&#x2F;V2 连接</p>
-<p>STM32 系列通过 JTAG&#x2F;SWD 接口与 ST-Link&#x2F;V2 连接</p>
-<h1 id="hex-与-flash"><a href="#hex-与-flash" class="headerlink" title="hex 与 flash"></a>hex 与 flash</h1><p>hex 大小和需要的 flash 空间没有必然关系。有时 hex 大于 flash 时也能正常烧录，因为<strong>实际写入 flash 中的是 hex 中的 bin 文件</strong>。</p>
-<p>keil 编译结束时会提示如下信息：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116111923141.png" class="" title="image-20241116111923141">
-
-<ul>
-<li>Code：程序中代码字节数</li>
-<li>RO-data：常量字节数</li>
-<li>RW-data：已初始化的变量的字节数</li>
-<li>ZI-data：未初始化的变量字节数</li>
-</ul>
-<p>flsh &#x3D; Code + RO-data + RW-data</p>
-<p>RAM &#x3D; RW-data + ZI-data</p>
-<h1 id="三种启动模式"><a href="#三种启动模式" class="headerlink" title="三种启动模式"></a>三种启动模式</h1><p>STM32 系列支持三种启动模式：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/%E4%B8%89%E7%A7%8D%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F.png" class="" title="image-20241116112235502">
-
-<ul>
-<li>Main Flash memory：STM32 内置 flash，一般使用 JTAG&#x2F;SWD 下载程序都是下载到这里面</li>
-<li>System memory：系统存储器是芯片内部特定区域。通常为 Bootloader，即:ISP。选用此模式时，<strong>通常是为了通过串口来下载程序</strong>，因为原厂提供的 Bootloader 都提供了串口下载程序的固件。使用 Bootloader 经串口下载程序时，需要注意 BOOT0 及 BOOT1 状态的切换</li>
-<li>Embedded memory：内置 SRAM。通常用于程序调试</li>
-</ul>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/%E6%94%AF%E6%8C%81%E7%9A%84%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.png" class="" title="image-20241116112404783">
-
-<h2 id="串口下载步骤"><a href="#串口下载步骤" class="headerlink" title="串口下载步骤"></a>串口下载步骤</h2><ul>
-<li>BOOT0接 V3.3（BOOT1保持接 GND）</li>
-<li>按下复位按钮</li>
-</ul>
-<p>即可开始下载，下载完成后，若未设置从 <code>0x08000000</code> 开始运行，则代码不会立即执行，此时，还需将 BOOT0 切换回 GND，再按一次复位才会开始运行刚下载的代码。</p>
-<p>正点原子 STM32F429 开发板一键下载电路，使用串口的 DTR 和 RTS 信号，分别控制 STM32 的复位和 BOOT0。可通过上层软件 Flymcu ，设置:<strong>DTR低电平复位，RTS高电平进 Bootloader</strong>。</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/%E4%B8%B2%E5%8F%A3%E4%B8%8B%E8%BD%BD%E7%94%B5%E8%B7%AF.png" class="" title="串口下载电路">
-
-
-
-<h1 id="寄存器配置过程"><a href="#寄存器配置过程" class="headerlink" title="寄存器配置过程"></a>寄存器配置过程</h1><p>ST 官方提供 HAL(硬件抽象层API) 库，该库负责与寄存器直接交互，并向用户提供调用 API。</p>
-<h1 id="时钟源"><a href="#时钟源" class="headerlink" title="时钟源"></a>时钟源</h1><img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/%E6%97%B6%E9%92%9F%E6%BA%90.png" class="" title="时钟源">
-
-
-
-<h2 id="时钟源-1"><a href="#时钟源-1" class="headerlink" title="时钟源"></a>时钟源</h2><p>STM32 中有五个时钟源：</p>
-<ul>
-<li>HSI：High Speed Interal 高速时钟。</li>
-<li>HSE：High Speed External 高速外部时钟。</li>
-<li>LSI：Low Speed Interal 低速时钟。</li>
-<li>LSE：Low Speed External 低速外部时钟。</li>
-<li>PLL：高速时钟。分为 主PLL、PLLI2S(I2S专用)、PLLSAI(SAI专用)</li>
-</ul>
-<p>HSE、LSE是外部时钟，通过外接晶振的方式获取，其它为内部时钟。</p>
-<p>系统时钟 SYSCLK 的三个来源：HSI、HSE、PLL</p>
-<p>RTC时钟来源：LSE、LSI、LSE的128分频</p>
-<p>看门狗时钟 IWDGCLK 来源：LSI</p>
-<p>USB 时钟 USBCLK 来源：PLL经预分频产生1&#x2F;1.5分频</p>
-<p><strong>系统时钟(SYSCLK)通过 AHB 分频器给外设提供时钟</strong>。AHB 分频器输出的时钟作为模块的输入：</p>
-<ul>
-<li>给 AHB 总线、core、内存和 DMA 使用的 HCLK</li>
-<li>系统时钟定时器</li>
-<li>直接给 cortex 的空闲运行时钟 FCLK</li>
-<li>APB1 外设。主要是低速外设，例如:电源接口、can、USB、I2C、USART2、USART3、UART4、SPI2~3等</li>
-<li>APB2 外设。主要是高速外设，例如:UART1、SPI1、Timer1、ADC1~3、所有普通 I&#x2F;O 等(具体可通过查看 STM32 参考手册中的 “系统架构&#x2F;结构” 部分)</li>
-</ul>
-<p>注意：当 APBx 预分频系数为 1 时，TIMxCLK &#x3D; PCLKx。否则，TIMxCLK &#x3D; 2 * PCLKx。(通过观察在 STM32CubeMX 中改变 APB 预分频系数的结果可以看出)</p>
-<p>STM32 启动过程中，在进入 main 函数之前，会执行 <code>SytemInit</code> 来设置系统时钟。</p>
-<h2 id="HAL-时钟系统配置"><a href="#HAL-时钟系统配置" class="headerlink" title="HAL 时钟系统配置"></a>HAL 时钟系统配置</h2><p>系统启动之后，会执行 HAL 库定义的 <code>SystemInit</code> 函数，进行系统的一些初始化配置：</p>
-<ul>
-<li>FPU 设置</li>
-<li>复位 RCC 时钟配置为默认复位值(默认开始了 HSI)</li>
-<li>外部存储器配置</li>
-<li>中断向量表地址配置</li>
-</ul>
-<p><strong>HAL 库中的 <code>SystemInit</code> 并没有像标准库中的 <code>SystemInit</code> 一样进行时钟初始化配置，除了打开 HSI 之外，没有任何时钟相关配置。因此，使用 HAL 库时，必须自己配置时钟</strong>。</p>
-<p><code>Stm32_Clock_Init</code> 函数的作用是进行时钟系统配置，除了配置 PLL 相关参数确定 SYSCLK 之外，还配置了 AHB、APB1、APB2 的分频系数，即:确定了 HCLK、PCLK1、PCLK2 的时钟值。</p>
-<p>使用 HAL 库配置 STM32 时钟的一般步骤;</p>
-<ul>
-<li>使能 PWR 时钟 <code>__HAL_RCC_PWR_CLK_ENABLE()</code>。因为后面的设置调节器输出电压级别和开启 over-drive 功能都是电源相关配置，所以必须先开启 PWR 时钟</li>
-<li>设置调压器输出电压级别 <code>__HAL_PWR_VOLTAGESCALING_CONFIG()</code></li>
-<li>选择是否开启 Over-Driver 功能 <code>HAL_PWREx_EnableOverDrive()</code></li>
-<li>配置时钟源相关参数 <code>HAL_RCC_OscConfig()</code></li>
-<li>配置系统时钟源及 AHB、APB1、APB2 的分频系数 <code>HAL_RCC_ClockConfig()</code></li>
-</ul>
-<p>设置好时钟系统之后，若还使用到了外设，如:GPIO、ADC等，则还需要<strong>使能这些外设时钟</strong>。</p>
-<h1 id="IO复用"><a href="#IO复用" class="headerlink" title="IO复用"></a>IO复用</h1><p>IO引脚会通过一个复用器连接到内置外设或模块。该复用器采用 16 路复用功能输入，可通过 GPIOx_AFRL 和 GPIOx_AFRH 寄存器进行配置。每 4 为控制一路复用。</p>
-<h1 id="HAL-库与标准库"><a href="#HAL-库与标准库" class="headerlink" title="HAL 库与标准库"></a>HAL 库与标准库</h1><p>ST 先后提供了两套固件库：标准库 和 HAL 库(2014年发布)。两者本质是一样的，都是提供底层硬件操作 API。HAL 的结构更容易整合 ST 官方提供的 STM32CubeMX 软件。</p>
-<h1 id="STM32-系列-flash-限制"><a href="#STM32-系列-flash-限制" class="headerlink" title="STM32 系列 flash 限制"></a>STM32 系列 flash 限制</h1><p>对齐方式：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/STM32%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F.png" class="" title="STM32内存对齐方式">
-
-<p>STM32F4 和 STM32F7 中某些设备支持自定义对齐方式。</p>
-<h1 id="attribute-at"><a href="#attribute-at" class="headerlink" title="__attribute__((at()))"></a><code>__attribute__((at()))</code></h1><p>绝对定位，定位到 flash 或 RAM。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 串口接收的数据定位到 RAM 中 0x20001000 地址处</span></span><br><span class="line"><span class="type">uint8_t</span>   UART_RX_BUF[<span class="number">1024</span>]   __attribute__ ((at(<span class="number">0X20001000</span>)));</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="获取系统时钟频率"><a href="#获取系统时钟频率" class="headerlink" title="获取系统时钟频率"></a>获取系统时钟频率</h1><h2 id="HAL-库"><a href="#HAL-库" class="headerlink" title="HAL 库"></a>HAL 库</h2><p><code>stm32f4xx_hal.rcc.h</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint32_t</span> sysclock = <span class="number">0</span>;   </span><br><span class="line">sysclock = HAL_RCC_GetSysClockFreq();</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h2><p><code>stm32f4xx_rcc.h</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">typedef struct</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  uint32_t SYSCLK_Frequency;/*!&lt; returns SYSCLK clock frequency expressed in Hz */</span></span><br><span class="line">  <span class="type">uint32_t</span> HCLK_Frequency;  <span class="comment">/*!&lt; returns HCLK clock frequency expressed in Hz */</span></span><br><span class="line">  <span class="type">uint32_t</span> PCLK1_Frequency; <span class="comment">/*!&lt; returns PCLK1 clock frequency expressed in Hz */</span></span><br><span class="line">  <span class="type">uint32_t</span> PCLK2_Frequency; <span class="comment">/*!&lt; returns PCLK2 clock frequency expressed in Hz */</span></span><br><span class="line">  <span class="type">uint32_t</span> ADCCLK_Frequency;<span class="comment">/*!&lt; returns ADCCLK clock frequency expressed in Hz */</span></span><br><span class="line">&#125;RCC_ClocksTypeDef;</span><br><span class="line">*/</span><br><span class="line">RCC_ClocksTypeDef get_rcc_clock;</span><br><span class="line">RCC_GetClocksFreq(&amp;get_rcc_clock);</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Stm32-Clock-Init-设置系统时钟"><a href="#Stm32-Clock-Init-设置系统时钟" class="headerlink" title="Stm32_Clock_Init 设置系统时钟"></a><code>Stm32_Clock_Init</code> 设置系统时钟</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stm32_Clock_Init(<span class="number">360</span>,<span class="number">25</span>,<span class="number">2</span>,<span class="number">8</span>);   <span class="comment">//配置系统时钟,180Mhz  -- STM32F429</span></span><br></pre></td></tr></table></figure>
-
-<p>外部晶振为25M时，推荐参数为: <code>plln=360,pllm=25,pllp=2,pllq=8</code>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Fvco=25*(360/25)=360Mhz</span><br><span class="line">SYSCLK=360/2=180Mhz</span><br><span class="line">Fusb=360/8=45Mhz</span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>FVCO:Frequency of VCO</code>，VCO输出频率。<code>VCO = Voltage Controlled Oscillator</code>，压控振荡器&#x2F;压控振荡电路。</p>
-<h1 id="SysTick"><a href="#SysTick" class="headerlink" title="SysTick"></a>SysTick</h1><p>SysTick 是一个 24bit 定时器，即一次最多可计数 <code>2^24</code> 个时钟脉冲。假设系统时钟为 180M，SysTick 配置为 <code>SYSTICK_CLKSOURCE_HCLK</code> ：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);<span class="comment">//SysTick频率为HCLK</span></span><br></pre></td></tr></table></figure>
-
-<p>SysTick 定时器计数一次为: 1&#x2F;180μs，因此 1μs 要计数 180 次。</p>
-<p>若 SysTick 时钟设置为 SYSTICK_CLKSOURCE_HCLK_DIV8(即: 180&#x2F;8 MHz)，则 SysTick 定时器计数一次为: 8&#x2F;180μs，因此 1μs 要计数 180&#x2F;8 次。</p>
-<h1 id="HAL-GPIO-TogglePin-vs-HAL-GPIO-WritePin"><a href="#HAL-GPIO-TogglePin-vs-HAL-GPIO-WritePin" class="headerlink" title="HAL_GPIO_TogglePin vs HAL_GPIO_WritePin"></a><code>HAL_GPIO_TogglePin</code> vs <code>HAL_GPIO_WritePin</code></h1><h1 id="空间不足"><a href="#空间不足" class="headerlink" title="空间不足"></a>空间不足</h1><p>xxx.axf: Error: L6406E: No space in execution regions with .ANY selector matching main.o(.bss)</p>
-<p>可能是 flash 不足，也可能是 RAM 不足。</p>
-<ul>
-<li><p>flash 占用为：Code + RO data + RW data</p>
-</li>
-<li><p>RAM 空间：RW data + ZI data</p>
-</li>
-</ul>
-<p>可先更换空间大的芯片编译，看编译结果中 flash 和 RAM 的需求，即可确定是哪个空间不足。</p>
-<h1 id="串口中断接收未触发"><a href="#串口中断接收未触发" class="headerlink" title="串口中断接收未触发"></a>串口中断接收未触发</h1><p>使用 STM32Cubex 生成 USART1(PA9、PA10) 串口传输代码(STM32F103C8T6)，能够正常发送数据，但无法接收数据。配置如下：</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116094025054.png" class="" title="image-20241116094025054">
-
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116094030781.png" class="" title="image-20241116094030781">
-
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/image-20241116094033994.png" class="" title="image-20241116094033994">
-
-<p>检查时钟都正常开启：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">MX_GPIO_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* GPIO Ports Clock Enable */</span></span><br><span class="line">  ......</span><br><span class="line">  __HAL_RCC_GPIOA_CLK_ENABLE();  <span class="comment">// USART1 - PA9,PA10 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>MX_USART1_UART_Init</code> 中会调用 <code>HAL_UART_Init()</code> 初始化 USART1 串口，而 <code>HAL_UART_Init()</code> 函数中又会调用 <code>HAL_UART_MspInit()</code> 方法初始化 UART MSP，该方法中会完成如下操作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 外设时钟使能 */</span></span><br><span class="line">__HAL_RCC_USART1_CLK_ENABLE();</span><br><span class="line">__HAL_RCC_GPIOA_CLK_ENABLE(); <span class="comment">// 与 MX_GPIO_Init 中重复</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* usart1 GPIO 配置 */</span></span><br><span class="line">...</span><br><span class="line">HAL_GPIO_Init(GPIOA, &amp;GPIO_InitStruct);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* USART1 中断初始化 */</span> </span><br><span class="line">__HAL_UART_ENABLE_IT(huart,UART_IT_RXNE); <span class="comment">// 使能中断接收。手动添加,默认无该函数调用</span></span><br><span class="line">HAL_NVIC_SetPriority(USART1_IRQn, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">HAL_NVIC_EnableIRQ(USART1_IRQn);</span><br></pre></td></tr></table></figure>
-
-<p>STM32Cubex 生成的代码中，<code>HAL_UART_MspInit()</code> 在初始化 USART1 中断时，并未调用 <code>__HAL_UART_ENABLE_IT()</code>，添加上该函数后即可在 正常触发 <code>USART1_IRQHandler</code> 接收串口数据。其中</p>
-<ul>
-<li><code>UART_IT_RXNE</code>：接收中断</li>
-<li><code>UART_IT_IDLE</code>：空闲中断</li>
-<li><code>UART_IT_TXE</code>：发送中断</li>
-<li><code>UART_IT_TC</code>：发送完成中断</li>
-</ul>
-<p>即：若要开启串口中断接收，则必须调用 <code>__HAL_UART_ENABLE_IT</code> 方法。也可不使用中断接收，而直接使用 <code>HAL_UART_Receive</code> 进行接收</p>
-<h1 id="DMA-串口接收错误"><a href="#DMA-串口接收错误" class="headerlink" title="DMA 串口接收错误"></a>DMA 串口接收错误</h1><p>使用 STM32CubeX 生成的 USART1 DMA 传输代码。确保程序无误的情况下，仍只接收到最后一个字符。</p>
-<p>原因：STM32CubeX 生成代码存在 BUG。</p>
-<p><code>MX_DMA_Init()</code> 主要是开启 DMA 时钟，使能 DMA 相关的 NVIC；</p>
-<p><code>MX_USART1_UART_Init()</code> 中会调用 <code>HAL_UART_MspInit() </code>，而 <code>HAL_UART_MspInit()</code> 中会配置 GPIO 功能，同时还会设置与 UART 有关的 DMA 配置，因此，必须在 <code>MX_USART1_UART_Init()</code> 之前使能 DMA 时钟，否则 UART 中有关 DMA 的配置操作将无法保证。</p>
-<p>解决方法：</p>
-<p>将 <code>MX_USART1_UART_Init()</code> 放到 <code>MX_DMA_Init(</code> 后面</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MX_GPIO_Init();</span><br><span class="line">MX_DMA_Init();</span><br><span class="line">MX_USART1_UART_Init();</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="DMA-发送注意"><a href="#DMA-发送注意" class="headerlink" title="DMA 发送注意"></a>DMA 发送注意</h1><p>通过调用 HAL_UART_Transmit_DMA 即可实现利用 DMA 通过 UART 发送数据 tx_data。该函数发送完一帧之后，接着发送下一帧，而不管 tx_data 是否更新。假设上一次发送的 0x0001，当前要发送 0xFFFE，当 tx_data 更新了 0xFF，尚未更新后面的 0xFE(即：上一次的 0x01 尚未被更新)，就被 DMA 发送出去，此时 DMA 发送的是 0xFF01。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E6%9C%AF%E8%AF%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/%E6%9C%AF%E8%AF%AD/" class="post-title-link" itemprop="url">术语</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 09:31:20 / 修改时间：11:22:07" itemprop="dateCreated datePublished" datetime="2024-11-16T09:31:20+08:00">2024-11-16</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>366</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>DFU: Device Firmware Upgrade</p>
-<p>OTG：On-The-Go</p>
-<p>HAL：硬件抽象层</p>
-<p>CMSIS：ARM Cortex 微控制器软件接口标准</p>
-<p>AFIO：Alternate Function IO，即：复用功能 IO。AFIO  相关寄存器：</p>
-<ul>
-<li><code>AFIO_EVCR</code>：事件控制寄存器</li>
-<li><code>AFIO_MAPR</code>：复用重映射和调试 I&#x2F;O 配置寄存器</li>
-<li><code>AFIO_EXTICR1</code>：外部中断配置寄存器1</li>
-<li><code>AFIO_EXTICR2</code>：外部中断配置寄存器2</li>
-<li><code>AFIO_EXTICR3</code>：外部中断配置寄存器3</li>
-<li><code>AFIO_EXTICR4</code>：外部中断配置寄存器4</li>
-</ul>
-<p>只要是对寄存器 <code>AFIO_EVCR、AFIO_MAPR</code> 和 <code>AFIO_EXTICRX</code> 进行读写操作前，就要打开 AFIO 的时钟</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">RCC_APB2PeriphClockCmd</span>(RCC_APB2Periph_AFIO,ENABLE);</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/airs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/airs/" class="post-title-link" itemprop="url">airs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 18:39:45 / 修改时间：18:46:22" itemprop="dateCreated datePublished" datetime="2024-11-09T18:39:45+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 14:02:23 / 修改时间：14:03:39" itemprop="dateCreated datePublished" datetime="2024-11-16T14:02:23+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1574,11 +1370,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">控制器</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
         </span>
     </span>
 
@@ -1589,14 +1385,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>12k</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>21 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -1607,15 +1403,264 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/airs/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="延迟中断处理"><a href="#延迟中断处理" class="headerlink" title="延迟中断处理"></a>延迟中断处理</h1><h2 id="采用二值信号量同步"><a href="#采用二值信号量同步" class="headerlink" title="采用二值信号量同步"></a>采用二值信号量同步</h2><p>二值信号量可在某个特殊中断发生时，让任务解除阻塞，相当于让任务与中断同步。这样，可以让中断服务例程（ISR）只快速处理少部分工作，而具体对中断事件进行处理的、大量的工作在同步任务中完成。相当于把中断处理 “deferred（推迟）” 到了 handler 任务中。如果中断处理要求特别急，可将该 handler 任务的优先级设置为最高，以保证延迟处理任务随时都可抢占系统中的其它任务。</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86/image-20241116140242689.png" class="" title="image-20241116140242689">
+
+
+
+<p>handler task 中对信号量执行 take 操作，进入阻塞状态等待事件发生。当事件发生时，ISR 对该信号量执行 give 操作，使得 handler task 解除阻塞，开始处理事件。</p>
+<h1 id="计数信号量"><a href="#计数信号量" class="headerlink" title="计数信号量"></a>计数信号量</h1><p>一个二值信号量最多只可以锁存一个中断事件。在锁存的事件还未被处理之前，如果还有中断事件发生，那么后续发生的中断事件将会丢失。使用计数信号量可以避免这种问题。</p>
+<p>计数信号量两种典型用法：</p>
+<p>1）事件计数：每次事件发生，信号量计数加一</p>
+<p>2）资源管理：信号量的计数值表示可用资源的数目。任务要获取资源的控制权，必须先获得信号量，信号量计数值减一，当计数值为 0 时表示没有可用资源</p>
+<h1 id="中断服务例程中使用队列"><a href="#中断服务例程中使用队列" class="headerlink" title="中断服务例程中使用队列"></a>中断服务例程中使用队列</h1><p>信号量用于事件通信。而队列不仅可以用于事件通信，还可以用来传递数据。</p>
+<p>xQueueSendToFrontFromISR()，xQueueSendToBackFromISR()与xQueueReceiveFromISR() 分别是 xQueueSendToFront()，xQueueSendToBack()与xQueueReceive()的中断安全版本，专门用于中断服务例程中。</p>
+<h1 id="中断嵌套"><a href="#中断嵌套" class="headerlink" title="中断嵌套"></a>中断嵌套</h1><p>中断嵌套要在 FreeRTOSConfig.h 中配置。</p>
+<p><strong>configKERNEL_INTERRUPT_PRIORITY</strong>：设置系统心跳时钟的中断优先级。如果在移植中没有使用常量 configMAX_SYSCALL_INTERRUPT_PRIORITY，那么需要调用中断安全版本 FreeRTOS API 的中断都必须运行在此优先级上。</p>
+<p><strong>configMAX_SYSCALL_INTERRUPT_PRIORITY</strong>：设置中断安全版本FreeRTOS API 可以运行的最高中断优先级。</p>
+<p>建立一个全面的中断嵌套模型需要设置 configMAX_SYSCALL_INTERRUPT_PRIRITY 为比 configKERNEL_INTERRUPT_PRIORITY 更高的优先级。例如，假设某微控制器包含七个不同中断优先级：</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%B8%AD%E6%96%AD%E7%AE%A1%E7%90%86/image-20241116140317285.png" class="" title="image-20241116140317285">
+
+<ul>
+<li>优先级为 1 到 3 的中断会被内核或处于临界区的应用程序阻塞执行，但是它们可以调用中断安全版本的 FreeRTOS API 函数。</li>
+<li>优先级 4 及以上的中断不受临界区影响，所以其不会被内核的任何行为阻塞，可以立即得到执行——这是由微控制器本身对中断优先级的限定所决定的</li>
+<li>不需要调用任何 FreeRTOS API 函数的中断，可以自由地使用任意优先级</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/" class="post-title-link" itemprop="url">异常排查</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 14:01:13 / 修改时间：14:02:07" itemprop="dateCreated datePublished" datetime="2024-11-16T14:01:13+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>959</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>主要集中在栈溢出异常的定位及解决上。</p>
+<p>调用标准 C 库函数时，栈空间使用量会急剧增加。尤其是 IO 与字符串处理函数，例如 sprintf。对于 sprintf 等接口，可使用 printf-stdarg.c（第三方提供，开源） 中的优化版本替换。</p>
+<h1 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h1><h2 id="uxTaskGetStackHighWaterMark"><a href="#uxTaskGetStackHighWaterMark" class="headerlink" title="uxTaskGetStackHighWaterMark()"></a>uxTaskGetStackHighWaterMark()</h2><p>每个任务独立维护自己的栈空间，栈空间的总量在任务创建时设定。</p>
+<p>uxTaskGetStackHighWaterMark() 主要用来查询指定任务的运行历史中，其栈空间还剩多少就要溢出。这个值被称为栈空间的 High Water Mark。返回的是从开始执行到当前过程中栈空间的最小剩余量。</p>
+<h2 id="运行时检测"><a href="#运行时检测" class="headerlink" title="运行时检测"></a>运行时检测</h2><p>FreeRTOS 包含两种运行时栈侦测机制，由FreeRTOSConfig.h 中的配置常量 <strong>configCHECK_FOR_STACK_OVERFLOW</strong> 进行控制。这两种方式都会增加上下文切换开销。</p>
+<p>栈溢出钩子函数(或称回调函数)由内核在侦测到栈溢出时调用。要使用栈溢出钩子函数，需要进行以下配置：在FreeRTOSConfig.h 中把<strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 1 或 2。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 栈溢出钩子函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">vApplicationStackOverflowHook</span><span class="params">( TaskHandle_t *pxTask, <span class="type">signed</span> portCHAR *pcTaskName )</span>;</span><br></pre></td></tr></table></figure>
+
+<p>栈溢出钩子函数只是为了使跟踪调试栈空间错误更容易，而无法在栈溢出时对其进行恢复。</p>
+<p>1）运行时检测-方法一</p>
+<p><strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 1。</p>
+<p>任务被交换出去的时候，该任务的整个上下文被保存到它自己的栈空间中。这时任务栈的使用应当达到了一个峰值。使用方式一时，内核会在任务上下文保存后检查栈指针是否还指向有效栈空间。一旦检测到栈指针的指向已经超出任务栈的有效范围，栈溢出钩子函数就会被调用。</p>
+<p>该方法速度快，但如果栈溢出发生在两次上下文保存之间，则无法监测到</p>
+<p>2）运行时检测-方法二</p>
+<p><strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 2。</p>
+<p>当创建任务时，任务栈空间中就预置了一个标记。该方法会检查任务栈的最后20 个字节，查看预置在这里的标记数据是否被覆盖。如果最后 20 个字节的标记数据与预设值不同，则栈溢出钩子函数就会被调用。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/" class="post-title-link" itemprop="url">栈</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 14:00:00 / 修改时间：14:00:53" itemprop="dateCreated datePublished" datetime="2024-11-16T14:00:00+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>局部变量，函数调用时的现场保护和返回地址（如：LR寄存器），函数的形参，进入中断函数前和中断嵌套</strong>等都需要栈空间，栈空间定义小了会造成系统崩溃。</p>
+<p>每个任务都有自己的栈空间（类似 linux 线程栈空间）。</p>
+<p>FreeRTOS 有两种方式创建任务：</p>
+<ul>
+<li><p>动态创建（xTaskCreate）</p>
+</li>
+<li><p>静态创建（xTaskCreateStatic）</p>
+</li>
+</ul>
+<p>对于动态创建方式，<strong>任务栈空间是在程序运行时（任务创建时）从</strong> <strong>configTOTAL_HEAP_SIZE</strong> <strong>(即：HEAP - 堆)中申请</strong>。而静态创建方式，在编译时分配。</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/image-20241116140020845.png" class="" title="image-20241116140020845">
+
+<p>startup_.s 中的堆栈大小是用于当前项目的异常和中断服务程序（ISR）。堆栈大小取决于异常和 ISR 执行的嵌套层数。</p>
+<p>任务栈并不是使用的这里的栈空间。</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/image-20241116140038977.png" class="" title="image-20241116140038977">
+
+<p>M3 和 M4 内核具有双堆栈指针，MSP（Main Stack Pointer） 主堆栈指针和 PSP（Process Stack Pointer） 进程堆栈指针（或 PSP 任务堆栈指针）。MSP 主要在线程模式下使用，PSP 主要在 Handler 模式下使用。这样，同一个逻辑地址实际对应两个物理寄存器，MSP 和 PSP，在不同工作模式下使用不同的物理寄存器。</p>
+<p>FreeRTOS 任务中，使用的是 PSP。一旦进入了中断函数以及可能发生的中断嵌套都是用的 MSP 指针。</p>
+<p>系统栈大小主要需要考虑可能发生的中断嵌套层数。</p>
+<p>对于 M3 和未使用 FPU 功能的 M4 内核，在发生中断时，最坏情况下需将 16 个通用寄存器全部入栈，即 16 x 4Byte &#x3D; 64Byte。假设可能发生 n 此中断嵌套，就需要 64 * n Byte。（实际中断时，有 8 个通用寄存器是自动入栈的，这是任务栈，进入中断后其余寄存器入栈及中断嵌套都是用的系统栈）</p>
+<p>对于使用 FPU 功能的 M4 内核，发生中断时，最坏情况下除了 16 个通用寄存器需要入栈外，还有 34 个浮点寄存器也要入栈，即：（16 + 34）* 4Byte &#x3D; 200Byte。（实际中断时，有 8 个通用寄存器和 18 个浮点寄存器是自动入栈的，这是任务栈，进入中断后其余寄存器入栈及中断嵌套都是用的系统栈）</p>
+<p>实际任务栈空间大小可通过调试方法得出：先给一个较大的栈空间，然后输出任务剩余栈信息，根据这个信息进行调整。涉及接口：</p>
+<p>- uxTaskGetStackHighWaterMark()：查询指定任务运行历史中，栈空间最少剩余多少。注意，需将 INCLUDE_uxTaskGetStackHighWaterMark（FreeRTOSConfig.h） 必须配置为 1</p>
+<p>MDK 生成的 htm 和 map 文件中可获取到每个被调用函数的最大栈需求，以及各函数之间的调用关系。</p>
+
       
     </div>
 
@@ -1634,7 +1679,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1657,14 +1702,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">794k</span>
+    <span title="站点总字数">827k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">24:03</span>
+    <span title="站点阅读时长">25:04</span>
   </span>
 </div>
 <div class="busuanzi-count">

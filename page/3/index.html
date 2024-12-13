@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">189</span>
+          <span class="site-state-item-count">206</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/OROCOS/%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,7 +199,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/OROCOS/%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">常用方法</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/" class="post-title-link" itemprop="url">任务</a>
         </h2>
 
         <div class="post-meta-container">
@@ -211,7 +211,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-09 18:35:54 / 修改时间：18:37:43" itemprop="dateCreated datePublished" datetime="2024-11-09T18:35:54+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 13:49:47 / 修改时间：13:59:44" itemprop="dateCreated datePublished" datetime="2024-11-16T13:49:47+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -219,7 +219,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OROCOS/" itemprop="url" rel="index"><span itemprop="name">OROCOS</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
         </span>
     </span>
 
@@ -230,7 +234,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -248,15 +252,65 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/OROCOS/%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>FreeRTOS 中，每个执行线程都被称为任务。</p>
+<p>前台系统：是单任务系统。单片机裸机一般是在 main 函数中用  while 循环来完成所有的处理，即应用是一个无限循环，循环中调用相应的函数完成相应的处理，有时也会需要在中断中完成一些处理。</p>
+<p>前台系统中，中断服务函数称为前台程序，外层的 while 循环为后台程序。前台系统各任务依次轮流执行，实时性差。</p>
+<p>FreeRTOS 是一个抢占式实时多任务系统(并不是同一时刻执行多个任务)。FreeRTOS 的任务调度器也是抢占式的。高优先级的任务可以打断低优先级任务的运行而取得 CPU 的使用权，以确保紧急任务的运行。</p>
+<h1 id="任务与协程-Co-Routine"><a href="#任务与协程-Co-Routine" class="headerlink" title="任务与协程(Co-Routine)"></a>任务与协程(Co-Routine)</h1><p>任务和协程使用不同的 API 函数，因此不能通过队列(或信号量)将数据从任务发送给协程，反之亦然。协程是为那些资源很少的 MCU 准备的，其开销很小，但是目前 MCU 性能越来越强大，协程已经很少用到，且 FreeRTOS 官方已经不再更新协程了。</p>
+<p>不同点：</p>
+<p>① 堆栈。所有协程使用同一个堆栈，而每个任务都有自己的堆栈。因此协程消耗更少的 RAM</p>
+<p>② 协程使用合作式调度器，但可以在抢占式的调度器中使用协程</p>
+<p>③ 协程通过宏定义实现</p>
+<p>④ 为了降低 RAM 消耗，做了很多限制</p>
+<h1 id="任务状态"><a href="#任务状态" class="headerlink" title="任务状态"></a>任务状态</h1><img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E4%BB%BB%E5%8A%A1/image-20241116135052583.png" class="" title="image-20241116135052583">
+
+<p>阻塞状态：任务正在等待某个事件。任务可进入阻塞态以等待以下两种不同类型的事件：</p>
+<ul>
+<li><p>定时事件</p>
+</li>
+<li><p>同步事件</p>
+</li>
+</ul>
+<p>挂起状态：调用 <code>vTaskSuspend()</code> 接口进入挂起状态，并调用 <code>vTaskResume()/vTaskResumeFromISR()</code> 接口唤醒进入就绪状态等待系统调度</p>
+<h1 id="任务优先级"><a href="#任务优先级" class="headerlink" title="任务优先级"></a>任务优先级</h1><p>每个任务都可以分配一个从 <strong>0 ~ <code>configMAX_PRIOROTIES-1</code></strong> 的优先级(<code>configMAX_PRIOROTIES</code> 在 FreeRTOSConfig.h 中定义)。FreeRTOS 本身并没有限定 <strong><code>configMAX_PRIOROTIES</code></strong> 的最大值，但这个值越大，则内核花销的内存空间就越多。所以总是建议将此常量设为能够用到的最小值。</p>
+<p><strong>数越小，对应的优先级越低</strong>。</p>
+<p><strong>configUSE_TIME_SLICING</strong> 为 1 时，多个任务可共用一个优先级，此时处于就绪状态的优先级相同的任务会使用时间片轮转调度器获取运行时间。</p>
+<p>任务优先级也可在调度器启动后调用 <em>vTaskPrioritySet()</em> 接口修改。</p>
+<p>调度器在以时间片为单位来切换任务执行。</p>
+<p>时间片的长度通过 tick 中断的频率进行设定，tick 中断频率由 <strong>configTICK_RATE_HZ</strong> 进行配置。</p>
+<p>FreeRTOS API 函数调用中指定的时间总是以 tick 中断为单位。常量<strong>portTICK_RATE_MS</strong> 用于将以 tick 为单位的时间值转化为以毫秒为单位的时间值。有效精度依赖于系统 tick 频率。</p>
+<p><strong>tick count</strong>（tick 计数器）表示从调度器启动开始，tick 中断的总数。用户程序在指定延迟周期时不必考虑 tick count 溢出问题。</p>
+<h1 id="任务实现"><a href="#任务实现" class="headerlink" title="任务实现"></a>任务实现</h1><p>FreeRTOS 中，使用 <code>xTaskCreate()</code> 和 <code>xTaskCreateStatic()</code> 来创建任务。任务函数格式为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">vATaskFunction</span><span class="params">( voidvoid *pvParameters )</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">for</span>( ;; )  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="comment">/* 功能代码 */</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">/* 任务不可以从这个函数返回或退出。在较新的FreeRTOS移植包中，如果</span></span><br><span class="line"><span class="comment">     * 试图从一个任务中返回，将会调用 configASSERT()。</span></span><br><span class="line"><span class="comment">    * 如果一个任务确实要退出函数，那么这个任务应调用 vTaskDelete(NULL) </span></span><br><span class="line"><span class="comment">    * 函数，以便处理一些清理工作</span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">    vTaskDelete( <span class="literal">NULL</span> );  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>任务函数不应该返回</li>
+<li>任务函数的参数为 void 指针类型</li>
+<li>任务具体执行过程是一个大循环，循环中为任务功能代码</li>
+<li>任务函数一般不允许跳出循环，若要跳出循环，需要调用 <code>vTaskDelete()</code> 函数删除任务</li>
+</ul>
+<p>在创建任务时，会自动为每个任务分配一个任务控制块 TCB_t，存储任务属性等内容。</p>
+<h2 id="空闲任务"><a href="#空闲任务" class="headerlink" title="空闲任务"></a>空闲任务</h2><p>为保证系统至少有一个任务处于运行态，当调用 <code>vTaskStartScheduler()</code> 时，调度器会自动创建一个空闲任务（优先级为 0）。</p>
+<p>通过空闲任务钩子函数(或称回调，hook, or call-back)，可以直接在空闲任务中添加应用程序相关的功能。空闲任务钩子函数会被空闲任务每循环一次就自动调用一次。</p>
+<p>空闲任务钩子函数通常被用于：</p>
+<ul>
+<li>执行低优先级，后台或需要不停处理的功能代码</li>
+<li>测试系统处理裕量(空闲任务只会在所有其它任务都不运行时才有机会执行，所以测量出空闲任务占用的处理时间就可以清楚的知道系统有多少富余的处理时间)</li>
+<li>将处理器配置到低功耗模式</li>
+</ul>
+<p>空闲任务钩子函数的限制：</p>
+<ul>
+<li>绝对不能阻塞或挂起。空闲任务只会在其它任务都不运行时才会被执行(除非有应用任务共享空闲任务优先级)。以任何方式阻塞空闲任务都可能导致没有任务能够进入运行态</li>
+<li>如果应用程序用到了 <code>vTaskDelete()</code> 函数，则空闲钩子函数必须能够尽快返回。因为<strong>在任务被删除后，空闲任务负责回收内核资源</strong>。如果空闲任务一直运行在钩子函数中，则无法进行回收工作</li>
+</ul>
+<h1 id="任务堆栈"><a href="#任务堆栈" class="headerlink" title="任务堆栈"></a>任务堆栈</h1><p>创建任务时需要指定堆栈，若使用 <code>xTaskCreate()</code> 创建任务，则会自动创建堆栈；若使用 <code>xTaskCreateStatic()</code> 创建任务，则需要手动指定任务堆栈。</p>
+<p>空闲任务的堆栈大小为：<code>configMINIMAL_STACK_SIZE</code>。</p>
+<h1 id="任务同步"><a href="#任务同步" class="headerlink" title="任务同步"></a>任务同步</h1><p>FreeRTOS 中可使用<strong>信号量、事件标志组</strong>来实现同步。</p>
+<p>使用信号量进行同步，任务只能与单个的事件或任务进行同步。使用事件标志组可以实现任务与多个事件或任务进行同步。</p>
+<p>从 FreeRTOS v8.2 版本开始，新增了任务通知(Task Notifications)功能，可替代信号量、消息队列、事件标志组等。</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>FreeRTOS中信号量又分为二值信号量、计数型信号量、互斥信号量和递归信号量。</p>
+<p>二值信号量与互斥信号量类似，但互斥信号量拥有优先级继承机制，二值信号量没有优先级继承。</p>
+<h2 id="事件标志组"><a href="#事件标志组" class="headerlink" title="事件标志组"></a>事件标志组</h2><h2 id="任务通知"><a href="#任务通知" class="headerlink" title="任务通知"></a>任务通知</h2><h1 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h1>
       
     </div>
 
@@ -282,7 +336,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/OROCOS/rtt_ros_integration/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -300,7 +354,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/OROCOS/rtt_ros_integration/" class="post-title-link" itemprop="url">rtt_ros_integration</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">内存管理</a>
         </h2>
 
         <div class="post-meta-container">
@@ -312,7 +366,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-09 18:34:26 / 修改时间：18:35:33" itemprop="dateCreated datePublished" datetime="2024-11-09T18:34:26+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 13:48:06 / 修改时间：13:49:32" itemprop="dateCreated datePublished" datetime="2024-11-16T13:48:06+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,7 +374,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OROCOS/" itemprop="url" rel="index"><span itemprop="name">OROCOS</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
         </span>
     </span>
 
@@ -331,7 +389,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>798</span>
+      <span>582</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -349,15 +407,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/OROCOS/rtt_ros_integration/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>任务、队列或信号量被创建时，内核需要进行动态分配。</p>
+<p>FreeRTOS 调用 <code>pvPortMalloc()</code> 请求内存，调用 <code>vPortFree()</code> 释放内存。</p>
+<p>FreeRTOS 有五种内存分配范例，对应：heap_1.c、heap_2.c、heap_3.c、heap_4.c、heap_5.c。</p>
+<h1 id="heap-1"><a href="#heap-1" class="headerlink" title="heap_1"></a>heap_1</h1><p>实现了基本的 <code>pvPortMalloc()</code>，没有 <code>vPortFree()</code>，即：不支持内存释放。</p>
+<p>将 FreeRTOS 的内存堆空间看做一个简单数组，调用 <code>pvPortMalloc</code> 时，将数组简单的细分为更小的内存块。</p>
+<h1 id="heap-2"><a href="#heap-2" class="headerlink" title="heap_2"></a>heap_2</h1><p>采用最佳匹配算法来分配内存，支持内存释放。</p>
+<p>最佳匹配算法保证 <code>pvPortMalloc</code> 会使用最接近请求大小的空闲内存块。</p>
+<p>heap_2 不会对相邻的空闲块进行合并，因此会产生内存碎片。</p>
+<h1 id="heap-3"><a href="#heap-3" class="headerlink" title="heap_3"></a>heap_3</h1><p>简单调用标准库函数 malloc 和 free。此时的内存堆空间不受 <code>configTOTAL_HEAP_SIZE</code> 影响，而由链接器配置决定。</p>
+<h1 id="heap-4"><a href="#heap-4" class="headerlink" title="heap_4"></a>heap_4</h1><p>heap4 相比于 heap2，可以把内存碎片合并成大块内存。</p>
+<h1 id="heap-5"><a href="#heap-5" class="headerlink" title="heap_5"></a>heap_5</h1><p>heap_1、2 和 4 方式都是静态申请一个数组作为堆，Heap_5 允许使用<strong>多个不连续的区域</strong>组成堆，申请前，必须通过函数 <code>vPortDefineHeapRegions()</code> 进行设置，对于一些内存分布不连续的嵌入式设备还是很有价值的，之后其他操作，和 Heap_4 基本一致。</p>
+
       
     </div>
 
@@ -383,7 +444,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/OROCOS/rtt_lwr/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/FreeRTOS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -401,7 +462,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/OROCOS/rtt_lwr/" class="post-title-link" itemprop="url">rtt_lwr</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/FreeRTOS/" class="post-title-link" itemprop="url">FreeRTOS</a>
         </h2>
 
         <div class="post-meta-container">
@@ -413,7 +474,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-09 18:18:08 / 修改时间：18:31:32" itemprop="dateCreated datePublished" datetime="2024-11-09T18:18:08+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 13:46:39 / 修改时间：14:06:53" itemprop="dateCreated datePublished" datetime="2024-11-16T13:46:39+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -421,213 +482,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OROCOS/" itemprop="url" rel="index"><span itemprop="name">OROCOS</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>25 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/OROCOS/rtt_lwr/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/OROCOS/orocos/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/OROCOS/orocos/" class="post-title-link" itemprop="url">orocos</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 16:59:46 / 修改时间：18:15:31" itemprop="dateCreated datePublished" datetime="2024-11-09T16:59:46+08:00">2024-11-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OROCOS/" itemprop="url" rel="index"><span itemprop="name">OROCOS</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>31k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>57 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/OROCOS/orocos/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%9C%BA%E6%A2%B0%E8%87%82%E8%AE%BE%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%9C%BA%E6%A2%B0%E8%87%82%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">机械臂设计</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 16:24:55 / 修改时间：16:54:34" itemprop="dateCreated datePublished" datetime="2024-11-09T16:24:55+08:00">2024-11-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">控制器</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
         </span>
     </span>
 
@@ -638,221 +497,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>12k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>21 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%9C%BA%E6%A2%B0%E8%87%82%E8%AE%BE%E8%AE%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/Robot/ROS/ros_control/ros2_control/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/Robot/ROS/ros_control/ros2_control/" class="post-title-link" itemprop="url">ros2_control</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 16:14:21 / 修改时间：16:18:04" itemprop="dateCreated datePublished" datetime="2024-11-09T16:14:21+08:00">2024-11-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Robot/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Robot/ROS/ros-control/" itemprop="url" rel="index"><span itemprop="name">ros_control</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/Robot/ROS/ros_control/ros2_control/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt2/MoveIt2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt2/MoveIt2/" class="post-title-link" itemprop="url">MoveIt2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 16:11:04 / 修改时间：16:13:24" itemprop="dateCreated datePublished" datetime="2024-11-09T16:11:04+08:00">2024-11-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt2/" itemprop="url" rel="index"><span itemprop="name">MoveIt2</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>698</span>
+      <span>808</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -870,15 +515,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/MoveIt2/MoveIt2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>可直接在 STM32CubeMX 中开启 FreeRTOS</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/FreeRTOS/image-20241116140600311.png" class="" title="image-20241116140600311">
+
+
+
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/FreeRTOS/image-20241116140617090.png" class="" title="image-20241116140617090">
+
+<p>程序说明</p>
+<p>① 初始化 CMSIS-RTOS 内核</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RTOS 自main函数开始接管系统调度。因此进入 main 函数后首先调用该接口停用调度,</span></span><br><span class="line"><span class="comment">// 以争取时间完成硬件初始化及创建需要的进程或其它 RTOS 组件，</span></span><br><span class="line"><span class="comment">// 然后调用 osKernelStart() 将控制权交还 RTOS</span></span><br><span class="line">osKernelInitialize()</span><br></pre></td></tr></table></figure>
+
+<p>② 创建线程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Create the thread(s) */</span></span><br><span class="line">  <span class="comment">/* definition and creation of defaultTask */</span></span><br><span class="line">  <span class="type">const</span> osThreadAttr_t defaultTask_attributes = &#123;</span><br><span class="line">    .name = <span class="string">&quot;defaultTask&quot;</span>,</span><br><span class="line">    .priority = (osPriority_t) osPriorityNormal,</span><br><span class="line">    .stack_size = <span class="number">128</span></span><br><span class="line">  &#125;;</span><br><span class="line">  defaultTaskHandle = osThreadNew(StartDefaultTask, <span class="literal">NULL</span>, &amp;defaultTask_attributes);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">/* USER CODE BEGIN Header_StartDefaultTask */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief  Function implementing the defaultTask thread.</span></span><br><span class="line"><span class="comment">  * @param  argument: Not used </span></span><br><span class="line"><span class="comment">  * @retval None</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">/* USER CODE END Header_StartDefaultTask */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">StartDefaultTask</span><span class="params">(<span class="type">void</span> *argument)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN 5 */</span></span><br><span class="line">  <span class="comment">/* Infinite loop */</span></span><br><span class="line">  <span class="keyword">for</span>(;;)</span><br><span class="line">  &#123;</span><br><span class="line">    osDelay(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* USER CODE END 5 */</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -904,7 +555,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%9C%BA%E6%A2%B0%E8%87%82/xArm/xArm/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -922,7 +573,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%9C%BA%E6%A2%B0%E8%87%82/xArm/xArm/" class="post-title-link" itemprop="url">xArm</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E4%B8%AD%E6%96%AD/" class="post-title-link" itemprop="url">STM32-中断</a>
         </h2>
 
         <div class="post-meta-container">
@@ -934,7 +585,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-09 15:46:49 / 修改时间：16:06:58" itemprop="dateCreated datePublished" datetime="2024-11-09T15:46:49+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 13:43:41 / 修改时间：13:46:06" itemprop="dateCreated datePublished" datetime="2024-11-16T13:43:41+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -942,7 +593,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E6%A2%B0%E8%87%82/" itemprop="url" rel="index"><span itemprop="name">机械臂</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
         </span>
     </span>
 
@@ -953,108 +608,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E6%9C%BA%E6%A2%B0%E8%87%82/%E6%9C%BA%E6%A2%B0%E8%87%82/xArm/xArm/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E6%A2%B0%E8%87%82%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E6%A2%B0%E8%87%82%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">机械臂系统设计</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-09 15:31:31 / 修改时间：15:37:43" itemprop="dateCreated datePublished" datetime="2024-11-09T15:31:31+08:00">2024-11-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">系统框架</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1072,15 +626,84 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E6%A2%B0%E8%87%82%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>常见内部中断：复位、不可屏蔽中断(NMI)、硬件异常等。内部中断不能被打断，不能设置优先级(优先于外部中断)。</p>
+<p>中断嵌套即打断其他正在执行的中断。</p>
+<p>STM32 有两个中断优先级：抢占式优先级(主)和响应优先级(次)</p>
+<p>抢占优先级任何比任何响应优先级高。<strong>只有抢占优先级更高的才具有中断嵌套功能</strong>；<strong>抢占优先级相同的中断，高响应优先级的不可以打断低响应优先级的中断</strong>；<strong>抢占优先级相同的中断，在同时发生时，响应优先级高的先执行</strong>。例如：</p>
+<p>假定设置中断优先级组为2，然后设置中断3(RTC_WKUP中断)的抢占优先级为2，响应优先级为1。中断6（外部中断0）的抢占优先级为3，响应优先级为0。中断7（外部中断1）的抢占优先级为2，响应优先级为0。那么这3个中断的优先级顺序为：中断7&gt;中断3&gt;中断6。</p>
+<p>Cortex-M3定义了 8bits 用于设置中断优先级。 Cortex-M3 允许具有较少中断源时使用较少的寄存器指定中断源的优先级，因此，STM32中，则把中断优先级寄存器位减少到 4bits。</p>
+<p>NVIC(Nested Vector interrupt controller)：中断控制器，负责除了 SYSTICK 之外的所有中断的控制。但 NVIC 只能配置 16 级中断优先级。库中将中断分为 5 组，分别为： </p>
+<table>
+<thead>
+<tr>
+<th>NVIC_PriorityGroup</th>
+<th>NVIC_IRQChannelPreemptionPriority(抢占优先级)</th>
+<th>NVIC_IRQChannelSubPriority(响应优先级)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NVIC_PriorityGroup_0</td>
+<td>0</td>
+<td>0-15</td>
+<td>0位抢占优先级,4位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_1</td>
+<td>0-1</td>
+<td>0-7</td>
+<td>1位抢占优先级,3位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_2</td>
+<td>0-3</td>
+<td>0-3</td>
+<td>2位抢占优先级,2位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_3</td>
+<td>0-7</td>
+<td>0-1</td>
+<td>3位抢占优先级,1位响应优先级</td>
+</tr>
+<tr>
+<td>NVIC_PriorityGroup_4</td>
+<td>0-15</td>
+<td>0</td>
+<td>4位抢占优先级,0位响应优先级</td>
+</tr>
+</tbody></table>
+<p>中断优先级分组在一个程序中只能设定一次。每个中断可设置抢占优先级为 0~7(越小优先级越高)，响应优先级位 1 或 0。</p>
+<p>STM32 的外部中断通过边沿触发(上升沿触发、下降沿触发和双边沿触发)，不支持电平触发。</p>
+<p>STM32 总共有 <strong>16 根中断线：EXTI0~EXTI15</strong>。</p>
+<p>中断相关寄存器：</p>
+<ul>
+<li>ISER：Interrupt Set-Enable Registers 中断使能寄存器组</li>
+<li>ICER：Interrupt Clear-Enable Registers 中断清除寄存器组</li>
+<li>ISPR：Interrupt Set-Pending Registers 中断挂起控制寄存器组</li>
+<li>ICPR：Interrupt Clear-Pending Registers 中断解除挂起控制寄存器组</li>
+<li>IABR：Interrupt Active Registers 中断激活寄存器组</li>
+<li>IP[240]：Interrupt Priority Regitsters 中断优先级寄存器组</li>
+</ul>
+<p>STM32 编程步骤：</p>
+<p>① 配置时钟，包括中断时钟、系统时钟等</p>
+<p>② 设置GPIO(根据需要)</p>
+<p>③ EXTI 配置，包括：中断源的选择、清除中断标志、触发模式等</p>
+<p>④ NVIC 设置(即:配置中断优先级)，例如：所属组、指定信息等</p>
+<p>⑤ 编写中断服务子程序(中断服务函数 <code>EXTIn_IRQHandler</code> 和中断处理回调函数 <code>HAL_GPIO_EXTI_IRQHandler</code>)</p>
+<p>默认情况下，调用 <code>HAL_Init</code> 之后，会设置中断优先级分组组号为 4。可修改 HAL 库中的 HAL_Init 接口，修改默认分组组号。例如，STM32F429IGT，找到 stm32f4xx_hal.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123; </span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">/* Set Interrupt Group Priority */</span></span><br><span class="line">  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2);<span class="comment">//中断优先级分组2</span></span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>STM32 中断服务函数注意事项：</p>
+<p>① 中断服务函数函数名是固定的，在启动代码中已经确定下来</p>
+<p>② 先清中断标志，再执行中断处理(如果把清除中断标志放在中断服务函数的最后，会出现当发出清中断标志指令后，硬件还没有把相关标志清除掉，程序就已经跳出了中断服务函数，这个时候NVIC又会识别到标志是1，出现重复中断)。如果要先执行中断处理再清中断标志，需要注意等待清除成功后再往下执行</p>
+<p>③ 中断服务函数应尽量简短，不要在中断中做延时等长时间占用 CPU 的操作</p>
+<p>④ 中断服务函数不会被任何函数调用</p>
+<p>⑤ 中断服务函数不能返回值</p>
+<p>⑥ 中断服务函数不能传递参数</p>
+
       
     </div>
 
@@ -1106,7 +729,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1124,7 +747,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">机器人中间件</a>
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">STM32-启动过程</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1136,7 +759,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-11-09 15:21:49 / 修改时间：15:40:36" itemprop="dateCreated datePublished" datetime="2024-11-09T15:21:49+08:00">2024-11-09</time>
+      <time title="创建时间：2024-11-16 13:36:28 / 修改时间：13:52:31" itemprop="dateCreated datePublished" datetime="2024-11-16T13:36:28+08:00">2024-11-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1144,7 +767,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">系统框架</span></a>
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
         </span>
     </span>
 
@@ -1155,7 +782,145 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.2k</span>
+      <span>995</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>STM32 启动过程指从上电开始，直到运行 main 函数之间的过程。</p>
+<h1 id="三种启动模式"><a href="#三种启动模式" class="headerlink" title="三种启动模式"></a>三种启动模式</h1><img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/image-20241116133649973.png" class="" title="image-20241116133649973">
+
+<ul>
+<li><p>Main Flash memory：从用户闪存Flash启动(正常工作模式)，一般使用 JTAG&#x2F;SWD 下载程序都是下载到这里面。起始地址为 0x8000000，复位后 PC 指针位于 0x8000000； </p>
+</li>
+<li><p>System memory：从系统存储器启动。通常为 Bootloader，即:ISP；</p>
+</li>
+<li><p>Embedded memory：从内置 SRAM 启动。通常用于程序调试。起始地址为 0x2000000，复位后 PC 指针位于 0x2000000</p>
+</li>
+</ul>
+<p>其中 FLASH 模式及 SRAM 模式下数据结构：</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/%E6%95%B0%E6%8D%AE%E4%BD%8D%E4%BA%8EFLASH%E4%B8%8A%E6%97%B6%E7%9A%84%E7%BB%93%E6%9E%84.png" class="" title="数据位于 FLASH 上时的结构">
+
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/%E6%95%B0%E6%8D%AE%E4%BD%8D%E4%BA%8ESRAM%E4%B8%8A%E6%97%B6%E7%9A%84%E7%BB%93%E6%9E%84.png" class="" title="数据位于 SRAM上时的结构">
+
+
+
+<h1 id="启动过程"><a href="#启动过程" class="headerlink" title="启动过程"></a>启动过程</h1><p><strong>Cortex-M3&#x2F;M4 内核规定：起始地址必须存放堆顶指针，第二个地址存放复位中断入口向量地址，Cortex 内核复位之后，会自动从起始地址的下一个 32bit 空间取出中断复位向量入口，跳转指定中断复位服务程序</strong>。相比 ARM7&#x2F;9 等内核，<strong>M3&#x2F;M4 内核固定了中断向量表的位置，但起始位置可变；而ARM7&#x2F;9 内核则是固定了起始地址(0x000000)，而中断向量表位置可变</strong>。</p>
+<h2 id="STM32-启动文件"><a href="#STM32-启动文件" class="headerlink" title="STM32 启动文件"></a>STM32 启动文件</h2><p>ST 为每个 STM32 处理器提供了现成的启动文件(也即:bootloader)。例如：STM32F429 对应的启动文件为 <code>STM32Cube_FW_F4_V1.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s</code></p>
+<h2 id="启动过程-1"><a href="#启动过程-1" class="headerlink" title="启动过程"></a>启动过程</h2><p>① 初始化堆栈指针 SP (<code>__initial_sp</code>) 及堆栈大小</p>
+<p>SP 对应寄存器 <strong>R13</strong>。自动从 0x08000000 地址中读取数据赋值给 SP</p>
+<p>② 初始化程序计数器指针 PC &#x3D;&#x3D; Reset_Handler</p>
+<p>对应寄存器 <strong>R15</strong>。自动从 0x08000004 地址中读取数据赋值给 PC(会自动对齐)</p>
+<p>③ 初始化中断向量表</p>
+<p>④ 设置系统时钟</p>
+<p>⑤ 调用 __main 初始化用户堆栈，并最终调用 main 函数</p>
+<p>例如：</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/image-20241116134018305.png" class="" title="image-20241116134018305">
+
+<p>上电复位后初始化 SP 及 PC</p>
+<p>SP : 0x20000788</p>
+<p>PC : 0x0800024D</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/image-20241116134032084.png" class="" title="image-20241116134032084">
+
+<p>执行 <code>SystemInit</code> 初始化系统时钟等操作。</p>
+<p>接着执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDR R0, =__main</span><br><span class="line">BX R0</span><br></pre></td></tr></table></figure>
+
+<p>跳转到 <code>__main</code> 程序段</p>
+<p>即：运行到 main 函数之前首先从启动文件的复位中断进入，然后初始化时钟，进入 main函数之前还得初始化一些全局变量。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%AE%9A%E6%97%B6%E5%99%A8%E5%8F%8APWM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-%E5%AE%9A%E6%97%B6%E5%99%A8%E5%8F%8APWM/" class="post-title-link" itemprop="url">STM32-定时器及PWM</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:32:08 / 修改时间：13:36:01" itemprop="dateCreated datePublished" datetime="2024-11-16T13:32:08+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1173,15 +938,732 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          Here's something encrypted, password is required to continue reading.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/11/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AD%E9%97%B4%E4%BB%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="STM32-共有11个定时器"><a href="#STM32-共有11个定时器" class="headerlink" title="STM32 共有11个定时器"></a>STM32 共有11个定时器</h1><p>2个高级控制定时器(TIM1、TIM8)</p>
+<p>4个普通定时器(TIM2 - TIM5)</p>
+<p>2个基本定时器(TIM6、TIM7)</p>
+<p>2个看门狗定时器</p>
+<p>1个系统嘀嗒定时器(SysTick)</p>
+<h2 id="TIM1-结构"><a href="#TIM1-结构" class="headerlink" title="TIM1 结构"></a>TIM1 结构</h2><p>TIM1由一个16位的自动装载计数器组成，由一个可编程预分频器驱动。适合多种用途，包含测量输入信号的脉冲宽度，或者产生输出波形。使用定时器预分频器和RCC时钟控制预分频器，可以实现脉冲宽度和波形周期从几个微秒到几个毫秒的调节。</p>
+<h2 id="SysTick"><a href="#SysTick" class="headerlink" title="SysTick"></a>SysTick</h2><p>是一个周期性的、倒计时定时器，用于提供时基，多为操作系统使用。SysTick 定时器被捆绑在 NVIC 中，用于产生 SYSTICK 异常(异常号:15)。SysTick 有四个寄存器：</p>
+<ul>
+<li><p>SysTick-&gt;CTRL ：控制和状态寄存器</p>
+</li>
+<li><p>SysTick-&gt;LOAD ：重装载寄存器</p>
+</li>
+<li><p>SysTick-&gt;VAL ：当前值寄存器</p>
+</li>
+<li><p>SysTick-&gt;CALIB ：校准值寄存器</p>
+</li>
+</ul>
+<p>Systick 的操作步骤：</p>
+<p>① 设置 SysTick 时钟源</p>
+<p>② 设置 SysTick 的重装初始值</p>
+<p>③ 清除 SysTick 当前计数器的值</p>
+<p>④ 使能 SysTick 定时器</p>
+<p>使用 Systick 实现 delay 时有两种方式：</p>
+<ul>
+<li><p>中断方式</p>
+<ul>
+<li>a) 定义延时时间 time</li>
+<li>b) 调用 <code>SysTick_Config()</code> 定义中断时间段，例如: <code>SysTick_Config(SystemFrequency/1000)</code> - 中断间隔 1ms；<code>SysTick_Config(SystemFrequency/100000)</code> - 中断间隔 10μs</li>
+<li>c) 在 SYSTICK 中断处理函数中递减 time</li>
+</ul>
+</li>
+<li><p>非中断方式 - 通过 SysTick 四个寄存器实现</p>
+</li>
+</ul>
+<h2 id="主要寄存器"><a href="#主要寄存器" class="headerlink" title="主要寄存器"></a>主要寄存器</h2><p><strong>计数寄存器(TIMx_CNT)</strong></p>
+<p><strong>预分频寄存器(TIMx_PSC)</strong></p>
+<p><strong>自动装载寄存器(TIMx_ARR)</strong></p>
+<p><strong>重复次数寄存器(TIMx_RCR)</strong></p>
+<p><strong>捕获&#x2F;比较模式寄存器(TIMx_CCMR1&#x2F;2)</strong></p>
+<p><strong>捕获&#x2F;比较使能寄存器(TIMx_CCER)</strong></p>
+<p><strong>捕获&#x2F;比较寄存器(TIMx_CCR1~4)</strong></p>
+<h1 id="普通定时器时钟来源"><a href="#普通定时器时钟来源" class="headerlink" title="普通定时器时钟来源"></a>普通定时器时钟来源</h1><ul>
+<li><p>内部时钟(CK_INT)</p>
+</li>
+<li><p>外部时钟模式1：外部输入引脚(TIx)</p>
+</li>
+<li><p>外部时钟模式2：外部触发输入(ETR)</p>
+</li>
+</ul>
+<h1 id="编程步骤"><a href="#编程步骤" class="headerlink" title="编程步骤"></a>编程步骤</h1><p>① 配置系统时钟,例如：RCC_Configuration()</p>
+<p>② 配置 NVIC(嵌套中断控制器的配置)</p>
+<p>③ 配置 GPIO,例如：GPIO_cfg() (可选,如需要定时操作GPIO等)</p>
+<p>④ 配置 TIMER,例如：Timer_Config()</p>
+<h2 id="系统时钟-RCC-配置-例如"><a href="#系统时钟-RCC-配置-例如" class="headerlink" title="系统时钟(RCC)配置,例如:"></a>系统时钟(RCC)配置,例如:</h2><p>① 将RCC寄存器恢复为默认值  RCC_DeInit</p>
+<p>② 打开外部高速时钟晶振   RCC_HSEConfig</p>
+<p>③ 等待外部高速时钟晶振工作  </p>
+<p>④ 设置AHB时钟   RCC_HCLKConfig</p>
+<p>⑤ 设置高速APB时钟   RCC_PCLK2Config</p>
+<p>⑥ 设置低速APB时钟   RCC_PCLK1Config</p>
+<p>⑦ 设置PLL锁相环   RCC_PLLConfig</p>
+<p>⑧ 打开PLL锁相环   RCC_PLLCmd</p>
+<p>⑨ 等待PLL锁相环工作   while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY)&#x3D;&#x3D;RESET)</p>
+<p>⑩ 设置系统时钟   RCC_SYSCLKConfig</p>
+<p>⑪ 判断PLL是否为系统时钟   while(RCC_GetSYSCLKSource()!&#x3D;0x08)</p>
+<p>⑫ 打开要使用的外设时钟 RCC_APB2PeriphClockCmd&#x2F;RCC_APB1PeriphClockCmd</p>
+<h2 id="timer配置过程"><a href="#timer配置过程" class="headerlink" title="timer配置过程"></a>timer配置过程</h2><p>① 利用TIM_DeInit()函数将Timer设置为默认缺省值</p>
+<p>② TIM_InternalClockConfig()选择TIMx来设置内部时钟源；</p>
+<p>③ TIM_Perscaler来设置预分频系数；</p>
+<p>④ TIM_ClockDivision来设置时钟分割；</p>
+<p>⑤ TIM_CounterMode来设置计数器模式；</p>
+<p>⑥ TIM_Period来设置自动装入的值；</p>
+<p>⑦ TIM_ARRPerloadConfig()来设置是否使用预装载缓冲器；</p>
+<p>⑧ TIM_ITConfig()来开启TIMx的中断</p>
+<h1 id="计数器模式"><a href="#计数器模式" class="headerlink" title="计数器模式"></a>计数器模式</h1><p>向上计数模式、向下计数模式、中央对齐模式</p>
+<p>向上计数模式：计数器从0计数到自动加载值(TIMx_ARR计数器的内容)，然后重新从0开始计数并且产生一个计数器溢出事件</p>
+<p>向下计数模式：计数器从自动加载值(TIMx_ARR计数器的内容)向下计数到0，然后重新从自动加载值开始计数并且产生一个向下溢出事件</p>
+<p>中央对齐模式：计数器从0开始计数到自动加载的值(TIMx_ARR寄存器)-1，产生一个计数器溢出事件，然后向下计数到1并且产生一个计数器下溢事件；然后再从0开始重新计数</p>
+<h1 id="PWM"><a href="#PWM" class="headerlink" title="PWM"></a>PWM</h1><p>ARR 决定 PWM 周期</p>
+<p>CCRx 决定 PWM 占空比（高低电平所占比例）</p>
+<p><strong>改变</strong> <strong>CCRx</strong> <strong>的值，就可以改变</strong> <strong>PWM</strong> <strong>输出的占空比，改变</strong> <strong>ARR</strong> <strong>的值，就可以改变</strong> <strong>PWM</strong> <strong>输出的频率</strong></p>
+<p><strong>Fpwm &#x3D; 时钟频率&#x2F;((ARR+1)*(PSC+1))</strong></p>
+<p>其中：PSC 为预分频系数</p>
+<p>例如：假设 TIM3 时钟，即 APB1 Timer Clocks 为 72MHz，假设要求 PWM 周期为 500Hz（即2ms）</p>
+<p>设置 PSC(预分频系数)： 720 - 1 &#x3D; 719，则计数器计数单位为 0.1MHz &#x3D; 10μs；要求为 500Hz即2ms，则 ARR 应为：199</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-WDG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-WDG/" class="post-title-link" itemprop="url">STM32-WDG</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:30:33 / 修改时间：13:32:10" itemprop="dateCreated datePublished" datetime="2024-11-16T13:30:33+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>340</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>WDG：看门狗。STM32 有两个看门狗：独立看门狗(IWDG)和窗口看门狗(WWDG)。</p>
+<p>IWDG:</p>
+<ul>
+<li>使用内部低速时钟 LSI，在主时钟故障时仍能正常工作</li>
+<li>无中断</li>
+<li>12位递减</li>
+<li>只有下限</li>
+<li>适合用于主程序之外，能完全独立工作，并且对事件精度要求低的场合</li>
+<li>一般用于避免程序跑飞或死循环</li>
+</ul>
+<p>WWDG:</p>
+<ul>
+<li>使用系统时钟 APB1ENR (由APB1时域分频得到)</li>
+<li>有中断</li>
+<li>7位递减</li>
+<li>有下限和上限</li>
+<li>适合用于要求看门狗在精确计时窗口起作用的应用程序</li>
+<li>一般用于避免程序不按预定逻辑执行</li>
+</ul>
+<p>IWDG 使用步骤：</p>
+<p>① 取消寄存器写保护</p>
+<p>② 设置 IWDG 预分频系数，确定时钟</p>
+<p>③ 设置看门狗重装载值，确定溢出时间</p>
+<p>④ 使能看门狗</p>
+<p>⑤ 喂狗</p>
+<p>WWDG 使用步骤：</p>
+<p>① 使能看门狗时钟</p>
+<p>② 设置分频值，确定时钟</p>
+<p>③ 设置窗口值</p>
+<p>④ 开启 WWDG 中断并分组</p>
+<p>⑤ 编写中断服务函数</p>
+<p>⑥ 使能看门狗</p>
+<p>⑦ 喂狗</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-GPIO/" class="post-title-link" itemprop="url">STM32-GPIO</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:26:43 / 修改时间：13:30:41" itemprop="dateCreated datePublished" datetime="2024-11-16T13:26:43+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="8-种工作模式"><a href="#8-种工作模式" class="headerlink" title="8 种工作模式"></a>8 种工作模式</h1><ul>
+<li><p>四种输入</p>
+<ul>
+<li>输入浮空 - 在浮空输入状态下，GPIO的电平状态是不确定的，完全由外部输入确定。</li>
+<li>输入上拉</li>
+<li>输出上拉</li>
+<li>模拟输入</li>
+</ul>
+</li>
+<li><p>四种输出</p>
+<ul>
+<li>开漏输出</li>
+<li>开漏复用：直接输出到片上外设</li>
+<li>推挽式输出</li>
+<li>推挽式复用</li>
+</ul>
+</li>
+</ul>
+<p>推挽 和 开漏 的区别 ：</p>
+<ul>
+<li><p>推挽 ：可以输出强高低电平，连接数字器件</p>
+</li>
+<li><p>开漏 ：只可以输出强低电平，高电平得靠外部电阻拉高， 适合做电流型的驱动。</p>
+</li>
+</ul>
+<h1 id="四种输出速率"><a href="#四种输出速率" class="headerlink" title="四种输出速率"></a>四种输出速率</h1><ul>
+<li>2MHz 低速</li>
+<li>25MHz 中速</li>
+<li>50MHz 快速</li>
+<li>100MHz 高速</li>
+</ul>
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>每个通用 I&#x2F;O 端口包括 10 个寄存器：</p>
+<ul>
+<li><p>4 个 32 位配置寄存器</p>
+<ul>
+<li>GPIOx_MODER - 端口模式寄存器</li>
+<li>GPIOx_OTYPER - 输出类型寄存器</li>
+<li>GPIOx_OSPEEDR - 输出速度寄存器</li>
+<li>GPIOx_PUPDR - 上下拉寄存器</li>
+</ul>
+</li>
+<li><p>2 个 32 位数据寄存器</p>
+<ul>
+<li>GPIOx_IDR - 输入数据寄存器</li>
+<li>GPIOx_ODR - 输出数据寄存器</li>
+</ul>
+</li>
+<li><p>1 个 32 位置位&#x2F;复位寄存器  GPIOx_BSRR</p>
+</li>
+<li><p>1 个 32 位<strong>锁定寄存器</strong>  GPIOx_LCKR</p>
+</li>
+<li><p>2 个 32 位<strong>复用功能选择</strong>寄存器</p>
+<ul>
+<li>GPIOx_AFRH - 高位</li>
+<li>GPIOx_AFRL - 低位</li>
+</ul>
+</li>
+</ul>
+<h1 id="复用与重映射"><a href="#复用与重映射" class="headerlink" title="复用与重映射"></a>复用与重映射</h1><p>复用 - STM32 所有内置外设(例如：I2C、ADC、ISP、USART等)的外部引脚都是与标准 GPIO 引脚复用的，如果有多个复用功能模块对应同一个引脚，只能使能其中之一，其它模块保持非使能状态。</p>
+<p>重映射 - 复用功能的引出脚可以通过重映射，从不同的 I&#x2F;O 管脚引出，即复用功能的引出脚位是可通过程序改变到其他的引脚上</p>
+<p>配置重映射步骤：</p>
+<p>①. 确保对应引脚的 GPIO 时钟和功能模块时钟开启</p>
+<p>②. 配置时，选择推挽复用输出(AF_PP)或开漏复用输出(AF_OD)</p>
+<p>③. I&#x2F;O 重映射开启</p>
+<p>④. 配置重映射引脚，选择需要的功能，去除不需要的</p>
+<h1 id="GPIO-一般使用步骤"><a href="#GPIO-一般使用步骤" class="headerlink" title="GPIO 一般使用步骤"></a>GPIO 一般使用步骤</h1><ul>
+<li><p>首先通过原理图确定要操作的 GPIO </p>
+</li>
+<li><p>通过芯片手册查找要操作的寄存器，找到该 GPIO 基地址</p>
+<ul>
+<li>目标寄存器地址 &#x3D; 基地址 + 地址偏移</li>
+</ul>
+</li>
+<li><p>软件编码</p>
+<ul>
+<li>使能 GPIO 时钟</li>
+<li>设置 GPIO 参数，包括:输入&#x2F;输出、工作模式、速率</li>
+<li>操作 GPIO</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基于 HAL 库</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">    GPIO_InitTypeDef GPIO_Initure;</span><br><span class="line">    __HAL_RCC_GPIOB_CLK_ENABLE();           <span class="comment">// 使能 GPIO 时钟</span></span><br><span class="line">	</span><br><span class="line">    GPIO_Initure.Pin=GPIO_PIN_0|GPIO_PIN_1; <span class="comment">//PB1,0 设置引脚</span></span><br><span class="line">    GPIO_Initure.Mode=GPIO_MODE_OUTPUT_PP;  <span class="comment">//推挽输出</span></span><br><span class="line">    GPIO_Initure.Pull=GPIO_PULLUP;          <span class="comment">//上拉</span></span><br><span class="line">    GPIO_Initure.Speed=GPIO_SPEED_HIGH;     <span class="comment">// 高速</span></span><br><span class="line">    HAL_GPIO_Init(GPIOB,&amp;GPIO_Initure);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接寄存器操作</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">XXX_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;    	 </span><br><span class="line">	RCC-&gt;AHB1ENR|=<span class="number">1</span>&lt;&lt;<span class="number">1</span>;<span class="comment">//使能PORTB时钟 </span></span><br><span class="line">	GPIO_Set(GPIOB,PIN0|PIN1,GPIO_MODE_OUT,GPIO_OTYPE_PP,GPIO_SPEED_100M,GPIO_PUPD_PU); <span class="comment">//PB0,PB1设置</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//GPIO通用设置 </span></span><br><span class="line"><span class="comment">//GPIOx:GPIOA~GPIOI.</span></span><br><span class="line"><span class="comment">//BITx:0X0000~0XFFFF,位设置,每个位代表一个IO,第0位代表Px0,第1位代表Px1,依次类推.</span></span><br><span class="line"><span class="comment">//                      比如0X0101,代表同时设置Px0和Px8.</span></span><br><span class="line"><span class="comment">//MODE:0~3;模式选择,0,输入(系统复位默认状态);1,普通输出;2,复用功能;3,模拟输入.</span></span><br><span class="line"><span class="comment">//OTYPE:0/1;输出类型选择,0,推挽输出;1,开漏输出.</span></span><br><span class="line"><span class="comment">//OSPEED:0~3;输出速度设置,0,2Mhz;1,25Mhz;2,50Mhz;3,100Mh. </span></span><br><span class="line"><span class="comment">//PUPD:0~3:上下拉设置,0,不带上下拉;1,上拉;2,下拉;3,保留.</span></span><br><span class="line"><span class="comment">//注意:在输入模式(普通输入/模拟输入)下,OTYPE和OSPEED参数无效!!</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">GPIO_Set</span><span class="params">(GPIO_TypeDef* GPIOx,u32 BITx,u32 MODE,u32 OTYPE,u32 OSPEED,u32 PUPD)</span></span><br><span class="line">&#123;  </span><br><span class="line">	u32 pinpos=<span class="number">0</span>,pos=<span class="number">0</span>,curpin=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(pinpos=<span class="number">0</span>;pinpos&lt;<span class="number">16</span>;pinpos++)</span><br><span class="line">	&#123;</span><br><span class="line">		pos=<span class="number">1</span>&lt;&lt;pinpos;	<span class="comment">//Ò»¸ö¸öÎ»¼ì²é </span></span><br><span class="line">		curpin=BITx&amp;pos;<span class="comment">//¼ì²éÒý½ÅÊÇ·ñÒªÉèÖÃ</span></span><br><span class="line">		<span class="keyword">if</span>(curpin==pos)	<span class="comment">//ÐèÒªÉèÖÃ</span></span><br><span class="line">		&#123;</span><br><span class="line">			GPIOx-&gt;MODER&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;MODER|=MODE&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÄ£Ê½ </span></span><br><span class="line">			<span class="keyword">if</span>((MODE==<span class="number">0X01</span>)||(MODE==<span class="number">0X02</span>))	<span class="comment">//Èç¹ûÊÇÊä³öÄ£Ê½/¸´ÓÃ¹¦ÄÜÄ£Ê½</span></span><br><span class="line">			&#123;  </span><br><span class="line">				GPIOx-&gt;OSPEEDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OSPEEDR|=(OSPEED&lt;&lt;(pinpos*<span class="number">2</span>));<span class="comment">//ÉèÖÃÐÂµÄËÙ¶ÈÖµ  </span></span><br><span class="line">				GPIOx-&gt;OTYPER&amp;=~(<span class="number">1</span>&lt;&lt;pinpos) ;		<span class="comment">//Çå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">				GPIOx-&gt;OTYPER|=OTYPE&lt;&lt;pinpos;		<span class="comment">//ÉèÖÃÐÂµÄÊä³öÄ£Ê½</span></span><br><span class="line">			&#125;  </span><br><span class="line">			GPIOx-&gt;PUPDR&amp;=~(<span class="number">3</span>&lt;&lt;(pinpos*<span class="number">2</span>));	<span class="comment">//ÏÈÇå³ýÔ­À´µÄÉèÖÃ</span></span><br><span class="line">			GPIOx-&gt;PUPDR|=PUPD&lt;&lt;(pinpos*<span class="number">2</span>);	<span class="comment">//ÉèÖÃÐÂµÄÉÏÏÂÀ­</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="HAL-GPIO相关接口"><a href="#HAL-GPIO相关接口" class="headerlink" title="HAL GPIO相关接口"></a>HAL GPIO相关接口</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span><br><span class="line">HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)    </span><br><span class="line"></span><br><span class="line"><span class="comment">// 引脚的电平翻转</span></span><br><span class="line">HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span><br><span class="line"></span><br><span class="line">HAL_GPIO_EXTI_Callback(<span class="type">uint16_t</span> GPIO_Pin)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/" class="post-title-link" itemprop="url">STM32-DMA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:23:22 / 修改时间：13:26:32" itemprop="dateCreated datePublished" datetime="2024-11-16T13:23:22+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>DMA(Direct Memory Access)。DMA传输方式无需 CPU 直接控制传输，也没有中断处理的保留现场和恢复现场的过程，通过硬件为 RAM 与 I&#x2F;O 设备开辟直接数据传输通路，大大提高 CPU 效率。</p>
+<p>DMA 传输过程的五个事件标志：</p>
+<ul>
+<li>DMA 半传输</li>
+<li>DMA 传输完成</li>
+<li>DMA 传输错误</li>
+<li>DMA FIFO 错误</li>
+<li>直接模式错误</li>
+</ul>
+<p>DMA控制器执行直接存储器传输：因为采用AHB主总线，它可以控制AHB总线矩阵来启动AHB事务。它可以执行下列事务：</p>
+<ul>
+<li>外设到存储器的传输</li>
+<li>存储器到外设的传输</li>
+<li>存储器到存储器的传输</li>
+<li>外设到外设的传输</li>
+</ul>
+<p>存储器到存储器需要外设接口可以访问存储器。STM32F429 中，只有 DMA2 的外设接口可以访问存储器。</p>
+<p>DMA 主要配置参数：源地址、目的地址、传输数据量。</p>
+<p>STM32Cubex 配置 DMA(以 STM32F103C8T6 为例)</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-DMA/image-20241116132448140.png" class="" title="image-20241116132448140">
+
+<p>参数说明：</p>
+<ul>
+<li><p>Mode：</p>
+<ul>
+<li>Normal：buffer 满了就不再接收</li>
+<li>Circular：buffer 满了后会覆盖</li>
+</ul>
+</li>
+<li><p>Increment Address：地址自加。DMA 中外设就相当于一个单一的寄存器，地址不自增；而存储器，接收一个数据就存储，然后地址自增，指向下一个写入的地址</p>
+</li>
+<li><p>Data Width：数据宽度</p>
+<ul>
+<li>Byte</li>
+<li>Half Word</li>
+<li>Word</li>
+</ul>
+<blockquote>
+<p>在32位机中，Word &#x3D; 32bit，Half word &#x3D; 16bit，Byte &#x3D; 8bit；在16位机中，Word &#x3D; 16bit，Half word &#x3D; 8bit，Byte &#x3D; 8bit；在 8 位机中，Word &#x3D; 16bit，Half word &#x3D; 8bit，Byte &#x3D; 8bit</p>
+</blockquote>
+</li>
+</ul>
+<p>配置完成后生成的代码中，在 <code>HAL_UART_MspInit</code> 接口中新增了 DMA 初始化部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* USART1 DMA Init */</span></span><br><span class="line"><span class="comment">/* USART1_RX Init */</span></span><br><span class="line">hdma_usart1_rx.Instance = DMA1_Channel5;</span><br><span class="line">hdma_usart1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;</span><br><span class="line">hdma_usart1_rx.Init.PeriphInc = DMA_PINC_DISABLE;</span><br><span class="line">hdma_usart1_rx.Init.MemInc = DMA_MINC_ENABLE;</span><br><span class="line">hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;</span><br><span class="line">hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;</span><br><span class="line">hdma_usart1_rx.Init.Mode = DMA_NORMAL;</span><br><span class="line">hdma_usart1_rx.Init.Priority = DMA_PRIORITY_LOW;</span><br><span class="line"><span class="keyword">if</span> (HAL_DMA_Init(&amp;hdma_usart1_rx) != HAL_OK)</span><br><span class="line">&#123;</span><br><span class="line">  Error_Handler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 设置 DMA 传输参数</span></span><br><span class="line"><span class="comment">  * HAL_DMA_Start 及 HAL_DMA_Start_IT 中会调用该函数设置参数</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">DMA_SetConfig()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/" class="post-title-link" itemprop="url">代码编程嵌入式单片机STM32STM32-IAP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-16 13:11:30 / 修改时间：13:22:58" itemprop="dateCreated datePublished" datetime="2024-11-16T13:11:30+08:00">2024-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>IAP(In Application Programming)：目的是为了在产品发布后能够通过预留的通信口对产品中的<strong>固件程序进行在线升级</strong>。</p>
+<p>该方法不同于 ICP(In-Circuit Programming) 及 ISP。<strong>ICP通过在线仿真器对单片机程序进行烧写</strong>；而 <strong>ISP 则是通过单片机内置的 bootloader 程序(System memory 中的 bootloader)引导的烧写技术</strong>。ICP 和 ISP 均需要连接下载线等操作。</p>
+<p>IAP 的前提是必须是基于可重复编程闪存的微控制器。STM32 带有可编程的内置内存。</p>
+<p>IAP 的核心是一段预先烧录在单片机内部的 IAP 程序(BootLoader)，该程序主要负责与外部的上位机软件进行同步，然后通信接口将来自上位机软件的程序数据接收后写入单片机内部制定的闪存区域，然后跳转执行新写入的程序。</p>
+<p>正常情况下，STM32 内置 Flash 布局及中断响应过程：</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/STM32%E5%86%85%E7%BD%AEFlash%E5%B8%83%E5%B1%80.png" class="" title="STM32内置Flash布局">
+
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131514957.png" class="" title="image-20241116131514957">
+
+<p>使用 IAP 方案时，内置 Flash 布局及中断响应流程：</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131536241.png" class="" title="image-20241116131536241">
+
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116131555216.png" class="" title="image-20241116131555216">
+
+<p>(此处假设 BootLoader 占用 N+M 字节)</p>
+<p>使用 IAP 过程写入的程序需满足两个要求：</p>
+<ul>
+<li>新程序必须从 IAP 程序之后的某个偏移量为 x 的地址开始</li>
+<li>必须将新程序的中断向量表相应的移动，移动偏移量为 x。对应接口：<code>void NVIC_SetVectorTable(u32 NVIC_VectTab, u32 Offset)</code></li>
+</ul>
+<p>IAP 使用注意事项：</p>
+<ul>
+<li>应用程序要编译成 bin 格式(<strong>hex文化包含了数据和地址信息，bin文件只包含数据</strong>)</li>
+<li><strong>IAP 程序不需要从串口&#x2F;USB口&#x2F;其它接口接收数据，固件传输由应用程序自行完成</strong></li>
+<li>接收完升级程序数据之后，校验，并复位系统</li>
+<li><strong>IAP 程序只检查固件升级标志</strong>，若未设置固件升级标志，则加载 Flash 中的 APP 程序</li>
+<li>若 APP 设置了<strong>固件升级标志</strong>，<strong>固件地址及固件加密方式</strong>，IAP 程序会根据这些信息，进入固件升级流程</li>
+<li>固件升级流程：解除 Flash 的 lock 状态&#x2F;读写保护，读取外部存储器中的固件，对固件解密后写入内部 Flash，重新开启读保护和写保护</li>
+</ul>
+<p>要点：</p>
+<ul>
+<li><p>flash 擦除及写入：flash操作过程：flash解锁、flash擦除、flash写入、flash上锁</p>
+<ul>
+<li>a) flash 解锁 - <code>FLASH_Unlock()/HAL_FLASH_Unlock()</code></li>
+<li>b) flash 擦除 - <code>FLASH_ErasePage()/HAL_FLASHex_Erase()</code></li>
+<li>c) flash 写入 - <code>FLASH_ProgramHalfWord()/HAL_FLASH_Program()</code></li>
+<li>d) flash 上锁 - <code>FLASH_Lock()/HAL_FLASH_Lock()</code></li>
+</ul>
+</li>
+<li><p>中断向量表的偏移设置：对于BootLoader程序只需设置中断向量表的指向在 <code>0x08000000</code> 处，假设用户程序需要设置中断向量表的指向在 <code>0x08008000</code> 处：</p>
+<ul>
+<li><code>NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x0);</code></li>
+<li><code>NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x8000);</code></li>
+<li>其中: <code>NAVIC_VectTable_FLASH</code> 为 <code>0x08000000</code></li>
+</ul>
+</li>
+</ul>
+<p>BootLoader 实现过程：</p>
+<ul>
+<li>初始化时钟</li>
+<li>初始化中断向量表地址</li>
+<li>初始化串口</li>
+</ul>
+<p>官方 IAP demo 分析：</p>
+<ul>
+<li><p>初始化 HAL 库</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_Init();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置系统时钟</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SystemClock_Config();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>升级操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Initialise Flash */</span></span><br><span class="line">FLASH_If_Init();</span><br><span class="line"><span class="comment">/* Execute the IAP driver in order to reprogram the Flash */</span></span><br><span class="line">IAP_Init();</span><br><span class="line"><span class="comment">/* Display main menu */</span></span><br><span class="line">Main_Menu ();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解锁 flash 以进行写访问</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">FLASH_If_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">/* Unlock the Program memory */</span></span><br><span class="line">  HAL_FLASH_Unlock();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Clear all FLASH flags */</span></span><br><span class="line">  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_PGSERR | FLASH_FLAG_WRPERR | FLASH_FLAG_OPTVERR);</span><br><span class="line">  <span class="comment">/* Unlock the Program memory */</span></span><br><span class="line">  HAL_FLASH_Lock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>IAP_Init()</code> 则主要是配置 USART</p>
+<p><code>Main_Menu()</code> 方法显示升级菜单，输入 1 则表示下载镜像并写入 flash：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">&#x27;1&#x27;</span> :</span><br><span class="line">      <span class="comment">/* Download user application in the Flash */</span></span><br><span class="line">      SerialDownload();</span><br><span class="line">      <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若无升级操作，则执行主程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> APPLICATION_ADDRESS     (uint32_t)0x08008000</span></span><br><span class="line">......</span><br><span class="line"><span class="comment">// 检查栈顶地址是否为 0x20000000</span></span><br><span class="line"><span class="keyword">if</span> (((*(__IO <span class="type">uint32_t</span>*)APPLICATION_ADDRESS) &amp; <span class="number">0x2FFE0000</span> ) == <span class="number">0x20000000</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>(__IO uint32_t*)APPLICATION_ADDRESS</code> 即取从 <code>APPLICATION_ADDRESS</code> 开始的首 4 个字节。而应用程序中将中断向量表放在了起始位置(即：<code>APPLICATION_ADDRESS</code>)；而中断向量表中第一个元素即为<strong>栈顶地址</strong>的值。此处通过判断栈顶地址是否正确来确认应用程序是否已经下载。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JumpAddress = *(__IO <span class="type">uint32_t</span>*) (APPLICATION_ADDRESS + <span class="number">4</span>)</span><br><span class="line">JumpToApplication = (pFunction) JumpAddress;</span><br><span class="line"><span class="comment">/* Initialize user application&#x27;s Stack Pointer */</span></span><br><span class="line">__set_MSP(*(__IO <span class="type">uint32_t</span>*) APPLICATION_ADDRESS); <span class="comment">// 设置主函数栈指针</span></span><br><span class="line">JumpToApplication(); <span class="comment">// 执行复位函数</span></span><br></pre></td></tr></table></figure>
+
+<p><code>APPLICATION_ADDRESS + 4</code> 地址中存放的是中断向量表的第二项：<strong>复位地址</strong>。</p>
+<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-IAP/image-20241116132242126.png" class="" title="image-20241116132242126">
+
       
     </div>
 
@@ -1200,7 +1682,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1223,14 +1705,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">794k</span>
+    <span title="站点总字数">827k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">24:03</span>
+    <span title="站点阅读时长">25:04</span>
   </span>
 </div>
 <div class="busuanzi-count">

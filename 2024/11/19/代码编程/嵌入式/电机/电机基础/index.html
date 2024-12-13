@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="假设 P 功率(W)，T 转矩(N.M)，N 转速(R&#x2F;min) 。则有：  P &#x3D; T * N &#x2F; 9550 T &#x3D; P * 9550 &#x2F; N  假设 V 线速度(m&#x2F;s)，N 转速(n&#x2F;min)，w 角速度(rad&#x2F;s)  N &#x3D; V * 1000 * 60 &#x2F; (2π R) w &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电机基础">
+<meta property="og:url" content="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="假设 P 功率(W)，T 转矩(N.M)，N 转速(R&#x2F;min) 。则有：  P &#x3D; T * N &#x2F; 9550 T &#x3D; P * 9550 &#x2F; N  假设 V 线速度(m&#x2F;s)，N 转速(n&#x2F;min)，w 角速度(rad&#x2F;s)  N &#x3D; V * 1000 * 60 &#x2F; (2π R) w &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-19T01:52:42.000Z">
+<meta property="article:modified_time" content="2024-11-27T13:38:29.319Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/","path":"2024/11/19/代码编程/嵌入式/电机/电机基础/","title":"电机基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>电机基础 | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E5%8F%8A%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">术语及参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%94%B5%E6%9C%BA%E4%B8%8E%E5%BC%82%E6%AD%A5%E7%94%B5%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">同步电机与异步电机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KV"><span class="nav-number">1.2.</span> <span class="nav-text">KV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E8%A7%92%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">电角度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AF%B9%E6%95%B0%E4%B8%8E%E6%A7%BD"><span class="nav-number">1.4.</span> <span class="nav-text">极对数与槽</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B4%E6%B5%81%E6%9C%89%E5%88%B7"><span class="nav-number">2.</span> <span class="nav-text">直流有刷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%84%E5%90%91%E7%A3%81%E9%93%81"><span class="nav-number">3.</span> <span class="nav-text">径向磁铁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF"><span class="nav-number">4.</span> <span class="nav-text">反电动势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E4%B8%8E%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA"><span class="nav-number">5.</span> <span class="nav-text">步进电机与无刷电机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BLDC-%E4%B8%8E-PMSM"><span class="nav-number">6.</span> <span class="nav-text">BLDC 与 PMSM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%A1%A5"><span class="nav-number">7.</span> <span class="nav-text">驱动桥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E6%AD%A5%E6%8E%A7%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">六步控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FOC-%E6%8E%A7%E5%88%B6"><span class="nav-number">9.</span> <span class="nav-text">FOC 控制</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%94%B5%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="电机基础 | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          电机基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-19 09:52:42" itemprop="dateCreated datePublished" datetime="2024-11-19T09:52:42+08:00">2024-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-27 21:38:29" itemprop="dateModified" datetime="2024-11-27T21:38:29+08:00">2024-11-27</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>假设 P 功率(W)，T 转矩(N.M)，N 转速(R&#x2F;min) 。则有：</p>
+<ul>
+<li>P &#x3D; T * N &#x2F; 9550</li>
+<li>T &#x3D; P * 9550 &#x2F; N</li>
+</ul>
+<p>假设 V 线速度(m&#x2F;s)，N 转速(n&#x2F;min)，w 角速度(rad&#x2F;s)</p>
+<ul>
+<li>N &#x3D; V * 1000 * 60 &#x2F; (2π R)</li>
+<li>w &#x3D; 2π * N &#x2F; 60</li>
+</ul>
+<p>NEMA17</p>
+<p>NEMA：国家电气制造商协会。NEMA-17 是一种混合式步进电机，尺寸 1.7 * 1.7 英寸(42 * 42 mm)，步距角 1.8°，旋转一圈 200 步。混合表示是永磁体和可变磁阻步进电机的组合。</p>
+<p>TMC8670：集成 EtherCAT 通信和 FOC 伺服运动控制芯片</p>
+<p>在电机控制器中实现的最重要的功能如下：</p>
+<ul>
+<li>对电动机速度、转矩或功率输出的调节</li>
+<li>启动阶段控制（软启动）</li>
+<li>防止电路故障和过载</li>
+<li>加速和减速 profile</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nidec.com/cn/technology/motor/glossary/item/slot-pole_combination/">https://www.nidec.com/cn/technology/motor/glossary/item/slot-pole_combination/</a></li>
+<li>王成元《现代电机控制》</li>
+<li>陈伯时《交流调速系统》</li>
+<li>辜承林《电机学》</li>
+<li>贺益康 《电机控制》</li>
+<li>Bimal K.Bose《现代电力电子学与交流传动》</li>
+<li>敖杰 《基于TMS320LF2406A的永磁同步电机矢量控制系统研究 》</li>
+<li>知乎 只是学电的 《永磁同步电机矢量控制之——“基础”》</li>
+<li>知乎 蒋昊 《电机控制要点解疑：SPWM，SVPWM和矢量控制》</li>
+<li>知乎 J Pan 《永磁同步电机》</li>
+<li>Csdn博客 《FOC中的Clarke变换和Park变换详解》</li>
+</ul>
+<h1 id="术语及参数"><a href="#术语及参数" class="headerlink" title="术语及参数"></a>术语及参数</h1><p>BLDC：直流无刷电机</p>
+<p>PMSM：永磁同步电机</p>
+<p>Hall：霍尔传感器，用于检测转子位置。通常嵌入在定子中，并且与转子上的永磁体位置相对应。每个霍尔传感器会在转子的磁极接近时产生高低电平信号，这些信号用于确定转子的精确位置</p>
+<p>EMF：Electromotive dorce，电动势。当载流导体置于磁场中或导体切断磁场时，在导体中感应或产生电动势（EMF）。由于电动机中感应到的电动势与发电机的电动势相反，因此任何电动机中由于运动而产生的电动势都被称为反电动势（back-EMF，即 BEMF）。</p>
+<h2 id="同步电机与异步电机"><a href="#同步电机与异步电机" class="headerlink" title="同步电机与异步电机"></a>同步电机与异步电机</h2><p>同步电机和异步电机最大的区别在于转子速度与定子旋转磁场，电机的转子速度与定子旋转磁场相同就叫同步电机，反之，则叫异步电机。</p>
+<p>同步电机与异步电机的定子绕组是相同的，区别在于电机的转子结构。异步电机的转子是短路的绕组，靠电磁感应产生电流。而同步电机的转子结构相对复杂，有直流励磁绕组，因此需要外加励磁电源，通过滑环引入电流。</p>
+<p>同步电机转速与电磁转速同步，而异步电动机的转速则低于电磁转速，同步电机不论负载大小，只要不失步，转速就不会变化，异步电动机的转速时刻跟随负载大小的变化而变化。</p>
+<h2 id="KV"><a href="#KV" class="headerlink" title="KV"></a>KV</h2><p>KV 值表示电机的每伏特电压下的转速，即 <strong>不带负载情况下每伏特电压产⽣的每分钟转数（RPM）</strong>，即：[ RPM &#x3D; KV * V ]。例如：如果有⼀个 KV 为 1000 的电机，施加 12V 电压，在⽆负载的情况下电机的转速会是：[ 1000 , KV × 12 V &#x3D; 12000 RPM ] 。</p>
+<ul>
+<li>⾼ <strong>KV</strong>：通常意味着电机会运⾏得更快，每伏特电压下产⽣的RPM更⾼。这适合需要⾼速度的应⽤，但通常扭矩较低</li>
+<li>低 <strong>KV</strong>：则意味着电机运⾏较慢，但每伏特电压产⽣的扭矩更⼤。这适⽤于需要⾼扭矩的应⽤，⽐如⼤螺旋桨或⾼负载场景</li>
+</ul>
+<h2 id="电角度"><a href="#电角度" class="headerlink" title="电角度"></a>电角度</h2><p>电机内部磁场和电场关系的一个重要物理量。是定子电流矢量与转子磁极矢量之间的夹角。表征了电机的磁场变化情况。</p>
+<h2 id="极对数与槽"><a href="#极对数与槽" class="headerlink" title="极对数与槽"></a>极对数与槽</h2><p>极对数：Pole Pair Number</p>
+
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jn5tiSIo5xc%EF%BC%89">https://www.youtube.com/watch?v=jn5tiSIo5xc）</a></p>
+<p>左图 2-poles，即 2 个磁极，极对数为 1；右图 4-poles，极对数为 2。</p>
+<h1 id="直流有刷"><a href="#直流有刷" class="headerlink" title="直流有刷"></a>直流有刷</h1>
+
+
+
+<p>参数</p>
+<ul>
+<li>额定电压：电机正常工作的电压</li>
+<li>额定电流：即负载电流，点击带负载正常工作时的电流</li>
+<li>额定转速：也叫负载转速 r&#x2F;min，即 RPM</li>
+<li>额定扭矩：电机额定电流下输出力的大小，kg·cm</li>
+<li>减速比：</li>
+</ul>
+<h1 id="径向磁铁"><a href="#径向磁铁" class="headerlink" title="径向磁铁"></a>径向磁铁</h1><p>主要作用</p>
+<ul>
+<li><strong>产生旋转磁场</strong>：电机轴上的径向磁铁在电机旋转时，产生的磁场也会随之旋转。这个旋转的磁场对于电机的运转至关重要，因为它与电机中的其他部件（如定子）相互作用，产生使电机旋转的力矩</li>
+<li><strong>角度检测</strong>：在一些磁编码器的应用中，径向磁铁与霍尔元件相结合，可以检测旋转位置。霍尔元件检测磁场分布的变化，将其转换成电气信号，从而实现对旋转角度的精确检测</li>
+<li><strong>提高电机效率</strong>：在轴向磁通电机中，使用径向磁化的磁铁可以减少侧面漏出的磁场，从而降低对周围设备的不良影响，同时提高电机的效率</li>
+</ul>
+<h1 id="反电动势"><a href="#反电动势" class="headerlink" title="反电动势"></a>反电动势</h1><p>运动的磁场会在导体中产生感应电流，从而产生感应电压，即感应电动势。因此永磁体在电机旋转时，会在定子绕组中产生感应电动势，也即反电势。不同的定转子结构，会在定子绕组中产生不同波形的反电势，目前主流的就两种，一种是梯形波，另一种是正弦波。</p>
+
+
+<p>（来源：<a target="_blank" rel="noopener" href="https://www.powerelectronicsnews.com/learning-the-basics-of-motor-control/%EF%BC%89">https://www.powerelectronicsnews.com/learning-the-basics-of-motor-control/）</a></p>
+<p>由于BEMF波形不同，因此需要不同的控制方式。</p>
+<h1 id="步进电机与无刷电机"><a href="#步进电机与无刷电机" class="headerlink" title="步进电机与无刷电机"></a>步进电机与无刷电机</h1><ul>
+<li><p>工作原理：</p>
+<ul>
+<li>步进电机：其旋转是通过改变电流在电机中的流动来实现的，每输入一个脉冲信号，步进电机前进一步<ul>
+<li>通过给定子的一个或多个相通电，线圈中流动的电流产生磁场，转子与该磁场对齐实现电能到动能的转化</li>
+<li>通过依次提供不同的相位，转子可以旋转特定的量以到达所需的最终位置</li>
+</ul>
+</li>
+<li>无刷电机中，由电子控制器来完成换相，通过电子换相线路去驱动电机本体使电枢绕组（定子绕组）依次馈电，从而在定子上产生旋转的磁场，驱动永磁转子转动</li>
+</ul>
+</li>
+<li><p>控制方式：</p>
+<ul>
+<li>步进电机<ul>
+<li>需要专用的步进电机驱动器，有脉冲发生控制单元、功率驱动单元、保护单元等组成</li>
+<li>步进电机的基本操作模式包括<strong>全步模式</strong>、<strong>半步模式</strong>和<strong>微步模式</strong>，其中微步模式能够有效降低步进电机相电流的噪声，改善步进电机固有的噪声震动问题</li>
+</ul>
+</li>
+<li>无刷电机<ul>
+<li>使用专门的电子控制器来驱动，这增加了系统的成本和复杂性</li>
+<li>控制电路相对复杂，需要根据转子位置传感器的输出信号确定转子位置，然后通过电子换相线路去驱动电机本体</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>特点</p>
+<ul>
+<li>步进电机<ul>
+<li>可精确控制转子的位置和速度，控制电路相对简单，成本低</li>
+<li>转速较低，不适用于高转速场景</li>
+<li>启动转矩小，功率密度相对较低</li>
+</ul>
+</li>
+<li>无刷电机<ul>
+<li>噪音低</li>
+<li>有较高的转速范围和较高的功率密度</li>
+<li>控制电路复杂，成本高</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>步进电机适合于需要精确位置控制的应用，而无刷电机则适合于需要高效率和高转速的应用。</p>
+<h1 id="BLDC-与-PMSM"><a href="#BLDC-与-PMSM" class="headerlink" title="BLDC 与 PMSM"></a>BLDC 与 PMSM</h1><p>BLDC 与 PMSM 基本结构相同：</p>
+<ul>
+<li>都是永磁电机，转子由永磁体组成基本结构，定子则为多相交流绕组</li>
+<li>都是由永久磁铁转子和定子的交流电流相互作用产生电机的转矩</li>
+<li>绕组中定子电流与转子位置反馈同步</li>
+<li>转子反馈信号可来自转子位置传感器，或者像在一些无传感器控制方式那样通过检测电机相绕组的反电动势等方法得到</li>
+</ul>
+<p>不同之处：</p>
+<ul>
+<li>反电动势不同，<strong>PMSM 具有正弦波反电动势，BLDC 则具有梯形反电动势</strong></li>
+<li>定子绕组分布不同，<strong>PMSM 采用短距分布绕组</strong>，有时也采用分数槽或正弦绕组，以进一步减小纹波转矩；<strong>BLDC 则采用整距集中绕组</strong>（注意：集中整距绕组不一定是 BLDC，分布短距绕组大概率是 PMSM。理论上以反电势波形区分）</li>
+<li>电流驱动模式不同，<strong>PMSM 采用正弦波驱动；而 BLDC 则采用方波驱动</strong>。BLDC 是采用六步换相控制，PMSM 采用正弦波的三相旋转交流电来控制</li>
+<li>传感器不同，PMSM 采用旋变传感器、磁编码器等，而 BLDC 采用霍尔传感器</li>
+<li>永磁体形状不同，PMSM的永磁体形状通常呈抛物线形，以适应其正弦波分布的需求。BLDC 则为瓦片形</li>
+<li>BLDC 本质是直流电机，对于开环 BLDC 控制，其转速随负载而降低；而 PMSM 本质上是同步电机，其转速只与电机极对数和频率有关，与负载大小没有直接关系。即：<strong>随着负载的增加，BLDC转速降低，而PMSM转速是恒定的</strong>。这也反应了 PMSM 控制近端更高。但 PMSM 存在失步现象，如果负载转矩超过堵转转矩，转子转速就没办法跟上旋转磁场转速，导致转速降低，直到停止</li>
+<li>功率密度和转矩惯量比：<strong>集中绕组的BLDC通常具有较高的功率密度</strong>，这使得它们在对重量敏感的应用中（如航模电机）更受欢迎</li>
+<li>转矩波动：PMSM通常具有较小的转矩波动，而BLDC可能因为其控制方式导致较大的转矩波动。然而，使用磁场定向控制（FOC）等现代控制技术可以显著降低BLDC的转矩波动</li>
+</ul>
+<blockquote>
+<p>短距分布绕组更容易产生正弦波反电势，而整距集中绕组产生的通常是介于梯形和正弦波之间的波形（完美梯形很难产生）。也就是说，从集中整距绕组的电机结构上，没办法判断确定电机是BLDC。而集中整距绕组工艺制造上，相对更容易，所以对要求不高的BLDC，就一般用集中整距绕组来做定子了。</p>
+<p><strong>集中绕组端部轴向尺寸小，提高了铜的利用率，所以集中绕组的电机一般效率较高</strong>。</p>
+</blockquote>
+<p>控制上的区别：</p>
+
+
+
+
+<p><strong>BLDC 也可以使用矢量控制，PMSM 也可以使用方波控制</strong>。</p>
+
+
+<p>矢量控制时，三相同时工作；而方波控制时，同时只有两相工作。</p>
+<h1 id="驱动桥"><a href="#驱动桥" class="headerlink" title="驱动桥"></a>驱动桥</h1><p>无刷直流电机的驱动桥用于控制电机的相电流。分为：</p>
+<ul>
+<li>半桥（Half-Bridge）驱动：最简单，常用于单极性电源，由两个功率开关组成，分别连接到电机的两个相<ul>
+<li>只能提供正向电流，不能反向</li>
+<li>适用于单电源驱动</li>
+</ul>
+</li>
+<li>全桥（Full-Bridge）驱动：包含 4 个功率开关，可提供正反向电流，适用于双电源电机驱动<ul>
+<li>提供正反相电流，可改变电机转向</li>
+</ul>
+</li>
+<li>三相桥（Three-Phase Bridge）驱动：包含六个功率开关（如：MOSFET），每个相连接两个</li>
+</ul>
+
+
+
+
+<h1 id="六步控制"><a href="#六步控制" class="headerlink" title="六步控制"></a>六步控制</h1><p>BLDC 与 PMSM 的控制都需要知道转子位置，有了转子位置才能确定三相桥的开关状态，从而控制定子的磁场方向。</p>
+<p>由于BLDC的反电动势是梯形波，存在快速的”换向点”，因此检测 BLDC 的位置相对来讲是比较简单：可以在定子内嵌入<strong>逻辑霍尔传感器</strong>，检测转子磁钢的位置进行直接的定位；也可以通过检测<strong>反电动势的换向点</strong>进行无传感器的位置检测。</p>
+<p>对于间隔 120° 的三相电机。通电方式共有 6 种：AB&#x2F;AC&#x2F;BA&#x2F;BC&#x2F;CA&#x2F;CB。以下图为例，6种通电方式，将圆周方向均分为6等分。<strong>这就意味着如果能够每 60° 对相位进行正确的变换，那么电机就能够顺利的转起来。</strong>这就是所谓的 BLDC 6 步控制或梯形控制。</p>
+
+
+<p>极对数越多，换向越频繁。</p>
+
+
+<p>该控制方法关键在于：相与相之间两两导通，另外一个线圈不流过电流，可以作为反电动势的检测“传感器”。该控制的本质还是基于位置信息的通电逻辑控制，因此该控制方法对芯片的<strong>要求极低</strong>，并且不需要额外的传感器成本，因此是BLDC最主流的控制方案。但是该控制的颗粒度很大，一般来讲转矩脉动和噪音都是比较大的，对于大功率，高性能的应用场合出现的频率比较小。</p>
+<h1 id="FOC-控制"><a href="#FOC-控制" class="headerlink" title="FOC 控制"></a>FOC 控制</h1><p>磁场定向控制。<strong>PMSM电机控制是使得电机定子磁场和转子磁场始终保证90°，以获取最大转矩，所以采用了FOC（Field-Oriented Control）控制</strong>。</p>
+<p>磁场定向控制（FOC）的基本原理：通过<strong>高精度的角度解析</strong>，产生和转子相对静止的控制磁场，实现对 PMSM 的像素级控制。其关键是电机转子位置信息，可通过以下方式获取：</p>
+<ul>
+<li><strong>位置编码器</strong>：通过高精度的光栅感应定子旋转过程中引起的数字编码变化，从而解析转子位置信息，一般应用在<strong>高精度的伺服系统</strong>中</li>
+<li><strong>Hall 磁编码器</strong>：通过在电机轴的端部安装的永磁体旋转，引起Hall传感器的磁感线变化，从而解析转子位置信息，一般应用在中小功率泵类驱动系统中</li>
+<li><strong>旋转变压器</strong>：电机轴的旋转引起旋转变压器感应电压的变化，通过一定的解码算法，从而解析转子位置信息，一般应用在<strong>高可靠性、高寿命的电动汽车系统</strong>中</li>
+<li><strong>观测器位置算法</strong>：无位置传感器，通过电机模型的建模计算出反电动势的变化，从而解析出转子的位置信息，该方法可靠性高，成本低，维护方便，也是电机控制最火热的方向</li>
+</ul>
+<p>对比PMSM的FOC控制，BLDC 的梯形控制中，定子磁场与转子磁场角度从未达到 90°，且角度在一定范围内波动（60°内）。<strong>一方面这种控制无法达到最大转矩，另外一方面也会存在转速和转矩的波动</strong>。这种控制经济、简单，更适合用于小电机，也就是为什么大电机 PMSM 需要需求一个更加复杂和可靠的FOC控制。</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/415924876">https://zhuanlan.zhihu.com/p/415924876</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599658549">https://zhuanlan.zhihu.com/p/599658549</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/ODrive/ODrive/" rel="prev" title="ODrive">
+                  <i class="fa fa-angle-left"></i> ODrive
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/19/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/%E7%BC%96%E7%A0%81%E5%99%A8/" rel="next" title="编码器">
+                  编码器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">827k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">25:04</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
