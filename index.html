@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,430 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-ADC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-ADC/" class="post-title-link" itemprop="url">STM32-ADC</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-13 16:49:47 / 修改时间：18:46:48" itemprop="dateCreated datePublished" datetime="2024-12-13T16:49:47+08:00">2024-12-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h1><p>12bits ADC 是一种<strong>逐次逼近</strong>型模数转换器，每个 ADC 有<strong>多达 18 个通道，可测量 16 个外部信号源和 2 个内部信号源</strong>。</p>
+<p><strong>ADC 的输入时钟不得超过 14MHZ，它是由 PCLK2 经分频产生</strong>。在 ADCCLK&#x3D;14M，采样周期为 1.5 个 ADC 时钟。此时的转换时间为 1us</p>
+<p>输入电压范围：0<del>3.3V，转换结果范围：0</del>4095，ADC供电要求：2.4V到3.6V </p>
+<p>STM32 ADC的总转换时间为：TCONV &#x3D; 采样时间 + 12.5个ADC周期。例如， ADCCLK 为 14MHz 时，采样时间为 1.5 个 ADC 周期，此时 TCONV &#x3D; 14 个 ADC 周期，即 1us。</p>
+<blockquote>
+<p>可设置的采样时间：</p>
+<ul>
+<li>1.5 个 ADC 时钟周期</li>
+<li>7.5 个 ADC 时钟周期</li>
+<li>13.5 个 ADC 时钟周期</li>
+<li>28.5 个 ADC 时钟周</li>
+<li>41.5 个 ADC 时钟周期</li>
+<li>55.5 个 ADC 时钟周期</li>
+<li>71.5 个 ADC 时钟周期</li>
+<li>239.5 个 ADC 时钟周期</li>
+</ul>
+</blockquote>
+<h1 id="ADC-采集过程"><a href="#ADC-采集过程" class="headerlink" title="ADC 采集过程"></a>ADC 采集过程</h1><ul>
+<li>采样</li>
+<li>量化：将模拟信号的电压值与ADC的参考电压进行比较，将其转换为相应的数字值</li>
+<li>编码：将量化后的结果编码为二进制形式，输出给后续的数字电路或处理器</li>
+</ul>
+<h1 id="ADC-采集模式"><a href="#ADC-采集模式" class="headerlink" title="ADC 采集模式"></a>ADC 采集模式</h1><ul>
+<li><strong>单次转换模式（Single Conversion Mode）</strong>：ADC在每次触发时只进行一次转换，适用于低速、低功耗的应用场景</li>
+<li><strong>连续转换模式（Continuous Conversion Mode）</strong>：适用于需要实时监测的应用，如信号处理和实时数据采集</li>
+<li><strong>扫描模式（Scan Mode）</strong>：在多个通道间进行扫描，每个通道依次进行转换，适合多通道数据采集</li>
+<li><strong>触发模式（Triggered Mode）</strong>：转换过程由外部信号触发，可以是定时器、GPIO引脚等，适合需要同步数据采集的场景</li>
+<li><strong>差分模式（Differential Mode）</strong>：测量两个输入信号的差值，提供更高的噪声抗性，适用于高精度测量</li>
+<li><strong>伪差分模式（Pseudo-Differential Mode）</strong>：其中一个输入端连接到地，另一端测量信号，适合简单的差分测量</li>
+<li><strong>注入转换模式（Injected Conversion Mode）</strong>：用于优先级更高的ADC转换任务，通常与常规转换并行工作</li>
+<li><strong>双ADC模式（Dual ADC Mode）</strong>：多个ADC模块协同工作，提高采样速度和数据精度</li>
+</ul>
+<h1 id="通道选择"><a href="#通道选择" class="headerlink" title="通道选择"></a>通道选择</h1><p>有16个通道，可以把转换组织分成两组：</p>
+<ul>
+<li><strong>规则组（Regular Channel Group）</strong>：由多达16个转换组成，规则通道和它们的转换顺序在ADC_SQRx寄存器中选择，规则组中转换的总数应写入ADC_SQR1寄存器的了L[3:0]位中<ul>
+<li>常用于周期性采集的传感器信号</li>
+<li>优先级较低</li>
+</ul>
+</li>
+<li><strong>注入组（Injected Channel Group）</strong>：注入通道组用于优先级更高的信号采集，通常用于突发事件或特定条件下的快速采样。由多达4个转换组成，注入通道和它们的转换顺序在ADC_JSQR寄存器中选择，注入组里的转换总数目应写入ADC_JSQR寄存器的L[1:0]中<ul>
+<li>优先级较高</li>
+<li>通常用于需在特定条件下迅速采集信号的应用，如运动控制、脉冲信号采集等等</li>
+</ul>
+</li>
+</ul>
+<h1 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h1><ul>
+<li>初始化 ADC：<code>ADC_Init</code><ul>
+<li>时钟配置</li>
+<li>输入通道选择</li>
+<li>（可选）启用&#x2F;禁用 DMA <code>void ADC_DMACmd(ADC_TypeDef *ADCx, FunctionalState NewState)</code></li>
+<li>（可选）中断配置 <code>void ADC_ITConfig(ADC_TypeDef *ADCx, uint32_t ADC_IT, FunctionalState NewState)</code></li>
+</ul>
+</li>
+<li>启动转换：<ul>
+<li>启用&#x2F;禁用指定 ADC 外设 <code>void ADC_Cmd(ADC_TypeDef *ADCx, FunctionalState NewState)</code></li>
+<li>开始 ADC 转换 <code>void ADC_StartConversion(ADC_TypeDef *ADCx)</code></li>
+</ul>
+</li>
+<li>读取结果 <code>uint16_t ADC_GetConversionValue(ADC_TypeDef *ADCx)</code></li>
+</ul>
+<h1 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h1><h2 id="噪声干扰"><a href="#噪声干扰" class="headerlink" title="噪声干扰"></a>噪声干扰</h2><p>优化方法：</p>
+<ul>
+<li>添加退耦电容：在ADC的引脚添加一个电容，用于消除噪声。这是因为电容可以吸收电路中的高频噪声，减少干扰。但需注意，电容值不宜过大，以免影响采样的充放电速度，从而影响采样精度</li>
+<li>使用 RC 滤波器：在输入信号前添加低通滤波器（如RC滤波），去除高频率噪声，从而减少ADC采样时的噪声干扰</li>
+<li>延长采样时间：通过降低ADC时钟频率和延长采样时间，可以减少采样时的噪声。这样可以确保在波形的相同位置进行采样，减少由于噪声引起的误差</li>
+<li>软件滤波算法：如一阶互补滤波、中值滤波、算术平均滤波、限幅平均滤波和卡尔曼滤波等，以减少噪声的影响</li>
+<li>避免通信外设引起的噪声：在即将开始ADC转换时，避免启动任何通信外设的数据传输，因为I&#x2F;O的切换可能会在供电电压中产生噪声</li>
+<li>避免高灌电流I&#x2F;O切换：避免切换高灌电流I&#x2F;O，因为会在电源中产生噪声波纹</li>
+<li>避免数字输出在同一I&#x2F;O端口切换：避免在同一I&#x2F;O端口上切换数字输出，因为这会将切换噪声引入模拟输入中</li>
+</ul>
+<h2 id="串扰问题"><a href="#串扰问题" class="headerlink" title="串扰问题"></a>串扰问题</h2><p>通道间串扰问题通常是因为相邻通道之间透过采样电容 Cs 发生了耦合。</p>
+<p>解决方法是增大 ADC 相邻通道采样之间的延时：<code>ADC_TwoSamplingDelay</code></p>
+<h2 id="采样时间与外部输入阻抗不匹配"><a href="#采样时间与外部输入阻抗不匹配" class="headerlink" title="采样时间与外部输入阻抗不匹配"></a><strong>采样时间与外部输入阻抗不匹配</strong></h2><p>可能导致转换精度降低。</p>
+<p>解决办法是根据实际输入阻抗和具体应用来配置合适的采样时间。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/" class="post-title-link" itemprop="url">TrustZone</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-13 14:53:16 / 修改时间：16:37:26" itemprop="dateCreated datePublished" datetime="2024-12-13T14:53:16+08:00">2024-12-13</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhajio/article/details/83622310">https://blog.csdn.net/zhajio/article/details/83622310</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61869253/article/details/139880557">https://blog.csdn.net/m0_61869253/article/details/139880557</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/arnoldlu/p/13993375.html">https://www.cnblogs.com/arnoldlu/p/13993375.html</a></li>
+<li>TrustZone for Armv8-A</li>
+</ul>
+<p>TEE：Trusted Exception Environment，是一个安全执行环境，它包括在安全世界中运行的小程序、库和操作系统，用于保护敏感操作和数据</p>
+<p>REE：Rich Exception Environment，非安全世界</p>
+<h1 id="安全背景"><a href="#安全背景" class="headerlink" title="安全背景"></a>安全背景</h1><p>CPU通过内存映射手段给每个进程营造一个单独的地址空间来隔离多个进程的代码和数据，通过内核空间和用户空间不同的特权级来隔离操作系统和用户进程的代码和数据。但由于内存中的代码和数据都是明文，容易被同处于内存中的其它应用偷窥，因此出现了扩展的安全模块，应用将加密数据送往安全模块，由安全模块处理完后再返回结果给相应的应用。</p>
+<p>在 TrustZone 之前的安全手段：</p>
+<ul>
+<li>外挂硬件安全模块：<ul>
+<li>数据的处理交由外部的安全模块实现，这些模块能够保护自己的资源和密钥等数据的安全，如SIM卡、各种智能卡或连接到外部的硬件加解密模块等，但其同主芯片的通信线路暴露在外部，容易被监听破解。另外，通信的速率比较低</li>
+</ul>
+</li>
+<li>内部集成硬件安全模块：<ul>
+<li>片上两个核，一个普通核和一个安全核。安全核性能有限，占用 SoC 面积，成本高</li>
+</ul>
+</li>
+</ul>
+<p>（来源：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhajio/article/details/83622310%EF%BC%89">https://blog.csdn.net/zhajio/article/details/83622310）</a></p>
+<p>ARM 安全架构</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\ef4e8692586e49ef789f4916824b214c.png" alt="img"></p>
+<p>(来源：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61869253/article/details/139880557">https://blog.csdn.net/m0_61869253/article/details/139880557</a>)</p>
+<h1 id="TrustZone"><a href="#TrustZone" class="headerlink" title="TrustZone"></a>TrustZone</h1><p>ARM 公司提出的一种硬件技术，旨在提供处理器级别的安全隔离解决方案，实现对系统资源的安全保护和隔离。通过 TrustZone 技术，处理器可划分为两个独立的区域：</p>
+<ul>
+<li>Secure World：安全世界</li>
+<li>Normal World：普通世界</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151119926-1734073880765-3.png" alt="image-20241213151119926"></p>
+<p>所有需要保密的操作在安全世界执行（如指纹识别、密码处理、数据加解密、安全认证等），其余操作在非安全世界执行（如用户操作系统、各种应用程序等），安全世界和非安全世界通过一个名为Monitor Mode的模式进行转换。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\34c67359185c59a1f67f05d67235977d.png" alt="ARM的安全世界和非安全世界"></p>
+<p>处理器架构上，<strong>TrustZone 将每个物理核虚拟为两个核，一个非安全核（Non-secure Core, NS Core），运行非安全世界的代码；和另一个安全核（Secure Core），运行安全世界的代码</strong>。两个虚拟的核以<strong>基于时间片</strong>的方式运行，根据需要实时占用物理核，并通过 Monitor Mode 在安全世界和非安全世界之间切换。</p>
+<h2 id="Security-states"><a href="#Security-states" class="headerlink" title="Security states"></a>Security states</h2><p>在 Arm 架构中，有两种安全状态：安全和非安全。</p>
+<p>在EL0、EL1和EL2，处理器可以处于安全状态或非安全状态，这是由 <code>SCR_EL3.NS</code> 控制的。表示方法例如：</p>
+<ul>
+<li>NS.EL1：Non-secure state，Exception level 1</li>
+<li>S.EL1：Secure state，Exception level 1</li>
+</ul>
+<p>不管 <code>SCR_EL3.NS</code> 位的值是多少，<strong>EL3 始终在 Secure state</strong>。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151541716.png" alt="image-20241213151541716"></p>
+<p>（来源：<a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/102418/latest/">TrustZone for Armv8-A</a>）</p>
+<blockquote>
+<p>注意：Secure EL2 最初在 Armv8.4 -A 中引入。</p>
+</blockquote>
+<h2 id="安全状态切换"><a href="#安全状态切换" class="headerlink" title="安全状态切换"></a>安全状态切换</h2><p><strong>无论从安全状态切换到非安全状态，还是从非安全状态切换到安全状态，都必须经过 EL3</strong>。例如：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151858655.png" alt="image-20241213151858655"></p>
+<p>执行流程：</p>
+<ul>
+<li>进入更高的 Exception 级别需要一个异常(exception)。通常，此异常将是 FIQ 或 SMC（Secure Monitor Call - 安全监视调用）异常。即：<strong>Rich OS 通过 FIQ&#x2F;SMC异常进入 EL3</strong> </li>
+<li>在适当的异常向量处进入 EL3。运行在 EL3 中的软件会改变 <code>SCR_EL3.NS</code></li>
+<li>然后异常返回将处理器从 EL3 切换到 S.EL1</li>
+</ul>
+<p>切换安全状态不仅仅是在 Exception 级别之间移动和更改 <code>SC_EL3.NS</code>。还必须考虑处理器状态。</p>
+<p>矢量寄存器、通用寄存器和大多数系统寄存器只有一个副本。在安全状态之间切换时，保存和恢复寄存器状态的责任是软件，而不是硬件。按照惯例，完成这项工作的软件被称为安全监控(Secure Monitor)。这使得之前的例子看起来更像下图中看到的：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213152404443.png" alt="image-20241213152404443"></p>
+<blockquote>
+<p>Trusted Firmware 是 Arm 赞助的一个开源项目，它提供了一个安全监视器的参考实现。</p>
+</blockquote>
+<h2 id="虚拟地址空间"><a href="#虚拟地址空间" class="headerlink" title="虚拟地址空间"></a>虚拟地址空间</h2><p>Virtual address spaces</p>
+<p>本系列中的内存管理指南介绍了多个虚拟地址空间或转换机制的概念。例如，EL0&#x2F;1有一个翻译制度，EL2有一个单独的翻译制度，如下所示：</p>
+<ul>
+<li>NS.EL0&#x2F;1 Guest OS虚拟地址空间，使用Guest OS Tables，TTBRn_EL1；如果存在EL2，则需要NS.EL2 IPA地址空间，使用Virtualization Tables，VTTBR_EL2、</li>
+<li>NS.EL2 VMM虚拟地址空间，使用Hypervisor Tables，TTBR0_EL2</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213152556477.png" alt="image-20241213152556477"></p>
+<blockquote>
+<p>TTBR：Translation Table Base Register.</p>
+<p>TTBR0_EL1&#x2F;TTBR1_EL1：EL1 OS 使用的用户转换页表基地址和内核转换页表基地址。</p>
+<p>TTBR0_EL2&#x2F;TTBR1_EL2：EL2 Hypervisor OS使用的转换页表基地址。</p>
+<p>TTBR0_EL3：EL3仅有Stage 1转换页表基地址。</p>
+<p>VTTBR_EL2：虚拟化场景下页表转换Stage 2基地址。</p>
+</blockquote>
+<ul>
+<li>S.EL0&#x2F;1TOS 虚拟地址空间</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225144444437-2141153125.png" alt="img"></p>
+<p>不同地址空间NS.EL1:0x8000和S.EL1:0x8000是两套独立的地址空间中地址，CPU在安全空间必须使用S.EL1页表转换，在非安全空间必须使用NS.EL1页表转换。</p>
+<h2 id="物理地址空间"><a href="#物理地址空间" class="headerlink" title="物理地址空间"></a>物理地址空间</h2><p>在非安全世界，虚拟地址被转换到非安全物理地址。这意味着，非安全世界的软件仅能看到非安全资源。</p>
+<p>在安全世界，软件可以访问所有非安全和安全物理地址空间。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225145319256-1803396097.png" alt="img"></p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225145341250-1915150730.png" alt="img"></p>
+<h2 id="Data-Instruction及unified-caches"><a href="#Data-Instruction及unified-caches" class="headerlink" title="Data,Instruction及unified caches"></a>Data,Instruction及unified caches</h2><p>在Arm架构中，数据缓存是物理标记的。物理地址包括该行来自哪个地址空间，如下所示</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213155212699.png" alt="image-20241213155212699"></p>
+<h2 id="Translation-Lookaside-Buffer"><a href="#Translation-Lookaside-Buffer" class="headerlink" title="Translation Lookaside Buffer"></a>Translation Lookaside Buffer</h2><h2 id="SMC-异常"><a href="#SMC-异常" class="headerlink" title="SMC 异常"></a>SMC 异常</h2><p>执行 SMC 产生 SMC 异常进入 EL3。SMC 被用于从 EL3 Firmware 或者 TEE 中请求服务。<strong>SMC dispatcher 将 SMC 请求发送给 Firmware(PSCI) 或者 TOS 处理</strong>。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225150249956-1541747798.png" alt="img"></p>
+<h2 id="Secure-virtualization"><a href="#Secure-virtualization" class="headerlink" title="Secure virtualization"></a>Secure virtualization</h2><p>直到ARMv8.3都没有支持S.EL2，EL3运行Firmware处理PSCI以及Secure Monitor。S.EL0&#x2F;1运行TOS。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225151317607-1264282866.png" alt="img"></p>
+<p>ARMv8.4开始增加了S.EL2，运行Secure Partition Manager。将Platform firmware工作移到S.EL1进行处理</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225163503667-1397515908.png" alt="img"></p>
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p>一个基于 TrustZone 系统组成</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225164013297-1644525873.png" alt="img"></p>
+<p>不同芯片厂商会根据安全需求选择不同的安全组件来构造其 TrustZone。其中主要组件包括：</p>
+<ul>
+<li>必选组件<ul>
+<li>AMBA3 AXI 总线，安全机制的基础设施</li>
+<li>虚拟化的 ARM Core，虚拟安全和非安全核</li>
+<li>TZPC(TrustZone Protextion Controller)，根据需要控制外设的安全特性</li>
+<li>TZASC(TrustZone Address Space Controller)，对内存进行安全和非安全区域划分和保护</li>
+</ul>
+</li>
+<li>可选组件<ul>
+<li>TZMA (TrustZone Memory Adapter)，片上ROM或RAM安全区域和非安全区域的划分和保护</li>
+<li>AXI-to-APB bridge，桥接APB总线，配合TZPC使APB总线外设支持TrustZone安全特性</li>
+</ul>
+</li>
+</ul>
+<p><strong>AMBA3 AXI(AMBA3 Advanced eXtensble Interface)系统总线作为TrustZone的基础架构设施，提供了安全世界和非安全世界的隔离机制</strong>，确保非安全核只能访问非安全世界的系统资源，而安全核能访问所有资源，因此安全世界的资源不会被非安全世界（或普通世界）所访问。</p>
+<p>ARM官网对TrustZone介绍的应用示意图：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\2770b8d13452d49fed175e5c7a1008a1.png" alt="基于TrustZone的应用示意图"></p>
+<h2 id="Slave-devices-peripherals-and-memories"><a href="#Slave-devices-peripherals-and-memories" class="headerlink" title="Slave devices: peripherals, and memories"></a>Slave devices: peripherals, and memories</h2><h2 id="Enforcing-isolation"><a href="#Enforcing-isolation" class="headerlink" title="Enforcing isolation"></a>Enforcing isolation</h2><p>执行隔离。</p>
+<p>主控告知访问权限，内存系统决定是否允许访问。</p>
+<p>内存系统权限检查一般是通过互联总线。比如NIC-400可以设置如下属性：</p>
+<ul>
+<li>安全：仅安全访问可以通过，互联总线对非安全访问产生异常，非安全访问不会抵达设备。</li>
+<li>非安全：仅非安全访问可以通过，互联总线对安全访问产生异常，安全访问不会抵达设备。</li>
+<li>启动可配置：系统初始化时可以配置设备为安全或非安全。默认是安全。</li>
+<li>TrustZone aware：互联总线允许所有访问通过，连接的设备自身负责隔离。</li>
+</ul>
+<p>例如：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225213628637-286033770.png" alt="img"></p>
+<p>对于 DDR，需要将整个区域划分为若干安全和非安全区域。通过 TZASC 可实现：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225214218296-2034889253.png" alt="img"></p>
+<h2 id="总线主设备"><a href="#总线主设备" class="headerlink" title="总线主设备"></a>总线主设备</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225215521167-1271838075.png" alt="img"></p>
+<p>A系列处理器都是TrustZone aware的，每次总线访问发送争取的安全状态。但还存在一些非处理器的总线主控，比如GPU、DMA等。</p>
+<p>因此将总线主控分为两种：</p>
+<ul>
+<li>TrustZone aware：每次总线访问都能提供合适安全信息。</li>
+<li>Non-TrustZone  aware：此类主设备访问总显示无法提供安全信息、或每次都是同样安全信息</li>
+</ul>
+<p>对于Non-Trusted-aware需要采取的措施有：</p>
+<ul>
+<li>设计时固定地址：给设备固定的访问地址</li>
+<li>可配逻辑单元：为主设备访问添加安全信息逻辑单元</li>
+<li>MMU：对于一个可信主设备，SMMU可以向安全状态下的MMU一样处理</li>
+</ul>
+<h1 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h1><h2 id="Top-level-software-architecture"><a href="#Top-level-software-architecture" class="headerlink" title="Top-level software architecture"></a>Top-level software architecture</h2><p>典型的基于 TrustZone 系统的软件调用栈关系图：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213161648727.png" alt="image-20241213161648727"></p>
+<p>安全世界的Trusted OS提供一系列安全服务，比如key管理或DRM。非安全世界应用需要使用这些服务，但是又无法直接使用。通过使用一些库中API来获取这些能力，比如libDRM.so。</p>
+<p>这些库和Trusted service之间通信往往通过message queue或者Mailbox。他们之间通信所用内存往往被称为WSM(World Shared Memory)。这些内存必须能够被Trusted service和库访问，这就意味着这些内存是非安全内存。</p>
+<p>应用通过库发送一个请求到Mailbox或message queue，然后出发内核中TrustZone驱动。</p>
+<p>TrustZone驱动负责和TEE部分交互，包括为message queue申请内存和注册这些内存。由于安全和非安全运行在两个虚拟地址空间，所以无法通过虚拟地址进行通信。</p>
+<p>TrustZone驱动通过调用SMC进入安全状态，控制权通过EL3的Secure Monitor传递到TEE中的TOS。TOS从message queue内存中获取内容个Trusted service进行处理。</p>
+<ul>
+<li>Trusting the message：由于message是从非安全世界传递的，所以需要安全世界需要对这些内容进行一些认证。</li>
+<li>Scheduling：对于PSCI类型快速处理并且不频繁请求，进入EL3处理完后退出到非安全状态。对于一些需要TOS处理的任务，不能被非安全中断打断，避免造成安全服务不可用。</li>
+<li>OP-TEE：OP-TEE内核运行在S.EL1，可信应用运行在S.EL0。</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201117113521738-2078575975.png" alt="img"></p>
+<p>非安全世界的App一般不直接使用TEE Client API，而是中间Service API提供一类服务。TEE Client API和内核中OP-TEE驱动交互，OP-TEE驱动SMC处理底层和OP-TEE内核的通信。</p>
+<p>EL3 Firmware&#x2F;Secure Monitor做SMC处理，根据需要将安全请求发送到OP-TEE内核处理。</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><h2 id="加密文件系统"><a href="#加密文件系统" class="headerlink" title="加密文件系统"></a>加密文件系统</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201227214131363-1290214216.png" alt="img"></p>
+<ul>
+<li>对用户进行认证后，加密后文件系统key被读到片内安全内存中，并使用存在OTP中的Private key对其进行解密和验证。</li>
+<li>解密后的文件系统key被提供给加解密引擎寄存器或者存储控制器中。</li>
+<li>后续对文件系统的存取使用写入的key进行加解密。</li>
+</ul>
+<p>上述操作都是在安全状态进行的，所有文件系统key不会暴露给非安全软件。</p>
+<h2 id="OTA-固件更新"><a href="#OTA-固件更新" class="headerlink" title="OTA 固件更新"></a>OTA 固件更新</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201227214200023-2098233312.png" alt="img"></p>
+<p>主要流程如下：</p>
+<ul>
+<li>OEM厂家使用私钥对镜像进行签名。</li>
+<li>镜像在非安全状态下被下载，并请求安全世界去安装固件。</li>
+<li>安全世界中使用Public key hash校验Public key。</li>
+<li>安全世界软件对镜像验签，至此表示镜像合法。</li>
+<li>然后安全世界开始安装固件。</li>
+<li>升级成功则递增non-volatile counter，可以检测到回滚操作。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1175,259 +1599,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">BLDC_位置控制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-21 18:17:08 / 修改时间：21:09:24" itemprop="dateCreated datePublished" datetime="2024-11-21T18:17:08+08:00">2024-11-21</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openExample(<span class="string">&#x27;simscapeelectrical/BLDCPositionControlExample&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>此示例说明如何控制基于 BLDC 的电气驱动器中的转子角度。理想的扭矩源（图中的 Torque Source）提供负载（即：在电机上施加外力）。</p>
-<h1 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h1><p>Control 子系统使用基于 PI 的级联控制结构，具有三个控制回路：</p>
-<ul>
-<li>一个外部位置控制回路</li>
-<li>一个速度控制回路</li>
-<li>一个内部电流控制回路</li>
-</ul>
-
-
-<p>控制器的输入为 Position，输出为六脉冲向量 S。Gate driver 为 Six-Pulse Gate Multiplexer。</p>
-<p>Angle、w_sens、Hall 为运动传感器和霍尔传感器测量的角度、角速度、位置值，iabc 为测量到的输入相电流向量。</p>
-<h2 id="BLDC-Current-Controller"><a href="#BLDC-Current-Controller" class="headerlink" title="BLDC Current Controller"></a>BLDC Current Controller</h2><p>该模块使用以下算法来控制无刷电机中的电流</p>
-
-
-<p>相应方程为</p>
-
-
-<p>BLDC 电流控制器通过使用此方程实现比例积分 （PI） 电流控制来产生 BLDC 模块的占空比。其中：</p>
-<ul>
-<li>D ：占空比（duty cycle）</li>
-<li>K_p：比例增益</li>
-<li>K_i：积分增益</li>
-<li>T_s：时间段</li>
-<li>Is_ref：参考电流</li>
-<li>Is：测量电流</li>
-<li>G_zc：零抵消多项式</li>
-</ul>
-<p>PI 控制算法的闭环传递函数产生一个零点，可以通过在前馈路径中使用零点抵消来抵消该零点。离散时间中的零抵消传递函数为：</p>
-
-
-
-
-<p>该模块通过将占空比乘以换向信号来获得三相的控制信号。得到的三个控制信号在区间 [-1， 1] 内归一化。</p>
-<h1 id="Gate-driver"><a href="#Gate-driver" class="headerlink" title="Gate driver"></a>Gate driver</h1>
-
-
-
-<p>BLDC 由受控的三相逆变器供电。逆变器的栅极信号是从霍尔信号获得的。模拟使用步骤引用。Scopes 子系统包含允许您查看仿真结果的 Scope。</p>
-<h1 id="iabc"><a href="#iabc" class="headerlink" title="iabc"></a>iabc</h1><p>三相电流传感器。</p>
-
-
-<p>Current Sensor （Three-Phase） 模块表示理想的三相电流传感器。该模块测量从端口 ~1 流向端口 ~2 的三个电流中的每一种，并输出三元素物理信号向量。物理信号输出向量的每个元件都与其各自相位中的电流成正比</p>
-<h1 id="trq"><a href="#trq" class="headerlink" title="trq"></a>trq</h1><p>扭矩传感器</p>
-
-
-<ul>
-<li>C：与输入 R 相同</li>
-<li>T：测量结果</li>
-</ul>
-<h1 id="a-w-Hall"><a href="#a-w-Hall" class="headerlink" title="a,w,Hall"></a>a,w,Hall</h1>
-
-<p>包含 Motion Sensor（此例中设置为：理想的旋转运动传感器） 和 Hall sensor（霍尔传感器）</p>
-<p>Motion Sensor 测量机械旋转的角速度或角度，测量结果为理想值，不考虑惯性、摩擦、延迟、能耗等因素。α、w、A 端口分别输出端口 R 相对于端口 C（电机外壳） 的角加速度、角速度、位置。当端口 R 的角速度大于端口 C 的角速度时，测得的角速度为正（此例中，C 接电机外壳，即测量转子转速）。</p>
-<h1 id="Torque-Source"><a href="#Torque-Source" class="headerlink" title="Torque Source"></a>Torque Source</h1><p>此例中为理想的扭矩源。输入 S 表示以 C 为参考，作用于 R 的扭矩。</p>
-<h1 id="Inertia"><a href="#Inertia" class="headerlink" title="Inertia"></a>Inertia</h1><p>表示理想的机械旋转惯性。该模块有一个或两个机械旋转守恒端口。区别纯粹是图形上的，因为端口是刚性连接的。模块的正方向是从其端口到参考点。这意味着，如果惯量在正方向上加速，则惯量扭矩为正</p>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_Hysteresis_Current_Control/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_Hysteresis_Current_Control/" class="post-title-link" itemprop="url">BLDC_Hysteresis_Current_Control</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-21 17:35:29 / 修改时间：18:17:13" itemprop="dateCreated datePublished" datetime="2024-11-21T17:35:29+08:00">2024-11-21</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>289</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openExample(<span class="string">&#x27;simscapeelectrical/BLDCHysteresisControlExample&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>使用迟滞(hysteresis)控制器控制 BLDC 电机。直流电压源通过受控三相逆变器为 BLDC 供电。向电机控制器提供一个电流请求斜坡(ramp)。负载转矩（load torque）与转子转速呈二次关系。控制子系统实现了基于磁滞的电流控制策略。Scopes子系统可查看模拟结果。</p>
-<p>示例中</p>
-<ul>
-<li><p>电机控制器：</p>
-<ul>
-<li>接收电流请求</li>
-<li>根据之后控制策略输出控制信号</li>
-<li>输出为六脉冲向量 S，用于控制功率转换器</li>
-</ul>
-
-</li>
-<li><p>BLDC 电机</p>
-<ul>
-<li>输入三相电流(iabc)</li>
-</ul>
-</li>
-<li><p>Gate drive</p>
-</li>
-</ul>
-<p>仿真结果</p>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1452,14 +1623,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">827k</span>
+    <span title="站点总字数">835k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">25:04</span>
+    <span title="站点阅读时长">25:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

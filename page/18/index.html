@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,462 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/16/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/catkin/" class="post-title-link" itemprop="url">catkin</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-16 11:04:39" itemprop="dateCreated datePublished" datetime="2024-09-16T11:04:39+08:00">2024-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">编译工具</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7/catkin/" itemprop="url" rel="index"><span itemprop="name">catkin</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="编译指令"><a href="#编译指令" class="headerlink" title="编译指令"></a>编译指令</h1><h2 id="编译为release版本"><a href="#编译为release版本" class="headerlink" title="编译为release版本"></a>编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>CMAKE_BUILD_TYPE</strong> 可以的取值是:</p>
+<ul>
+<li><code>Debug</code> - 调试信息多，没优化</li>
+<li><code>Release</code> - 没有多余的调试信息，发布时使用</li>
+<li><code>RelWithDebInfo</code> - 优化过的带有有调试信息的版本</li>
+<li><code>MinSizeRel</code></li>
+</ul>
+<h2 id="编译指定包"><a href="#编译指定包" class="headerlink" title="编译指定包"></a>编译指定包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg &lt;package_name&gt;  <span class="comment"># 临时生效</span></span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --only-pkg-with-msgs=&lt;message_package_name&gt; <span class="comment"># 只编译 .msg 文件</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>白名单：**<code>-DCATKIN_WHITELIST_PACKAGES</code>**</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;package1;package2&quot;</span></span> </span><br></pre></td></tr></table></figure>
+
+<p>恢复编译所有的包（如不执行该指令，则后续都只会编译上述指定的包）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;&quot;</span></span>   </span><br></pre></td></tr></table></figure>
+
+
+
+<p> 黑名单: <strong><code>-DCATKIN_BLACKLIST_PACKAGES</code></strong></p>
+<h2 id="将指定包编译为release版本"><a href="#将指定包编译为release版本" class="headerlink" title="将指定包编译为release版本"></a>将指定包编译为release版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>可使用多个</strong> <strong>–pkg</strong> <strong>参数指定多个包</strong></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make install --pkg rbx1_bringup <span class="comment"># 安装指定包</span></span>              </span><br></pre></td></tr></table></figure>
+
+
+
+<p>若未编译，则先编译（Debug），再安装。默认安装在当前目录，若要指定安装目录，可使用-DCMAKE_INSTALL_PREFIX参数，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg rbx1_bringup</span></span><br></pre></td></tr></table></figure>
+
+<p>​              </p>
+<h2 id="编译为release，并安装在指定目录"><a href="#编译为release，并安装在指定目录" class="headerlink" title="编译为release，并安装在指定目录"></a>编译为release，并安装在指定目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=/home/ros/catkin_ws/test install --pkg=rbx1_bringup --cmake-args -DCMAKE_BUILD_TYPE=Release</span>              </span><br></pre></td></tr></table></figure>
+
+<h2 id="自动初始化工作空间"><a href="#自动初始化工作空间" class="headerlink" title="自动初始化工作空间"></a>自动初始化工作空间</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON</span></span><br></pre></td></tr></table></figure>
+
+<p>编译rovio包。如果工作空间未初始化，可以自动完成工作空间初始化 。</p>
+<h2 id="catkin-init-workspace"><a href="#catkin-init-workspace" class="headerlink" title="catkin_init_workspace"></a>catkin_init_workspace</h2><p>将当前目录初始化为一个 ROS 工作空间（通常不需要运行该指令，除非想将某个目录指定为 ROS 工作空间）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Creating symlink &quot;/home/ros/catkin_test/src/CMakeLists.txt&quot; pointing to &quot;/opt/ros/kinetic/share/catkin/cmake/toplevel.cmake&quot;</span><br></pre></td></tr></table></figure>
+
+<p>会在当前目录生成一个 CMakeLists.txt 文件，该文件为 &#x2F;opt&#x2F;ros&#x2F;kinetic&#x2F;share&#x2F;catkin&#x2F;cmake&#x2F;toplevel.cmake 的软链接。</p>
+<h2 id="catkin-make-CMakeLists-txt-常用变量"><a href="#catkin-make-CMakeLists-txt-常用变量" class="headerlink" title="catkin_make CMakeLists.txt 常用变量"></a>catkin_make CMakeLists.txt 常用变量</h2><p>install 相关变量：</p>
+<p><strong>- CATKIN_PACKAGE_BIN_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_ETC_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_INCLUDE_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_LIB_DESTINATION</strong></p>
+<p><strong>- CATKIN_PACKAGE_PYTHON_DESTINATION</strong></p>
+<p><strong>-</strong> <strong>CATKIN_PACKAGE_SHARE_DESTINATION</strong>: 被设置为 ${CATKIN_GLOBAL_SHARE_DESTINATION}&#x2F;${PROJECT_NAME}</p>
+<p><strong>- CATKIN_GLOBAL_BIN_DESTINATION：</strong>通常值用于ROS核心执行程序</p>
+<p><strong>- CATKIN_GLOBAL_ETC_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_INCLUDE_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_LIB_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_LIBEXEC_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_PYTHON_DESTINATION</strong></p>
+<p><strong>- CATKIN_GLOBAL_SHARE_DESTINATION</strong></p>
+<h1 id="catkin-make-isolated"><a href="#catkin-make-isolated" class="headerlink" title="catkin_make_isolated"></a>catkin_make_isolated</h1><p>当一个工作空间中包含不同环境的独立的项目时，可以使用该指令进行编译。为纯粹由 catkin 包构成的工作区提供调试，并允许用户构建包含 <strong>catkin</strong> 和 **非catkin **包的工作区。</p>
+<p>非catkin包：编译脚本中不使用 Catkin cmake，而是简单的 CMake 或者其它的工具的程序包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make_isolated --install-space ./cartographer-packages --install</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">catkin_make -DCMAKE_INSTALL_PREFIX=xxxx install --pkg=</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="catkin-build"><a href="#catkin-build" class="headerlink" title="catkin build"></a>catkin build</h1><p>主要区别在于 catkin build 获取的 isolated 环境。catkin build 使得整个 build configuration 更加独立，并且对配置文件的修改(添加&#x2F;删除程序包，修改 cmake 变量等)更加健壮。</p>
+<ul>
+<li><strong><code>catkin build</code> 并行编译相互独立的包</strong>，因此速度更快</li>
+<li><code>catkin build</code> 可在 workspace 的任何目录下执行，**<code>catkin_make</code> 只能在顶层目录下执行**</li>
+<li>编译指定包更加方便。<code>catkin build</code> ，或者，在要编译的包目录下执行 <code>catkin build --this</code></li>
+<li><code>catkin build</code> 输出的日志更易读</li>
+<li>使用 <code>catkin build</code>，还可以获得许多其它有用的 <code>catkin</code> 子命令，例如: <ul>
+<li>catkin clean - 清除 build devel 及 install 目录</li>
+<li>catkin list</li>
+<li>catkin locate</li>
+<li>catkin profile</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/15/Robot/ROS/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/15/Robot/ROS/%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">命名空间</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-15 21:24:52" itemprop="dateCreated datePublished" datetime="2024-09-15T21:24:52+08:00">2024-09-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Robot/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id=""><a href="#" class="headerlink" title=""></a><!--需保留首行 # --></h1><h1 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h1><p>参考：<a target="_blank" rel="noopener" href="http://wiki.ros.org/Names">ros Names</a>  </p>
+<h2 id="Graph-Resource-Names"><a href="#Graph-Resource-Names" class="headerlink" title="Graph Resource Names"></a>Graph Resource Names</h2><p>Graph Resource Names 提供了一个<strong>分层的命名结构</strong>，该结构用于 ROS 计算图中的所有资源，如 nodes、参数、topics 和 services。  </p>
+<p>例如：  </p>
+<ul>
+<li><code>/</code> : 全局命名空间</li>
+<li><code>/foo</code></li>
+<li><code>/stanford/robot/name</code></li>
+<li><code>/wg/node</code></li>
+</ul>
+<p>Graph Resource Names 是 ROS 中一个提供封装(encapsulation)的重要机制。每个资源定义在一个命名空间(namespace)中，而该命名空间有可能为多个资源所共享。通常，资源可在其 namespace 中创建资源，并且可以访问其 namespace 内或其 namespace 上一层的资源。可以建立属于不同 namespace 的资源之间的连接，这通常是通过在上层整合这两个 namespace 的代码来实现。  </p>
+<p>names 是相对解析的，因此资源不需要关注其所属的 namespace。</p>
+<h3 id="可用的-names"><a href="#可用的-names" class="headerlink" title="可用的 names"></a>可用的 names</h3><p>一个可用的名字有以下特征：  </p>
+<ul>
+<li>以字母、’~’、’&#x2F;‘ 开始</li>
+<li>后跟字母、数字、下划线或 ‘&#x2F;‘</li>
+</ul>
+<blockquote>
+<hr>
+<p><strong><em>注意：</em></strong>  </p>
+<ul>
+<li>base names 不能使用 ‘&#x2F;‘ 或 ‘~’</li>
+</ul>
+<hr>
+</blockquote>
+<h3 id="resolving"><a href="#resolving" class="headerlink" title="resolving"></a>resolving</h3><p>ROS 中有四种类型的 Graph Resource Names: <code>base</code>、<code>relative</code>、<code>global</code>、<code>private</code>  </p>
+<ul>
+<li>base</li>
+<li>relative&#x2F;name</li>
+<li>&#x2F;global&#x2F;name</li>
+<li>~private&#x2F;name</li>
+</ul>
+<p>默认情况下，<code>resolution is done relative to the node&#39;s namespace(resolution 是相对于节点的命名空间)</code>。  </p>
+<p>没有指定任何 namespace 限定符的 names 属于 <code>base names</code>。**<code>base names</code> 实际上是 <code>relative names</code> 的一个子类，并且有着相同的 resolution 规则**。Base names 经常用于初始化节点名。    </p>
+<p><strong>以 <code>/</code> 开头的 names 是全局的</strong>。应当尽量避免 <code>Global names</code>，因为其限制了代码的可移植性。   </p>
+<p>**以 <code>~</code> 开头的 names 是 <code>private</code> **。将节点的名字转换为 namespace。例如，<code>/wg</code> 命名空间中的节点 node1 的私有命名空间为 <code>/wg/node1</code>。Private names 用于通过参数服务器传递参数到一个指定节点。    </p>
+<p>示例: <!-- 注意：表格与文字间需换行，否则无效 -->  </p>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Relative(default)</th>
+<th>Global</th>
+<th>Private</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;node1</td>
+<td>bar -&gt; &#x2F;bar</td>
+<td>&#x2F;bar -&gt; &#x2F;bar</td>
+<td>~bar -&gt; &#x2F;node1&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;wg&#x2F;node2</td>
+<td>bar -&gt; &#x2F;wg&#x2F;bar</td>
+<td>&#x2F;bar -&gt; &#x2F;bar</td>
+<td>~bar -&gt; &#x2F;wg&#x2F;node2&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;wg&#x2F;node3</td>
+<td>foo&#x2F;bar -&gt; &#x2F;wg&#x2F;foo&#x2F;bar</td>
+<td>&#x2F;foo&#x2F;bar -&gt; &#x2F;foo&#x2F;bar</td>
+<td>~foo&#x2F;bar -&gt; &#x2F;wg&#x2F;node3&#x2F;foo&#x2F;bar</td>
+</tr>
+</tbody></table>
+<h3 id="remapping"><a href="#remapping" class="headerlink" title="remapping"></a>remapping</h3><p>命令行启动节点时，可对 ROS 节点的名字进行重映射。  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rospy_tutorials talker chatter:=/wg/chatter</span></span><br></pre></td></tr></table></figure>
+<p>将 <code>chatter</code> 重映射为 <code>/wg/chatter</code>。  </p>
+<p>重映射匹配规则示例：  </p>
+<table>
+<thead>
+<tr>
+<th>Node Namespace</th>
+<th>Remapping Argument</th>
+<th>Matching Names</th>
+<th>Final Resolved Name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;</td>
+<td>foo:&#x3D;bar</td>
+<td>foo,&#x2F;foo</td>
+<td>&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;baz</td>
+<td>foo:&#x3D;bar</td>
+<td>foo,&#x2F;baz&#x2F;foo</td>
+<td>&#x2F;baz&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>&#x2F;foo:&#x3D;bar</td>
+<td>foo,&#x2F;foo</td>
+<td>&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;baz</td>
+<td>&#x2F;foo:&#x3D;bar</td>
+<td>&#x2F;foo</td>
+<td>&#x2F;baz&#x2F;bar</td>
+</tr>
+<tr>
+<td>&#x2F;baz</td>
+<td>&#x2F;foo:&#x3D;&#x2F;a&#x2F;b&#x2F;c&#x2F;bar</td>
+<td>&#x2F;foo</td>
+<td>&#x2F;a&#x2F;b&#x2F;c&#x2F;bar</td>
+</tr>
+</tbody></table>
+<p>参数重映射：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 ~param 设置为 1.0</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rospy_tutorials talker _param:=1.0</span> </span><br></pre></td></tr></table></figure>
+<p>其它常用 keys：  </p>
+<ul>
+<li><code>__name</code>:</li>
+<li><code>__log</code>:</li>
+<li><code>__ip</code>:</li>
+<li><code>__host</code>:</li>
+<li><code>__master</code>:</li>
+<li><code>__ns</code>:</li>
+</ul>
+<p>
+
+<h2 id="Package-Resource-Names"><a href="#Package-Resource-Names" class="headerlink" title="Package Resource Names"></a>Package Resource Names</h2><p>该名字用于 ROS 文件系统级别的概念，用于简化指向磁盘文件和数据类型的过程。包资源名字非常简单: 在包名后增加资源名。例如，<code>std_msgs/String</code> 指 <code>std_msgs</code> 包中的 <code>String</code> 消息类型。  </p>
+<p>可以使用包资源名引用的一些ros相关文件包括:  </p>
+<ul>
+<li>Message types（msg）</li>
+<li>Service types（srv）</li>
+<li>Node types</li>
+</ul>
+<p>可用 names：    </p>
+<ul>
+<li>以字母（<code>[a-z|A-Z]</code>）开始</li>
+<li>后跟字母或数字、下划线、斜杠(&#x2F;)</li>
+<li>最多有一个斜杠</li>
+</ul>
+<h2 id="roscpp-API"><a href="#roscpp-API" class="headerlink" title="roscpp API"></a>roscpp API</h2><p>参考：<a target="_blank" rel="noopener" href="http://docs.ros.org/en/noetic/api/roscpp/html/namespaceros_1_1names.html">ros::names Namespace Reference</a></p>
+<h1 id="全局名称"><a href="#全局名称" class="headerlink" title="全局名称"></a>全局名称</h1><p><code>/</code> 表示全局名称。由斜杠分开的一系列命名空间，每个斜杠代表一级命名空间。基本名（base name）称描述资源本身。<br>例如：&#x2F;teleop_turtle，该名称为全局名称，teleop_turtle 为基本名称。  </p>
+<h1 id="相对名称"><a href="#相对名称" class="headerlink" title="相对名称"></a>相对名称</h1><p>缺少全局名称的斜杠 <code>/</code>。  </p>
+<p><strong>相对名称解析</strong>：将当前默认的命名空间的名称加在相对名称的前面，从而将相对名解析为全局名称。  </p>
+<p><strong>设置默认命名空间</strong>：默认的命名空间是单独为每个节点设置的，而不是在系统范围进行。为节点选择一个不同的默认命名空间的最好的也是最常用的方法是在 launch 文件中使用命名空间属性(ns)。ROS 提供如下方式设置默认命名空间：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过命令行参数 __ns 设置默认命名空间</span></span><br><span class="line">__ns:=default-namespace  </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 shell 环境变量设置默认命名空间</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">export</span> ROS_NAMESPACE=default-namespace</span> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<hr>
+<ul>
+<li>只有当没有其他由 <code>__ns</code> 参数指定的默认命名空间时，<code>ROS_NAMESPACE</code> 环境变量才有效</li>
+</ul>
+<hr>
+</blockquote>
+<h1 id="私有名称"><a href="#私有名称" class="headerlink" title="私有名称"></a>私有名称</h1><p>以 <code>~</code> 开始。和相对名称一样，私有名称并不能完全确定他们自身所在的命名空间，而是需要 ROS 客户端库将这个名称解析为一个全局名称。  </p>
+<p>与相对名称的主要差别在于：<strong>私有名称不是用当前默认命名空间，而是使用其节点名称作为命名空间</strong>。</p>
+<h1 id="匿名名称"><a href="#匿名名称" class="headerlink" title="匿名名称"></a>匿名名称</h1><p>一般用于节点名（匿名并不是指没有名字，而是指非用户指定而又没有语义信息的名字）。<strong>匿名名称的目的是使节点的命名更容易准守唯一性的规则</strong>。其思路是，当节点调用 <code>ros::init</code> 方法时可以请求一个自动分配的唯一名称。  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros::<span class="built_in">init</span>(argc, argv, base_name, ros::init_options::AnonymousName);</span><br></pre></td></tr></table></figure>
+<p>注意：需要将 <em><code>ros::init_options::AnonymousName</code></em> 作为第四个参数传递给 ros::init 方法   </p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;demo&quot;</span>);</span><br><span class="line"></span><br><span class="line">    ros::NodeHandle nh_global; <span class="comment">// global</span></span><br><span class="line">    <span class="function">ros::NodeHandle <span class="title">nh_local</span><span class="params">(<span class="string">&quot;~&quot;</span>)</span></span>; <span class="comment">// private</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结果为 /</span></span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Global nh ns: %s&quot;</span>, nh_global.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="comment">// 结果为 /demo</span></span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Local nh ns: %s&quot;</span>, nh_local.<span class="built_in">getNamespace</span>().<span class="built_in">c_str</span>());</span><br><span class="line">    </span><br><span class="line">    std::string test_param1;</span><br><span class="line">    std::string test_param2;</span><br><span class="line">    nh_local.<span class="built_in">param</span>(<span class="string">&quot;param1&quot;</span>, test_param1, std::<span class="built_in">string</span>(<span class="string">&quot;param1&quot;</span>));</span><br><span class="line">    nh_global.<span class="built_in">param</span>(<span class="string">&quot;param2&quot;</span>, test_param2, std::<span class="built_in">string</span>(<span class="string">&quot;param2&quot;</span>));</span><br><span class="line">    </span><br><span class="line">    ros::Subscriber sub0 = private_nh.<span class="built_in">subscribe</span>(<span class="string">&quot;test_sub1&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line">    ros::Subscriber sub1 = nh.<span class="built_in">subscribe</span>(<span class="string">&quot;test_sub2&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line"></span><br><span class="line">    ros::<span class="built_in">spin</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>rosrun</code> 指令直接运行节点时，若不使用 <code>_name</code> 则默认节点名为 <code>ros::init</code> 中指定的名字；若使用 <code>launch</code> 文件启动节点，则节点名为 <code>&lt;node&gt;</code> 元素中 <code>name</code> 属性指定的值；若 <code>name</code> 属性值为空，则为匿名名称。  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /test</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demo __name:=<span class="built_in">test</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /ns0/demo</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demp __ns:=ns0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">节点名为 /ns0/test</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun &lt;package&gt; demp __ns:=ns0 __name:=<span class="built_in">test</span></span></span><br></pre></td></tr></table></figure>
+<p>
+
+<p>若使用 launch 文件：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;ns&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- global serial --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/dev/ttyS0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;test&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;parameter_demo&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> <span class="attr">ns</span>=<span class="string">&quot;ns1&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- local serial --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/dev/ttyS1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此时，节点名为 <code>/ns/ns1/test</code>  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param2&quot;</span> /&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;test_pkg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">name</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param2&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 结果为</span></span><br><span class="line"><span class="comment">/param1 - global_param1</span></span><br><span class="line"><span class="comment">/param2 - global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test_node/param1 - local_param1</span></span><br><span class="line"><span class="comment">/test_node/param2 - local_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">nh_local 读取的实际为 /test_node/param1</span></span><br><span class="line"><span class="comment">nh_global 读取的实际为 /test_node/param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">并订阅主题：/test_node/test_sub1 和 /test_sub2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param1&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;global_param2&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">group</span> <span class="attr">ns</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;test/global_param2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;test_pkg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">name</span>=<span class="string">&quot;test_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param1&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;local_param2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 结果为</span></span><br><span class="line"><span class="comment">/param1 - global_param1</span></span><br><span class="line"><span class="comment">/param2 - global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test/param2 - test/global_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/test/test_node/param1 - local_param1 # 包含指定的 namespace: test</span></span><br><span class="line"><span class="comment">/test/test_node/param2 - local_param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">nh_local 读取的实际为 /test/test_node/param1</span></span><br><span class="line"><span class="comment">nh_global 读取的实际为 /test/param2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">并订阅主题：/test/test_node/test_sub1 和 /test/test_sub2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1481,269 +1937,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/" class="post-title-link" itemprop="url">python调用C++</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">代码编程</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="python-调用-C"><a href="#python-调用-C" class="headerlink" title="python 调用 C++"></a><strong>python 调用 C++</strong></h1><p>Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> value) : <span class="built_in">value_</span>(value) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; value_ = value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> value_; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;No arguments&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;Value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// BOOST_PYTHON_MODULE 宏定义 python 模块 my_module </span></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">  <span class="comment">// 使用 bp::class_ 将上面定义的 MyClass 类暴露给 python</span></span><br><span class="line">  <span class="function">bp::class_&lt;MyClass&gt; <span class="title">my_class_interface</span><span class="params">(<span class="string">&quot;MyClass&quot;</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment">// bp::init 用于暴露构造函数</span></span></span></span><br><span class="line"><span class="params"><span class="function">    bp::init&lt;<span class="type">int</span>&gt;())</span></span>;</span><br><span class="line">    <span class="comment">// .def 将 C++ 类的成员函数暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;setValue&quot;</span>, &amp;MyClass::setValue)</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;getValue&quot;</span>, &amp;MyClass::getValue)</span><br><span class="line">    <span class="comment">// 重载函数</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)()&gt;(&amp;MyClass::show))</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)(<span class="type">int</span>)&gt;(&amp;MyClass::show))</span><br><span class="line">    <span class="comment">// .def_readwrite 和 .def_readonly 用于将类成员变量暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def_readonly</span>(<span class="string">&quot;value&quot;</span>, &amp;MyClass::value_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>cmake 文件</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最低版本要求</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">project</span>(MyPythonModule)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 C++ 标准</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 Python 和 Boost Python</span></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源文件</span></span><br><span class="line"><span class="keyword">set</span>(SOURCES my_class.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成共享库</span></span><br><span class="line"><span class="keyword">add_library</span>(my_module SHARED <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_module <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 PREFIX 为空，生成 my_class.so 库，否则默认生成 libmy_class.so 库</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(my_module PROPERTIES PREFIX <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用别名</span></span><br><span class="line">moveit::core::<span class="built_in">MoveItErrorCode</span> (MoveGroupInterfaceWrapper::*pick_1)(<span class="type">const</span> std::string&amp;, <span class="type">bool</span>) =</span><br><span class="line">      &amp;MoveGroupInterfaceWrapper::pick;</span><br><span class="line">move_group_interface_class.<span class="built_in">def</span>(<span class="string">&quot;pick&quot;</span>, pick_1);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>bp::tuple 用于将 C++ 数据转换为 Python 元组的工具。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function">bp::tuple <span class="title">createComplexTuple</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个复杂的元组，包含整数、字符串和向量</span></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">    bp::list pyList;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> v : vec) &#123;</span><br><span class="line">        pyList.<span class="built_in">append</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bp::<span class="built_in">make_tuple</span>(<span class="number">42</span>, <span class="string">&quot;Hello, World&quot;</span>, pyList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">    bp::<span class="built_in">def</span>(<span class="string">&quot;createComplexTuple&quot;</span>, createComplexTuple);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="C-调用-python"><a href="#C-调用-python" class="headerlink" title="C++ 调用 python"></a><strong>C++ 调用 python</strong></h1><p>假设有 python 方法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># example.py</span></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">greet</span><span class="params">(name)</span>:</span></span><br><span class="line"><span class="function">  return f<span class="string">&quot;Hello, &#123;name&#125;!&quot;</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">def add(a, b):</span></span><br><span class="line"><span class="function">  return a + b</span></span><br></pre></td></tr></table></figure>
-
-<p>C++ 中通过 boost.python 调用以上 python 方法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callPythonFunctions</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 初始化Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 导入 Python 模块</span></span><br><span class="line">    bp::object example_module = bp::<span class="built_in">import</span>(<span class="string">&quot;example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取函数对象</span></span><br><span class="line">    bp::object greet_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;greet&quot;</span>);</span><br><span class="line">    bp::object add_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="comment">// 调用 greet 函数</span></span><br><span class="line">    bp::object result = <span class="built_in">greet_function</span>(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">    std::string greet_result = bp::<span class="built_in">extract</span>&lt;std::string&gt;(result);</span><br><span class="line">    std::cout &lt;&lt; greet_result &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调用 add 函数</span></span><br><span class="line">    bp::object sum_result = <span class="built_in">add_function</span>(<span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="type">int</span> sum = bp::<span class="built_in">extract</span>&lt;<span class="type">int</span>&gt;(sum_result);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="built_in">catch</span> (bp::error_already_set <span class="type">const</span> &amp;) &#123;</span><br><span class="line">    <span class="built_in">PyErr_Print</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 关闭Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">callPythonFunctions</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>对应的 CMakeLists.txt</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"><span class="keyword">project</span>(CppCallPython)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(SOURCES main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(CppCallPython <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(CppCallPython <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/" class="post-title-link" itemprop="url">行为树与状态机</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>903</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://robohub.org/introduction-to-behavior-trees/">introduction-to-behavior-trees</a></li>
-<li>The Behavior Trees in Robotics and AI</li>
-<li><a target="_blank" rel="noopener" href="https://gitee.com/ncnynl/turtlebot3_behavior_demos.git">turtlebot3_behavior_demos</a></li>
-<li><a target="_blank" rel="noopener" href="https://dev.epicgames.com/documentation/en-us/unreal-engine/behavior-tree-in-unreal-engine---quick-start-guide?application_version=5.4">Behavior Tree in Unreal Engine - Quick Start Guide | Unreal Engine 5.4 Documentation | Epic Developer Community (epicgames.com)</a></li>
-<li><a target="_blank" rel="noopener" href="https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/">https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/</a></li>
-</ul>
-<p>BT vs FSM</p>
-<ul>
-<li>理论上，可以将任何东西表述为行为树、有限状态机、其它抽象之一。但不同模型在进行大规模设计时有气优劣</li>
-<li>行为树与状态机，在模块化(modularity)和反应性(reactivity)之间存在一种权衡。通常，行为树更容易组合和修改，而有限状态机在设计反应性行为方面更有优势</li>
-</ul>
-<p>假设有一个移动抓取任务，机器人需要移动到物体旁，抓取物体，然后返回起始位置，其行为树和有限状态机设计分别如下</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203758231.png" class="" title="image-20240907203758231">
-
-<p>若要修改这种行为。例如，先检查抓取前的位置是否有效，必要时先纠正位姿。针对行为树，可以插入一个子树，而 FSM 则需要重新连接多个转换</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203830026.png" class="" title="image-20240907203830026">
-
-<p>此外，针对响应性问题。若机器人电池电量低，必须先返回充电再继续任务。此时使用 FSM 更容易，虽然会导致状态转换看似混乱。而为了使行为树在这类场景更具响应性，增加了 Reactive Sequence 概念，即使返回 SUCCEEDED，仍可对序列中的前面的子节点进行处理</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203852775.png" class="" title="image-20240907203852775">
-
-
-
-<p>（注意：此例中，只会在开始时检查电量，并非 reactive 的。可参考 reactive sequence 进行调整）</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203915759.png" class="" title="image-20240907203915759">
-
-<p>FSM 可通过允许在任意两个状态之间定义转换来实现这种 reactive。</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203936469.png" class="" title="image-20240907203936469">
-
-<p>分层有限状态机(HFSM)可以让结构更加清晰。上例中定义了一个 Nominal 超级状态，从而定义了正常操作与充电之间的工作模式。</p>
-<p>由于这种模块化和反应性的权衡，FSM 在管理更高层级的操作模式(如正常操作与充电)方面表现优秀；而行为树则擅长构建复杂的行为序列，非常擅长处理故障恢复。因此，可考虑混合模式：</p>
-<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203957318.png" class="" title="image-20240907203957318">
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1768,14 +1961,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">827k</span>
+    <span title="站点总字数">835k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">25:04</span>
+    <span title="站点阅读时长">25:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

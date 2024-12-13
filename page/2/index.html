@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,259 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">BLDC_位置控制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-21 18:17:08 / 修改时间：21:09:24" itemprop="dateCreated datePublished" datetime="2024-11-21T18:17:08+08:00">2024-11-21</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openExample(<span class="string">&#x27;simscapeelectrical/BLDCPositionControlExample&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>此示例说明如何控制基于 BLDC 的电气驱动器中的转子角度。理想的扭矩源（图中的 Torque Source）提供负载（即：在电机上施加外力）。</p>
+<h1 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h1><p>Control 子系统使用基于 PI 的级联控制结构，具有三个控制回路：</p>
+<ul>
+<li>一个外部位置控制回路</li>
+<li>一个速度控制回路</li>
+<li>一个内部电流控制回路</li>
+</ul>
+
+
+<p>控制器的输入为 Position，输出为六脉冲向量 S。Gate driver 为 Six-Pulse Gate Multiplexer。</p>
+<p>Angle、w_sens、Hall 为运动传感器和霍尔传感器测量的角度、角速度、位置值，iabc 为测量到的输入相电流向量。</p>
+<h2 id="BLDC-Current-Controller"><a href="#BLDC-Current-Controller" class="headerlink" title="BLDC Current Controller"></a>BLDC Current Controller</h2><p>该模块使用以下算法来控制无刷电机中的电流</p>
+
+
+<p>相应方程为</p>
+
+
+<p>BLDC 电流控制器通过使用此方程实现比例积分 （PI） 电流控制来产生 BLDC 模块的占空比。其中：</p>
+<ul>
+<li>D ：占空比（duty cycle）</li>
+<li>K_p：比例增益</li>
+<li>K_i：积分增益</li>
+<li>T_s：时间段</li>
+<li>Is_ref：参考电流</li>
+<li>Is：测量电流</li>
+<li>G_zc：零抵消多项式</li>
+</ul>
+<p>PI 控制算法的闭环传递函数产生一个零点，可以通过在前馈路径中使用零点抵消来抵消该零点。离散时间中的零抵消传递函数为：</p>
+
+
+
+
+<p>该模块通过将占空比乘以换向信号来获得三相的控制信号。得到的三个控制信号在区间 [-1， 1] 内归一化。</p>
+<h1 id="Gate-driver"><a href="#Gate-driver" class="headerlink" title="Gate driver"></a>Gate driver</h1>
+
+
+
+<p>BLDC 由受控的三相逆变器供电。逆变器的栅极信号是从霍尔信号获得的。模拟使用步骤引用。Scopes 子系统包含允许您查看仿真结果的 Scope。</p>
+<h1 id="iabc"><a href="#iabc" class="headerlink" title="iabc"></a>iabc</h1><p>三相电流传感器。</p>
+
+
+<p>Current Sensor （Three-Phase） 模块表示理想的三相电流传感器。该模块测量从端口 ~1 流向端口 ~2 的三个电流中的每一种，并输出三元素物理信号向量。物理信号输出向量的每个元件都与其各自相位中的电流成正比</p>
+<h1 id="trq"><a href="#trq" class="headerlink" title="trq"></a>trq</h1><p>扭矩传感器</p>
+
+
+<ul>
+<li>C：与输入 R 相同</li>
+<li>T：测量结果</li>
+</ul>
+<h1 id="a-w-Hall"><a href="#a-w-Hall" class="headerlink" title="a,w,Hall"></a>a,w,Hall</h1>
+
+<p>包含 Motion Sensor（此例中设置为：理想的旋转运动传感器） 和 Hall sensor（霍尔传感器）</p>
+<p>Motion Sensor 测量机械旋转的角速度或角度，测量结果为理想值，不考虑惯性、摩擦、延迟、能耗等因素。α、w、A 端口分别输出端口 R 相对于端口 C（电机外壳） 的角加速度、角速度、位置。当端口 R 的角速度大于端口 C 的角速度时，测得的角速度为正（此例中，C 接电机外壳，即测量转子转速）。</p>
+<h1 id="Torque-Source"><a href="#Torque-Source" class="headerlink" title="Torque Source"></a>Torque Source</h1><p>此例中为理想的扭矩源。输入 S 表示以 C 为参考，作用于 R 的扭矩。</p>
+<h1 id="Inertia"><a href="#Inertia" class="headerlink" title="Inertia"></a>Inertia</h1><p>表示理想的机械旋转惯性。该模块有一个或两个机械旋转守恒端口。区别纯粹是图形上的，因为端口是刚性连接的。模块的正方向是从其端口到参考点。这意味着，如果惯量在正方向上加速，则惯量扭矩为正</p>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_Hysteresis_Current_Control/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/21/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E7%94%B5%E6%9C%BA/Matlab%E4%BB%BF%E7%9C%9F/BLDC_Hysteresis_Current_Control/" class="post-title-link" itemprop="url">BLDC_Hysteresis_Current_Control</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-21 17:35:29 / 修改时间：18:17:13" itemprop="dateCreated datePublished" datetime="2024-11-21T17:35:29+08:00">2024-11-21</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>289</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openExample(<span class="string">&#x27;simscapeelectrical/BLDCHysteresisControlExample&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用迟滞(hysteresis)控制器控制 BLDC 电机。直流电压源通过受控三相逆变器为 BLDC 供电。向电机控制器提供一个电流请求斜坡(ramp)。负载转矩（load torque）与转子转速呈二次关系。控制子系统实现了基于磁滞的电流控制策略。Scopes子系统可查看模拟结果。</p>
+<p>示例中</p>
+<ul>
+<li><p>电机控制器：</p>
+<ul>
+<li>接收电流请求</li>
+<li>根据之后控制策略输出控制信号</li>
+<li>输出为六脉冲向量 S，用于控制功率转换器</li>
+</ul>
+
+</li>
+<li><p>BLDC 电机</p>
+<ul>
+<li>输入三相电流(iabc)</li>
+</ul>
+</li>
+<li><p>Gate drive</p>
+</li>
+</ul>
+<p>仿真结果</p>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1444,240 +1697,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/" class="post-title-link" itemprop="url">异常排查</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 14:01:13 / 修改时间：14:02:07" itemprop="dateCreated datePublished" datetime="2024-11-16T14:01:13+08:00">2024-11-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>959</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>主要集中在栈溢出异常的定位及解决上。</p>
-<p>调用标准 C 库函数时，栈空间使用量会急剧增加。尤其是 IO 与字符串处理函数，例如 sprintf。对于 sprintf 等接口，可使用 printf-stdarg.c（第三方提供，开源） 中的优化版本替换。</p>
-<h1 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h1><h2 id="uxTaskGetStackHighWaterMark"><a href="#uxTaskGetStackHighWaterMark" class="headerlink" title="uxTaskGetStackHighWaterMark()"></a>uxTaskGetStackHighWaterMark()</h2><p>每个任务独立维护自己的栈空间，栈空间的总量在任务创建时设定。</p>
-<p>uxTaskGetStackHighWaterMark() 主要用来查询指定任务的运行历史中，其栈空间还剩多少就要溢出。这个值被称为栈空间的 High Water Mark。返回的是从开始执行到当前过程中栈空间的最小剩余量。</p>
-<h2 id="运行时检测"><a href="#运行时检测" class="headerlink" title="运行时检测"></a>运行时检测</h2><p>FreeRTOS 包含两种运行时栈侦测机制，由FreeRTOSConfig.h 中的配置常量 <strong>configCHECK_FOR_STACK_OVERFLOW</strong> 进行控制。这两种方式都会增加上下文切换开销。</p>
-<p>栈溢出钩子函数(或称回调函数)由内核在侦测到栈溢出时调用。要使用栈溢出钩子函数，需要进行以下配置：在FreeRTOSConfig.h 中把<strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 1 或 2。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 栈溢出钩子函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">vApplicationStackOverflowHook</span><span class="params">( TaskHandle_t *pxTask, <span class="type">signed</span> portCHAR *pcTaskName )</span>;</span><br></pre></td></tr></table></figure>
-
-<p>栈溢出钩子函数只是为了使跟踪调试栈空间错误更容易，而无法在栈溢出时对其进行恢复。</p>
-<p>1）运行时检测-方法一</p>
-<p><strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 1。</p>
-<p>任务被交换出去的时候，该任务的整个上下文被保存到它自己的栈空间中。这时任务栈的使用应当达到了一个峰值。使用方式一时，内核会在任务上下文保存后检查栈指针是否还指向有效栈空间。一旦检测到栈指针的指向已经超出任务栈的有效范围，栈溢出钩子函数就会被调用。</p>
-<p>该方法速度快，但如果栈溢出发生在两次上下文保存之间，则无法监测到</p>
-<p>2）运行时检测-方法二</p>
-<p><strong>configCHECK_FOR_STACK_OVERFLOW</strong> 设为 2。</p>
-<p>当创建任务时，任务栈空间中就预置了一个标记。该方法会检查任务栈的最后20 个字节，查看预置在这里的标记数据是否被覆盖。如果最后 20 个字节的标记数据与预设值不同，则栈溢出钩子函数就会被调用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/" class="post-title-link" itemprop="url">栈</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-11-16 14:00:00 / 修改时间：14:00:53" itemprop="dateCreated datePublished" datetime="2024-11-16T14:00:00+08:00">2024-11-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>局部变量，函数调用时的现场保护和返回地址（如：LR寄存器），函数的形参，进入中断函数前和中断嵌套</strong>等都需要栈空间，栈空间定义小了会造成系统崩溃。</p>
-<p>每个任务都有自己的栈空间（类似 linux 线程栈空间）。</p>
-<p>FreeRTOS 有两种方式创建任务：</p>
-<ul>
-<li><p>动态创建（xTaskCreate）</p>
-</li>
-<li><p>静态创建（xTaskCreateStatic）</p>
-</li>
-</ul>
-<p>对于动态创建方式，<strong>任务栈空间是在程序运行时（任务创建时）从</strong> <strong>configTOTAL_HEAP_SIZE</strong> <strong>(即：HEAP - 堆)中申请</strong>。而静态创建方式，在编译时分配。</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/image-20241116140020845.png" class="" title="image-20241116140020845">
-
-<p>startup_.s 中的堆栈大小是用于当前项目的异常和中断服务程序（ISR）。堆栈大小取决于异常和 ISR 执行的嵌套层数。</p>
-<p>任务栈并不是使用的这里的栈空间。</p>
-<img src="/2024/11/16/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/FreeRTOS/%E6%A0%88/image-20241116140038977.png" class="" title="image-20241116140038977">
-
-<p>M3 和 M4 内核具有双堆栈指针，MSP（Main Stack Pointer） 主堆栈指针和 PSP（Process Stack Pointer） 进程堆栈指针（或 PSP 任务堆栈指针）。MSP 主要在线程模式下使用，PSP 主要在 Handler 模式下使用。这样，同一个逻辑地址实际对应两个物理寄存器，MSP 和 PSP，在不同工作模式下使用不同的物理寄存器。</p>
-<p>FreeRTOS 任务中，使用的是 PSP。一旦进入了中断函数以及可能发生的中断嵌套都是用的 MSP 指针。</p>
-<p>系统栈大小主要需要考虑可能发生的中断嵌套层数。</p>
-<p>对于 M3 和未使用 FPU 功能的 M4 内核，在发生中断时，最坏情况下需将 16 个通用寄存器全部入栈，即 16 x 4Byte &#x3D; 64Byte。假设可能发生 n 此中断嵌套，就需要 64 * n Byte。（实际中断时，有 8 个通用寄存器是自动入栈的，这是任务栈，进入中断后其余寄存器入栈及中断嵌套都是用的系统栈）</p>
-<p>对于使用 FPU 功能的 M4 内核，发生中断时，最坏情况下除了 16 个通用寄存器需要入栈外，还有 34 个浮点寄存器也要入栈，即：（16 + 34）* 4Byte &#x3D; 200Byte。（实际中断时，有 8 个通用寄存器和 18 个浮点寄存器是自动入栈的，这是任务栈，进入中断后其余寄存器入栈及中断嵌套都是用的系统栈）</p>
-<p>实际任务栈空间大小可通过调试方法得出：先给一个较大的栈空间，然后输出任务剩余栈信息，根据这个信息进行调整。涉及接口：</p>
-<p>- uxTaskGetStackHighWaterMark()：查询指定任务运行历史中，栈空间最少剩余多少。注意，需将 INCLUDE_uxTaskGetStackHighWaterMark（FreeRTOSConfig.h） 必须配置为 1</p>
-<p>MDK 生成的 htm 和 map 文件中可获取到每个被调用函数的最大栈需求，以及各函数之间的调用关系。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1702,14 +1721,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">827k</span>
+    <span title="站点总字数">835k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">25:04</span>
+    <span title="站点阅读时长">25:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

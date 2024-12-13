@@ -144,7 +144,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">206</span>
+          <span class="site-state-item-count">208</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,6 +172,269 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/python%E8%B0%83%E7%94%A8CPP/" class="post-title-link" itemprop="url">python调用C++</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">代码编程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="python-调用-C"><a href="#python-调用-C" class="headerlink" title="python 调用 C++"></a><strong>python 调用 C++</strong></h1><p>Boost.Python 用于在 C++ 和 Python 之间进行无缝集成，使得可以在 Python 中使用 C++ 编写的代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> value) : <span class="built_in">value_</span>(value) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; value_ = value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> value_; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;No arguments&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;Value: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// BOOST_PYTHON_MODULE 宏定义 python 模块 my_module </span></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">  <span class="comment">// 使用 bp::class_ 将上面定义的 MyClass 类暴露给 python</span></span><br><span class="line">  <span class="function">bp::class_&lt;MyClass&gt; <span class="title">my_class_interface</span><span class="params">(<span class="string">&quot;MyClass&quot;</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment">// bp::init 用于暴露构造函数</span></span></span></span><br><span class="line"><span class="params"><span class="function">    bp::init&lt;<span class="type">int</span>&gt;())</span></span>;</span><br><span class="line">    <span class="comment">// .def 将 C++ 类的成员函数暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;setValue&quot;</span>, &amp;MyClass::setValue)</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;getValue&quot;</span>, &amp;MyClass::getValue)</span><br><span class="line">    <span class="comment">// 重载函数</span></span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)()&gt;(&amp;MyClass::show))</span><br><span class="line">    my_class_interface.<span class="built_in">def</span>(<span class="string">&quot;show&quot;</span>, <span class="built_in">static_cast</span>&lt;<span class="built_in">void</span> (MyClass::*)(<span class="type">int</span>)&gt;(&amp;MyClass::show))</span><br><span class="line">    <span class="comment">// .def_readwrite 和 .def_readonly 用于将类成员变量暴露给 Python</span></span><br><span class="line">    my_class_interface.<span class="built_in">def_readonly</span>(<span class="string">&quot;value&quot;</span>, &amp;MyClass::value_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cmake 文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最低版本要求</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">project</span>(MyPythonModule)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 C++ 标准</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 Python 和 Boost Python</span></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源文件</span></span><br><span class="line"><span class="keyword">set</span>(SOURCES my_class.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成共享库</span></span><br><span class="line"><span class="keyword">add_library</span>(my_module SHARED <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_module <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 PREFIX 为空，生成 my_class.so 库，否则默认生成 libmy_class.so 库</span></span><br><span class="line"><span class="keyword">set_target_properties</span>(my_module PROPERTIES PREFIX <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用别名</span></span><br><span class="line">moveit::core::<span class="built_in">MoveItErrorCode</span> (MoveGroupInterfaceWrapper::*pick_1)(<span class="type">const</span> std::string&amp;, <span class="type">bool</span>) =</span><br><span class="line">      &amp;MoveGroupInterfaceWrapper::pick;</span><br><span class="line">move_group_interface_class.<span class="built_in">def</span>(<span class="string">&quot;pick&quot;</span>, pick_1);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>bp::tuple 用于将 C++ 数据转换为 Python 元组的工具。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function">bp::tuple <span class="title">createComplexTuple</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个复杂的元组，包含整数、字符串和向量</span></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">    bp::list pyList;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> v : vec) &#123;</span><br><span class="line">        pyList.<span class="built_in">append</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bp::<span class="built_in">make_tuple</span>(<span class="number">42</span>, <span class="string">&quot;Hello, World&quot;</span>, pyList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOST_PYTHON_MODULE</span>(my_module) &#123;</span><br><span class="line">    bp::<span class="built_in">def</span>(<span class="string">&quot;createComplexTuple&quot;</span>, createComplexTuple);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="C-调用-python"><a href="#C-调用-python" class="headerlink" title="C++ 调用 python"></a><strong>C++ 调用 python</strong></h1><p>假设有 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># example.py</span></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">greet</span><span class="params">(name)</span>:</span></span><br><span class="line"><span class="function">  return f<span class="string">&quot;Hello, &#123;name&#125;!&quot;</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">def add(a, b):</span></span><br><span class="line"><span class="function">  return a + b</span></span><br></pre></td></tr></table></figure>
+
+<p>C++ 中通过 boost.python 调用以上 python 方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/python.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bp = boost::python;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callPythonFunctions</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 初始化Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Initialize</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 导入 Python 模块</span></span><br><span class="line">    bp::object example_module = bp::<span class="built_in">import</span>(<span class="string">&quot;example&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取函数对象</span></span><br><span class="line">    bp::object greet_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;greet&quot;</span>);</span><br><span class="line">    bp::object add_function = example_module.<span class="built_in">attr</span>(<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="comment">// 调用 greet 函数</span></span><br><span class="line">    bp::object result = <span class="built_in">greet_function</span>(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">    std::string greet_result = bp::<span class="built_in">extract</span>&lt;std::string&gt;(result);</span><br><span class="line">    std::cout &lt;&lt; greet_result &lt;&lt; std::endl;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 调用 add 函数</span></span><br><span class="line">    bp::object sum_result = <span class="built_in">add_function</span>(<span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">    <span class="type">int</span> sum = bp::<span class="built_in">extract</span>&lt;<span class="type">int</span>&gt;(sum_result);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="built_in">catch</span> (bp::error_already_set <span class="type">const</span> &amp;) &#123;</span><br><span class="line">    <span class="built_in">PyErr_Print</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 关闭Python解释器</span></span><br><span class="line">  <span class="built_in">Py_Finalize</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">callPythonFunctions</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>对应的 CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"><span class="keyword">project</span>(CppCallPython)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_package</span>(PythonInterp REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(PythonLibs REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(Boost REQUIRED COMPONENTS python)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PYTHON_INCLUDE_DIRS&#125;</span> <span class="variable">$&#123;Boost_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(SOURCES main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(CppCallPython <span class="variable">$&#123;SOURCES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(CppCallPython <span class="variable">$&#123;PYTHON_LIBRARIES&#125;</span> <span class="variable">$&#123;Boost_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/" class="post-title-link" itemprop="url">行为树与状态机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>903</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://robohub.org/introduction-to-behavior-trees/">introduction-to-behavior-trees</a></li>
+<li>The Behavior Trees in Robotics and AI</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/ncnynl/turtlebot3_behavior_demos.git">turtlebot3_behavior_demos</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.epicgames.com/documentation/en-us/unreal-engine/behavior-tree-in-unreal-engine---quick-start-guide?application_version=5.4">Behavior Tree in Unreal Engine - Quick Start Guide | Unreal Engine 5.4 Documentation | Epic Developer Community (epicgames.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/">https://roboticseabass.com/2020/12/30/2020-review-service-robotics-mit-csail/</a></li>
+</ul>
+<p>BT vs FSM</p>
+<ul>
+<li>理论上，可以将任何东西表述为行为树、有限状态机、其它抽象之一。但不同模型在进行大规模设计时有气优劣</li>
+<li>行为树与状态机，在模块化(modularity)和反应性(reactivity)之间存在一种权衡。通常，行为树更容易组合和修改，而有限状态机在设计反应性行为方面更有优势</li>
+</ul>
+<p>假设有一个移动抓取任务，机器人需要移动到物体旁，抓取物体，然后返回起始位置，其行为树和有限状态机设计分别如下</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203758231.png" class="" title="image-20240907203758231">
+
+<p>若要修改这种行为。例如，先检查抓取前的位置是否有效，必要时先纠正位姿。针对行为树，可以插入一个子树，而 FSM 则需要重新连接多个转换</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203830026.png" class="" title="image-20240907203830026">
+
+<p>此外，针对响应性问题。若机器人电池电量低，必须先返回充电再继续任务。此时使用 FSM 更容易，虽然会导致状态转换看似混乱。而为了使行为树在这类场景更具响应性，增加了 Reactive Sequence 概念，即使返回 SUCCEEDED，仍可对序列中的前面的子节点进行处理</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203852775.png" class="" title="image-20240907203852775">
+
+
+
+<p>（注意：此例中，只会在开始时检查电量，并非 reactive 的。可参考 reactive sequence 进行调整）</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203915759.png" class="" title="image-20240907203915759">
+
+<p>FSM 可通过允许在任意两个状态之间定义转换来实现这种 reactive。</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203936469.png" class="" title="image-20240907203936469">
+
+<p>分层有限状态机(HFSM)可以让结构更加清晰。上例中定义了一个 Nominal 超级状态，从而定义了正常操作与充电之间的工作模式。</p>
+<p>由于这种模块化和反应性的权衡，FSM 在管理更高层级的操作模式(如正常操作与充电)方面表现优秀；而行为树则擅长构建复杂的行为序列，非常擅长处理故障恢复。因此，可考虑混合模式：</p>
+<img src="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/image-20240907203957318.png" class="" title="image-20240907203957318">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1811,260 +2074,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/mailbox/" class="post-title-link" itemprop="url">Mailbox</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/" itemprop="url" rel="index"><span itemprop="name">数据通信</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1/ZeroMQ/" itemprop="url" rel="index"><span itemprop="name">ZeroMQ</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>ZeroMQ 中，每个线程内含有一个 MailBox，用于线程间传递命令。创建 ZeroMQ IO 线程时，会把 mailbox 句柄添加到 Poller 中，用于监听是否有命令到达。  </p>
-<p>在使用 <code>zsock_new()</code> 新建套接字时，最终会调用 <code>socket_base_t::create(...)</code> 方法创建 socket 并注册其 mailbox。  </p>
-<p><code>socket_base_t::create(...)</code> 中会根据指定的套接字类型创建不同的套接字，例如：  </p>
-<ul>
-<li><code>ZMQ_PAIR</code>：pair_t</li>
-<li><code>ZMQ_PUB</code>：pub_t</li>
-<li><code>ZMQ_SUB</code>：sub_t</li>
-<li>…</li>
-</ul>
-<p>所有套接字基类均为 <code>socket_base_t</code>，该类构造函数中创建 mailbox：  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (_thread_safe) &#123;</span><br><span class="line">    _mailbox = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_safe_t</span> (&amp;_sync);</span><br><span class="line">    <span class="built_in">zmq_assert</span> (_mailbox);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">mailbox_t</span> *m = <span class="built_in">new</span> (std::nothrow) <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    <span class="built_in">zmq_assert</span> (m);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (m-&gt;<span class="built_in">get_fd</span> () != retired_fd)</span><br><span class="line">        _mailbox = m;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">LIBZMQ_DELETE</span> (m);</span><br><span class="line">        _mailbox = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="mailbox-t"><a href="#mailbox-t" class="headerlink" title="mailbox_t"></a>mailbox_t</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">mailbox_t</span> ZMQ_FINAL : <span class="keyword">public</span> i_mailbox</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mailbox_t</span> ();</span><br><span class="line">    ~<span class="built_in">mailbox_t</span> ();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">fd_t</span> <span class="title">get_fd</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">send</span> <span class="params">(<span class="type">const</span> <span class="type">command_t</span> &amp;cmd_)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">recv</span> <span class="params">(<span class="type">command_t</span> *cmd_, <span class="type">int</span> timeout_)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">valid</span> <span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> HAVE_FORK</span></span><br><span class="line">    <span class="comment">// close the file descriptors in the signaller. This is used in a forked</span></span><br><span class="line">    <span class="comment">// child process to close the file descriptors so that they do not interfere</span></span><br><span class="line">    <span class="comment">// with the context in the parent process.</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">forked</span> <span class="params">()</span> ZMQ_FINAL</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _signaler.forked ();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 存储实际指令的队列</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">ypipe_t</span>&lt;<span class="type">command_t</span>, command_pipe_granularity&gt; <span class="type">cpipe_t</span>;</span><br><span class="line">    <span class="type">cpipe_t</span> _cpipe;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用于从 writer 线程发送信号到 reader 线程</span></span><br><span class="line">    <span class="type">signaler_t</span> _signaler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只有一个线程从 mailbox 接收消息，但可以有任意数量的线程向 mailbox 发送消息。</span></span><br><span class="line">    <span class="comment">// 假设管道需要在它的两个端点上同步访问，必须同步发送端。</span></span><br><span class="line">    <span class="type">mutex_t</span> _sync;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果底层管道处于活动状态，则为 True。例如：当被允许从它读取命令时</span></span><br><span class="line">    <span class="type">bool</span> _active;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过宏定义将其设置为 private 以禁用拷贝构造和赋值运算符</span></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">mailbox_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="ypipe-t"><a href="#ypipe-t" class="headerlink" title="ypipe_t"></a>ypipe_t</h2><p><code>ypipe_t</code> 是无锁队列(Lock-free queue)实现。  </p>
-<ul>
-<li>同一时刻只有一个线程可以从管道中读取数据  </li>
-<li>同一时刻只有一个线程可以向管道写入数据</li>
-</ul>
-<p>使用 <code>yqueue_t</code> 队列存储数据。  </p>
-<p>其中 yqueue 是用来设计队列，ypipe 用来设计队列的写入&#x2F;读取时机、回滚以及 flush  </p>
-<h2 id="yqueue-t"><a href="#yqueue-t" class="headerlink" title="yqueue_t"></a>yqueue_t</h2><p>参考：  </p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/33309228">https://www.zhihu.com/question/33309228</a>  </li>
-<li><a target="_blank" rel="noopener" href="https://gopher.blog.csdn.net/article/details/126284313">https://gopher.blog.csdn.net/article/details/126284313</a></li>
-</ul>
-<p><code>yqueue</code> 是一个高效的队列实现。主要目的是最小化 <code>allocations/deallocations</code> 次数。  </p>
-<p><code>yqueue</code> 中的使用 chunk 块机制，每次批量分配一批元素，这样可以减少内存的分配和释放。<code>yqueue_t</code> 由一组 chunk 组成，每个 chunk 保存 N 个元素：<code>spare_chunk</code>，当需要分配 <code>chunk_t</code> 时，从 <code>spare_chunk</code> 中获取。  </p>
-<p>当队列空间不足时，每次分配一个 <code>chunk_t</code>，每个 <code>chunk_t</code> 能存储 N 个元素。在数据出队列后，队列有多余空间时，回收的 chunk 也不会立即释放，而是根据局部性原理先回收到队列中。  </p>
-<p><code>yqueue_t</code> 类中的 <code>spare_chunk</code> 用于保存最近的空闲块。即：在将一个 chunk 中的所有元素都 <code>pop</code> 掉之后，就可以释放这个 chunk。但是可以保存一块最近的空闲块，以后如果 chunk 不够用时，扩容 chunk 就不用 malloc，直接复用该 <code>spare_chunk</code> 即可。根据局部性原理，这个 <code>spare_chunk</code> 的地址或者内存也很可能还在 cache 中，这样的机制可以减少一次 malloc 以及存入 cache 操作。  </p>
-<p><code>yqueue_t</code> 内部有三个 <code>chunk_t</code> 类型指针以及对应的索引位置：  </p>
-<ul>
-<li><code>begin_chunk/begin_pos</code>：指向队列中第一个 chunk，begin_pos 指向第一个 chunk 中第一个元素的索引位置，因为 <code>pop()</code>，所以第一个元素不可能永远为 0，会随着 <code>pop()</code> 而改变。同理，第一个 chunk 也会被回收，也需记录第一个 chunk 的位置</li>
-<li><code>back_chunk/back_pos</code>：用于指向队列最后一个 chunk，back_pos 指向之后一个 chunk 的最后一个元素的索引位置</li>
-<li><code>end_chunk/end_pos</code>：在最后一个 chunk 未满时，end_chunk 和 back_chunk 相同，back_pos 的下一个就是 end_pos。最后一个 chunk 已满时，end_chunk 指向新分配的 chunk，end_pos 为 0。即：end_chunk 和 end_pos 是辅助 back_chunk&#x2F;back_pos 的</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * ALIGN 是在 posix_memalign 可用的情况下使用的内存对齐大小。默认值是 64，</span></span><br><span class="line"><span class="comment"> * 这种对齐将防止两个队列块占用同一 CPU 缓存线(Cache line)，在缓存线 &lt;= 64字节的架构</span></span><br><span class="line"><span class="comment"> * (例如，除了POWER之外的大多数内容)。它是在构建时检测到的，以尝试考虑 POWER 和 s390x 等其他平台。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N, <span class="type">size_t</span> ALIGN = ZMQ_CACHELINE_SIZE&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">int</span> N&gt; <span class="keyword">class</span> <span class="type">yqueue_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//  Create the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> <span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        _begin_chunk = <span class="built_in">allocate_chunk</span> ();</span><br><span class="line">        <span class="built_in">alloc_assert</span> (_begin_chunk);</span><br><span class="line">        _begin_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// back_chunk总是指向队列中最后一个元素所在的 chunk，初始为空</span></span><br><span class="line">        _back_chunk = <span class="literal">NULL</span>;</span><br><span class="line">        _back_pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// end_chunk 总是指向链表的最后一个 chunk</span></span><br><span class="line">        _end_chunk = _begin_chunk;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Destroy the queue.</span></span><br><span class="line">    <span class="keyword">inline</span> ~<span class="built_in">yqueue_t</span> ()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (_begin_chunk == _end_chunk) &#123;</span><br><span class="line">                <span class="built_in">free</span> (_begin_chunk);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            <span class="built_in">free</span> (o);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">free</span> (sc);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  返回队列首元素.注意：若队列为空，行为未定义</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">front</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _begin_chunk-&gt;values[_begin_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> T &amp;<span class="title">back</span> <span class="params">()</span> </span>&#123; <span class="keyword">return</span> _back_chunk-&gt;values[_back_pos]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">push</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        _back_chunk = _end_chunk;</span><br><span class="line">        _back_pos = _end_pos;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (++_end_pos != N) <span class="comment">// 当前 chunk 未满</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">chunk_t</span> *sc = _spare_chunk.<span class="built_in">xchg</span> (<span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (sc) &#123; <span class="comment">// 若有 spare_chunk，则继续复用</span></span><br><span class="line">            _end_chunk-&gt;next = sc;</span><br><span class="line">            sc-&gt;prev = _end_chunk;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 若没有 spare_chunk，则重新分配 chunk</span></span><br><span class="line">            _end_chunk-&gt;next = <span class="built_in">allocate_chunk</span> (); <span class="comment">// 分配一个 chunk</span></span><br><span class="line">            <span class="built_in">alloc_assert</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next-&gt;prev = _end_chunk;</span><br><span class="line">        &#125;</span><br><span class="line">        _end_chunk = _end_chunk-&gt;next;</span><br><span class="line">        _end_pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除队列末尾元素。即：回滚最后一次推送到队列的元素。注意：调用者负责销毁 unpushed 的对象。</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">unpush</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//  First, move &#x27;back&#x27; one position backwards.</span></span><br><span class="line">        <span class="keyword">if</span> (_back_pos)</span><br><span class="line">            --_back_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123; </span><br><span class="line">            _back_pos = N - <span class="number">1</span>;</span><br><span class="line">            _back_chunk = _back_chunk-&gt;prev;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Now, move &#x27;end&#x27; position backwards. Note that obsolete end chunk</span></span><br><span class="line">        <span class="comment">//  is not used as a spare chunk. The analysis shows that doing so</span></span><br><span class="line">        <span class="comment">//  would require free and atomic operation per chunk deallocated</span></span><br><span class="line">        <span class="comment">//  instead of a simple free.</span></span><br><span class="line">        <span class="keyword">if</span> (_end_pos)</span><br><span class="line">            --_end_pos;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            _end_pos = N - <span class="number">1</span>;</span><br><span class="line">            _end_chunk = _end_chunk-&gt;prev;</span><br><span class="line">            <span class="built_in">free</span> (_end_chunk-&gt;next);</span><br><span class="line">            _end_chunk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Removes an element from the front end of the queue.</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">pop</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (++_begin_pos == N) &#123; <span class="comment">// 删除满一个 chunk 才回收 chunk</span></span><br><span class="line">            <span class="type">chunk_t</span> *o = _begin_chunk;</span><br><span class="line">            _begin_chunk = _begin_chunk-&gt;next;</span><br><span class="line">            _begin_chunk-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">            _begin_pos = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//  &#x27;o&#x27; has been more recently used than _spare_chunk,</span></span><br><span class="line">            <span class="comment">//  so for cache reasons we&#x27;ll get rid of the spare and</span></span><br><span class="line">            <span class="comment">//  use &#x27;o&#x27; as the spare.</span></span><br><span class="line">            <span class="comment">// 根据局部性原理，总是保存最新的空闲块儿释放先前的空闲块</span></span><br><span class="line">            <span class="type">chunk_t</span> *cs = _spare_chunk.<span class="built_in">xchg</span> (o); </span><br><span class="line">            <span class="built_in">free</span> (cs);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// Individual memory chunk to hold N elements. 链表节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">chunk_t</span></span><br><span class="line">    &#123;</span><br><span class="line">        T values[N];</span><br><span class="line">        <span class="type">chunk_t</span> *prev;</span><br><span class="line">        <span class="type">chunk_t</span> *next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">chunk_t</span> *<span class="title">allocate_chunk</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 分配的内存空间大小：sizeof(T) * N + 8 (32bit系统，+ 16：64bit系统) </span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined HAVE_POSIX_MEMALIGN</span></span><br><span class="line">        <span class="type">void</span> *pv;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">posix_memalign</span> (&amp;pv, ALIGN, <span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">chunk_t</span> *) pv;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">chunk_t</span> *&gt; (<span class="built_in">malloc</span> (<span class="built_in">sizeof</span> (<span class="type">chunk_t</span>)));</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果队列为空，返回位置可能指向无效内存，而开始和结束位置总是有效的。</span></span><br><span class="line"><span class="comment">     * 开始位置由队列读取器(front/pop)独占访问，而back和结束位置由队列写入器(back/push)独占访问。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">chunk_t</span> *_begin_chunk;</span><br><span class="line">    <span class="type">int</span> _begin_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_back_chunk;</span><br><span class="line">    <span class="type">int</span> _back_pos;</span><br><span class="line">    <span class="type">chunk_t</span> *_end_chunk;</span><br><span class="line">    <span class="type">int</span> _end_pos;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生产和消费速度可能接近。此时，保留最近释放的块使得不必调用 malloc/free。 </span></span><br><span class="line">    <span class="type">atomic_ptr_t</span>&lt;<span class="type">chunk_t</span>&gt; _spare_chunk;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ZMQ_NON_COPYABLE_NOR_MOVABLE</span> (<span class="type">yqueue_t</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Damon">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Daemo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Daemo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/%E8%A1%8C%E4%B8%BA%E6%A0%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA/BT/%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81/" class="post-title-link" itemprop="url">BT 示例代码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-07 20:37:29" itemprop="dateCreated datePublished" datetime="2024-09-07T20:37:29+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 14:42:30" itemprop="dateModified" datetime="2024-09-22T14:42:30+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%A1%8C%E4%B8%BA%E6%A0%91/" itemprop="url" rel="index"><span itemprop="name">行为树</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ACTION_CLIENT_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTION_CLIENT_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bt_tutorials</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">ActionT</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActionClient</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> BaseClass  = RosActionNode&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionClientType = actionlib::SimpleActionClient&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionType = ActionT;</span><br><span class="line">    <span class="keyword">using</span> GoalType   = <span class="keyword">typename</span> ActionT::_action_goal_type::_goal_type;</span><br><span class="line">    <span class="keyword">using</span> ResultType = <span class="keyword">typename</span> ActionT::_action_result_type::_result_type;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">ActionClient</span>(<span class="type">const</span> std::string&amp; name)</span><br><span class="line">        : <span class="built_in">action_client_</span>(name, <span class="literal">true</span>), <span class="built_in">action_name_</span>(name) <span class="comment">// 实例化 action client</span></span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">ActionClient</span>()</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">sendGoal</span><span class="params">(cost GoalType&amp; goal)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// if server not running, fail after 20ms</span></span><br><span class="line">        <span class="keyword">if</span> (!action_client_.<span class="built_in">waitForServer</span>(<span class="built_in">rosDuration</span>(<span class="number">0.02</span>))) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;%s not running.&quot;</span>, action_name_.<span class="built_in">c_str</span>());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        action_client_.<span class="built_in">sendGoal</span>(goal);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">actionlib::SimpleClientGoalState <span class="title">getState</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> action_client_.<span class="built_in">getState</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ResultType <span class="title">getResult</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="comment">// waitForResult();</span></span><br><span class="line">        <span class="keyword">return</span> action_client_.<span class="built_in">getResult</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">cancelGoal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        action_client_.<span class="built_in">cancelAllGoal</span>(); <span class="comment">// or cancelGoal()</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ActionClientType action_client_;</span><br><span class="line">    std::string action_name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ASYNC_ACTION_INTERFACE_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  ASYNC_ACTION_INTERFACE_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> ACTION_INTERFACE_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTION_INTERFACE_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;behaviortree_cpp/action_node.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;behaviortree_cpp/bt_factory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;actionlib/client/simple_action_client.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> BT;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> narwal_behavior_tree</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">ActionT</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AsyncActionInterfaceNode</span>: <span class="keyword">public</span> AsyncActionNode</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> BaseClass  = RosActionNode&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionClientType = actionlib::SimpleActionClient&lt;ActionT&gt;;</span><br><span class="line">    <span class="keyword">using</span> ActionType = ActionT;</span><br><span class="line">    <span class="keyword">using</span> GoalType   = <span class="keyword">typename</span> ActionT::_action_goal_type::_goal_type;</span><br><span class="line">    <span class="keyword">using</span> ResultType = <span class="keyword">typename</span> ActionT::_action_result_type::_result_type;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">AsyncActionInterface</span>(ros::NodeHandle&amp; nh, <span class="type">const</span> std::string&amp; name, <span class="type">const</span> BT::NodeConfiguration&amp; config)</span><br><span class="line">        : <span class="built_in">AsyncActionNode</span>(name, config), <span class="built_in">node_</span>(nh)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">const</span> std::string server_name = <span class="built_in">getInput</span>&lt;std::string&gt;(<span class="string">&quot;server_name&quot;</span>).<span class="built_in">value</span>();</span><br><span class="line">        action_client_ = std::<span class="built_in">make_shared</span>&lt;ActionClientType&gt;(node_, server_name, <span class="literal">true</span> ); <span class="comment">// 实例化 action client</span></span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">AsyncActionInterface</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> BT::PortsList <span class="title">providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123; BT::<span class="built_in">InputPort</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 异步行为，会创建线程执行，不会阻塞主流程，执行过程中该行为返回 RUNNING 状态</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> BT::NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!action_client_-&gt;<span class="built_in">waitForServer</span>(ros::<span class="built_in">Duration</span>(<span class="number">2.0</span>))) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Server not running.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Pose2D goal;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">getInput</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>, goal)) &#123;</span><br><span class="line">            <span class="comment">// if I can&#x27;t get this, there is something wrong with your BT.</span></span><br><span class="line">            <span class="comment">// For this reason throw an exception instead of returning FAILURE</span></span><br><span class="line">            <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;missing required input [goal]&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        aborted_ = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Send goal...&quot;</span>);</span><br><span class="line">        <span class="comment">// GoalType msg;</span></span><br><span class="line">        action_client_-&gt;<span class="built_in">sendGoal</span>(msg);</span><br><span class="line">        <span class="keyword">while</span> (!aborted_ &amp;&amp; !action_client_.<span class="built_in">waitForResult</span>(ros::<span class="built_in">Duration</span>(<span class="number">0.02</span>))) &#123;</span><br><span class="line">            <span class="comment">// 等待结果</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (aborted_) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Goal aborted&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (action_client_-&gt;<span class="built_in">getState</span>() != actionlib::SimpleClientGoalState::SUCCEEDED) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Action Server failed.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal reached.&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> BT::NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">halt</span><span class="params">()</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aborted_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::shared_ptr&lt;ActionClientType&gt; action_client_;</span><br><span class="line">    ros::NodeHandle node_;</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> aborted_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MOVE_BASE_CLIENT_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MOVE_BASE_CLIENT_H_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Pose2D</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> x, y, quaternion_z, quaternion_w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> BT</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="function"><span class="keyword">inline</span></span></span><br><span class="line"><span class="function">Pose2D <span class="title">convertFromString</span><span class="params">(StringView key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// three real numbers separated by semicolons</span></span><br><span class="line">    <span class="keyword">auto</span> parts = BT::<span class="built_in">splitString</span>(key, <span class="string">&#x27;;&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (parts.<span class="built_in">size</span>() != <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;invalid input)&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Pose2D output;</span><br><span class="line">        output.x     = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">0</span>]);</span><br><span class="line">        output.y     = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">1</span>]);</span><br><span class="line">        output.quaternion_z = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">2</span>]);</span><br><span class="line">        output.quaternion_w = <span class="built_in">convertFromString</span>&lt;<span class="type">double</span>&gt;(parts[<span class="number">3</span>]);</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125; <span class="comment">// end namespace BT</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> bt_tutorials</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MoveBaseClient</span>: <span class="keyword">public</span> ActionClient, BT::AsyncActionNode</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">/* data */</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MoveBaseClient</span>(<span class="type">const</span> std::string&amp; action_name, <span class="type">const</span> std::string&amp; node_name,</span><br><span class="line">                    <span class="type">const</span> BT::NodeConfiguration&amp; config)</span><br><span class="line">        : <span class="built_in">ActionClient</span>(<span class="string">&quot;move_base&quot;</span>), <span class="built_in">AsyncActionNode</span>(node_name, config)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">MoveBaseClient</span>()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> BT::PortsList <span class="title">providedPorts</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123; BT::<span class="built_in">InputPort</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> BT::NodeStatus <span class="title">tick</span><span class="params">()</span> <span class="keyword">override</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Pose2D goal;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">getInput</span>&lt;Pose2D&gt;(<span class="string">&quot;goal&quot;</span>, goal)) &#123;</span><br><span class="line">            <span class="comment">// 读取不到目标点参数，则抛出异常</span></span><br><span class="line">            <span class="keyword">throw</span> BT::<span class="built_in">RuntimeError</span>(<span class="string">&quot;missing required input [goal]&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        aborted_ = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">sendGoal</span>(goal)) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;Maybe action server not running.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(!aborted_ &amp;&amp; !<span class="built_in">waitForResult</span>(ros::<span class="built_in">Duration</span>(<span class="number">0.02</span>))) &#123; <span class="comment">// timeout: 20ms</span></span><br><span class="line"></span><br><span class="line">        &#125;       </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (aborted_) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;MoveBase aborted&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">getState</span>() != actionlib::SimpleClientGoalState::SUCCEEDED) &#123;</span><br><span class="line">            <span class="built_in">ROS_ERROR</span>(<span class="string">&quot;MoveBase failed&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> BT::NodeStatus::FAILURE;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Goal reached&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> BT::NodeStatus::SUCCESS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">halt</span><span class="params">()</span> <span class="keyword">override</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        aborted_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> aborted_;</span><br><span class="line">&#125;;</span><br><span class="line">    </span><br><span class="line">&#125; <span class="comment">// namespace bt_tutorials</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这些方法都是一个 Action 类对应一个行为。若需要在一个类中定义多个异步行为，例如：机械臂控制类中定义移动到指定位置和移动到预定义位姿两类行为，而两类行为通过同一个 action client 进行通信时，可使用依赖注入方式。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/18/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/20/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2089,14 +2098,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">827k</span>
+    <span title="站点总字数">835k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">25:04</span>
+    <span title="站点阅读时长">25:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

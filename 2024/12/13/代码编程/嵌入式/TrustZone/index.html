@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考：  https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhajio&#x2F;article&#x2F;details&#x2F;83622310 https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_61869253&#x2F;article&#x2F;details&#x2F;139880557 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;arnoldlu&#x2F;p&#x2F;13993375.html TrustZone for Armv8-A  TEE：Trust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TrustZone">
+<meta property="og:url" content="http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/index.html">
+<meta property="og:site_name" content="Daemo">
+<meta property="og:description" content="参考：  https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhajio&#x2F;article&#x2F;details&#x2F;83622310 https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_61869253&#x2F;article&#x2F;details&#x2F;139880557 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;arnoldlu&#x2F;p&#x2F;13993375.html TrustZone for Armv8-A  TEE：Trust">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\ef4e8692586e49ef789f4916824b214c.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213151119926-1734073880765-3.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\34c67359185c59a1f67f05d67235977d.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213151541716.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213151858655.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213152404443.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213152556477.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225144444437-2141153125.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225145319256-1803396097.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225145341250-1915150730.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213155212699.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225150249956-1541747798.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225151317607-1264282866.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225163503667-1397515908.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225164013297-1644525873.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\2770b8d13452d49fed175e5c7a1008a1.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225213628637-286033770.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225214218296-2034889253.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201225215521167-1271838075.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\image-20241213161648727.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201117113521738-2078575975.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201227214131363-1290214216.png">
+<meta property="og:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\1083701-20201227214200023-2098233312.png">
+<meta property="article:published_time" content="2024-12-13T06:53:16.000Z">
+<meta property="article:modified_time" content="2024-12-13T08:37:26.585Z">
+<meta property="article:author" content="Damon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\workspace\my-notes\myblog\source_posts\%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B\%E5%B5%8C%E5%85%A5%E5%BC%8F\TrustZone\ef4e8692586e49ef789f4916824b214c.png">
+
+
+<link rel="canonical" href="http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/","path":"2024/12/13/代码编程/嵌入式/TrustZone/","title":"TrustZone"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TrustZone | Daemo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Daemo</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">内诚于心，外信于人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">安全背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TrustZone"><span class="nav-number">2.</span> <span class="nav-text">TrustZone</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Security-states"><span class="nav-number">2.1.</span> <span class="nav-text">Security states</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">安全状态切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="nav-number">2.3.</span> <span class="nav-text">虚拟地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="nav-number">2.4.</span> <span class="nav-text">物理地址空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Instruction%E5%8F%8Aunified-caches"><span class="nav-number">2.5.</span> <span class="nav-text">Data,Instruction及unified caches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Translation-Lookaside-Buffer"><span class="nav-number">2.6.</span> <span class="nav-text">Translation Lookaside Buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMC-%E5%BC%82%E5%B8%B8"><span class="nav-number">2.7.</span> <span class="nav-text">SMC 异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secure-virtualization"><span class="nav-number">2.8.</span> <span class="nav-text">Secure virtualization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Slave-devices-peripherals-and-memories"><span class="nav-number">3.1.</span> <span class="nav-text">Slave devices: peripherals, and memories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enforcing-isolation"><span class="nav-number">3.2.</span> <span class="nav-text">Enforcing isolation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E4%B8%BB%E8%AE%BE%E5%A4%87"><span class="nav-number">3.3.</span> <span class="nav-text">总线主设备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">软件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Top-level-software-architecture"><span class="nav-number">4.1.</span> <span class="nav-text">Top-level software architecture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.1.</span> <span class="nav-text">加密文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OTA-%E5%9B%BA%E4%BB%B6%E6%9B%B4%E6%96%B0"><span class="nav-number">5.2.</span> <span class="nav-text">OTA 固件更新</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Damon</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">208</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/TrustZone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Damon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Daemo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TrustZone | Daemo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TrustZone
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-13 14:53:16 / 修改时间：16:37:26" itemprop="dateCreated datePublished" datetime="2024-12-13T14:53:16+08:00">2024-12-13</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhajio/article/details/83622310">https://blog.csdn.net/zhajio/article/details/83622310</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61869253/article/details/139880557">https://blog.csdn.net/m0_61869253/article/details/139880557</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/arnoldlu/p/13993375.html">https://www.cnblogs.com/arnoldlu/p/13993375.html</a></li>
+<li>TrustZone for Armv8-A</li>
+</ul>
+<p>TEE：Trusted Exception Environment，是一个安全执行环境，它包括在安全世界中运行的小程序、库和操作系统，用于保护敏感操作和数据</p>
+<p>REE：Rich Exception Environment，非安全世界</p>
+<h1 id="安全背景"><a href="#安全背景" class="headerlink" title="安全背景"></a>安全背景</h1><p>CPU通过内存映射手段给每个进程营造一个单独的地址空间来隔离多个进程的代码和数据，通过内核空间和用户空间不同的特权级来隔离操作系统和用户进程的代码和数据。但由于内存中的代码和数据都是明文，容易被同处于内存中的其它应用偷窥，因此出现了扩展的安全模块，应用将加密数据送往安全模块，由安全模块处理完后再返回结果给相应的应用。</p>
+<p>在 TrustZone 之前的安全手段：</p>
+<ul>
+<li>外挂硬件安全模块：<ul>
+<li>数据的处理交由外部的安全模块实现，这些模块能够保护自己的资源和密钥等数据的安全，如SIM卡、各种智能卡或连接到外部的硬件加解密模块等，但其同主芯片的通信线路暴露在外部，容易被监听破解。另外，通信的速率比较低</li>
+</ul>
+</li>
+<li>内部集成硬件安全模块：<ul>
+<li>片上两个核，一个普通核和一个安全核。安全核性能有限，占用 SoC 面积，成本高</li>
+</ul>
+</li>
+</ul>
+<p>（来源：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhajio/article/details/83622310%EF%BC%89">https://blog.csdn.net/zhajio/article/details/83622310）</a></p>
+<p>ARM 安全架构</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\ef4e8692586e49ef789f4916824b214c.png" alt="img"></p>
+<p>(来源：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_61869253/article/details/139880557">https://blog.csdn.net/m0_61869253/article/details/139880557</a>)</p>
+<h1 id="TrustZone"><a href="#TrustZone" class="headerlink" title="TrustZone"></a>TrustZone</h1><p>ARM 公司提出的一种硬件技术，旨在提供处理器级别的安全隔离解决方案，实现对系统资源的安全保护和隔离。通过 TrustZone 技术，处理器可划分为两个独立的区域：</p>
+<ul>
+<li>Secure World：安全世界</li>
+<li>Normal World：普通世界</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151119926-1734073880765-3.png" alt="image-20241213151119926"></p>
+<p>所有需要保密的操作在安全世界执行（如指纹识别、密码处理、数据加解密、安全认证等），其余操作在非安全世界执行（如用户操作系统、各种应用程序等），安全世界和非安全世界通过一个名为Monitor Mode的模式进行转换。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\34c67359185c59a1f67f05d67235977d.png" alt="ARM的安全世界和非安全世界"></p>
+<p>处理器架构上，<strong>TrustZone 将每个物理核虚拟为两个核，一个非安全核（Non-secure Core, NS Core），运行非安全世界的代码；和另一个安全核（Secure Core），运行安全世界的代码</strong>。两个虚拟的核以<strong>基于时间片</strong>的方式运行，根据需要实时占用物理核，并通过 Monitor Mode 在安全世界和非安全世界之间切换。</p>
+<h2 id="Security-states"><a href="#Security-states" class="headerlink" title="Security states"></a>Security states</h2><p>在 Arm 架构中，有两种安全状态：安全和非安全。</p>
+<p>在EL0、EL1和EL2，处理器可以处于安全状态或非安全状态，这是由 <code>SCR_EL3.NS</code> 控制的。表示方法例如：</p>
+<ul>
+<li>NS.EL1：Non-secure state，Exception level 1</li>
+<li>S.EL1：Secure state，Exception level 1</li>
+</ul>
+<p>不管 <code>SCR_EL3.NS</code> 位的值是多少，<strong>EL3 始终在 Secure state</strong>。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151541716.png" alt="image-20241213151541716"></p>
+<p>（来源：<a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/102418/latest/">TrustZone for Armv8-A</a>）</p>
+<blockquote>
+<p>注意：Secure EL2 最初在 Armv8.4 -A 中引入。</p>
+</blockquote>
+<h2 id="安全状态切换"><a href="#安全状态切换" class="headerlink" title="安全状态切换"></a>安全状态切换</h2><p><strong>无论从安全状态切换到非安全状态，还是从非安全状态切换到安全状态，都必须经过 EL3</strong>。例如：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213151858655.png" alt="image-20241213151858655"></p>
+<p>执行流程：</p>
+<ul>
+<li>进入更高的 Exception 级别需要一个异常(exception)。通常，此异常将是 FIQ 或 SMC（Secure Monitor Call - 安全监视调用）异常。即：<strong>Rich OS 通过 FIQ&#x2F;SMC异常进入 EL3</strong> </li>
+<li>在适当的异常向量处进入 EL3。运行在 EL3 中的软件会改变 <code>SCR_EL3.NS</code></li>
+<li>然后异常返回将处理器从 EL3 切换到 S.EL1</li>
+</ul>
+<p>切换安全状态不仅仅是在 Exception 级别之间移动和更改 <code>SC_EL3.NS</code>。还必须考虑处理器状态。</p>
+<p>矢量寄存器、通用寄存器和大多数系统寄存器只有一个副本。在安全状态之间切换时，保存和恢复寄存器状态的责任是软件，而不是硬件。按照惯例，完成这项工作的软件被称为安全监控(Secure Monitor)。这使得之前的例子看起来更像下图中看到的：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213152404443.png" alt="image-20241213152404443"></p>
+<blockquote>
+<p>Trusted Firmware 是 Arm 赞助的一个开源项目，它提供了一个安全监视器的参考实现。</p>
+</blockquote>
+<h2 id="虚拟地址空间"><a href="#虚拟地址空间" class="headerlink" title="虚拟地址空间"></a>虚拟地址空间</h2><p>Virtual address spaces</p>
+<p>本系列中的内存管理指南介绍了多个虚拟地址空间或转换机制的概念。例如，EL0&#x2F;1有一个翻译制度，EL2有一个单独的翻译制度，如下所示：</p>
+<ul>
+<li>NS.EL0&#x2F;1 Guest OS虚拟地址空间，使用Guest OS Tables，TTBRn_EL1；如果存在EL2，则需要NS.EL2 IPA地址空间，使用Virtualization Tables，VTTBR_EL2、</li>
+<li>NS.EL2 VMM虚拟地址空间，使用Hypervisor Tables，TTBR0_EL2</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213152556477.png" alt="image-20241213152556477"></p>
+<blockquote>
+<p>TTBR：Translation Table Base Register.</p>
+<p>TTBR0_EL1&#x2F;TTBR1_EL1：EL1 OS 使用的用户转换页表基地址和内核转换页表基地址。</p>
+<p>TTBR0_EL2&#x2F;TTBR1_EL2：EL2 Hypervisor OS使用的转换页表基地址。</p>
+<p>TTBR0_EL3：EL3仅有Stage 1转换页表基地址。</p>
+<p>VTTBR_EL2：虚拟化场景下页表转换Stage 2基地址。</p>
+</blockquote>
+<ul>
+<li>S.EL0&#x2F;1TOS 虚拟地址空间</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225144444437-2141153125.png" alt="img"></p>
+<p>不同地址空间NS.EL1:0x8000和S.EL1:0x8000是两套独立的地址空间中地址，CPU在安全空间必须使用S.EL1页表转换，在非安全空间必须使用NS.EL1页表转换。</p>
+<h2 id="物理地址空间"><a href="#物理地址空间" class="headerlink" title="物理地址空间"></a>物理地址空间</h2><p>在非安全世界，虚拟地址被转换到非安全物理地址。这意味着，非安全世界的软件仅能看到非安全资源。</p>
+<p>在安全世界，软件可以访问所有非安全和安全物理地址空间。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225145319256-1803396097.png" alt="img"></p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225145341250-1915150730.png" alt="img"></p>
+<h2 id="Data-Instruction及unified-caches"><a href="#Data-Instruction及unified-caches" class="headerlink" title="Data,Instruction及unified caches"></a>Data,Instruction及unified caches</h2><p>在Arm架构中，数据缓存是物理标记的。物理地址包括该行来自哪个地址空间，如下所示</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213155212699.png" alt="image-20241213155212699"></p>
+<h2 id="Translation-Lookaside-Buffer"><a href="#Translation-Lookaside-Buffer" class="headerlink" title="Translation Lookaside Buffer"></a>Translation Lookaside Buffer</h2><h2 id="SMC-异常"><a href="#SMC-异常" class="headerlink" title="SMC 异常"></a>SMC 异常</h2><p>执行 SMC 产生 SMC 异常进入 EL3。SMC 被用于从 EL3 Firmware 或者 TEE 中请求服务。<strong>SMC dispatcher 将 SMC 请求发送给 Firmware(PSCI) 或者 TOS 处理</strong>。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225150249956-1541747798.png" alt="img"></p>
+<h2 id="Secure-virtualization"><a href="#Secure-virtualization" class="headerlink" title="Secure virtualization"></a>Secure virtualization</h2><p>直到ARMv8.3都没有支持S.EL2，EL3运行Firmware处理PSCI以及Secure Monitor。S.EL0&#x2F;1运行TOS。</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225151317607-1264282866.png" alt="img"></p>
+<p>ARMv8.4开始增加了S.EL2，运行Secure Partition Manager。将Platform firmware工作移到S.EL1进行处理</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225163503667-1397515908.png" alt="img"></p>
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p>一个基于 TrustZone 系统组成</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225164013297-1644525873.png" alt="img"></p>
+<p>不同芯片厂商会根据安全需求选择不同的安全组件来构造其 TrustZone。其中主要组件包括：</p>
+<ul>
+<li>必选组件<ul>
+<li>AMBA3 AXI 总线，安全机制的基础设施</li>
+<li>虚拟化的 ARM Core，虚拟安全和非安全核</li>
+<li>TZPC(TrustZone Protextion Controller)，根据需要控制外设的安全特性</li>
+<li>TZASC(TrustZone Address Space Controller)，对内存进行安全和非安全区域划分和保护</li>
+</ul>
+</li>
+<li>可选组件<ul>
+<li>TZMA (TrustZone Memory Adapter)，片上ROM或RAM安全区域和非安全区域的划分和保护</li>
+<li>AXI-to-APB bridge，桥接APB总线，配合TZPC使APB总线外设支持TrustZone安全特性</li>
+</ul>
+</li>
+</ul>
+<p><strong>AMBA3 AXI(AMBA3 Advanced eXtensble Interface)系统总线作为TrustZone的基础架构设施，提供了安全世界和非安全世界的隔离机制</strong>，确保非安全核只能访问非安全世界的系统资源，而安全核能访问所有资源，因此安全世界的资源不会被非安全世界（或普通世界）所访问。</p>
+<p>ARM官网对TrustZone介绍的应用示意图：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\2770b8d13452d49fed175e5c7a1008a1.png" alt="基于TrustZone的应用示意图"></p>
+<h2 id="Slave-devices-peripherals-and-memories"><a href="#Slave-devices-peripherals-and-memories" class="headerlink" title="Slave devices: peripherals, and memories"></a>Slave devices: peripherals, and memories</h2><h2 id="Enforcing-isolation"><a href="#Enforcing-isolation" class="headerlink" title="Enforcing isolation"></a>Enforcing isolation</h2><p>执行隔离。</p>
+<p>主控告知访问权限，内存系统决定是否允许访问。</p>
+<p>内存系统权限检查一般是通过互联总线。比如NIC-400可以设置如下属性：</p>
+<ul>
+<li>安全：仅安全访问可以通过，互联总线对非安全访问产生异常，非安全访问不会抵达设备。</li>
+<li>非安全：仅非安全访问可以通过，互联总线对安全访问产生异常，安全访问不会抵达设备。</li>
+<li>启动可配置：系统初始化时可以配置设备为安全或非安全。默认是安全。</li>
+<li>TrustZone aware：互联总线允许所有访问通过，连接的设备自身负责隔离。</li>
+</ul>
+<p>例如：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225213628637-286033770.png" alt="img"></p>
+<p>对于 DDR，需要将整个区域划分为若干安全和非安全区域。通过 TZASC 可实现：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225214218296-2034889253.png" alt="img"></p>
+<h2 id="总线主设备"><a href="#总线主设备" class="headerlink" title="总线主设备"></a>总线主设备</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201225215521167-1271838075.png" alt="img"></p>
+<p>A系列处理器都是TrustZone aware的，每次总线访问发送争取的安全状态。但还存在一些非处理器的总线主控，比如GPU、DMA等。</p>
+<p>因此将总线主控分为两种：</p>
+<ul>
+<li>TrustZone aware：每次总线访问都能提供合适安全信息。</li>
+<li>Non-TrustZone  aware：此类主设备访问总显示无法提供安全信息、或每次都是同样安全信息</li>
+</ul>
+<p>对于Non-Trusted-aware需要采取的措施有：</p>
+<ul>
+<li>设计时固定地址：给设备固定的访问地址</li>
+<li>可配逻辑单元：为主设备访问添加安全信息逻辑单元</li>
+<li>MMU：对于一个可信主设备，SMMU可以向安全状态下的MMU一样处理</li>
+</ul>
+<h1 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h1><h2 id="Top-level-software-architecture"><a href="#Top-level-software-architecture" class="headerlink" title="Top-level software architecture"></a>Top-level software architecture</h2><p>典型的基于 TrustZone 系统的软件调用栈关系图：</p>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\image-20241213161648727.png" alt="image-20241213161648727"></p>
+<p>安全世界的Trusted OS提供一系列安全服务，比如key管理或DRM。非安全世界应用需要使用这些服务，但是又无法直接使用。通过使用一些库中API来获取这些能力，比如libDRM.so。</p>
+<p>这些库和Trusted service之间通信往往通过message queue或者Mailbox。他们之间通信所用内存往往被称为WSM(World Shared Memory)。这些内存必须能够被Trusted service和库访问，这就意味着这些内存是非安全内存。</p>
+<p>应用通过库发送一个请求到Mailbox或message queue，然后出发内核中TrustZone驱动。</p>
+<p>TrustZone驱动负责和TEE部分交互，包括为message queue申请内存和注册这些内存。由于安全和非安全运行在两个虚拟地址空间，所以无法通过虚拟地址进行通信。</p>
+<p>TrustZone驱动通过调用SMC进入安全状态，控制权通过EL3的Secure Monitor传递到TEE中的TOS。TOS从message queue内存中获取内容个Trusted service进行处理。</p>
+<ul>
+<li>Trusting the message：由于message是从非安全世界传递的，所以需要安全世界需要对这些内容进行一些认证。</li>
+<li>Scheduling：对于PSCI类型快速处理并且不频繁请求，进入EL3处理完后退出到非安全状态。对于一些需要TOS处理的任务，不能被非安全中断打断，避免造成安全服务不可用。</li>
+<li>OP-TEE：OP-TEE内核运行在S.EL1，可信应用运行在S.EL0。</li>
+</ul>
+<p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201117113521738-2078575975.png" alt="img"></p>
+<p>非安全世界的App一般不直接使用TEE Client API，而是中间Service API提供一类服务。TEE Client API和内核中OP-TEE驱动交互，OP-TEE驱动SMC处理底层和OP-TEE内核的通信。</p>
+<p>EL3 Firmware&#x2F;Secure Monitor做SMC处理，根据需要将安全请求发送到OP-TEE内核处理。</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><h2 id="加密文件系统"><a href="#加密文件系统" class="headerlink" title="加密文件系统"></a>加密文件系统</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201227214131363-1290214216.png" alt="img"></p>
+<ul>
+<li>对用户进行认证后，加密后文件系统key被读到片内安全内存中，并使用存在OTP中的Private key对其进行解密和验证。</li>
+<li>解密后的文件系统key被提供给加解密引擎寄存器或者存储控制器中。</li>
+<li>后续对文件系统的存取使用写入的key进行加解密。</li>
+</ul>
+<p>上述操作都是在安全状态进行的，所有文件系统key不会暴露给非安全软件。</p>
+<h2 id="OTA-固件更新"><a href="#OTA-固件更新" class="headerlink" title="OTA 固件更新"></a>OTA 固件更新</h2><p><img src="D:\workspace\my-notes\myblog\source_posts\代码编程\嵌入式\TrustZone\1083701-20201227214200023-2098233312.png" alt="img"></p>
+<p>主要流程如下：</p>
+<ul>
+<li>OEM厂家使用私钥对镜像进行签名。</li>
+<li>镜像在非安全状态下被下载，并请求安全世界去安装固件。</li>
+<li>安全世界中使用Public key hash校验Public key。</li>
+<li>安全世界软件对镜像验签，至此表示镜像合法。</li>
+<li>然后安全世界开始安装固件。</li>
+<li>升级成功则递增non-volatile counter，可以检测到回滚操作。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/09/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/OpenHarmony/OpenHarmony/" rel="prev" title="OpenHarmony">
+                  <i class="fa fa-angle-left"></i> OpenHarmony
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/13/%E4%BB%A3%E7%A0%81%E7%BC%96%E7%A8%8B/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/STM32/STM32-ADC/" rel="next" title="STM32-ADC">
+                  STM32-ADC <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Damon</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">835k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">25:18</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
